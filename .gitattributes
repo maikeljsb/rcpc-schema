@@ -1,0 +1,8 @@
+# Normalise line endings to LF in the repository and on checkout,
+# so the published schema set has one line ending regardless of
+# who commits or on which platform.
+* text=auto eol=lf
+
+# Binary reference material
+*.pdf binary
+*.png binary
