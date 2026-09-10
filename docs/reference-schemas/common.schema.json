@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rcpc.for5672/graph/representation/common.schema.json",
+  "title": "RCPC representation — shared definitions",
+  "description": "Identifier types, geometric types, version fields, and the provenance record shared by every representation payload. Referenced by every other schema in this directory; declares no domain content of its own.",
+  "$defs": {
+    "schema_version": {
+      "title": "Representation-schema version",
+      "description": "The version of the representation definition the payload conforms to. Semantic; a minor is additive-only. Distinct from the service-API version and from content versions such as `baseline_version` and `plan_version`.",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "examples": [
+        "1.0.0"
+      ]
+    },
+    "baseline_version": {
+      "title": "Product-baseline version",
+      "description": "The content version identifying one pinned, immutable product baseline. Every process side references one.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "baseline-2026-08-24T10-00-00Z-0001"
+      ]
+    },
+    "plan_version": {
+      "title": "Plan version",
+      "description": "The content version identifying one submitted plan.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "plan-0007"
+      ]
+    },
+    "run_id": {
+      "title": "Run identifier",
+      "description": "Identifies one execution or simulation of a Behavior Tree. Minted by the Orchestration Service at run start; carried by every event of that run.",
+      "type": "string",
+      "format": "uuid"
+    },
+    "element_id": {
+      "title": "Product-element identifier",
+      "description": "Identifies one element of the product baseline. Carried through from the imported model's GUID where the source supplies one.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "3VdpNTXxn6LRliFkBWvlx7"
+      ]
+    },
+    "task_id": {
+      "title": "Stable task identifier",
+      "description": "Minted once by the Graph Service at product-graph construction time and carried unchanged through the plan, the Behavior Tree, every execution event, and every dispatched instruction. The sole correlation key for feedback; no schema anywhere declares a second one. The same value identifies a task in a plan version and in every run of it, so plan-versus-run comparison is a query. See representation.md section 3.",
+      "type": "string",
+      "format": "uuid"
+    },
+    "robot_id": {
+      "title": "Robot resource identifier",
+      "description": "Identifies one registered robot resource. Referenced from a run's task node to record which robot actually performed the task.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "crane1"
+      ]
+    },
+    "provenance": {
+      "title": "Reproducibility record",
+      "description": "Carried by every derived artifact (a graph delta, a plan version, a Behavior Tree, a run's process side), recording what produced it and under which versions.",
+      "type": "object",
+      "properties": {
+        "baseline_version": {
+          "$ref": "#/$defs/baseline_version"
+        },
+        "representation_schema_version": {
+          "$ref": "#/$defs/schema_version"
+        },
+        "event_schema_version": {
+          "$ref": "#/$defs/schema_version"
+        },
+        "content_plugin_versions": {
+          "description": "The content plug-ins that participated, by name and version: the material-to-method map, the method library, importers.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "examples": [
+            {
+              "material-to-method-map": "1.2.0",
+              "method-library": "1.0.0"
+            }
+          ]
+        },
+        "producer": {
+          "description": "The producing component and its own version.",
+          "type": "object",
+          "properties": {
+            "component": {
+              "type": "string",
+              "examples": [
+                "graphs-service"
+              ]
+            },
+            "version": {
+              "type": "string",
+              "examples": [
+                "0.4.1"
+              ]
+            }
+          },
+          "required": [
+            "component",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "baseline_version",
+        "representation_schema_version",
+        "content_plugin_versions",
+        "producer"
+      ],
+      "additionalProperties": false
+    },
+    "quantities": {
+      "title": "Quantity attribute map",
+      "description": "An optional map an element or a task may carry. The Graph Service validates shape only (key, numeric value, unit, provenance) and never interprets a quantity's meaning. The extension point through which a second application such as Life Cycle Assessment obtains its inputs.",
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_.]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provenance": {
+            "description": "Where the quantity came from: the importer, a derivation, or a manual entry. Free text, not interpreted.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value",
+          "unit"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "volume": {
+            "value": 1.44,
+            "unit": "m3",
+            "provenance": "ifc-import"
+          }
+        }
+      ]
+    },
+    "vec3": {
+      "title": "Three-component vector",
+      "description": "Three numbers in the baseline's coordinate system. Shape only; `position` and `rotation` build on it and carry the meaning.",
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "position": {
+      "title": "A position",
+      "description": "A point in the baseline's coordinate system. Where an element sits, and where a robot is asked to arrive: the same kind of fact, so the same definition.",
+      "$ref": "#/$defs/vec3",
+      "examples": [
+        [
+          12.5,
+          3.0,
+          0.0
+        ]
+      ]
+    },
+    "rotation": {
+      "title": "A rotation",
+      "description": "An orientation in the baseline's coordinate system, ordered [rx, ry, rz] in radians.",
+      "$ref": "#/$defs/vec3",
+      "examples": [
+        [
+          0.0,
+          0.0,
+          1.5708
+        ]
+      ]
+    },
+    "envelope_head": {
+      "title": "Fields every representation payload carries",
+      "description": "Every payload the Graph Service returns or accepts declares the representation-schema version it conforms to and, where baseline-scoped, the baseline it was read at.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "#/$defs/schema_version"
+        },
+        "baseline_version": {
+          "$ref": "#/$defs/baseline_version"
+        }
+      },
+      "required": [
+        "schema_version"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rcpc.for5672/graph/representation/capability.schema.json",
+  "title": "RCPC representation — capability vocabulary",
+  "description": "The capability vocabulary's metaschema. The instances live in `capabilities.json`, which validates against `#/$defs/capabilities_payload`; this file declares no instances. The Planning Service's domain content, the Orchestration Service's dispatch logic, and the robot resources reference those entries by identifier; none encodes a second copy. Adding a capability type is an additive minor; removing one, or changing what an identifier means, is a major. See representation.md section 6.",
+  "$defs": {
+    "capability_type_id": {
+      "title": "Capability-type identifier",
+      "description": "References one entry of the capability vocabulary by identifier. The vocabulary is enumerated once, in `capability.schema.json`.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "examples": [
+        "gripper",
+        "lifting",
+        "extrusion"
+      ]
+    },
+    "capability_type": {
+      "title": "One capability type",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The identifier every other component references. Stable for the life of the major version.",
+          "$ref": "#/$defs/capability_type_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "title": "An array of capability references",
+      "description": "How an action states what it needs, and how a robot resource states what it offers. Matched by identifier; membership enforced by validate.py, not this schema.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/capability_type_id"
+      },
+      "minItems": 1
+    },
+    "capabilities_payload": {
+      "title": "query-representation, scope = capabilities",
+      "description": "The `capabilities` query scope: the whole vocabulary, as served.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "capability_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_type"
+          },
+          "minItems": 1
+        },
+        "description": {
+          "description": "Optional annotation. Present on `capabilities.json`; a served payload omits it.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "capability_types"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/capabilities_payload"
+}

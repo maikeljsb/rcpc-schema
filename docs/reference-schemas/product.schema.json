@@ -1,0 +1,389 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rcpc.for5672/graph/representation/product.schema.json",
+  "title": "RCPC representation — product side",
+  "description": "The pinned, immutable product baseline: elements, their geometry, their material association, and the method binding derived from that material. Additive: nothing here is rewritten once pinned. Also declares the method vocabulary's metaschema and the unresolved-element state. The method instances live in `methods.json`, which validates against `#/$defs/methods_payload`; this file declares no instances.",
+  "$defs": {
+    "material_term": {
+      "title": "Material term",
+      "description": "A material as named on an element. Project- and language-specific content, resolved against the versioned material-to-method map. This field constrains shape only, never the set of admissible terms; a term the map does not cover yields an unresolved element, not a schema violation.",
+      "type": "string",
+      "minLength": 1,
+      "examples": [
+        "concrete_precast",
+        "brick",
+        "concrete_insitu",
+        "Stahlbeton"
+      ]
+    },
+    "method_id": {
+      "title": "Construction-method identifier",
+      "description": "The construction method bound to an element. Derived from the element's material by the material-to-method map; never supplied directly, never defaulted. See representation.md sections 6.1 and 8.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "examples": [
+        "prefab",
+        "insitu",
+        "masonry",
+        "3dcp"
+      ]
+    },
+    "unresolved_reason": {
+      "title": "Unresolved-element reason code",
+      "description": "Why an element carries no construction method. Exactly one of two reasons; no third state, and neither carries an inferred method. `no_material_association`: the element carries no material at all. `material_not_in_map`: the element carries a material term the map version in force has no entry for. Each reason constrains whether the element carries a `material`, enforced by a conditional on `element`.",
+      "type": "string",
+      "enum": [
+        "no_material_association",
+        "material_not_in_map"
+      ]
+    },
+    "geometry": {
+      "title": "Element geometry",
+      "description": "The element's placement and extent in the baseline's coordinate system. Shape only; not interpreted beyond serving it.",
+      "type": "object",
+      "properties": {
+        "location": {
+          "$ref": "common.schema.json#/$defs/position"
+        },
+        "rotation": {
+          "$ref": "common.schema.json#/$defs/rotation"
+        },
+        "bounding_box": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "$ref": "common.schema.json#/$defs/position"
+            },
+            "max": {
+              "$ref": "common.schema.json#/$defs/position"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "location"
+      ],
+      "additionalProperties": false
+    },
+    "element": {
+      "title": "One product element",
+      "description": "An element of the pinned baseline. `material` and `method` are both optional: an element with neither is unresolved, an import completes regardless, and a baseline may be pinned with unresolved elements present. Planning is what refuses, not import.",
+      "type": "object",
+      "properties": {
+        "element_id": {
+          "$ref": "common.schema.json#/$defs/element_id"
+        },
+        "ifc_type": {
+          "description": "The source model's entity type, carried through unchanged.",
+          "type": "string",
+          "examples": [
+            "IfcWall",
+            "IfcSlab",
+            "IfcColumn"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "material": {
+          "$ref": "#/$defs/material_term"
+        },
+        "method": {
+          "description": "Present only where derivation succeeded. Absent on an unresolved element, and never defaulted.",
+          "$ref": "#/$defs/method_id"
+        },
+        "unresolved_reason": {
+          "description": "Present exactly when `method` is absent.",
+          "$ref": "#/$defs/unresolved_reason"
+        },
+        "geometry": {
+          "$ref": "#/$defs/geometry"
+        },
+        "quantities": {
+          "$ref": "common.schema.json#/$defs/quantities"
+        }
+      },
+      "required": [
+        "element_id"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "description": "Method derivation is a two-step decision: first whether the element carries a material at all, second — only if it does — whether the map covers that material. A material means either a resolved method or material_not_in_map, never both, never neither. No material means no_material_association and no method.",
+          "if": {
+            "required": [
+              "material"
+            ]
+          },
+          "then": {
+            "if": {
+              "required": [
+                "method"
+              ]
+            },
+            "then": {
+              "not": {
+                "required": [
+                  "unresolved_reason"
+                ]
+              }
+            },
+            "else": {
+              "required": [
+                "unresolved_reason"
+              ],
+              "properties": {
+                "unresolved_reason": {
+                  "const": "material_not_in_map"
+                }
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "method"
+              ]
+            },
+            "required": [
+              "unresolved_reason"
+            ],
+            "properties": {
+              "unresolved_reason": {
+                "const": "no_material_association"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "method_definition": {
+      "title": "One method definition",
+      "description": "What a method requires, as tasks. Completes the chain the product side half-carries: an element binds to a method, a method requires tasks, a task references an action. A method is not a compound; the method identifier is the only token crossing the Graph Service and Planning boundary. See representation.md section 8.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/method_id"
+        },
+        "consists_of": {
+          "title": "The top-level tasks this method requires",
+          "description": "What building an element by this method takes, in order. Each entry names a compound of the action vocabulary or an action directly. These are the top-level tasks; what each decomposes into is the compound's own definition. Repetition is meaningful, so `uniqueItems` is absent.",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "description": "A compound of the action vocabulary, by identifier.",
+                "$ref": "action.schema.json#/$defs/compound_id"
+              },
+              {
+                "description": "An action of the action vocabulary, by identifier.",
+                "$ref": "action.schema.json#/$defs/action_id"
+              }
+            ]
+          },
+          "minItems": 1
+        },
+        "description": {
+          "description": "What the method is, for a human reader. Read by no component.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "consists_of",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "elements_payload": {
+      "title": "query-representation, scope = elements",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "baseline_version": {
+          "$ref": "common.schema.json#/$defs/baseline_version"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element"
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "baseline_version",
+        "elements"
+      ],
+      "additionalProperties": false
+    },
+    "geometry_payload": {
+      "title": "query-representation, scope = geometry",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "baseline_version": {
+          "$ref": "common.schema.json#/$defs/baseline_version"
+        },
+        "geometry": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "element_id": {
+                "$ref": "common.schema.json#/$defs/element_id"
+              },
+              "geometry": {
+                "$ref": "#/$defs/geometry"
+              }
+            },
+            "required": [
+              "element_id",
+              "geometry"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "baseline_version",
+        "geometry"
+      ],
+      "additionalProperties": false
+    },
+    "quantities_payload": {
+      "title": "query-representation, scope = quantities",
+      "description": "The `quantities` query scope. Served unvalidated beyond shape.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "baseline_version": {
+          "$ref": "common.schema.json#/$defs/baseline_version"
+        },
+        "quantities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "subject_kind": {
+                "description": "Whether the quantities hang off a product element or a plan task. Both are admitted.",
+                "type": "string",
+                "enum": [
+                  "element",
+                  "task"
+                ]
+              },
+              "subject_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "quantities": {
+                "$ref": "common.schema.json#/$defs/quantities"
+              }
+            },
+            "required": [
+              "subject_kind",
+              "subject_id",
+              "quantities"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "baseline_version",
+        "quantities"
+      ],
+      "additionalProperties": false
+    },
+    "unresolved_payload": {
+      "title": "query-representation, scope = unresolved",
+      "description": "The work list: elements carrying no construction method, each with its reason. What a front end presents for manual material assignment.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "baseline_version": {
+          "$ref": "common.schema.json#/$defs/baseline_version"
+        },
+        "unresolved": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "element_id": {
+                "$ref": "common.schema.json#/$defs/element_id"
+              },
+              "ifc_type": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "reason": {
+                "$ref": "#/$defs/unresolved_reason"
+              },
+              "material": {
+                "description": "Present only for reason = material_not_in_map: the term the map does not cover.",
+                "$ref": "#/$defs/material_term"
+              }
+            },
+            "required": [
+              "element_id",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "baseline_version",
+        "unresolved"
+      ],
+      "additionalProperties": false
+    },
+    "methods_payload": {
+      "title": "query-representation, scope = methods",
+      "description": "The `methods` query scope: the method vocabulary as served. The referent of the `method` field an element and a binding carry.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/method_definition"
+          },
+          "minItems": 1
+        },
+        "description": {
+          "description": "Optional annotation. Present on `methods.json`; a served payload omits it.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "methods"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

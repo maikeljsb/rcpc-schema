@@ -1,0 +1,323 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rcpc.for5672/graph/representation/resource.schema.json",
+  "title": "RCPC representation — robot resource",
+  "description": "Schema to describe resources. Robotic resources are described largely following the CRS.",
+  "$defs": {
+    "robot_resource": {
+      "title": "One registered robot resource",
+      "type": "object",
+      "properties": {
+        "robot_id": {
+          "description": "The identifier the Graph Service mints at registration, by which every other component refers to this robot, including a run task's `robot_id` and a dispatched instruction's `robotId`.",
+          "$ref": "common.schema.json#/$defs/robot_id"
+        },
+        "retired": {
+          "description": "Deregistration records the resource as retired from later baselines. It never rewrites a pinned one, so a retired robot stays present in every baseline pinned before its retirement.",
+          "type": "boolean",
+          "default": false
+        },
+        "crs": {
+          "$ref": "#/$defs/crs"
+        }
+      },
+      "required": [
+        "robot_id",
+        "crs"
+      ],
+      "additionalProperties": false
+    },
+    "crs": {
+      "title": "Construction Robot Schema description",
+      "description": "The Construction Robot Schema description (Li, Beauchat, Hu & Leicht 2026, ITcon 31, pp. 1-21, doi:10.36680/j.itcon.2026.001): 56 attributes across Physical Property (29), Operational Requirement (6), Safety (6), Activity (15). Attribute names, categories, and data types are the paper's own, from its Table 3. Every attribute is optional except `name` and `task_type`, the latter required because it also carries the capability types this robot offers. Data types map to JSON as String -> string, Decimal -> number, Int -> integer, Bool -> boolean, Enum -> open string (no value set is closed; closing one is a major). Two constraints carry weight: no robot-schema attribute enters a plan, and operational availability is not representation content. See representation.md section 12.",
+      "type": "object",
+      "properties": {
+        "physical_property": {
+          "description": "CRS category 1 of 4 — 29 attributes. Physical descriptors and performance of the robot, observable or measurable from on-site operation.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "CRS: the official label or identifier of the robot given by the developer."
+            },
+            "manufacturer": {
+              "type": "string",
+              "description": "CRS: the developer of the robot."
+            },
+            "level_of_autonomy": {
+              "type": "string",
+              "description": "CRS (Enum): the independency of the robot in performing tasks."
+            },
+            "network": {
+              "type": "string",
+              "description": "CRS (Enum): the approach of the robot to communicate and exchange data."
+            },
+            "length": {
+              "type": "number",
+              "description": "CRS (Decimal): measurement along the longest dimension."
+            },
+            "width": {
+              "type": "number",
+              "description": "CRS (Decimal): measurement side to side, perpendicular to length."
+            },
+            "height": {
+              "type": "number",
+              "description": "CRS (Decimal): measurement from base to highest point."
+            },
+            "weight": {
+              "type": "number",
+              "description": "CRS (Decimal): the physical mass of the robot."
+            },
+            "load_capacity": {
+              "type": "number",
+              "description": "CRS (Decimal): maximum allowable weight the robot can withstand for a long time while working."
+            },
+            "mobility": {
+              "type": "string",
+              "description": "CRS (Enum): the mechanism by which the robot moves from place to place."
+            },
+            "speed": {
+              "type": "number",
+              "description": "CRS (Decimal): rate of traversing a distance within a given timeframe."
+            },
+            "navigation": {
+              "type": "boolean",
+              "description": "CRS (Bool): ability to confirm its position in 3D space and plan a path to a specified location."
+            },
+            "power_source": {
+              "type": "string",
+              "description": "CRS (Enum): the energy origin supplying the robot."
+            },
+            "run_duration": {
+              "type": "number",
+              "description": "CRS (Decimal): period the robot can operate continuously before replenishment."
+            },
+            "sensor_type": {
+              "type": "string",
+              "description": "CRS: a device producing an output signal for sensing the physical environment."
+            },
+            "sensor_location": {
+              "type": "string",
+              "description": "CRS: installation position of the sensor, on the robot or outside."
+            },
+            "sensor_requirements": {
+              "type": "string",
+              "description": "CRS: hardware or software supporting the sensor's operation."
+            },
+            "sensor_capability": {
+              "type": "string",
+              "description": "CRS: the functions of the sensor."
+            },
+            "end_effector": {
+              "type": "string",
+              "description": "CRS: the device attached to the robot to interact with the task environment."
+            },
+            "manipulator": {
+              "type": "string",
+              "description": "CRS: a structure of links and joints that performs tasks."
+            },
+            "coordinate_reach_x": {
+              "type": "number",
+              "description": "CRS (Decimal): maximum reach of the manipulator on the x-axis."
+            },
+            "coordinate_reach_y": {
+              "type": "number",
+              "description": "CRS (Decimal): maximum reach of the manipulator on the y-axis."
+            },
+            "coordinate_reach_z": {
+              "type": "number",
+              "description": "CRS (Decimal): maximum reach of the manipulator on the z-axis."
+            },
+            "yaw": {
+              "type": "number",
+              "description": "CRS (Decimal): rotational movement range around the vertical axis."
+            },
+            "pitch": {
+              "type": "number",
+              "description": "CRS (Decimal): rotational movement range around the lateral axis."
+            },
+            "roll": {
+              "type": "number",
+              "description": "CRS (Decimal): rotational movement range around the longitudinal axis."
+            },
+            "manipulator_position": {
+              "type": "string",
+              "description": "CRS: installation position of the manipulator on the robot."
+            },
+            "degree_of_freedom": {
+              "type": "integer",
+              "description": "CRS (Int): number of geometry axes that can be rotated or extended."
+            },
+            "lifting_capacity": {
+              "type": "number",
+              "description": "CRS (Decimal): maximum weight the robot can lift during operation."
+            }
+          },
+          "additionalProperties": false
+        },
+        "operational_requirement": {
+          "description": "CRS category 2 of 4 — 6 attributes. Site conditions that allow the robot to perform tasks.",
+          "type": "object",
+          "properties": {
+            "grade": {
+              "type": "string",
+              "description": "CRS: acceptable flat level of the ground for a mobile robot."
+            },
+            "temperature": {
+              "type": "string",
+              "description": "CRS: temperature range required for proper operation."
+            },
+            "humidity": {
+              "type": "number",
+              "description": "CRS (Decimal): humidity range required for proper operation."
+            },
+            "site_preparation": {
+              "type": "string",
+              "description": "CRS: preparations required on site for the robot to work properly."
+            },
+            "req_number_operators": {
+              "type": "integer",
+              "description": "CRS (Int): quantity of persons who control the robot."
+            },
+            "operator_responsibilities": {
+              "type": "string",
+              "description": "CRS: the operator's work contents while the robot performs tasks."
+            }
+          },
+          "additionalProperties": false
+        },
+        "safety": {
+          "description": "CRS category 3 of 4 — 6 attributes. Requirements or capabilities preventing damage or injury to workers.",
+          "type": "object",
+          "properties": {
+            "emergency_stop": {
+              "type": "string",
+              "description": "CRS: the robot stops automatically and immediately when specific conditions are triggered."
+            },
+            "safe_distance": {
+              "type": "number",
+              "description": "CRS (Decimal): minimum distance to maintain when humans and robots work together."
+            },
+            "object_detection_range": {
+              "type": "number",
+              "description": "CRS (Decimal): range within which the robot detects and recognizes objects."
+            },
+            "safety_barrier": {
+              "type": "boolean",
+              "description": "CRS (Bool): facility for the robot to avoid collisions with humans or objects."
+            },
+            "additional_ppe_requirements": {
+              "type": "string",
+              "description": "CRS: extra personal protective equipment required when humans operate or work with the robot."
+            },
+            "minimum_workspace": {
+              "type": "number",
+              "description": "CRS (Decimal): minimum space the robot requires to avoid collisions while operating."
+            }
+          },
+          "additionalProperties": false
+        },
+        "activity": {
+          "description": "CRS category 4 of 4 — 15 attributes. The construction process the robot participates in.",
+          "type": "object",
+          "properties": {
+            "task_type": {
+              "description": "CRS: the specific operations related to the construction activity performed by the robot. Interpreted as the capabilites this robot offers, by identifier from the capability vocabulary.",
+              "$ref": "capability.schema.json#/$defs/capabilities"
+            },
+            "productivity": {
+              "type": "number",
+              "description": "CRS (Decimal): amount of work or production per unit time."
+            },
+            "precision": {
+              "type": "number",
+              "description": "CRS (Decimal): degree of refinement when performing work normally."
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "CRS (Decimal): degree of correctness when performing work normally."
+            },
+            "productivity_units": {
+              "type": "string",
+              "description": "CRS: the unit used to measure robot productivity."
+            },
+            "precision_units": {
+              "type": "string",
+              "description": "CRS: the unit used to measure robot precision."
+            },
+            "accuracy_units": {
+              "type": "string",
+              "description": "CRS: the unit used to measure robot accuracy."
+            },
+            "activity_type": {
+              "type": "string",
+              "description": "CRS: the construction activity the robot is involved in."
+            },
+            "material": {
+              "type": "string",
+              "description": "CRS: the specific material the robot needs to perform tasks."
+            },
+            "data_output_type": {
+              "type": "string",
+              "description": "CRS: the form of sensor data output."
+            },
+            "data_output_file_type": {
+              "type": "string",
+              "description": "CRS: the file format of sensor output data."
+            },
+            "crew_information": {
+              "type": "string",
+              "description": "CRS: team composition working with the robot."
+            },
+            "crew_responsibilities": {
+              "type": "string",
+              "description": "CRS: the crew's work contents while the robot performs tasks."
+            },
+            "worker_type": {
+              "type": "string",
+              "description": "CRS (Enum): the categorization of workers who work with the robot."
+            },
+            "worker_responsibilities": {
+              "type": "string",
+              "description": "CRS: the worker's work contents while the robot performs tasks."
+            }
+          },
+          "required": [
+            "task_type"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "physical_property",
+        "activity"
+      ],
+      "additionalProperties": false
+    },
+    "resources_payload": {
+      "title": "query-representation, scope = resources",
+      "description": "The `resources` query scope: the registered robots at the requested baseline_version, each described by the Construction Robot Schema, with offered task types referencing the capability vocabulary by identifier. Operational availability is not carried here.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "baseline_version": {
+          "$ref": "common.schema.json#/$defs/baseline_version"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/robot_resource"
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "baseline_version",
+        "resources"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

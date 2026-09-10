@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rcpc.for5672/graph/representation/action.schema.json",
+  "title": "RCPC representation — action vocabulary",
+  "description": "The action vocabulary's metaschema. An action carries identity, parameters, parameter value schemas, and required capability types; `additionalProperties: false` admits nothing else. The instances live in `actions.json`, which validates against `#/$defs/actions_payload`; this file declares no instances. The planning and execution representations are generated from those definitions.\n\nAn action is declared once it has a real executor. Adding an action or a parameter type is an additive minor; removing one, or changing an action's parameters, is a major. See representation.md section 7.",
+  "$defs": {
+    "action_id": {
+      "title": "Action identifier",
+      "description": "The action's identity. Travels unchanged to the wire as the Behavior Tree node's registration name and the transport's `command`; no component maps it to a second token.",
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*$",
+      "examples": [
+        "MoveTo",
+        "Attach",
+        "Detach"
+      ]
+    },
+    "parameter_name": {
+      "title": "Parameter name",
+      "description": "The role the parameter plays in the action, such as `target` or `object`. The execution projection rules map it to a Behavior Tree port name.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "examples": [
+        "object",
+        "target"
+      ]
+    },
+    "parameter": {
+      "title": "One parameter of an action",
+      "description": "A name (the key) and a value schema (this object). `value` is a JSON Schema, not the name of one: declaring `target` as `common.schema.json#/$defs/position` says a supplied target is a position, and `validate.py` checks each supplied value against it. There is no separate type vocabulary.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "title": "The schema a supplied value must satisfy",
+          "description": "A JSON Schema, in practice a `$ref` into `common.schema.json`, so a parameter's value and the product field holding the same kind of fact resolve to one definition. `common.schema.json#/$defs/robot_id` is excluded: no parameter may take a concrete robot as its value, because an action states the capability it requires and the robot is matched at dispatch. The `not` clause below is a shallow guard against a literal top-level `$ref` only; it is not authoritative. `validate.py` walks the whole value schema and is the check that holds for any indirection, such as an `allOf`-wrapped reference.",
+          "type": "object",
+          "minProperties": 1,
+          "not": {
+            "properties": {
+              "$ref": {
+                "const": "common.schema.json#/$defs/robot_id"
+              }
+            },
+            "required": [
+              "$ref"
+            ]
+          }
+        },
+        "description": {
+          "description": "The parameter's role, for a human reader. Read by no component.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "value",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "primitive_action": {
+      "title": "One action definition",
+      "description": "Identity, parameters, required capability types, and a description. `additionalProperties: false` rejects any further field.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/action_id"
+        },
+        "parameters": {
+          "title": "The action's parameters and the values they take",
+          "description": "The action's arity and roles, each parameter carrying the schema its value must satisfy: `Attach(object, target)`, where `object` is an element identifier and `target` a position. A task instance supplies values for exactly these. Unordered; an action with no parameters declares an empty object.",
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/parameter_name"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/parameter"
+          }
+        },
+        "requires_capabilities": {
+          "title": "The capability types this action requires",
+          "description": "What a robot must offer to perform this action, by identifier from the capability vocabulary.",
+          "$ref": "capability.schema.json#/$defs/capabilities",
+          "uniqueItems": true
+        },
+        "description": {
+          "description": "What the action does, for a human reader. Read by no component; states no precondition and no effect.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "parameters",
+        "requires_capabilities",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "compound_id": {
+      "title": "Compound identifier",
+      "description": "The compound's identity. Unlike an action identifier it does not travel to the wire: a compound is never dispatched. It is how a plan's compound task names what it is, and how a method names what it requires.",
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*$",
+      "examples": [
+        "TransportComponent"
+      ]
+    },
+    "compound_action": {
+      "title": "One compound definition",
+      "description": "Identity, an ordered decomposition, and a description. A compound itself does not perform an action, so it has no `parameters` and no `requires_capabilities`. `additionalProperties: false` rejects any further field.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/compound_id"
+        },
+        "decomposition": {
+          "title": "What this compound decomposes into, in order",
+          "description": "The actions the compound is made of, in the order they are performed. Repetition is meaningful, so `uniqueItems` is absent: `TransportComponent` names `MoveTo` twice. `minItems: 2`, because a body of one states no ordering and is a renaming of its single child.",
+          "type": "array",
+          "items": {
+            "description": "One action in this compound's ordered decomposition, by identifier.",
+            "$ref": "#/$defs/action_id"
+          },
+          "minItems": 2
+        },
+        "description": {
+          "description": "What the compound is, for a human reader. Read by no component; states no precondition and no effect.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "decomposition",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "actions_payload": {
+      "title": "query-representation, scope = actions",
+      "description": "The `actions` query scope: the whole action vocabulary, as served. The referent of the `action` field every process-side task node carries, and of the `compound_name` a compound task carries. `compounds` is optional. `actions.json` is the instance this schema governs.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/primitive_action"
+          },
+          "minItems": 1
+        },
+        "compounds": {
+          "description": "The compound definitions. Absent means the vocabulary declares none, not that they are declared elsewhere.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compound_action"
+          },
+          "minItems": 1
+        },
+        "description": {
+          "description": "Optional annotation. Present on `actions.json`; a served payload omits it.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "actions"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/actions_payload"
+}

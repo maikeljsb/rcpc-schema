@@ -1,0 +1,523 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rcpc.for5672/graph/representation/process.schema.json",
+  "title": "RCPC representation — process side",
+  "description": "The upper layers of the twin: one process side per plan version (as-planned) and one per run (as-simulated / as-executed).\n\nA task is primitive (performs one action, carries its parameters) or compound (performs none, decomposes into children); `kind` discriminates. The two shapes share only identity, the element served, and the capability types required.\n\nThree orderings, distinct. Decomposition order is the mandatory relative order of one parent's children, with interleaving allowed. Precedence is an additional constraint between non-siblings. `planned_order` / `actual_order` is a position in the whole plan's or run's execution order, shared by concurrent tasks.\n\nA task's `parameters` must match the parameters its action declares; `validate.py` enforces that, not this schema. See representation.md section 5.",
+  "$defs": {
+    "run_mode": {
+      "title": "Run mode",
+      "description": "The discriminator separating the as-simulated process side from the as-executed one.",
+      "type": "string",
+      "enum": [
+        "simulation",
+        "execution"
+      ]
+    },
+    "plan_origin": {
+      "title": "Plan-version origin",
+      "description": "How this plan version was produced. A solve supersedes nothing; a replan carries all three provenance relations.",
+      "type": "string",
+      "enum": [
+        "solve",
+        "replan"
+      ]
+    },
+    "precedence": {
+      "title": "Precedence constraint between two tasks",
+      "description": "An ordering constraint the hierarchy does not already imply: `predecessor` completes before `successor` starts. Carries constraints only between non-siblings, since a parent's `children` array already fixes its own children's order. Concurrency is not expressed here.",
+      "type": "object",
+      "properties": {
+        "predecessor": {
+          "$ref": "common.schema.json#/$defs/task_id"
+        },
+        "successor": {
+          "$ref": "common.schema.json#/$defs/task_id"
+        }
+      },
+      "required": [
+        "predecessor",
+        "successor"
+      ],
+      "additionalProperties": false
+    },
+    "decomposition": {
+      "title": "Decomposition of one compound task into its ordered children",
+      "description": "A compound task and the tasks it decomposes into. One entry per compound task. `children` is ordered and the order is mandatory, but relative not contiguous: other tasks may be interleaved. `minItems: 2`, because a single-child parent states no ordering and adds no level.",
+      "type": "object",
+      "properties": {
+        "parent": {
+          "description": "The compound task being decomposed.",
+          "$ref": "common.schema.json#/$defs/task_id"
+        },
+        "children": {
+          "description": "The parent's children, in their mandatory relative execution order. A child may itself be a parent in another entry.",
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/task_id"
+          },
+          "minItems": 2,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "parent",
+        "children"
+      ],
+      "additionalProperties": false
+    },
+    "task_common": {
+      "title": "What every task carries, primitive and compound alike",
+      "description": "Identity and the element the task serves. What a task does is not here: a primitive task performs an action, carries the parameters it declares and the capability types it requires; a compound task decomposes into children.",
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "$ref": "common.schema.json#/$defs/task_id"
+        },
+        "kind": {
+          "description": "The discriminator: `primitive` requires `action`, `parameters` and `requires_capabilities`, `compound` forbids all three and appears as a `parent` in the decomposition.",
+          "type": "string",
+          "enum": [
+            "primitive",
+            "compound"
+          ]
+        },
+        "for_element": {
+          "description": "The pinned baseline element this task serves. A reference, never a copy: no property of a baseline element is carried onto a task node.",
+          "$ref": "common.schema.json#/$defs/element_id"
+        },
+        "quantities": {
+          "$ref": "common.schema.json#/$defs/quantities"
+        }
+      },
+      "required": [
+        "task_id",
+        "kind",
+        "for_element"
+      ]
+    },
+    "plan_task": {
+      "title": "A task as it appears in a PLAN VERSION",
+      "description": "The as-planned record. Attributed to exactly one plan version by the `plan_version` property, and carrying no `run_id`.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/task_common"
+        },
+        {
+          "$ref": "#/$defs/task_shape"
+        },
+        {
+          "description": "A primitive task carries the duration the plan allots it. A compound task carries none: its span follows from its children and how they are scheduled.",
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "primitive"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "planned_duration_seconds"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "planned_duration_seconds"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "object",
+      "properties": {
+        "plan_version": {
+          "description": "The one plan version this task belongs to. Required, and the sole attribution mechanism for a plan task.",
+          "$ref": "common.schema.json#/$defs/plan_version"
+        },
+        "planned_order": {
+          "description": "Where the plan places this task in its global execution order. Tasks the plan schedules concurrently share one value.",
+          "$ref": "#/$defs/execution_order"
+        },
+        "planned_duration_seconds": {
+          "description": "The duration the plan allots this task. Required on a primitive task and absent on a compound one.",
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "task_id",
+        "kind",
+        "for_element",
+        "plan_version",
+        "planned_order"
+      ],
+      "not": {
+        "description": "A plan task carries no run identity.",
+        "required": [
+          "run_id"
+        ]
+      },
+      "unevaluatedProperties": false
+    },
+    "run_task": {
+      "title": "A task as it appears in a RUN",
+      "description": "The as-executed or as-simulated record, attributed to exactly one run by `run_id` and carrying no `plan_version`. `task_id` is the same value the corresponding plan task carries. The primitive/compound split is the plan's; what a run adds is what happened: `actual_order`, `outcome`, and on a primitive task `actual_duration_seconds` and `robot_id`. Everything else is the plan's statement, repeated so a run's process side is readable on its own.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/task_common"
+        },
+        {
+          "$ref": "#/$defs/task_shape"
+        },
+        {
+          "description": "A robot performs a primitive task and a duration is measured for it, so it carries both. A compound task is not dispatched, so it carries neither. The two branches are exhaustive: `kind` admits no third value, and a primitive task missing either field is an incomplete record.",
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "compound"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "robot_id"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "actual_duration_seconds"
+                  ]
+                }
+              }
+            ]
+          },
+          "else": {
+            "required": [
+              "robot_id",
+              "actual_duration_seconds"
+            ]
+          }
+        }
+      ],
+      "type": "object",
+      "properties": {
+        "run_id": {
+          "description": "The one run this task belongs to. Required, and the sole attribution mechanism for a run task.",
+          "$ref": "common.schema.json#/$defs/run_id"
+        },
+        "actual_order": {
+          "description": "Where this task fell in the run's global execution order, derived from the run's event sequence. Concurrent tasks share one value. The as-executed counterpart of `planned_order`.",
+          "$ref": "#/$defs/execution_order"
+        },
+        "actual_duration_seconds": {
+          "description": "How long this task actually took, from task-started to task-finished or task-failed. Required on a primitive task and absent on a compound one, whose span is derived from its children.",
+          "type": "number",
+          "minimum": 0
+        },
+        "robot_id": {
+          "description": "The robot that performed this task, bound at dispatch and recorded on the task-started event. Required on a primitive task and absent on a compound one.",
+          "$ref": "common.schema.json#/$defs/robot_id"
+        },
+        "outcome": {
+          "description": "How this task ended. On a primitive task the run's events state it directly. On a compound task it summarises the subtree: `succeeded` when every child succeeded, `failed` when at least one failed, `not_reached` when the compound task was never entered. A failed compound task may have children that succeeded; those never entered are `not_reached`.",
+          "type": "string",
+          "enum": [
+            "succeeded",
+            "failed",
+            "not_reached"
+          ]
+        }
+      },
+      "required": [
+        "task_id",
+        "kind",
+        "for_element",
+        "run_id",
+        "actual_order",
+        "outcome"
+      ],
+      "not": {
+        "description": "A run task carries no plan identity. The plan it came from is recorded on the RUN, not on each task.",
+        "required": [
+          "plan_version"
+        ]
+      },
+      "unevaluatedProperties": false
+    },
+    "plan_node": {
+      "title": "One plan",
+      "description": "The as-planned process side, holding every plan the Planning Service submits.",
+      "type": "object",
+      "properties": {
+        "plan_version": {
+          "$ref": "common.schema.json#/$defs/plan_version"
+        },
+        "baseline_version": {
+          "description": "The pinned baseline this plan references. Never modified by the plan.",
+          "$ref": "common.schema.json#/$defs/baseline_version"
+        },
+        "origin": {
+          "$ref": "#/$defs/plan_origin"
+        },
+        "replaces": {
+          "description": "Required exactly when origin = replan, forbidden when origin = solve. The plan version this one supersedes.",
+          "$ref": "common.schema.json#/$defs/plan_version"
+        },
+        "for_task": {
+          "description": "The task from which the replanned version takes over. Required exactly when origin = replan.",
+          "$ref": "common.schema.json#/$defs/task_id"
+        },
+        "caused_by": {
+          "description": "The event that caused the replan. Required exactly when origin = replan.",
+          "type": "string",
+          "format": "uuid"
+        },
+        "provenance": {
+          "$ref": "common.schema.json#/$defs/provenance"
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/plan_task"
+          }
+        },
+        "precedence": {
+          "description": "Ordering constraints the hierarchy does not already imply. Between non-siblings only.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/precedence"
+          }
+        },
+        "decomposition": {
+          "description": "The plan's task hierarchy: one entry per compound task. Empty or absent where the plan is flat.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/decomposition"
+          }
+        }
+      },
+      "required": [
+        "plan_version",
+        "baseline_version",
+        "origin",
+        "provenance",
+        "tasks"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "description": "A replan carries all three provenance relations; a solve carries none.",
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "replan"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "required": [
+              "replaces",
+              "for_task",
+              "caused_by"
+            ]
+          },
+          "else": {
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "replaces"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "for_task"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "caused_by"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "run_node": {
+      "title": "One run",
+      "description": "A run's process side. `mode` distinguishes the as-simulated sibling from the as-executed one. `plan_versions` is a list in submission order because a tree-changed event may put a different plan version in force mid-run.",
+      "type": "object",
+      "properties": {
+        "run_id": {
+          "$ref": "common.schema.json#/$defs/run_id"
+        },
+        "mode": {
+          "$ref": "#/$defs/run_mode"
+        },
+        "bt_id": {
+          "description": "The Behavior Tree this run executes, recorded on the run-started event.",
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline_version": {
+          "$ref": "common.schema.json#/$defs/baseline_version"
+        },
+        "plan_versions": {
+          "description": "The plan versions in force over this run, in the order they took effect: the first from the run-started event, each later one from a tree-changed event.",
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/plan_version"
+          },
+          "minItems": 1
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finished_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "provenance": {
+          "$ref": "common.schema.json#/$defs/provenance"
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/run_task"
+          }
+        },
+        "decomposition": {
+          "description": "The run's task hierarchy, over the run's own task nodes. Present here as well as on the plan version, so a run records which compound task a primitive belonged to without reading the plan.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/decomposition"
+          }
+        },
+        "precedence": {
+          "description": "The ordering constraints in force over this run, over the run's own task nodes.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/precedence"
+          }
+        }
+      },
+      "required": [
+        "run_id",
+        "mode",
+        "bt_id",
+        "baseline_version",
+        "plan_versions",
+        "provenance",
+        "tasks"
+      ],
+      "additionalProperties": false
+    },
+    "plan_payload": {
+      "title": "query-representation, scope = plan",
+      "description": "The `plan` query scope: task structure with graph-derived task_ids, parameters, precedence relations, capability requirements, and the plan_version.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "baseline_version": {
+          "$ref": "common.schema.json#/$defs/baseline_version"
+        },
+        "plan": {
+          "$ref": "#/$defs/plan_node"
+        }
+      },
+      "required": [
+        "schema_version",
+        "baseline_version",
+        "plan"
+      ],
+      "additionalProperties": false
+    },
+    "execution_order": {
+      "title": "Position in the global execution order",
+      "description": "A task's position in the whole plan's or run's execution order. Not a unique key: concurrent tasks share one value, so this is a level rather than a total ordering. Distinct from decomposition order, which fixes the relative order of one parent's children.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "task_shape": {
+      "title": "The primitive/compound split",
+      "description": "A primitive task performs one action and carries the parameters that action declares, the capability types it requires, and the duration allotted to it. A compound task performs none of that: it decomposes into children, which the decomposition relation records.",
+      "oneOf": [
+        {
+          "title": "Primitive",
+          "properties": {
+            "kind": {
+              "const": "primitive"
+            },
+            "action": {
+              "description": "The action this task performs, by identifier from the action vocabulary. An identifier resolving to no definition is rejected.",
+              "$ref": "action.schema.json#/$defs/action_id"
+            },
+            "parameters": {
+              "description": "Values for the parameters the action declares, keyed by parameter name. Exactly the action's parameters. This schema constrains shape only; the match against the action's declaration is checked by `validate.py`.",
+              "type": "object",
+              "additionalProperties": true
+            },
+            "requires_capabilities": {
+              "description": "The capability types this task requires, by identifier from the capability vocabulary. Types only, no parameters, never a concrete robot. Derived, not authored: equal to the action's own `requires_capabilities`.",
+              "$ref": "capability.schema.json#/$defs/capabilities"
+            },
+            "compound_name": {
+              "not": {}
+            }
+          },
+          "required": [
+            "kind",
+            "action",
+            "parameters",
+            "requires_capabilities"
+          ]
+        },
+        {
+          "title": "Compound",
+          "properties": {
+            "kind": {
+              "const": "compound"
+            },
+            "compound_name": {
+              "description": "What this compound task is, by name from the action vocabulary. The same name appears under several parents and in several plans; `task_id` distinguishes the instances. The name resolves to a compound definition, which says what this task decomposes into.",
+              "$ref": "action.schema.json#/$defs/compound_id"
+            },
+            "action": {
+              "not": {}
+            },
+            "parameters": {
+              "not": {}
+            }
+          },
+          "required": [
+            "kind",
+            "compound_name"
+          ]
+        }
+      ]
+    }
+  }
+}

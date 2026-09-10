@@ -1,0 +1,13 @@
+{
+  "description": "The method vocabulary's content: the instances the `methods` query scope serves. Validates against `product.schema.json#/$defs/methods_payload`, which is the metaschema and holds no instances. One method is declared: `prefab`, which the action vocabulary's one compound serves. See representation.md section 8.",
+  "schema_version": "1.0.0",
+  "methods": [
+    {
+      "id": "prefab",
+      "description": "Prefabrication: elements are made off site, transported, and placed.",
+      "consists_of": [
+        "TransportComponent"
+      ]
+    }
+  ]
+}
