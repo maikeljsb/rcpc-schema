@@ -4,11 +4,11 @@
 
 ## Objective
 
-Give the repository one command that a person on another team can run on a clean clone and see green, and one command that turns whatever LinkML modules exist under `schema/` into the artifacts the contract promises: one JSON Schema per module in draft 2020-12 for the schema viewer, and generated documentation per module. Continuous integration runs the same commands on every push.
+Give the repository one command that a person on another team can run on a clean clone and see every test pass, and one command that turns whatever LinkML modules exist under `schema/` into the artifacts the contract promises: one JSON Schema per module in draft 2020-12 for the schema viewer, and generated documentation per module. Continuous integration runs the same commands on every push.
 
 **Users.** The author, who drops each domain module into this scaffolding. Other project teams, who run `uv run pytest` to confirm their documents validate and read `docs/model/` to learn the contract. The schema viewer, which loads `dist/*.schema.json`.
 
-**Success in one sentence.** A clean clone plus two commands produces a green test run and, from a fixture schema, a draft 2020-12 JSON Schema that passes its meta-schema and a folder of Markdown documentation, on Windows and on Linux CI alike.
+**Success in one sentence.** A clean clone plus two commands produces a passing test run and, from a fixture schema, a draft 2020-12 JSON Schema that passes its meta-schema and a folder of Markdown documentation, on Windows and on Linux CI alike.
 
 **What this module deliberately is not.** It contains no domain model. `schema/` is empty when this module is complete. It does not implement the tier 2 or tier 3 checks from the brief; those are the step 2 generator.
 
@@ -126,7 +126,7 @@ Conventions:
 
 ## Testing Strategy
 
-There is one thing under test in this module, the build script, and one thing to prove about the harness, that it runs green with no domain modules present. Everything runs with `uv run pytest`; there is no other test entry point.
+There is one thing under test in this module, the build script, and one thing to prove about the harness, that it passes with no domain modules present. Everything runs with `uv run pytest`; there is no other test entry point.
 
 | Test | Proves | How |
 |---|---|---|
@@ -143,7 +143,7 @@ The build tests operate on a temporary copy so they never touch the committed `d
 
 ## Boundaries
 
-**Always.** `uv run pytest` green before every commit. Conventional Commits 1.0.0. LF line endings. Rebuild and commit `dist/` and `docs/model/` in the same commit as any `schema/` change. Standard library plus PyYAML only in `scripts/`.
+**Always.** `uv run pytest` passes before every commit. Conventional Commits 1.0.0. LF line endings. Rebuild and commit `dist/` and `docs/model/` in the same commit as any `schema/` change. Standard library plus PyYAML only in `scripts/`.
 
 **Ask first.** Adding a dependency to `pyproject.toml`. Changing the CI workflow. Changing the Python version. Adding a flag or configuration to `build.py`. Adding a second script.
 
@@ -156,7 +156,7 @@ Checkable by anyone with git and uv:
 1. On a clean clone: `uv sync` then `uv run pytest` passes, on Windows and on `ubuntu-latest`.
 2. `uv run python scripts/build.py` with an empty `schema/` exits 0 and leaves `dist/` holding only a README saying no modules exist.
 3. With `tests/fixtures/minimal.yaml` copied into `schema/`, `build.py` produces `dist/minimal.schema.json` declaring draft 2020-12 that passes `Draft202012Validator.check_schema`, a `dist/README.md` listing it with its description, and `docs/model/minimal/index.md`. Then delete the copy and rebuild: the schema file and docs folder are gone and the README says no modules exist.
-4. The GitHub Actions workflow is green on the commit that completes this module.
+4. The GitHub Actions workflow passes on the commit that completes this module.
 5. `scripts/build.py` is under sixty lines and imports only the standard library and PyYAML.
 6. Nothing exists under `schema/` except `.gitkeep`.
 
