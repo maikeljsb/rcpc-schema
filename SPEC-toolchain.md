@@ -117,7 +117,7 @@ def json_schema(module: Path) -> None:
 
 Conventions:
 
-- **Standard library first.** The build script imports nothing outside the standard library; it shells out to the LinkML CLIs rather than importing their Python API, so a LinkML internal change cannot break the build silently.
+- **Standard library first.** The build script imports only the standard library plus PyYAML, which LinkML already depends on, to read each module's `description`; it shells out to the LinkML CLIs rather than importing their Python API, so a LinkML internal change cannot break the build silently.
 - **Paths are `pathlib`, relative to `ROOT`.** Never `os.getcwd()`, never string concatenation.
 - **Files are written with explicit `encoding="utf-8"` and `newline="\n"`.** The `.gitattributes` already pins LF; the code should not rely on it.
 - **Tests are plain functions with plain `assert`.** Parametrise over files with `pytest.mark.parametrize`. No test classes, no fixtures beyond the repo root path.
@@ -143,7 +143,7 @@ The build tests operate on a temporary copy so they never touch the committed `d
 
 ## Boundaries
 
-**Always.** `uv run pytest` green before every commit. Conventional Commits 1.0.0. LF line endings. Rebuild and commit `dist/` and `docs/model/` in the same commit as any `schema/` change. Standard library only in `scripts/`.
+**Always.** `uv run pytest` green before every commit. Conventional Commits 1.0.0. LF line endings. Rebuild and commit `dist/` and `docs/model/` in the same commit as any `schema/` change. Standard library plus PyYAML only in `scripts/`.
 
 **Ask first.** Adding a dependency to `pyproject.toml`. Changing the CI workflow. Changing the Python version. Adding a flag or configuration to `build.py`. Adding a second script.
 
@@ -157,7 +157,7 @@ Checkable by anyone with git and uv:
 2. `uv run python scripts/build.py` with an empty `schema/` exits 0 and leaves `dist/` holding only a README saying no modules exist.
 3. With `tests/fixtures/minimal.yaml` copied into `schema/`, `build.py` produces `dist/minimal.schema.json` declaring draft 2020-12 that passes `Draft202012Validator.check_schema`, a `dist/README.md` listing it with its description, and `docs/model/minimal/index.md`. Then delete the copy and rebuild: the schema file and docs folder are gone and the README says no modules exist.
 4. The GitHub Actions workflow is green on the commit that completes this module.
-5. `scripts/build.py` is under sixty lines and imports only the standard library.
+5. `scripts/build.py` is under sixty lines and imports only the standard library and PyYAML.
 6. Nothing exists under `schema/` except `.gitkeep`.
 
 ## Open Questions
