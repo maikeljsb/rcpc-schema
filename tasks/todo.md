@@ -7,14 +7,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-common.md`. Each task is one Conventional Com
 **Description:** Write `schema/common.yaml` with its header, the shared slots `id`, `label`, `description`, and the `CapabilityType` class; migrate the ten reference capability types into `examples/common/capability_types.yaml` with "element" replaced by "component"; add one invalid example missing its `id`; add the two rows to `EXAMPLES`; run the build; commit YAML, examples, test rows, and generated outputs together.
 
 **Acceptance criteria:**
-- [ ] `uv run linkml-lint schema/common.yaml` reports no problems
-- [ ] `examples/common/capability_types.yaml` validates against `CapabilityType`, holds exactly ten entries with `id`, `label`, `description`, and contains no occurrence of the word "element"; `examples/common/invalid/capability_type_missing_id.yaml` fails naming `id`
-- [ ] After `uv run python scripts/build.py`: `dist/common.schema.json`, `docs/model/common/index.md` exist and `dist/README.md` lists common with its description
+- [x] `uv run linkml-lint schema/common.yaml` reports no problems
+- [x] `examples/common/capability_types.yaml` validates against `CapabilityType`, holds exactly ten entries with `id`, `label`, `description`, and contains no occurrence of the word "element"; `examples/common/invalid/capability_type_missing_id.yaml` fails naming `id`
+- [x] After `uv run python scripts/build.py`: `dist/common.schema.json`, `docs/model/common/index.md` exist and `dist/README.md` lists common with its description
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest` with `test_lint.py` and `test_dist.py` no longer skipped
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
-- [ ] Manual check: `docs/model/common/CapabilityType.md` reads correctly on disk
+- [x] Tests pass: `uv run pytest` with `test_lint.py` and `test_dist.py` no longer skipped (13 passed, 0 skipped)
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
+- [x] Manual check: `docs/model/common/CapabilityType.md` reads correctly on disk; three slots, cardinality 1 each
 
 **Dependencies:** None
 
@@ -28,7 +28,7 @@ Plan: `tasks/plan.md`. Spec: `SPEC-common.md`. Each task is one Conventional Com
 **Estimated scope:** Medium
 
 ## Checkpoint: Phase 1
-- [ ] `uv run pytest` passes with common's lint, two example rows, drift, and meta-schema tests all collected
+- [x] `uv run pytest` passes with common's lint, two example rows, drift, and meta-schema tests all collected
 - [ ] Review with human before Task 2
 
 ## Task 2: Value types, `MaterialName`, and `ParameterKind`

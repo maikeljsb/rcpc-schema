@@ -35,10 +35,10 @@ Slice 1 comes first because it is the only path that exercises every toolchain h
 ## Task List
 
 ### Phase 1: The document class, end to end
-- [ ] Task 1: `CapabilityType` through the whole pipeline
+- [x] Task 1: `CapabilityType` through the whole pipeline
 
 ### Checkpoint: Phase 1
-- [ ] `uv run pytest` passes with lint, example, drift, and meta-schema tests collected for common
+- [x] `uv run pytest` passes with lint, example, drift, and meta-schema tests collected for common
 - [ ] Review with human
 
 ### Phase 2: Value types and enum
