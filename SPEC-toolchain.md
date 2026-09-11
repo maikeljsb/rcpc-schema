@@ -18,7 +18,7 @@ Give the repository one command that a person on another team can run on a clean
 |---|---|---|
 | Python | 3.12, via `.python-version` | uv installs it if absent |
 | Environment, lockfile, runner | uv | `pyproject.toml` + `uv.lock`; every command is `uv run …` |
-| Schema toolkit | `linkml` (latest 1.9.x at lock time) | provides `linkml-lint`, `linkml-validate`, `gen-json-schema`, `gen-doc` |
+| Schema toolkit | `linkml` (latest 1.x at lock time; 1.11.1 on 2026-09-11) | provides `linkml-lint`, `linkml-validate`, `gen-json-schema`, `gen-doc` |
 | Tests | `pytest` | |
 | JSON Schema meta-check | `jsonschema` | `Draft202012Validator.check_schema` |
 | CI | GitHub Actions | one workflow, one job, `ubuntu-latest` |

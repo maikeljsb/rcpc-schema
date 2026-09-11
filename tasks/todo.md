@@ -7,13 +7,13 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Description:** Create the Python project so that `uv sync` on a clean clone produces an environment with LinkML, pytest, jsonschema, and PyYAML, and `uv run pytest` runs. No tests exist yet beyond a conftest fixture, so pytest's "no tests collected" exit is acceptable for this task only.
 
 **Acceptance criteria:**
-- [ ] `.python-version` says `3.12`; `pyproject.toml` declares `requires-python = ">=3.12"`, dependencies `linkml`, `pytest`, `jsonschema`, `pyyaml`, and `[tool.pytest.ini_options] testpaths = ["tests"]`
-- [ ] `uv.lock` is committed and `uv sync` completes from a clean checkout
-- [ ] `uv run linkml-lint --help`, `uv run gen-json-schema --help`, `uv run gen-doc --help`, `uv run linkml-validate --help` all exit 0
+- [x] `.python-version` says `3.12`; `pyproject.toml` declares `requires-python = ">=3.12"`, dependencies `linkml`, `pytest`, `jsonschema`, `pyyaml`, and `[tool.pytest.ini_options] testpaths = ["tests"]`
+- [x] `uv.lock` is committed and `uv sync` completes from a clean checkout
+- [x] `uv run linkml-lint --help`, `uv run gen-json-schema --help`, `uv run gen-doc --help`, `uv run linkml-validate --help` all exit 0
 
 **Verification:**
-- [ ] `uv sync && uv run python -c "import linkml, jsonschema, yaml, pytest"` exits 0
-- [ ] Manual check: `uv.lock` pins one `linkml` version in the 1.9 series
+- [x] `uv sync && uv run python -c "import linkml, jsonschema, yaml, pytest"` exits 0
+- [x] Manual check: `uv.lock` pins one `linkml` version, 1.11.1 (the spec's "1.9.x" was an assumption about the current release, corrected to "latest 1.x")
 
 **Dependencies:** None
 

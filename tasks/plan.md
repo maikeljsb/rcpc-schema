@@ -38,7 +38,7 @@ Order is bottom-up along the graph. Task 2 sits before the build script on purpo
 ## Task List
 
 ### Phase 1: Project boots and validates
-- [ ] Task 1: Bootstrap the uv project
+- [x] Task 1: Bootstrap the uv project
 - [ ] Task 2: Fixture schema, fixture instances, and the example validation test
 
 ### Checkpoint: Phase 1
