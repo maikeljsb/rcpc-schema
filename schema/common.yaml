@@ -12,7 +12,48 @@ default_range: string
 imports:
   - linkml:types
 
+types:
+  MaterialName:
+    typeof: string
+    description: An IFC material name, exactly as it appears in the model.
+
+enums:
+  ParameterKind:
+    description: The kinds of value a task parameter can hold.
+    permissible_values:
+      position:
+        description: A Position.
+      component_reference:
+        description: A reference to a BuildingComponent, by id.
+      quantity:
+        description: A Quantity.
+
 classes:
+  Position:
+    description: A point in the IFC project coordinate frame, in metres.
+    slots:
+      - x_coord
+      - y_coord
+      - z_coord
+    slot_usage:
+      x_coord:
+        required: true
+      y_coord:
+        required: true
+      z_coord:
+        required: true
+
+  Quantity:
+    description: A number with a unit.
+    slots:
+      - value
+      - unit
+    slot_usage:
+      value:
+        required: true
+      unit:
+        required: true
+
   CapabilityType:
     description: >-
       Something a robot can do, named by a verb. Required by primitive tasks and
@@ -30,3 +71,17 @@ slots:
     description: Identifier, unique among instances of its class.
   description:
     description: What this is, in one or two plain sentences.
+  x_coord:
+    range: float
+    description: Easting, in metres.
+  y_coord:
+    range: float
+    description: Northing, in metres.
+  z_coord:
+    range: float
+    description: Height, in metres.
+  value:
+    range: float
+    description: The numeric value.
+  unit:
+    description: The unit of the value. UCUM case-sensitive codes are recommended.

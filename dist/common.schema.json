@@ -19,6 +19,61 @@
       ],
       "title": "CapabilityType",
       "type": "object"
+    },
+    "ParameterKind": {
+      "description": "The kinds of value a task parameter can hold.",
+      "enum": [
+        "position",
+        "component_reference",
+        "quantity"
+      ],
+      "title": "ParameterKind",
+      "type": "string"
+    },
+    "Position": {
+      "additionalProperties": false,
+      "description": "A point in the IFC project coordinate frame, in metres.",
+      "properties": {
+        "x_coord": {
+          "description": "Easting, in metres.",
+          "type": "number"
+        },
+        "y_coord": {
+          "description": "Northing, in metres.",
+          "type": "number"
+        },
+        "z_coord": {
+          "description": "Height, in metres.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x_coord",
+        "y_coord",
+        "z_coord"
+      ],
+      "title": "Position",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "description": "A number with a unit.",
+      "properties": {
+        "unit": {
+          "description": "The unit of the value. UCUM case-sensitive codes are recommended.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The numeric value.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
     }
   },
   "$id": "https://rcpc.for5672/schema/common",
