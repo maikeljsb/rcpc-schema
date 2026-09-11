@@ -13,7 +13,7 @@ Name: common
 | Class | Description |
 | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |
-| [Position](Position.md) | A point in the IFC project coordinate frame, in metres |
+| [Position](Position.md) | A cartesian point in the IFC project coordinate frame |
 | [Quantity](Quantity.md) | A number with a unit |
 
 
@@ -26,9 +26,9 @@ Name: common
 | [id](id.md) | Identifier, unique among instances of its class |
 | [unit](unit.md) | The unit of the value |
 | [value](value.md) | The numeric value |
-| [x_coord](x_coord.md) | Easting, in metres |
-| [y_coord](y_coord.md) | Northing, in metres |
-| [z_coord](z_coord.md) | Height, in metres |
+| [x_coord](x_coord.md) | Cartesian x coordinate |
+| [y_coord](y_coord.md) | Cartesian y coordinate |
+| [z_coord](z_coord.md) | Cartesian z coordinate |
 
 
 ## Enumerations

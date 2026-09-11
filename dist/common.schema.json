@@ -32,18 +32,18 @@
     },
     "Position": {
       "additionalProperties": false,
-      "description": "A point in the IFC project coordinate frame, in metres.",
+      "description": "A cartesian point in the IFC project coordinate frame.",
       "properties": {
         "x_coord": {
-          "description": "Easting, in metres.",
+          "description": "Cartesian x coordinate.",
           "type": "number"
         },
         "y_coord": {
-          "description": "Northing, in metres.",
+          "description": "Cartesian y coordinate.",
           "type": "number"
         },
         "z_coord": {
-          "description": "Height, in metres.",
+          "description": "Cartesian z coordinate.",
           "type": "number"
         }
       },
@@ -60,7 +60,7 @@
       "description": "A number with a unit.",
       "properties": {
         "unit": {
-          "description": "The unit of the value. UCUM case-sensitive codes are recommended.",
+          "description": "The unit of the value.",
           "type": "string"
         },
         "value": {

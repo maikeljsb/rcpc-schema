@@ -6,7 +6,7 @@ search:
 # Slot: unit 
 
 
-_The unit of the value. UCUM case-sensitive codes are recommended._
+_The unit of the value._
 
 
 
@@ -84,7 +84,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 <details>
 ```yaml
 name: unit
-description: The unit of the value. UCUM case-sensitive codes are recommended.
+description: The unit of the value.
 from_schema: https://rcpc.for5672/schema/common
 rank: 1000
 domain_of:

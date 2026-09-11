@@ -153,7 +153,7 @@ attributes:
     required: true
   unit:
     name: unit
-    description: The unit of the value. UCUM case-sensitive codes are recommended.
+    description: The unit of the value.
     from_schema: https://rcpc.for5672/schema/common
     rank: 1000
     owner: Quantity

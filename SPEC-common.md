@@ -73,8 +73,8 @@ imports:
 
 | Class | Slots | Notes |
 |---|---|---|
-| `Position` | `x_coord`, `y_coord`, `z_coord`, all `float`, all required | A point in the IFC project frame, metres. The one frame the model uses. Always inlined by its owner; never a document on its own. |
-| `Quantity` | `value` `float` required; `unit` string required | A number with a unit. UCUM case-sensitive codes recommended in the description, not enforced. Always inlined. |
+| `Position` | `x_coord`, `y_coord`, `z_coord`, all `float`, all required | A Cartesian point in the IFC project coordinate frame. Units are the model's project units and are not stated in the schema. The one frame the model uses. Always inlined by its owner; never a document on its own. |
+| `Quantity` | `value` `float` required; `unit` string required | A number with a unit. UCUM case-sensitive codes are the recommended convention; not enforced and not stated in the schema. Always inlined. |
 | `CapabilityType` | `id` identifier; `description` required | Something a robot can do, named by a bare verb. The id is the name; no separate label. Matching is by id, no levels or qualifiers. The only document class in this module. |
 
 ### Type

@@ -6,7 +6,7 @@ search:
 # Slot: x_coord 
 
 
-_Easting, in metres._
+_Cartesian x coordinate._
 
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:x_coord](https://rcpc.for5672/schema/x_coord)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Position](Position.md) | A point in the IFC project coordinate frame, in metres |  yes  |
+| [Position](Position.md) | A cartesian point in the IFC project coordinate frame |  yes  |
 
 
 
@@ -84,7 +84,7 @@ URI: [rcpc:x_coord](https://rcpc.for5672/schema/x_coord)
 <details>
 ```yaml
 name: x_coord
-description: Easting, in metres.
+description: Cartesian x coordinate.
 from_schema: https://rcpc.for5672/schema/common
 rank: 1000
 domain_of:

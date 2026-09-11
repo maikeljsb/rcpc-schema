@@ -30,7 +30,7 @@ enums:
 
 classes:
   Position:
-    description: A point in the IFC project coordinate frame, in metres.
+    description: A cartesian point in the IFC project coordinate frame.
     slots:
       - x_coord
       - y_coord
@@ -73,15 +73,15 @@ slots:
     description: What this is, in one or two plain sentences.
   x_coord:
     range: float
-    description: Easting, in metres.
+    description: Cartesian x coordinate.
   y_coord:
     range: float
-    description: Northing, in metres.
+    description: Cartesian y coordinate.
   z_coord:
     range: float
-    description: Height, in metres.
+    description: Cartesian z coordinate.
   value:
     range: float
     description: The numeric value.
   unit:
-    description: The unit of the value. UCUM case-sensitive codes are recommended.
+    description: The unit of the value.

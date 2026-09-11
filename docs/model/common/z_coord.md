@@ -6,7 +6,7 @@ search:
 # Slot: z_coord 
 
 
-_Height, in metres._
+_Cartesian z coordinate._
 
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:z_coord](https://rcpc.for5672/schema/z_coord)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Position](Position.md) | A point in the IFC project coordinate frame, in metres |  yes  |
+| [Position](Position.md) | A cartesian point in the IFC project coordinate frame |  yes  |
 
 
 
@@ -84,7 +84,7 @@ URI: [rcpc:z_coord](https://rcpc.for5672/schema/z_coord)
 <details>
 ```yaml
 name: z_coord
-description: Height, in metres.
+description: Cartesian z coordinate.
 from_schema: https://rcpc.for5672/schema/common
 rank: 1000
 domain_of:

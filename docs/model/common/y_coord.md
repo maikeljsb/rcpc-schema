@@ -6,7 +6,7 @@ search:
 # Slot: y_coord 
 
 
-_Northing, in metres._
+_Cartesian y coordinate._
 
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:y_coord](https://rcpc.for5672/schema/y_coord)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Position](Position.md) | A point in the IFC project coordinate frame, in metres |  yes  |
+| [Position](Position.md) | A cartesian point in the IFC project coordinate frame |  yes  |
 
 
 
@@ -84,7 +84,7 @@ URI: [rcpc:y_coord](https://rcpc.for5672/schema/y_coord)
 <details>
 ```yaml
 name: y_coord
-description: Northing, in metres.
+description: Cartesian y coordinate.
 from_schema: https://rcpc.for5672/schema/common
 rank: 1000
 domain_of:
