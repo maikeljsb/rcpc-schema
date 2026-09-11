@@ -12,7 +12,7 @@ Name: common
 
 | Class | Description |
 | --- | --- |
-| [CapabilityType](CapabilityType.md) | A named capability that a PrimitiveTask requires and a RobotType offers |
+| [CapabilityType](CapabilityType.md) | Something a robot can do, named by a bare verb, that a PrimitiveTask requires... |
 
 
 
@@ -21,8 +21,8 @@ Name: common
 | Slot | Description |
 | --- | --- |
 | [description](description.md) | What this is, for a human reader |
-| [id](id.md) | Unique identifier within the document set |
-| [label](label.md) | Short human-readable name |
+| [id](id.md) | Identifier, unique among instances of its class |
+| [label](label.md) | Display name, for classes whose id is not readable on its own |
 
 
 ## Enumerations

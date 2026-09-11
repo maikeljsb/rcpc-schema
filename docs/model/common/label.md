@@ -6,7 +6,7 @@ search:
 # Slot: label 
 
 
-_Short human-readable name._
+_Display name, for classes whose id is not readable on its own. Not used where the id already is the name._
 
 
 
@@ -21,15 +21,6 @@ URI: [rcpc:label](https://rcpc.for5672/schema/label)
 
 
 
-## Applicable Classes
-
-| Name | Description | Modifies Slot |
-| --- | --- | --- |
-| [CapabilityType](CapabilityType.md) | A named capability that a PrimitiveTask requires and a RobotType offers |  yes  |
-
-
-
-
 
 
 ## Properties
@@ -39,7 +30,6 @@ URI: [rcpc:label](https://rcpc.for5672/schema/label)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md) |
 
 ### Cardinality and Requirements
 
@@ -84,11 +74,10 @@ URI: [rcpc:label](https://rcpc.for5672/schema/label)
 <details>
 ```yaml
 name: label
-description: Short human-readable name.
+description: Display name, for classes whose id is not readable on its own. Not used
+  where the id already is the name.
 from_schema: https://rcpc.for5672/schema/common
 rank: 1000
-domain_of:
-- CapabilityType
 range: string
 
 ```

@@ -17,24 +17,26 @@ imports:
 classes:
   CapabilityType:
     description: >-
-      A named capability that a PrimitiveTask requires and a RobotType offers.
-      Matching is by identifier; there are no levels or qualifiers. Type-level
-      allocation asks whether a robot type offers every capability a task requires.
+      Something a robot can do, named by a bare verb, that a PrimitiveTask requires
+      and a RobotType offers. The id is the name; matching is by id and there are no
+      levels or qualifiers. Type-level allocation asks whether a robot type offers
+      every capability a task requires.
     slots:
       - id
-      - label
       - description
     slot_usage:
-      label:
-        required: true
       description:
         required: true
 
 slots:
   id:
     identifier: true
-    description: Unique identifier within the document set.
+    description: >-
+      Identifier, unique among instances of its class. The class is always known from
+      the slot that references it, so the id carries no namespace.
   label:
-    description: Short human-readable name.
+    description: >-
+      Display name, for classes whose id is not readable on its own. Not used where the
+      id already is the name.
   description:
     description: What this is, for a human reader.

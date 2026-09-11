@@ -6,7 +6,7 @@ search:
 # Class: CapabilityType 
 
 
-_A named capability that a PrimitiveTask requires and a RobotType offers. Matching is by identifier; there are no levels or qualifiers. Type-level allocation asks whether a robot type offers every capability a task requires._
+_Something a robot can do, named by a bare verb, that a PrimitiveTask requires and a RobotType offers. The id is the name; matching is by id and there are no levels or qualifiers. Type-level allocation asks whether a robot type offers every capability a task requires._
 
 
 
@@ -46,17 +46,6 @@ URI: [rcpc:CapabilityType](https://rcpc.for5672/schema/CapabilityType)
     
 
         
-      CapabilityType : label
-        
-          
-    
-        
-        
-        CapabilityType --> "1" String : label
-        click String href "../http://www.w3.org/2001/XMLSchema#string/"
-    
-
-        
       
 ```
 
@@ -69,8 +58,7 @@ URI: [rcpc:CapabilityType](https://rcpc.for5672/schema/CapabilityType)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Unique identifier within the document set | direct |
-| [label](label.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Short human-readable name | direct |
+| [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Identifier, unique among instances of its class | direct |
 | [description](description.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What this is, for a human reader | direct |
 
 
@@ -122,18 +110,15 @@ URI: [rcpc:CapabilityType](https://rcpc.for5672/schema/CapabilityType)
 <details>
 ```yaml
 name: CapabilityType
-description: A named capability that a PrimitiveTask requires and a RobotType offers.
-  Matching is by identifier; there are no levels or qualifiers. Type-level allocation
-  asks whether a robot type offers every capability a task requires.
+description: Something a robot can do, named by a bare verb, that a PrimitiveTask
+  requires and a RobotType offers. The id is the name; matching is by id and there
+  are no levels or qualifiers. Type-level allocation asks whether a robot type offers
+  every capability a task requires.
 from_schema: https://rcpc.for5672/schema/common
 slots:
 - id
-- label
 - description
 slot_usage:
-  label:
-    name: label
-    required: true
   description:
     name: description
     required: true
@@ -146,34 +131,23 @@ slot_usage:
 <details>
 ```yaml
 name: CapabilityType
-description: A named capability that a PrimitiveTask requires and a RobotType offers.
-  Matching is by identifier; there are no levels or qualifiers. Type-level allocation
-  asks whether a robot type offers every capability a task requires.
+description: Something a robot can do, named by a bare verb, that a PrimitiveTask
+  requires and a RobotType offers. The id is the name; matching is by id and there
+  are no levels or qualifiers. Type-level allocation asks whether a robot type offers
+  every capability a task requires.
 from_schema: https://rcpc.for5672/schema/common
 slot_usage:
-  label:
-    name: label
-    required: true
   description:
     name: description
     required: true
 attributes:
   id:
     name: id
-    description: Unique identifier within the document set.
+    description: Identifier, unique among instances of its class. The class is always
+      known from the slot that references it, so the id carries no namespace.
     from_schema: https://rcpc.for5672/schema/common
     rank: 1000
     identifier: true
-    owner: CapabilityType
-    domain_of:
-    - CapabilityType
-    range: string
-    required: true
-  label:
-    name: label
-    description: Short human-readable name.
-    from_schema: https://rcpc.for5672/schema/common
-    rank: 1000
     owner: CapabilityType
     domain_of:
     - CapabilityType

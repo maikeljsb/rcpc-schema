@@ -25,7 +25,7 @@ URI: [rcpc:description](https://rcpc.for5672/schema/description)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CapabilityType](CapabilityType.md) | A named capability that a PrimitiveTask requires and a RobotType offers |  yes  |
+| [CapabilityType](CapabilityType.md) | Something a robot can do, named by a bare verb, that a PrimitiveTask requires... |  yes  |
 
 
 

@@ -1,16 +1,12 @@
 - id: locomote
-  label: Locomote
   description: >-
     Move the robot itself, or a held payload, from one pose to another. Required by every task that repositions something.
 - id: grip
-  label: Grip
   description: >-
     Grasp and release a discrete component, the attach/detach pair. Required by tasks that take custody of a component.
 - id: lift
-  label: Lift
   description: >-
     Bear and raise a component's weight. Distinct from `grip`: holding is not lifting, and a robot may offer one without the other.
 - id: align
-  label: Align
   description: >-
     Position a component to a stated tolerance. Required by tasks whose success is defined by a tolerance rather than by arrival.

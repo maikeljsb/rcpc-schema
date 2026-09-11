@@ -75,7 +75,7 @@ imports:
 |---|---|---|
 | `Position` | `x`, `y`, `z`, all `float`, all required | A point in the IFC project frame, metres. The one frame the model uses. Always inlined by its owner; never a document on its own. |
 | `Quantity` | `value` `float` required; `unit` string required | A number with a unit. UCUM case-sensitive codes recommended in the description, not enforced. Always inlined. |
-| `CapabilityType` | `id` identifier; `label` required; `description` required | A named capability. Matching is by identifier, no levels or qualifiers. The only document class in this module. |
+| `CapabilityType` | `id` identifier; `description` required | Something a robot can do, named by a bare verb. The id is the name; no separate label. Matching is by id, no levels or qualifiers. The only document class in this module. |
 
 ### Type
 
@@ -91,7 +91,7 @@ imports:
 
 ### Shared slots
 
-`id` (`identifier: true`), `label`, `description`, `x`, `y`, `z`, `value`, `unit`. Defined here once with descriptions; domain modules reuse `id`, `label`, and `description` and never redeclare them.
+`id` (`identifier: true`), `label`, `description`, `x`, `y`, `z`, `value`, `unit`. Defined here once with descriptions; domain modules reuse `id`, `label`, and `description` and never redeclare them. `id` is unique among instances of its class, not across the document set: every reference slot declares its range, so the class is always known and the id carries no namespace. `label` is for classes whose id is not readable on its own, such as a robot type; classes whose id is the name, such as CapabilityType, do not use it.
 
 ### Foreseen additions
 
@@ -115,16 +115,14 @@ The module follows the conventions in `SPEC-toolchain.md` and the snippet in the
 classes:
   CapabilityType:
     description: >-
-      A named capability that a PrimitiveTask requires and a RobotType offers.
-      Matching is by identifier; there are no levels or qualifiers. Type-level
-      allocation asks whether a robot type offers every capability a task requires.
+      Something a robot can do, named by a bare verb, that a PrimitiveTask requires
+      and a RobotType offers. The id is the name; matching is by id and there are no
+      levels or qualifiers. Type-level allocation asks whether a robot type offers
+      every capability a task requires.
     slots:
       - id
-      - label
       - description
     slot_usage:
-      label:
-        required: true
       description:
         required: true
 ```
@@ -134,7 +132,7 @@ Conventions specific to this module:
 - **Value objects state that they are inlined** in their description, so a reader of `docs/model/common/Position.md` knows it is never a document on its own. The `inlined: true` itself is set by the owning slot in the consuming module, because inlining is a property of the slot in LinkML.
 - **Descriptions state the decision, not the history.** "Matching is by identifier; there are no levels" rather than the reasoning that led there.
 - **Capability descriptions are migrated from the reference, with "element" replaced by "component"** and nothing else changed unless a sentence no longer makes sense. The vocabulary is a starting point, open to revision; capabilities are added when a method needs them.
-- **Capability ids are bare verbs**, `locomote`, `grip`, `lift`, `align`, and every future capability follows: a capability is something a robot can *do*. Labels are the capitalised verb; descriptions open with the verb.
+- **Capability ids are bare verbs**, `locomote`, `grip`, `lift`, `align`, and every future capability follows: a capability is something a robot can *do*. The id is the name, so there is no label; descriptions open with the verb.
 - **No `tree_root`.** See Decisions Made Here.
 
 ## Testing Strategy
@@ -163,8 +161,8 @@ No new test files. This module lights up the tests the toolchain left waiting an
 1. `uv run pytest` passes with `test_lint.py` and `test_dist.py` no longer skipped: 1 lint test, 1 meta-schema test, and 2 new example rows collected and passing.
 2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `CapabilityType`, and `ParameterKind`. `MaterialName` does not appear: LinkML inlines types onto the slots that use them by default, so a `MaterialName` slot renders as a plain string, which is the preferred rendering for the viewer. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
 3. `dist/README.md` lists `common.schema.json` with the module description.
-4. `docs/model/common/index.md` lists three classes, eight slots, one enum, and one type, `MaterialName`. Every page has a description.
-5. `examples/common/capability_types.yaml` contains the four core capability types, `locomote`, `grip`, `lift`, `align`, with `id`, `label`, `description`; every id is a bare verb and the word "element" appears in none of them.
+4. `docs/model/common/index.md` lists three classes, eight slots (`label` among them, defined for later modules), one enum, and one type, `MaterialName`. Every page has a description.
+5. `examples/common/capability_types.yaml` contains the four core capability types, `locomote`, `grip`, `lift`, `align`, with `id` and `description` only; every id is a bare verb and the word "element" appears in none of them.
 6. Another team's check: given only `docs/model/common/`, a person adds an eleventh capability type to the example file and `uv run pytest` still passes. Recorded as done when it has happened once; not blocking.
 7. The toolchain was not changed. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module.
 
@@ -174,10 +172,11 @@ No new test files. This module lights up the tests the toolchain left waiting an
 2. **Quantity drops `provenance`.** Deferred to Plan and Run with the rest of provenance.
 3. **`unit` is a free string, UCUM recommended.** Enforcing a unit vocabulary is a later decision that the graph would inherit; nothing in step 1 needs it.
 4. **The four core capabilities migrate; the other six reference entries do not.** Revised 2026-09-11: the vocabulary is open for improvement, so the example holds only what the reference primitives require and the brief's allocation example names. Others return one at a time when a method needs them.
-5. **`label` and `description` required on CapabilityType.**
+5. **`description` required on CapabilityType; no `label`.** Revised 2026-09-11: the id is the verb and a label would repeat it. `label` stays a shared slot for classes such as RobotType whose id is not a readable name.
 6. **Capability ids are bare verbs.** Decided 2026-09-11: the reference's noun ids (`locomotion`, `gripper`, `lifting`, `alignment`) become `locomote`, `grip`, `lift`, `align`, because a capability names something a robot can do. Bare verbs over gerunds for brevity and because `requires: [lift, align]` reads naturally.
-7. **`MaterialName` as a shared string type.** Product's `material` and process's `applies_to` are joined by exact match; one declared type makes that visible and keeps the two modules independent of each other.
-8. **No `tree_root` anywhere, and no container classes.** LinkML recommends a `tree_root` container for serialisation, and that is right for a single self-contained schema. Here modules merge on import, and a probe on 2026-09-11 showed the consequence: with a container in common and another in product, product's generated schema took common's root and rejected a product document as having unexpected properties. So documents are top-level lists, validation always names the class with `-C`, and the `dist/` files are definition libraries with no root properties. Container classes without `tree_root` were considered and declined to avoid a wrapper class per module and an extra projection rule.
+7. **`id` is unique among instances of its class, with no namespace prefix.** Decided 2026-09-11. In the graph the node label is the namespace, and in documents every reference slot declares its range, so the class is always known. Namespaced ids such as `capability.lift` would state the class twice; opaque ids would make the hand-authored catalogue unreadable. The projection's one uniqueness constraint per label enforces exactly this promise.
+8. **`MaterialName` as a shared string type.** Product's `material` and process's `applies_to` are joined by exact match; one declared type makes that visible and keeps the two modules independent of each other.
+9. **No `tree_root` anywhere, and no container classes.** LinkML recommends a `tree_root` container for serialisation, and that is right for a single self-contained schema. Here modules merge on import, and a probe on 2026-09-11 showed the consequence: with a container in common and another in product, product's generated schema took common's root and rejected a product document as having unexpected properties. So documents are top-level lists, validation always names the class with `-C`, and the `dist/` files are definition libraries with no root properties. Container classes without `tree_root` were considered and declined to avoid a wrapper class per module and an extra projection rule.
 
 ## Open Questions
 

@@ -8,7 +8,7 @@ Plan: `tasks/plan.md`. Spec: `SPEC-common.md`. Each task is one Conventional Com
 
 **Acceptance criteria:**
 - [x] `uv run linkml-lint schema/common.yaml` reports no problems
-- [x] `examples/common/capability_types.yaml` validates against `CapabilityType`, holds exactly four entries (locomote, grip, lift, align; reduced from ten and renamed to bare verbs on 2026-09-11, vocabulary open for improvement) with `id`, `label`, `description`, and contains no occurrence of the word "element"; `examples/common/invalid/capability_type_missing_id.yaml` fails naming `id`
+- [x] `examples/common/capability_types.yaml` validates against `CapabilityType`, holds exactly four entries (locomote, grip, lift, align; reduced from ten and renamed to bare verbs on 2026-09-11, vocabulary open for improvement) with `id` and `description` (label dropped 2026-09-11: the id is the name), and contains no occurrence of the word "element"; `examples/common/invalid/capability_type_missing_id.yaml` fails naming `id`
 - [x] After `uv run python scripts/build.py`: `dist/common.schema.json`, `docs/model/common/index.md` exist and `dist/README.md` lists common with its description
 
 **Verification:**

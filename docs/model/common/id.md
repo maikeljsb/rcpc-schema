@@ -6,7 +6,7 @@ search:
 # Slot: id 
 
 
-_Unique identifier within the document set._
+_Identifier, unique among instances of its class. The class is always known from the slot that references it, so the id carries no namespace._
 
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CapabilityType](CapabilityType.md) | A named capability that a PrimitiveTask requires and a RobotType offers |  no  |
+| [CapabilityType](CapabilityType.md) | Something a robot can do, named by a bare verb, that a PrimitiveTask requires... |  no  |
 
 
 
@@ -92,7 +92,8 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 <details>
 ```yaml
 name: id
-description: Unique identifier within the document set.
+description: Identifier, unique among instances of its class. The class is always
+  known from the slot that references it, so the id carries no namespace.
 from_schema: https://rcpc.for5672/schema/common
 rank: 1000
 identifier: true
