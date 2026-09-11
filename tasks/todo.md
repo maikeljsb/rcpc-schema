@@ -1,156 +1,80 @@
-# Tasks: toolchain
+# Tasks: common
 
-Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional Commit.
+Plan: `tasks/plan.md`. Spec: `SPEC-common.md`. Each task is one Conventional Commit, with rebuilt `dist/` and `docs/model/` in the same commit as any schema change.
 
-## Task 1: Bootstrap the uv project
+## Task 1: `CapabilityType` through the whole pipeline
 
-**Description:** Create the Python project so that `uv sync` on a clean clone produces an environment with LinkML, pytest, jsonschema, and PyYAML, and `uv run pytest` runs. No tests exist yet beyond a conftest fixture, so pytest's "no tests collected" exit is acceptable for this task only.
+**Description:** Write `schema/common.yaml` with its header, the shared slots `id`, `label`, `description`, and the `CapabilityType` class; migrate the ten reference capability types into `examples/common/capability_types.yaml` with "element" replaced by "component"; add one invalid example missing its `id`; add the two rows to `EXAMPLES`; run the build; commit YAML, examples, test rows, and generated outputs together.
 
 **Acceptance criteria:**
-- [x] `.python-version` says `3.12`; `pyproject.toml` declares `requires-python = ">=3.12"`, dependencies `linkml`, `pytest`, `jsonschema`, `pyyaml`, and `[tool.pytest.ini_options] testpaths = ["tests"]`
-- [x] `uv.lock` is committed and `uv sync` completes from a clean checkout
-- [x] `uv run linkml-lint --help`, `uv run gen-json-schema --help`, `uv run gen-doc --help`, `uv run linkml-validate --help` all exit 0
+- [ ] `uv run linkml-lint schema/common.yaml` reports no problems
+- [ ] `examples/common/capability_types.yaml` validates against `CapabilityType`, holds exactly ten entries with `id`, `label`, `description`, and contains no occurrence of the word "element"; `examples/common/invalid/capability_type_missing_id.yaml` fails naming `id`
+- [ ] After `uv run python scripts/build.py`: `dist/common.schema.json`, `docs/model/common/index.md` exist and `dist/README.md` lists common with its description
 
 **Verification:**
-- [x] `uv sync && uv run python -c "import linkml, jsonschema, yaml, pytest"` exits 0
-- [x] Manual check: `uv.lock` pins one `linkml` version, 1.11.1 (the spec's "1.9.x" was an assumption about the current release, corrected to "latest 1.x")
+- [ ] Tests pass: `uv run pytest` with `test_lint.py` and `test_dist.py` no longer skipped
+- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
+- [ ] Manual check: `docs/model/common/CapabilityType.md` reads correctly on disk
 
 **Dependencies:** None
 
 **Files likely touched:**
-- `.python-version`
-- `pyproject.toml`
-- `uv.lock`
-- `tests/conftest.py`
-
-**Estimated scope:** Small
-
-## Task 2: Fixture schema, fixture instances, and the example validation test
-
-**Description:** Write the minimal LinkML schema the harness proves itself on, two valid instances and one invalid instance of its top class, and `tests/test_examples.py` with the `EXAMPLE_TARGETS` dictionary mapping each example path to its target class. This is also the early test that `linkml-validate` accepts a top-level YAML list, which the whole example convention depends on.
-
-**Acceptance criteria:**
-- [x] `tests/fixtures/minimal.yaml` lints clean and defines: an identified top class with a required reference slot to a second identified class, an inlined value-object slot to a third class with no identifier, and one enum-ranged slot; every element has a description
-- [x] `tests/fixtures/minimal_instances.yaml` is a top-level list of two instances and validates against the top class; `tests/fixtures/minimal_invalid.yaml` omits a required slot and fails with a message naming that slot
-- [x] `tests/test_examples.py` validates every path in `EXAMPLE_TARGETS` (named `EXAMPLES` in code; one table covers valid and invalid rows), expects every path under an `invalid/` folder to fail naming the slot, and is written so that domain modules only add rows
-- [x] Validation runs by shelling out to `linkml-validate`, consistent with the build script; the offending slot name is read from the CLI's output. Only if that text proves brittle does the test fall back to `linkml.validator.validate()` from Python, and the fallback is recorded in `tasks/plan.md` under Architecture Decisions
-
-**Verification:**
-- [x] Tests pass: `uv run pytest tests/test_examples.py`
-- [x] Manual check: `uv run linkml-validate -s tests/fixtures/minimal.yaml -C Widget tests/fixtures/minimal_instances.yaml` reports no errors, proving the CLI accepts a list
-
-**Dependencies:** Task 1
-
-**Files likely touched:**
-- `tests/fixtures/minimal.yaml`
-- `tests/fixtures/minimal_instances.yaml`
-- `tests/fixtures/minimal_invalid.yaml`
+- `schema/common.yaml`
+- `examples/common/capability_types.yaml`
+- `examples/common/invalid/capability_type_missing_id.yaml`
 - `tests/test_examples.py`
+- `dist/common.schema.json`, `dist/README.md`, `docs/model/common/*` (generated)
 
 **Estimated scope:** Medium
 
 ## Checkpoint: Phase 1
-- [x] `uv run pytest` passes (2 passed)
-- [x] `linkml-validate` accepts a top-level list: exit 0 on the valid file, exit 1 and `'made_of' is a required property` on the invalid one
-- [ ] Review with human before Task 3
+- [ ] `uv run pytest` passes with common's lint, two example rows, drift, and meta-schema tests all collected
+- [ ] Review with human before Task 2
 
-## Task 3: Write `tests/test_build.py`, failing
+## Task 2: Value types, `MaterialName`, and `ParameterKind`
 
-**Description:** One test per rule in the spec's build description, written before the script exists, so the script is built to the tests. Each test copies `scripts/build.py` and a chosen `schema/` content into a temporary directory tree and runs the script there via `subprocess`, so the committed `dist/` and `docs/model/` are never touched.
+**Description:** Add `Position` (x, y, z float, required), `Quantity` (value float required, unit string required), the `MaterialName` string type, and the `ParameterKind` enum with `position`, `component_reference`, `quantity`, each with descriptions as specified. Rebuild. Inspect the generated schema to confirm on the real module what the probe showed: no root `properties`, `$defs` holding the three classes and the enum, the type inlined.
 
 **Acceptance criteria:**
-- [x] Six tests exist and all fail because `scripts/build.py` is absent: 2020-12 declared; meta-schema passes; `docs/model/minimal/index.md` created; `dist/README.md` names `minimal.schema.json` and contains the fixture's description; a pre-seeded `dist/ghost.schema.json` is removed; empty `schema/` exits 0 with a README saying no modules exist and `docs/model/` untouched
-- [x] Tests are plain functions with plain asserts and a shared helper that builds the temp tree
+- [ ] `uv run linkml-lint schema/common.yaml` reports no problems; `schema/common.yaml` contains no `tree_root`
+- [ ] `dist/common.schema.json` has no root `properties` key, and its `$defs` keys are exactly `Position`, `Quantity`, `CapabilityType`, `ParameterKind`; `MaterialName` is inlined as a string on the slots that use it
+- [ ] `docs/model/common/index.md` lists three classes, eight slots, one enum, and `MaterialName` under types
 
 **Verification:**
-- [x] `uv run pytest tests/test_build.py` reports 6 failed, 0 passed, 0 errors in collection (each fails with FileNotFoundError on the missing script)
+- [ ] Tests pass: `uv run pytest`
+- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
+- [ ] Manual check: `python -c` over `dist/common.schema.json` prints the `$defs` keys and confirms no root `properties`
 
-**Dependencies:** Task 2
+**Dependencies:** Task 1
 
 **Files likely touched:**
-- `tests/test_build.py`
+- `schema/common.yaml`
+- `dist/common.schema.json`, `dist/README.md`, `docs/model/common/*` (generated)
 
 **Estimated scope:** Small
 
-## Task 4: Write `scripts/build.py` until the build tests pass
+## Task 3: Verify success criteria, push, confirm CI
 
-**Description:** Implement the six build rules from the spec: JSON Schema per module with the `$schema` rewrite, docs per module with imports not merged, generated `dist/README.md`, stale-output removal, empty-schema no-op, fail fast with the generator's message. Standard library plus PyYAML, explicit UTF-8 everywhere, under sixty lines. This task also answers the spec's open question about `gen-doc` with imports not merged, by looking at the fixture's rendered docs.
-
-**Acceptance criteria:**
-- [x] `uv run pytest tests/test_build.py` reports 6 passed
-- [x] `wc -l scripts/build.py` is 59; imports are only `pathlib`, `json`, `shutil`, `subprocess`, `sys`, `yaml`
-- [x] The fixture's `docs/model/minimal/index.md` reads sensibly (own elements in the index, imported elements get pages so links resolve); no fallback (merged docs, one folder) is taken and both spec and tests are amended in this same task
-
-**Verification:**
-- [x] Tests pass: `uv run pytest tests/test_build.py`
-- [x] Manual check: generated fixture docs and a two-module probe inspected; links to own and imported classes resolve
-
-**Dependencies:** Task 3
-
-**Files likely touched:**
-- `scripts/build.py`
-- `SPEC-toolchain.md` (only if the docs fallback is taken)
-- `tests/test_build.py` (only if the docs fallback is taken)
-
-**Estimated scope:** Small
-
-## Checkpoint: Phase 2
-- [x] All build tests pass (6 passed; full suite 8 passed)
-- [x] Docs layout decision recorded: per-module as specified, open question in the spec marked resolved
-- [ ] Review with human before Task 5; go-ahead for the push in Task 6
-
-## Task 5: Domain-module hooks, directory skeleton, and the first real build
-
-**Description:** Add the two tests that domain modules will light up, `test_lint.py` over `schema/*.yaml` and `test_dist.py` comparing committed `dist/` and `docs/model/` to a fresh build and meta-checking every `dist/*.schema.json`; create `schema/`, `examples/`, `docs/model/` with `.gitkeep`; run the real build once so `dist/README.md` exists saying no modules exist; confirm the whole suite passes and the tree is clean after a rebuild.
+**Description:** Walk the seven success criteria in `SPEC-common.md` and record evidence for each in this file's Checkpoint: Complete. Confirm no commit in this module touched `scripts/`, `tests/test_build.py`, `tests/test_lint.py`, or `tests/test_dist.py`. Push and confirm the CI run passes. Criterion 6, another team's check, is recorded as pending, not blocking.
 
 **Acceptance criteria:**
-- [x] `tests/test_lint.py` and `tests/test_dist.py` parametrise over the real directories and skip cleanly when they are empty (2 skipped today)
-- [x] `schema/.gitkeep`, `examples/.gitkeep`, `docs/model/.gitkeep` exist; `dist/README.md` is the generated no-modules README
-- [x] `uv run pytest` passes (9 passed, 2 skipped); running `uv run python scripts/build.py` afterwards leaves `git status` clean
+- [ ] Criteria 1 to 5 and 7 verified with a command and its output noted; criterion 6 marked pending
+- [ ] `git log --oneline <first common commit>^..HEAD -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` prints nothing
+- [ ] CI run on the pushed commit passes
 
 **Verification:**
-- [x] Tests pass: `uv run pytest`
-- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
+- [ ] Manual check: `gh run watch <id> --exit-status` exits 0
+- [ ] Manual check: evidence recorded under Checkpoint: Complete below
 
-**Dependencies:** Task 4
-
-**Files likely touched:**
-- `tests/test_lint.py`
-- `tests/test_dist.py`
-- `schema/.gitkeep`, `examples/.gitkeep`, `docs/model/.gitkeep`
-- `dist/README.md`
-
-**Estimated scope:** Medium
-
-## Task 6: CI workflow, push, passing run
-
-**Description:** One GitHub Actions workflow, one job on `ubuntu-latest`: check out, install uv with the official action and caching, `uv sync`, `uv run pytest`. Push the branch after explicit go-ahead and watch the run until it passes.
-
-**Acceptance criteria:**
-- [x] `.github/workflows/ci.yml` triggers on push and pull request, has exactly one job, and runs only `uv sync` and `uv run pytest`
-- [x] The run on the pushed commit passes (run 34603032167 on 33c360f)
-- [x] Every success criterion in `SPEC-toolchain.md` is ticked with evidence (see Checkpoint: Complete)
-
-**Verification:**
-- [x] Manual check: `gh run watch 34603032167 --exit-status` exited 0
-- [x] Manual check: `SPEC-toolchain.md` success criteria 1 to 6 each verified once, 2026-09-11
-
-**Dependencies:** Task 5, and go-ahead for the push
+**Dependencies:** Task 2, and the push permission noted in `tasks/plan.md`
 
 **Files likely touched:**
-- `.github/workflows/ci.yml`
+- `tasks/todo.md`, `tasks/plan.md` (bookkeeping)
 
 **Estimated scope:** Small
 
 ## Checkpoint: Complete
-- [x] All six tasks committed, one commit each
-- [x] CI passes on the last commit
-- [x] `schema/` holds only `.gitkeep`; ready for `SPEC-common.md`
-
-Success criteria of `SPEC-toolchain.md`, verified 2026-09-11:
-1. Fresh `git clone` from GitHub on Windows, `uv sync`, `uv run pytest`: 9 passed, 2 skipped. On `ubuntu-latest`: CI run 34603032167 passed.
-2. `build.py` with empty `schema/`: exit 0, `dist/` holds only `README.md` saying no modules exist.
-3. Fixture copied into `schema/` and built: `dist/minimal.schema.json` declares draft 2020-12 and passes `Draft202012Validator.check_schema`; `dist/README.md` lists it; `docs/model/minimal/index.md` exists. Fixture removed and rebuilt: both gone, README says no modules. Tree clean afterwards.
-4. Workflow passed on the completing commit.
-5. `scripts/build.py` is 59 lines; imports are pathlib, json, shutil, subprocess, sys, yaml.
-6. `schema/` contains only `.gitkeep`.
+- [ ] All three tasks committed
+- [ ] CI passes on the last commit
+- [ ] Toolchain untouched
+- [ ] Ready for `SPEC-product.md` and `SPEC-resource.md`

@@ -81,7 +81,7 @@ imports:
 
 | Type | Base | Notes |
 |---|---|---|
-| `MaterialName` | `string` | An IFC material name exactly as it appears in the model. The product side's `material` slot and the process side's `applies_to` list both use this type, and method selection joins them by exact match. Declared once so the join is visible in the docs and neither module reaches into the other for it. |
+| `MaterialName` | `string` | An IFC material name exactly as it appears in the model. The product side's `material` slot and the process side's `applies_to` list both use this type, and method selection joins them by exact match. Declared once so the join is visible in the docs and neither module reaches into the other for it. In generated JSON Schema it is inlined as a plain string; its meaning is carried by the docs. |
 
 ### Enum
 
@@ -160,7 +160,7 @@ No new test files. This module lights up the tests the toolchain left waiting an
 ## Success Criteria
 
 1. `uv run pytest` passes with `test_lint.py` and `test_dist.py` no longer skipped: 1 lint test, 1 meta-schema test, and 2 new example rows collected and passing.
-2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `CapabilityType`, `ParameterKind`, and `MaterialName`. Its root has no `properties` of its own, confirming the no-`tree_root` decision.
+2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `CapabilityType`, and `ParameterKind`. `MaterialName` does not appear: LinkML inlines types onto the slots that use them by default, so a `MaterialName` slot renders as a plain string, which is the preferred rendering for the viewer. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
 3. `dist/README.md` lists `common.schema.json` with the module description.
 4. `docs/model/common/index.md` lists three classes, eight slots, one enum, and one type, `MaterialName`. Every page has a description.
 5. `examples/common/capability_types.yaml` contains the ten reference capability types with `id`, `label`, `description`, and the word "element" appears in none of them.
@@ -175,8 +175,8 @@ No new test files. This module lights up the tests the toolchain left waiting an
 4. **All ten reference capabilities migrate.** Cheap, and the vocabulary is hand-authored content that already exists.
 5. **`label` and `description` required on CapabilityType.**
 6. **`MaterialName` as a shared string type.** Product's `material` and process's `applies_to` are joined by exact match; one declared type makes that visible and keeps the two modules independent of each other.
-7. **No `tree_root` anywhere.** LinkML's JSON Schema generator makes a tree-root class the document root; with imports merged, common's root would become every consumer's root. The `dist/` files are definition libraries. Verified on the first build by criterion 2.
+7. **No `tree_root` anywhere, and no container classes.** LinkML recommends a `tree_root` container for serialisation, and that is right for a single self-contained schema. Here modules merge on import, and a probe on 2026-09-11 showed the consequence: with a container in common and another in product, product's generated schema took common's root and rejected a product document as having unexpected properties. So documents are top-level lists, validation always names the class with `-C`, and the `dist/` files are definition libraries with no root properties. Container classes without `tree_root` were considered and declined to avoid a wrapper class per module and an extra projection rule.
 
 ## Open Questions
 
-- Does the schema viewer need a root `properties` block to render, or does it read `$defs` directly? If it needs a root, the fix is in the toolchain build, not in this module.
+- Does the schema viewer need a root `properties` block to render, or does it read `$defs` directly? The generated root has `$id`, `$schema`, `title`, `type`, `version`, `additionalProperties`, and `$defs`, and no `properties`. If the viewer needs a root, the fix is in the toolchain build, not in this module.
