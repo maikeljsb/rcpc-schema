@@ -1,0 +1,36 @@
+{
+  "$defs": {
+    "CapabilityType": {
+      "additionalProperties": false,
+      "description": "A named capability that a PrimitiveTask requires and a RobotType offers. Matching is by identifier; there are no levels or qualifiers. Type-level allocation asks whether a robot type offers every capability a task requires.",
+      "properties": {
+        "description": {
+          "description": "What this is, for a human reader.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique identifier within the document set.",
+          "type": "string"
+        },
+        "label": {
+          "description": "Short human-readable name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "description"
+      ],
+      "title": "CapabilityType",
+      "type": "object"
+    }
+  },
+  "$id": "https://rcpc.for5672/schema/common",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "metamodel_version": "1.11.0",
+  "title": "common",
+  "type": "object",
+  "version": "0.1.0"
+}

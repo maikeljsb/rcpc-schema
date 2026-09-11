@@ -13,6 +13,8 @@ import pytest
 EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "tests/fixtures/minimal_instances.yaml": ("tests/fixtures/minimal.yaml", "Widget", None),
     "tests/fixtures/minimal_invalid.yaml": ("tests/fixtures/minimal.yaml", "Widget", "made_of"),
+    "examples/common/capability_types.yaml": ("schema/common.yaml", "CapabilityType", None),
+    "examples/common/invalid/capability_type_missing_id.yaml": ("schema/common.yaml", "CapabilityType", "id"),
 }
 
 

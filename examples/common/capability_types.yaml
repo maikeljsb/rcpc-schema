@@ -1,0 +1,40 @@
+- id: locomotion
+  label: Locomotion
+  description: >-
+    Moving the robot itself, or a held payload, from one pose to another. Required by every task that repositions something.
+- id: gripper
+  label: Gripper
+  description: >-
+    Grasping and releasing a discrete component, the attach/detach pair. Required by tasks that take custody of a component.
+- id: lifting
+  label: Lifting
+  description: >-
+    Bearing and raising a component's weight. Distinct from `gripper`: holding is not lifting, and a robot may offer one without the other.
+- id: alignment
+  label: Alignment
+  description: >-
+    Positioning a component to a stated tolerance. Required by tasks whose success is defined by a tolerance rather than by arrival.
+- id: fastening
+  label: Fastening
+  description: >-
+    Applying or releasing a mechanical connection at a stated torque.
+- id: extrusion
+  label: Extrusion
+  description: >-
+    Depositing a continuous material bead at a controlled rate. The additive-manufacturing capability the 3dcp method requires.
+- id: material_handling
+  label: Material handling
+  description: >-
+    Loading, carrying, and discharging bulk or granular material, as distinct from handling a discrete component (`gripper`). Covers the bucket fill/empty pair and brick transport.
+- id: mortar_application
+  label: Mortar application
+  description: >-
+    Mixing and spreading mortar to a stated thickness.
+- id: surface_treatment
+  label: Surface treatment
+  description: >-
+    Applying a coating or a curing treatment to a surface, including humidity maintenance and protective covering.
+- id: calibration
+  label: Calibration
+  description: >-
+    Bringing the robot's own instrumentation to a stated precision before productive work begins.
