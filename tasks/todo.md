@@ -127,13 +127,13 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Description:** One GitHub Actions workflow, one job on `ubuntu-latest`: check out, install uv with the official action and caching, `uv sync`, `uv run pytest`. Push the branch after explicit go-ahead and watch the run until it passes.
 
 **Acceptance criteria:**
-- [ ] `.github/workflows/ci.yml` triggers on push and pull request, has exactly one job, and runs only `uv sync` and `uv run pytest`
-- [ ] The run on the pushed commit passes
-- [ ] Every success criterion in `SPEC-toolchain.md` is ticked with evidence
+- [x] `.github/workflows/ci.yml` triggers on push and pull request, has exactly one job, and runs only `uv sync` and `uv run pytest`
+- [x] The run on the pushed commit passes (run 34603032167 on 33c360f)
+- [x] Every success criterion in `SPEC-toolchain.md` is ticked with evidence (see Checkpoint: Complete)
 
 **Verification:**
-- [ ] Manual check: `gh run list --limit 1` shows the run as completed, success
-- [ ] Manual check: `SPEC-toolchain.md` success criteria 1 to 6 each verified once
+- [x] Manual check: `gh run watch 34603032167 --exit-status` exited 0
+- [x] Manual check: `SPEC-toolchain.md` success criteria 1 to 6 each verified once, 2026-09-11
 
 **Dependencies:** Task 5, and go-ahead for the push
 
@@ -143,6 +143,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Estimated scope:** Small
 
 ## Checkpoint: Complete
-- [ ] All six tasks committed, one commit each
-- [ ] CI passes on the last commit
-- [ ] `schema/` holds only `.gitkeep`; ready for `SPEC-common.md`
+- [x] All six tasks committed, one commit each
+- [x] CI passes on the last commit
+- [x] `schema/` holds only `.gitkeep`; ready for `SPEC-common.md`
+
+Success criteria of `SPEC-toolchain.md`, verified 2026-09-11:
+1. Fresh `git clone` from GitHub on Windows, `uv sync`, `uv run pytest`: 9 passed, 2 skipped. On `ubuntu-latest`: CI run 34603032167 passed.
+2. `build.py` with empty `schema/`: exit 0, `dist/` holds only `README.md` saying no modules exist.
+3. Fixture copied into `schema/` and built: `dist/minimal.schema.json` declares draft 2020-12 and passes `Draft202012Validator.check_schema`; `dist/README.md` lists it; `docs/model/minimal/index.md` exists. Fixture removed and rebuilt: both gone, README says no modules. Tree clean afterwards.
+4. Workflow passed on the completing commit.
+5. `scripts/build.py` is 59 lines; imports are pathlib, json, shutil, subprocess, sys, yaml.
+6. `schema/` contains only `.gitkeep`.

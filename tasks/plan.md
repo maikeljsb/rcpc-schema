@@ -1,6 +1,6 @@
 # Implementation Plan: toolchain
 
-*Module `toolchain` of `CAPABILITY-MAP.md`, specified in `SPEC-toolchain.md`. Plan drafted 2026-09-10, approved 2026-09-11. Tasks in `tasks/todo.md`.*
+*Module `toolchain` of `CAPABILITY-MAP.md`, specified in `SPEC-toolchain.md`. Plan drafted 2026-09-10, approved 2026-09-11, completed 2026-09-11. Tasks in `tasks/todo.md`.*
 
 ## Overview
 
@@ -57,12 +57,12 @@ Order is bottom-up along the graph. Task 2 sits before the build script on purpo
 
 ### Phase 3: Domain hooks and CI
 - [x] Task 5: Domain-module hooks, directory skeleton, and the first real build
-- [ ] Task 6: CI workflow, push, passing run
+- [x] Task 6: CI workflow, push, passing run
 
 ### Checkpoint: Complete
-- [ ] Every success criterion in `SPEC-toolchain.md` verified and ticked
-- [ ] `schema/` holds only `.gitkeep`
-- [ ] Ready for the `common` module
+- [x] Every success criterion in `SPEC-toolchain.md` verified and ticked (evidence in `tasks/todo.md`)
+- [x] `schema/` holds only `.gitkeep`
+- [x] Ready for the `common` module
 
 ## Risks and Mitigations
 
