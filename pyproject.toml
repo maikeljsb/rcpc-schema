@@ -1,0 +1,14 @@
+[project]
+name = "rcpc-schema"
+version = "0.1.0"
+description = "LinkML model of the Product Process Graph for robotic construction planning"
+requires-python = ">=3.12"
+dependencies = [
+    "linkml>=1.9,<2",
+    "pytest>=8",
+    "jsonschema>=4",
+    "pyyaml>=6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
