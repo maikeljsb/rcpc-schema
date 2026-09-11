@@ -77,13 +77,13 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Description:** Implement the six build rules from the spec: JSON Schema per module with the `$schema` rewrite, docs per module with imports not merged, generated `dist/README.md`, stale-output removal, empty-schema no-op, fail fast with the generator's message. Standard library plus PyYAML, explicit UTF-8 everywhere, under sixty lines. This task also answers the spec's open question about `gen-doc` with imports not merged, by looking at the fixture's rendered docs.
 
 **Acceptance criteria:**
-- [ ] `uv run pytest tests/test_build.py` reports 6 passed
-- [ ] `wc -l scripts/build.py` is under 60; imports are only `pathlib`, `json`, `shutil`, `subprocess`, `sys`, `yaml`
-- [ ] The fixture's `docs/model/minimal/index.md` reads sensibly, or the fallback (merged docs, one folder) is taken and both spec and tests are amended in this same task
+- [x] `uv run pytest tests/test_build.py` reports 6 passed
+- [x] `wc -l scripts/build.py` is 59; imports are only `pathlib`, `json`, `shutil`, `subprocess`, `sys`, `yaml`
+- [x] The fixture's `docs/model/minimal/index.md` reads sensibly (own elements in the index, imported elements get pages so links resolve); no fallback (merged docs, one folder) is taken and both spec and tests are amended in this same task
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest tests/test_build.py`
-- [ ] Manual check: open the generated fixture docs and confirm links to the fixture's own classes resolve
+- [x] Tests pass: `uv run pytest tests/test_build.py`
+- [x] Manual check: generated fixture docs and a two-module probe inspected; links to own and imported classes resolve
 
 **Dependencies:** Task 3
 
@@ -95,8 +95,8 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Estimated scope:** Small
 
 ## Checkpoint: Phase 2
-- [ ] All build tests pass
-- [ ] Docs layout decision recorded (per-module as specified, or fallback with spec amended)
+- [x] All build tests pass (6 passed; full suite 8 passed)
+- [x] Docs layout decision recorded: per-module as specified, open question in the spec marked resolved
 - [ ] Review with human before Task 5; go-ahead for the push in Task 6
 
 ## Task 5: Domain-module hooks, directory skeleton, and the first real build

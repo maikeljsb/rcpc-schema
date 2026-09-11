@@ -162,4 +162,4 @@ Checkable by anyone with git and uv:
 
 ## Open Questions
 
-- `gen-doc` with imports not merged: does it still render links to imported classes, or leave dangling anchors? To be checked at implementation on the fixture. If it breaks, fall back to merged docs under a single `docs/model/` and note it here.
+- Resolved 2026-09-11: `gen-doc --no-mergeimports` lists only the module's own classes, slots, and enums in its index, and still writes pages for the imported elements the module references, so every link resolves. Verified on a two-module probe. Per-module folders stand; no fallback needed.

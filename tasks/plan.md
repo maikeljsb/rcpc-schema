@@ -48,11 +48,11 @@ Order is bottom-up along the graph. Task 2 sits before the build script on purpo
 
 ### Phase 2: The build
 - [x] Task 3: Write `tests/test_build.py`, one failing test per build rule
-- [ ] Task 4: Write `scripts/build.py` until the build tests pass, under sixty lines
+- [x] Task 4: Write `scripts/build.py` until the build tests pass, under sixty lines
 
 ### Checkpoint: Phase 2
-- [ ] All six build tests pass
-- [ ] `gen-doc` with imports not merged renders the fixture module sensibly, or the fallback in the spec's open question is taken and the spec amended
+- [x] All six build tests pass
+- [x] `gen-doc` with imports not merged renders the fixture module sensibly; verified on a two-module probe
 - [ ] Review with human
 
 ### Phase 3: Domain hooks and CI
