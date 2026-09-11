@@ -39,11 +39,11 @@ Order is bottom-up along the graph. Task 2 sits before the build script on purpo
 
 ### Phase 1: Project boots and validates
 - [x] Task 1: Bootstrap the uv project
-- [ ] Task 2: Fixture schema, fixture instances, and the example validation test
+- [x] Task 2: Fixture schema, fixture instances, and the example validation test
 
 ### Checkpoint: Phase 1
-- [ ] `uv sync` from clean; `uv run pytest` passes
-- [ ] `linkml-validate` confirmed to accept a top-level YAML list of instances, or the example convention is revised before any domain module
+- [x] `uv sync` from clean; `uv run pytest` passes
+- [x] `linkml-validate` confirmed to accept a top-level YAML list of instances
 - [ ] Review with human
 
 ### Phase 2: The build

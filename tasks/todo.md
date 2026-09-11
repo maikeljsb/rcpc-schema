@@ -30,14 +30,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Description:** Write the minimal LinkML schema the harness proves itself on, two valid instances and one invalid instance of its top class, and `tests/test_examples.py` with the `EXAMPLE_TARGETS` dictionary mapping each example path to its target class. This is also the early test that `linkml-validate` accepts a top-level YAML list, which the whole example convention depends on.
 
 **Acceptance criteria:**
-- [ ] `tests/fixtures/minimal.yaml` lints clean and defines: an identified top class with a required reference slot to a second identified class, an inlined value-object slot to a third class with no identifier, and one enum-ranged slot; every element has a description
-- [ ] `tests/fixtures/minimal_instances.yaml` is a top-level list of two instances and validates against the top class; `tests/fixtures/minimal_invalid.yaml` omits a required slot and fails with a message naming that slot
-- [ ] `tests/test_examples.py` validates every path in `EXAMPLE_TARGETS`, expects every path under an `invalid/` folder to fail naming the slot, and is written so that domain modules only add rows
-- [ ] Validation runs by shelling out to `linkml-validate`, consistent with the build script; the offending slot name is read from the CLI's output. Only if that text proves brittle does the test fall back to `linkml.validator.validate()` from Python, and the fallback is recorded in `tasks/plan.md` under Architecture Decisions
+- [x] `tests/fixtures/minimal.yaml` lints clean and defines: an identified top class with a required reference slot to a second identified class, an inlined value-object slot to a third class with no identifier, and one enum-ranged slot; every element has a description
+- [x] `tests/fixtures/minimal_instances.yaml` is a top-level list of two instances and validates against the top class; `tests/fixtures/minimal_invalid.yaml` omits a required slot and fails with a message naming that slot
+- [x] `tests/test_examples.py` validates every path in `EXAMPLE_TARGETS` (named `EXAMPLES` in code; one table covers valid and invalid rows), expects every path under an `invalid/` folder to fail naming the slot, and is written so that domain modules only add rows
+- [x] Validation runs by shelling out to `linkml-validate`, consistent with the build script; the offending slot name is read from the CLI's output. Only if that text proves brittle does the test fall back to `linkml.validator.validate()` from Python, and the fallback is recorded in `tasks/plan.md` under Architecture Decisions
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest tests/test_examples.py`
-- [ ] Manual check: `uv run linkml-validate -s tests/fixtures/minimal.yaml -C <TopClass> tests/fixtures/minimal_instances.yaml` reports no errors, proving the CLI accepts a list
+- [x] Tests pass: `uv run pytest tests/test_examples.py`
+- [x] Manual check: `uv run linkml-validate -s tests/fixtures/minimal.yaml -C Widget tests/fixtures/minimal_instances.yaml` reports no errors, proving the CLI accepts a list
 
 **Dependencies:** Task 1
 
@@ -50,8 +50,8 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Estimated scope:** Medium
 
 ## Checkpoint: Phase 1
-- [ ] `uv run pytest` passes
-- [ ] `linkml-validate` accepts a top-level list, or the example convention is revised and the spec amended
+- [x] `uv run pytest` passes (2 passed)
+- [x] `linkml-validate` accepts a top-level list: exit 0 on the valid file, exit 1 and `'made_of' is a required property` on the invalid one
 - [ ] Review with human before Task 3
 
 ## Task 3: Write `tests/test_build.py`, failing
