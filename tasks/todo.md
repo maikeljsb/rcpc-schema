@@ -29,21 +29,21 @@ Plan: `tasks/plan.md`. Spec: `SPEC-common.md`. Each task is one Conventional Com
 
 ## Checkpoint: Phase 1
 - [x] `uv run pytest` passes with common's lint, two example rows, drift, and meta-schema tests all collected
-- [ ] Review with human before Task 2
+- [x] Review with human before Task 2 (Task 1 output reviewed in session 2026-09-11: vocabulary trimmed, verbs, id and description only)
 
 ## Task 2: Value types, `MaterialName`, and `ParameterKind`
 
-**Description:** Add `Position` (x, y, z float, required), `Quantity` (value float required, unit string required), the `MaterialName` string type, and the `ParameterKind` enum with `position`, `component_reference`, `quantity`, each with descriptions as specified. Rebuild. Inspect the generated schema to confirm on the real module what the probe showed: no root `properties`, `$defs` holding the three classes and the enum, the type inlined.
+**Description:** Add `Position` (x_coord, y_coord, z_coord float, required; renamed from x, y, z because lint requires two-character snake_case names), `Quantity` (value float required, unit string required), the `MaterialName` string type, and the `ParameterKind` enum with `position`, `component_reference`, `quantity`, each with descriptions as specified. Rebuild. Inspect the generated schema to confirm on the real module what the probe showed: no root `properties`, `$defs` holding the three classes and the enum, the type inlined.
 
 **Acceptance criteria:**
-- [ ] `uv run linkml-lint schema/common.yaml` reports no problems; `schema/common.yaml` contains no `tree_root`
-- [ ] `dist/common.schema.json` has no root `properties` key, and its `$defs` keys are exactly `Position`, `Quantity`, `CapabilityType`, `ParameterKind`; `MaterialName` is inlined as a string on the slots that use it
-- [ ] `docs/model/common/index.md` lists three classes, eight slots, one enum, and `MaterialName` under types
+- [x] `uv run linkml-lint schema/common.yaml` reports no problems; `schema/common.yaml` contains no `tree_root`
+- [x] `dist/common.schema.json` has no root `properties` key, and its `$defs` keys are exactly `Position`, `Quantity`, `CapabilityType`, `ParameterKind`; `MaterialName` is inlined as a string on the slots that use it (verified on the real file)
+- [x] `docs/model/common/index.md` lists three classes, seven slots, one enum, and `MaterialName` under types
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
-- [ ] Manual check: `python -c` over `dist/common.schema.json` prints the `$defs` keys and confirms no root `properties`
+- [x] Tests pass: `uv run pytest` (13 passed, exit 0)
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
+- [x] Manual check: `python -c` over `dist/common.schema.json` prints the `$defs` keys and confirms no root `properties`
 
 **Dependencies:** Task 1
 

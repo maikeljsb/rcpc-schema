@@ -73,7 +73,7 @@ imports:
 
 | Class | Slots | Notes |
 |---|---|---|
-| `Position` | `x`, `y`, `z`, all `float`, all required | A point in the IFC project frame, metres. The one frame the model uses. Always inlined by its owner; never a document on its own. |
+| `Position` | `x_coord`, `y_coord`, `z_coord`, all `float`, all required | A point in the IFC project frame, metres. The one frame the model uses. Always inlined by its owner; never a document on its own. |
 | `Quantity` | `value` `float` required; `unit` string required | A number with a unit. UCUM case-sensitive codes recommended in the description, not enforced. Always inlined. |
 | `CapabilityType` | `id` identifier; `description` required | Something a robot can do, named by a bare verb. The id is the name; no separate label. Matching is by id, no levels or qualifiers. The only document class in this module. |
 
@@ -91,7 +91,7 @@ imports:
 
 ### Shared slots
 
-`id` (`identifier: true`), `description`, `x`, `y`, `z`, `value`, `unit`. Defined here once; domain modules reuse `id` and `description` and never redeclare them. `id` is unique among instances of its class, not across the document set: every reference slot declares its range, so the class is always known and the id carries no namespace. There is no `label` slot in common. A class whose id is not a readable name, such as a robot type, brings `label` with it when its module is specified.
+`id` (`identifier: true`), `description`, `x_coord`, `y_coord`, `z_coord`, `value`, `unit`. Defined here once; domain modules reuse `id` and `description` and never redeclare them. `id` is unique among instances of its class, not across the document set: every reference slot declares its range, so the class is always known and the id carries no namespace. There is no `label` slot in common. A class whose id is not a readable name, such as a robot type, brings `label` with it when its module is specified.
 
 ### Foreseen additions
 
@@ -175,7 +175,8 @@ No new test files. This module lights up the tests the toolchain left waiting an
 6. **Capability ids are bare verbs.** Decided 2026-09-11: the reference's noun ids (`locomotion`, `gripper`, `lifting`, `alignment`) become `locomote`, `grip`, `lift`, `align`, because a capability names something a robot can do. Bare verbs over gerunds for brevity and because `requires: [lift, align]` reads naturally.
 7. **`id` is unique among instances of its class, with no namespace prefix.** Decided 2026-09-11. In the graph the node label is the namespace, and in documents every reference slot declares its range, so the class is always known. Namespaced ids such as `capability.lift` would state the class twice; opaque ids would make the hand-authored catalogue unreadable. The projection's one uniqueness constraint per label enforces exactly this promise.
 8. **`MaterialName` as a shared string type.** Product's `material` and process's `applies_to` are joined by exact match; one declared type makes that visible and keeps the two modules independent of each other.
-9. **No `tree_root` anywhere, and no container classes.** LinkML recommends a `tree_root` container for serialisation, and that is right for a single self-contained schema. Here modules merge on import, and a probe on 2026-09-11 showed the consequence: with a container in common and another in product, product's generated schema took common's root and rejected a product document as having unexpected properties. So documents are top-level lists, validation always names the class with `-C`, and the `dist/` files are definition libraries with no root properties. Container classes without `tree_root` were considered and declined to avoid a wrapper class per module and an extra projection rule.
+9. **Coordinate slots are `x_coord`, `y_coord`, `z_coord`.** Decided 2026-09-11: `linkml-lint`'s snake_case rule requires at least two characters and rejects hyphens, so single letters and `x-coord` both fail. A lint exemption for three names was considered and declined in favour of names that pass the rule as it stands.
+10. **No `tree_root` anywhere, and no container classes.** LinkML recommends a `tree_root` container for serialisation, and that is right for a single self-contained schema. Here modules merge on import, and a probe on 2026-09-11 showed the consequence: with a container in common and another in product, product's generated schema took common's root and rejected a product document as having unexpected properties. So documents are top-level lists, validation always names the class with `-C`, and the `dist/` files are definition libraries with no root properties. Container classes without `tree_root` were considered and declined to avoid a wrapper class per module and an extra projection rule.
 
 ## Open Questions
 

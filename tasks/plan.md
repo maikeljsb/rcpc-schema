@@ -39,10 +39,10 @@ Slice 1 comes first because it is the only path that exercises every toolchain h
 
 ### Checkpoint: Phase 1
 - [x] `uv run pytest` passes with lint, example, drift, and meta-schema tests collected for common
-- [ ] Review with human
+- [x] Review with human (2026-09-11)
 
 ### Phase 2: Value types and enum
-- [ ] Task 2: `Position`, `Quantity`, `MaterialName`, `ParameterKind`, rebuilt outputs, generated-schema check
+- [x] Task 2: `Position`, `Quantity`, `MaterialName`, `ParameterKind`, rebuilt outputs, generated-schema check
 
 ### Phase 3: Close
 - [ ] Task 3: Verify the seven success criteria, push, confirm CI
