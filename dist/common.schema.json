@@ -2,14 +2,14 @@
   "$defs": {
     "CapabilityType": {
       "additionalProperties": false,
-      "description": "Something a robot can do, named by a bare verb, that a PrimitiveTask requires and a RobotType offers. The id is the name; matching is by id and there are no levels or qualifiers. Type-level allocation asks whether a robot type offers every capability a task requires.",
+      "description": "Something a robot can do, named by a verb. Required by primitive tasks and offered by robot types.",
       "properties": {
         "description": {
-          "description": "What this is, for a human reader.",
+          "description": "What this is, in one or two plain sentences.",
           "type": "string"
         },
         "id": {
-          "description": "Identifier, unique among instances of its class. The class is always known from the slot that references it, so the id carries no namespace.",
+          "description": "Identifier, unique among instances of its class.",
           "type": "string"
         }
       },

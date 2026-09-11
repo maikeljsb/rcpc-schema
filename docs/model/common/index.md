@@ -1,6 +1,6 @@
 # common
 
-Shared vocabulary for the Product Process Graph: the Position and Quantity value types, the MaterialName type that joins product to process, the closed set of parameter kinds, and the capability types that primitive tasks require and robot types offer. Imported by every other module.
+Shared vocabulary for the Product Process Graph: value types, the material name type, the parameter kinds, and the capability types. Imported by every other module.
 
 URI: https://rcpc.for5672/schema/common
 
@@ -12,7 +12,7 @@ Name: common
 
 | Class | Description |
 | --- | --- |
-| [CapabilityType](CapabilityType.md) | Something a robot can do, named by a bare verb, that a PrimitiveTask requires... |
+| [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |
 
 
 
@@ -20,9 +20,8 @@ Name: common
 
 | Slot | Description |
 | --- | --- |
-| [description](description.md) | What this is, for a human reader |
+| [description](description.md) | What this is, in one or two plain sentences |
 | [id](id.md) | Identifier, unique among instances of its class |
-| [label](label.md) | Display name, for classes whose id is not readable on its own |
 
 
 ## Enumerations

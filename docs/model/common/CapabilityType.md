@@ -6,7 +6,7 @@ search:
 # Class: CapabilityType 
 
 
-_Something a robot can do, named by a bare verb, that a PrimitiveTask requires and a RobotType offers. The id is the name; matching is by id and there are no levels or qualifiers. Type-level allocation asks whether a robot type offers every capability a task requires._
+_Something a robot can do, named by a verb. Required by primitive tasks and offered by robot types._
 
 
 
@@ -59,7 +59,7 @@ URI: [rcpc:CapabilityType](https://rcpc.for5672/schema/CapabilityType)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Identifier, unique among instances of its class | direct |
-| [description](description.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What this is, for a human reader | direct |
+| [description](description.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What this is, in one or two plain sentences | direct |
 
 
 
@@ -110,10 +110,8 @@ URI: [rcpc:CapabilityType](https://rcpc.for5672/schema/CapabilityType)
 <details>
 ```yaml
 name: CapabilityType
-description: Something a robot can do, named by a bare verb, that a PrimitiveTask
-  requires and a RobotType offers. The id is the name; matching is by id and there
-  are no levels or qualifiers. Type-level allocation asks whether a robot type offers
-  every capability a task requires.
+description: Something a robot can do, named by a verb. Required by primitive tasks
+  and offered by robot types.
 from_schema: https://rcpc.for5672/schema/common
 slots:
 - id
@@ -131,10 +129,8 @@ slot_usage:
 <details>
 ```yaml
 name: CapabilityType
-description: Something a robot can do, named by a bare verb, that a PrimitiveTask
-  requires and a RobotType offers. The id is the name; matching is by id and there
-  are no levels or qualifiers. Type-level allocation asks whether a robot type offers
-  every capability a task requires.
+description: Something a robot can do, named by a verb. Required by primitive tasks
+  and offered by robot types.
 from_schema: https://rcpc.for5672/schema/common
 slot_usage:
   description:
@@ -143,8 +139,7 @@ slot_usage:
 attributes:
   id:
     name: id
-    description: Identifier, unique among instances of its class. The class is always
-      known from the slot that references it, so the id carries no namespace.
+    description: Identifier, unique among instances of its class.
     from_schema: https://rcpc.for5672/schema/common
     rank: 1000
     identifier: true
@@ -155,7 +150,7 @@ attributes:
     required: true
   description:
     name: description
-    description: What this is, for a human reader.
+    description: What this is, in one or two plain sentences.
     from_schema: https://rcpc.for5672/schema/common
     rank: 1000
     owner: CapabilityType

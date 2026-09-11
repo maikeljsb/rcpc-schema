@@ -6,7 +6,7 @@ search:
 # Slot: description 
 
 
-_What this is, for a human reader._
+_What this is, in one or two plain sentences._
 
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:description](https://rcpc.for5672/schema/description)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CapabilityType](CapabilityType.md) | Something a robot can do, named by a bare verb, that a PrimitiveTask requires... |  yes  |
+| [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |  yes  |
 
 
 
@@ -84,7 +84,7 @@ URI: [rcpc:description](https://rcpc.for5672/schema/description)
 <details>
 ```yaml
 name: description
-description: What this is, for a human reader.
+description: What this is, in one or two plain sentences.
 from_schema: https://rcpc.for5672/schema/common
 rank: 1000
 domain_of:
