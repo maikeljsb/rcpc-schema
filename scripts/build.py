@@ -1,8 +1,7 @@
 """Regenerate dist/ and docs/model/ from every LinkML module under schema/.
 
-Rules (SPEC-toolchain.md): one draft 2020-12 JSON Schema per module, docs per module
-with imports not merged, a generated dist/README.md, stale outputs removed, empty
-schema/ is a no-op, the first generator failure aborts the build.
+Rules in SPEC-toolchain.md: one draft 2020-12 JSON Schema per module, docs per module,
+a generated dist/README.md, stale outputs removed, empty schema/ is a no-op, fail fast.
 """
 from pathlib import Path
 import json, shutil, subprocess, sys
@@ -27,6 +26,7 @@ def build(module: Path) -> str:
     schema = json.loads(run("gen-json-schema", str(module)))
     schema["$schema"] = DRAFT
     write(DIST / f"{module.stem}.schema.json", json.dumps(schema, indent=2) + "\n")
+    shutil.rmtree(DOCS / module.stem, ignore_errors=True)
     run("gen-doc", "--no-mergeimports", "-d", str(DOCS / module.stem), str(module))
     return str(yaml.safe_load(module.read_text(encoding="utf-8")).get("description", "")).strip()
 

@@ -73,9 +73,13 @@ def test_stale_outputs_removed(tmp_path: Path, root: Path) -> None:
     (tree / "dist" / "ghost.schema.json").write_text("{}", encoding="utf-8")
     (tree / "docs" / "model" / "ghost").mkdir()
     (tree / "docs" / "model" / "ghost" / "index.md").write_text("stale", encoding="utf-8")
+    (tree / "docs" / "model" / "minimal").mkdir()
+    (tree / "docs" / "model" / "minimal" / "removed_slot.md").write_text("stale", encoding="utf-8")
     assert build(tree).returncode == 0
     assert not (tree / "dist" / "ghost.schema.json").exists()
     assert not (tree / "docs" / "model" / "ghost").exists()
+    assert not (tree / "docs" / "model" / "minimal" / "removed_slot.md").exists()
+    assert (tree / "docs" / "model" / "minimal" / "index.md").is_file()
     assert (tree / "dist" / "minimal.schema.json").is_file()
 
 

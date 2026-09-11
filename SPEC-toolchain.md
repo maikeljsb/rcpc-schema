@@ -43,7 +43,7 @@ Behaviour, fully specified so a domain module never has to think about it:
 1. For every `schema/<module>.yaml`, in file-name order: run `gen-json-schema` with imports merged (the default) and write the result to `dist/<module>.schema.json`. Before writing, replace the value of the top-level `$schema` key with `https://json-schema.org/draft/2020-12/schema`. LinkML hardcodes draft 2019-09 and offers no option to change it; this is the one place the contract diverges from what LinkML emits, and the meta-schema test in this module proves the rewrite is valid on every build.
 2. For every `schema/<module>.yaml`: run `gen-doc` with imports not merged and write to `docs/model/<module>/`, so each module's documentation covers its own elements only and a team reads one folder.
 3. Write `dist/README.md`: one heading, one sentence saying these files are generated from `schema/` and how to regenerate them, then one line per module: the file name, the draft, and the module's `description` read from its YAML. Written on every build so it can never disagree with the folder.
-4. Remove stale outputs: any `dist/*.schema.json` or `docs/model/<dir>/` with no matching module file is deleted, so a renamed module does not leave ghosts.
+4. Remove stale outputs: any `dist/*.schema.json` or `docs/model/<dir>/` with no matching module file is deleted, so a renamed module does not leave ghosts. Each module's docs folder is cleared before `gen-doc` writes it, so a removed class, slot, or enum does not leave its old page behind (added 2026-09-11 after the drift test caught exactly that).
 5. If `schema/` has no modules, write a `dist/README.md` saying so and exit 0.
 6. Exit non-zero on the first generator failure, with the generator's message unaltered.
 
@@ -134,7 +134,7 @@ There is one thing under test in this module, the build script, and one thing to
 | `test_build.py::test_fixture_passes_metaschema` | The rewrite is valid | `Draft202012Validator.check_schema` on the output raises nothing |
 | `test_build.py::test_fixture_docs_generated` | Docs per module | `docs/model/minimal/` exists and contains an `index.md` |
 | `test_build.py::test_readme_lists_modules` | Rule 3 | `dist/README.md` names `minimal.schema.json` and contains the fixture's description |
-| `test_build.py::test_stale_outputs_removed` | Rule 4 | Pre-seed `dist/ghost.schema.json`; after build it is gone |
+| `test_build.py::test_stale_outputs_removed` | Rule 4 | Pre-seed `dist/ghost.schema.json`, a `docs/model/ghost/` folder, and a stale page inside the fixture's own docs folder; after build all three are gone |
 | `test_build.py::test_empty_schema_is_noop` | Rule 5 | Empty `schema/`; exit 0; `dist/` holds only a README saying no modules exist; `docs/model/` unchanged |
 | `test_examples.py` on the fixture instances | The validation path works | `minimal_instances.yaml` validates; `minimal_invalid.yaml` fails with the missing slot named |
 | `test_lint.py`, `test_dist.py` | Domain hooks are wired | Both collect zero files today and pass; they are the tests domain modules will light up |
