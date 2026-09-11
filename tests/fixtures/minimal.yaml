@@ -1,0 +1,75 @@
+id: https://example.org/minimal
+name: minimal
+version: 0.1.0
+description: >-
+  A three-class fixture the toolchain proves itself on. It exercises an identifier,
+  a reference slot, an inlined value object, and an enum, and nothing else.
+prefixes:
+  minimal: https://example.org/minimal/
+  linkml: https://w3id.org/linkml/
+default_prefix: minimal
+default_range: string
+imports:
+  - linkml:types
+
+enums:
+  WidgetState:
+    description: The lifecycle state of a widget.
+    permissible_values:
+      planned:
+        description: Designed but not yet made.
+      built:
+        description: Physically exists.
+
+classes:
+  Widget:
+    description: The top-level thing in this fixture. Identified, so it becomes a node.
+    tree_root: true
+    slots:
+      - id
+      - made_of
+      - size
+      - state
+    slot_usage:
+      made_of:
+        required: true
+
+  Material:
+    description: What a widget is made of. Identified, so a widget references it by id.
+    slots:
+      - id
+      - label
+
+  Dimensions:
+    description: A value object with no identifier, so it is inlined into its owner.
+    slots:
+      - width
+      - height
+    slot_usage:
+      width:
+        required: true
+      height:
+        required: true
+
+slots:
+  id:
+    identifier: true
+    description: Unique identifier within the document set.
+  label:
+    description: Short human-readable name.
+  made_of:
+    description: The material this widget is made of, by identifier.
+    range: Material
+  size:
+    description: The widget's outer dimensions.
+    range: Dimensions
+    inlined: true
+  state:
+    description: Where the widget is in its lifecycle.
+    range: WidgetState
+  width:
+    description: Width in metres.
+    range: float
+  height:
+    description: Height in metres.
+    range: float

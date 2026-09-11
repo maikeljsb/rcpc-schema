@@ -1,0 +1,12 @@
+- id: w1
+  made_of: steel
+  size:
+    width: 1.2
+    height: 0.4
+  state: planned
+- id: w2
+  made_of: timber
+  size:
+    width: 2.0
+    height: 0.6
+  state: built
