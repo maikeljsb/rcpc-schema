@@ -56,7 +56,7 @@ Order is bottom-up along the graph. Task 2 sits before the build script on purpo
 - [ ] Review with human
 
 ### Phase 3: Domain hooks and CI
-- [ ] Task 5: Domain-module hooks, directory skeleton, and the first real build
+- [x] Task 5: Domain-module hooks, directory skeleton, and the first real build
 - [ ] Task 6: CI workflow, push, passing run
 
 ### Checkpoint: Complete

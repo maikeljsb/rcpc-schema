@@ -104,13 +104,13 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Description:** Add the two tests that domain modules will light up, `test_lint.py` over `schema/*.yaml` and `test_dist.py` comparing committed `dist/` and `docs/model/` to a fresh build and meta-checking every `dist/*.schema.json`; create `schema/`, `examples/`, `docs/model/` with `.gitkeep`; run the real build once so `dist/README.md` exists saying no modules exist; confirm the whole suite passes and the tree is clean after a rebuild.
 
 **Acceptance criteria:**
-- [ ] `tests/test_lint.py` and `tests/test_dist.py` parametrise over the real directories and skip cleanly when they are empty
-- [ ] `schema/.gitkeep`, `examples/.gitkeep`, `docs/model/.gitkeep` exist; `dist/README.md` is the generated no-modules README
-- [ ] `uv run pytest` passes; running `uv run python scripts/build.py` afterwards leaves `git status` clean
+- [x] `tests/test_lint.py` and `tests/test_dist.py` parametrise over the real directories and skip cleanly when they are empty (2 skipped today)
+- [x] `schema/.gitkeep`, `examples/.gitkeep`, `docs/model/.gitkeep` exist; `dist/README.md` is the generated no-modules README
+- [x] `uv run pytest` passes (9 passed, 2 skipped); running `uv run python scripts/build.py` afterwards leaves `git status` clean
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
+- [x] Tests pass: `uv run pytest`
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
 
 **Dependencies:** Task 4
 
