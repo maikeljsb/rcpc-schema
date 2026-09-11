@@ -6,7 +6,7 @@ search:
 # Class: CapabilityType 
 
 
-_Something a robot can do, named by a verb. Required by primitive tasks and offered by robot types._
+_Something a robot can do, named by a verb. Required by primitive tasks and offered by robots._
 
 
 
@@ -111,7 +111,7 @@ URI: [rcpc:CapabilityType](https://rcpc.for5672/schema/CapabilityType)
 ```yaml
 name: CapabilityType
 description: Something a robot can do, named by a verb. Required by primitive tasks
-  and offered by robot types.
+  and offered by robots.
 from_schema: https://rcpc.for5672/schema/common
 slots:
 - id
@@ -130,7 +130,7 @@ slot_usage:
 ```yaml
 name: CapabilityType
 description: Something a robot can do, named by a verb. Required by primitive tasks
-  and offered by robot types.
+  and offered by robots.
 from_schema: https://rcpc.for5672/schema/common
 slot_usage:
   description:

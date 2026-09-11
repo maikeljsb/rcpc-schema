@@ -2,7 +2,7 @@
   "$defs": {
     "CapabilityType": {
       "additionalProperties": false,
-      "description": "Something a robot can do, named by a verb. Required by primitive tasks and offered by robot types.",
+      "description": "Something a robot can do, named by a verb. Required by primitive tasks and offered by robots.",
       "properties": {
         "description": {
           "description": "What this is, in one or two plain sentences.",

@@ -56,10 +56,8 @@ id: https://rcpc.for5672/schema/common
 name: common
 version: 0.1.0
 description: >-
-  Shared vocabulary for the Product Process Graph: the Position and Quantity value
-  types, the MaterialName type that joins product to process, the closed set of
-  parameter kinds, and the capability types that primitive tasks require and robot
-  types offer. Imported by every other module.
+  Shared vocabulary for the Product Process Graph: value types, the material name
+  type, the parameter kinds, and the capability types. Imported by every other module.
 prefixes:
   rcpc: https://rcpc.for5672/schema/
   linkml: https://w3id.org/linkml/
@@ -117,7 +115,7 @@ classes:
   CapabilityType:
     description: >-
       Something a robot can do, named by a verb. Required by primitive tasks and
-      offered by robot types.
+      offered by robots.
     slots:
       - id
       - description

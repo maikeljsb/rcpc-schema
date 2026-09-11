@@ -57,7 +57,7 @@ classes:
   CapabilityType:
     description: >-
       Something a robot can do, named by a verb. Required by primitive tasks and
-      offered by robot types.
+      offered by robots.
     slots:
       - id
       - description
