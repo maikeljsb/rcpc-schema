@@ -59,11 +59,11 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md`. Each task is one Conventional 
 **Description:** One test per rule in the spec's build description, written before the script exists, so the script is built to the tests. Each test copies `scripts/build.py` and a chosen `schema/` content into a temporary directory tree and runs the script there via `subprocess`, so the committed `dist/` and `docs/model/` are never touched.
 
 **Acceptance criteria:**
-- [ ] Six tests exist and all fail because `scripts/build.py` is absent: 2020-12 declared; meta-schema passes; `docs/model/minimal/index.md` created; `dist/README.md` names `minimal.schema.json` and contains the fixture's description; a pre-seeded `dist/ghost.schema.json` is removed; empty `schema/` exits 0 with a README saying no modules exist and `docs/model/` untouched
-- [ ] Tests are plain functions with plain asserts and a shared helper that builds the temp tree
+- [x] Six tests exist and all fail because `scripts/build.py` is absent: 2020-12 declared; meta-schema passes; `docs/model/minimal/index.md` created; `dist/README.md` names `minimal.schema.json` and contains the fixture's description; a pre-seeded `dist/ghost.schema.json` is removed; empty `schema/` exits 0 with a README saying no modules exist and `docs/model/` untouched
+- [x] Tests are plain functions with plain asserts and a shared helper that builds the temp tree
 
 **Verification:**
-- [ ] `uv run pytest tests/test_build.py` reports 6 failed, 0 passed, 0 errors in collection
+- [x] `uv run pytest tests/test_build.py` reports 6 failed, 0 passed, 0 errors in collection (each fails with FileNotFoundError on the missing script)
 
 **Dependencies:** Task 2
 

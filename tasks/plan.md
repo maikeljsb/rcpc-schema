@@ -47,7 +47,7 @@ Order is bottom-up along the graph. Task 2 sits before the build script on purpo
 - [ ] Review with human
 
 ### Phase 2: The build
-- [ ] Task 3: Write `tests/test_build.py`, one failing test per build rule
+- [x] Task 3: Write `tests/test_build.py`, one failing test per build rule
 - [ ] Task 4: Write `scripts/build.py` until the build tests pass, under sixty lines
 
 ### Checkpoint: Phase 2
