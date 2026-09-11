@@ -34,7 +34,7 @@ schema/
   common.yaml                          the module
 examples/
   common/
-    capability_types.yaml              the ten reference capability types, migrated
+    capability_types.yaml              the four core capability types, migrated from the reference
     invalid/
       capability_type_missing_id.yaml  one entry without an id
 dist/
@@ -133,7 +133,7 @@ Conventions specific to this module:
 
 - **Value objects state that they are inlined** in their description, so a reader of `docs/model/common/Position.md` knows it is never a document on its own. The `inlined: true` itself is set by the owning slot in the consuming module, because inlining is a property of the slot in LinkML.
 - **Descriptions state the decision, not the history.** "Matching is by identifier; there are no levels" rather than the reasoning that led there.
-- **Capability descriptions are migrated from the reference, with "element" replaced by "component"** and nothing else changed unless a sentence no longer makes sense.
+- **Capability descriptions are migrated from the reference, with "element" replaced by "component"** and nothing else changed unless a sentence no longer makes sense. The vocabulary is a starting point, open to revision; capabilities are added when a method needs them.
 - **No `tree_root`.** See Decisions Made Here.
 
 ## Testing Strategy
@@ -163,7 +163,7 @@ No new test files. This module lights up the tests the toolchain left waiting an
 2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `CapabilityType`, and `ParameterKind`. `MaterialName` does not appear: LinkML inlines types onto the slots that use them by default, so a `MaterialName` slot renders as a plain string, which is the preferred rendering for the viewer. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
 3. `dist/README.md` lists `common.schema.json` with the module description.
 4. `docs/model/common/index.md` lists three classes, eight slots, one enum, and one type, `MaterialName`. Every page has a description.
-5. `examples/common/capability_types.yaml` contains the ten reference capability types with `id`, `label`, `description`, and the word "element" appears in none of them.
+5. `examples/common/capability_types.yaml` contains the four core capability types, `locomotion`, `gripper`, `lifting`, `alignment`, with `id`, `label`, `description`, and the word "element" appears in none of them.
 6. Another team's check: given only `docs/model/common/`, a person adds an eleventh capability type to the example file and `uv run pytest` still passes. Recorded as done when it has happened once; not blocking.
 7. The toolchain was not changed. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module.
 
@@ -172,7 +172,7 @@ No new test files. This module lights up the tests the toolchain left waiting an
 1. **Position is an object, not an array.** The reference used a three-number array. An object flattens to `x`, `y`, `z` properties in the graph and is unambiguous in YAML.
 2. **Quantity drops `provenance`.** Deferred to Plan and Run with the rest of provenance.
 3. **`unit` is a free string, UCUM recommended.** Enforcing a unit vocabulary is a later decision that the graph would inherit; nothing in step 1 needs it.
-4. **All ten reference capabilities migrate.** Cheap, and the vocabulary is hand-authored content that already exists.
+4. **The four core capabilities migrate; the other six reference entries do not.** Revised 2026-09-11: the vocabulary is open for improvement, so the example holds only what the reference primitives require and the brief's allocation example names. Others return one at a time when a method needs them.
 5. **`label` and `description` required on CapabilityType.**
 6. **`MaterialName` as a shared string type.** Product's `material` and process's `applies_to` are joined by exact match; one declared type makes that visible and keeps the two modules independent of each other.
 7. **No `tree_root` anywhere, and no container classes.** LinkML recommends a `tree_root` container for serialisation, and that is right for a single self-contained schema. Here modules merge on import, and a probe on 2026-09-11 showed the consequence: with a container in common and another in product, product's generated schema took common's root and rejected a product document as having unexpected properties. So documents are top-level lists, validation always names the class with `-C`, and the `dist/` files are definition libraries with no root properties. Container classes without `tree_root` were considered and declined to avoid a wrapper class per module and an extra projection rule.

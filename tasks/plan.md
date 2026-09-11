@@ -29,7 +29,7 @@ Slice 1 comes first because it is the only path that exercises every toolchain h
 - **`CapabilityType` first, value types second.** Vertical slice over a horizontal one: the document class runs the whole pipeline; the value types only add to the generated outputs.
 - **The no-`tree_root` decision is re-checked on the real generated file.** Already confirmed on a probe; Task 2 asserts the same on `dist/common.schema.json` so the evidence is about the real module.
 - **LinkML inlines types by default, and that is what we want.** Verified on a probe 2026-09-11 and confirmed by the generator docs: a `MaterialName` slot renders as a plain string, `$defs` holds only classes and enums, and a schema with no `tree_root` has no root `properties`. The spec's criterion 2 says so; `MaterialName` is verified through the docs index.
-- **Capability descriptions are migrated by script, not retyped.** The ten entries come from `docs/reference-schemas/capabilities.json` with "element" replaced by "component" and the one mojibake dash in the `gripper` description replaced by a plain comma. Nothing else changes.
+- **Capability descriptions are migrated by script, not retyped.** The entries come from `docs/reference-schemas/capabilities.json` with "element" replaced by "component" and the one mojibake dash in the `gripper` description replaced by a plain comma. Nothing else changes.
 - **Example files are top-level YAML lists**, as proven in the toolchain module.
 
 ## Task List
