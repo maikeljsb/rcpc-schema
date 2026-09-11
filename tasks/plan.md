@@ -45,7 +45,7 @@ Slice 1 comes first because it is the only path that exercises every toolchain h
 - [x] Task 2: `Position`, `Quantity`, `MaterialName`, `ParameterKind`, rebuilt outputs, generated-schema check
 
 ### Phase 3: Close
-- [ ] Task 3: Verify the seven success criteria, push, confirm CI
+- [x] Task 3: Verify the seven success criteria, push, confirm CI
 
 ### Checkpoint: Complete
 - [ ] Every success criterion in `SPEC-common.md` verified with evidence

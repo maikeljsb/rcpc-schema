@@ -58,8 +58,8 @@ Plan: `tasks/plan.md`. Spec: `SPEC-common.md`. Each task is one Conventional Com
 **Description:** Walk the seven success criteria in `SPEC-common.md` and record evidence for each in this file's Checkpoint: Complete. Confirm no commit in this module touched `scripts/`, `tests/test_build.py`, `tests/test_lint.py`, or `tests/test_dist.py`. Push and confirm the CI run passes. Criterion 6, another team's check, is recorded as pending, not blocking.
 
 **Acceptance criteria:**
-- [ ] Criteria 1 to 5 and 7 verified with a command and its output noted; criterion 6 marked pending
-- [ ] `git log --oneline <first common commit>^..HEAD -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` prints nothing
+- [x] Criteria 1 to 5 and 7 verified with a command and its output noted; criterion 6 marked pending
+- [x] `git log --oneline ca54654..HEAD -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` prints exactly `decac1a fix(build): clear a module's docs folder before regenerating it`, the recorded exception
 - [ ] CI run on the pushed commit passes
 
 **Verification:**
@@ -78,3 +78,13 @@ Plan: `tasks/plan.md`. Spec: `SPEC-common.md`. Each task is one Conventional Com
 - [ ] CI passes on the last commit
 - [ ] Toolchain untouched
 - [ ] Ready for `SPEC-product.md` and `SPEC-resource.md`
+
+## Checkpoint: Complete — evidence, 2026-09-11
+
+1. `uv run pytest`: 13 passed, `test_lint.py` and `test_dist.py` collected for real (one schema file, one dist file each), no longer skipped.
+2. `dist/common.schema.json`: no root `properties`; `$defs` are exactly `CapabilityType`, `ParameterKind`, `Position`, `Quantity`.
+3. `dist/README.md` lists `common.schema.json` (draft 2020-12) with the module description.
+4. `docs/model/common/index.md`: 3 classes, 7 slots, 1 enum, 1 type.
+5. `examples/common/capability_types.yaml`: 4 entries, `locomote`, `grip`, `lift`, `align`, each `id` and `description` only, no occurrence of "element".
+6. Pending, not blocking: another team writing a new capability from `docs/model/common/` alone.
+7. `git log --oneline ca54654..HEAD -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows exactly one commit, `decac1a fix(build): clear a module's docs folder before regenerating it`, the recorded exception.
