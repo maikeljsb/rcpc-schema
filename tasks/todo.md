@@ -13,7 +13,7 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 **Verification:**
 - [x] Tests pass: `uv run pytest`
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
 - [x] Manual check: `docs/model/common/weight.md` exists and reads correctly
 
 **Dependencies:** None
@@ -23,6 +23,8 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 - `dist/common.schema.json`, `docs/model/common/*` (generated)
 
 **Estimated scope:** Small
+
+**Done:** Committed 2026-09-12 as `317eaf0 feat(common): add the four dimension slots`.
 
 ## Task 2: `RobotUnit`, `RobotStatus`, and `Activity` with `offers`, end to end
 

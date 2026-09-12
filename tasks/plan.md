@@ -44,7 +44,7 @@ schema/common.yaml  (+ length, width, height, weight)                         (T
 ## Task List
 
 ### Phase 1: Prerequisite and the entry
-- [ ] Task 1: Add the four dimension slots to common
+- [x] Task 1: Add the four dimension slots to common
 - [ ] Task 2: `RobotUnit`, `RobotStatus`, and `Activity` with `offers`, end to end
 
 ### Checkpoint: Phase 1
