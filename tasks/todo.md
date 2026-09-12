@@ -31,14 +31,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 **Description:** Create `schema/resource.yaml` with the header from the spec, the `RobotStatus` enum, the `RobotUnit` class with `id`, `count`, `status`, and `activity`, and the `Activity` class with `id` and `offers` only. Declare `count`, `status`, `activity`, and `offers` as the spec states them. The other three group slots are declared in the task that adds their class, so no range ever names an undeclared class. Write `examples/resource/robot_units.yaml` with two minimal fictional entries, `mason_m1` with `count: 2` and a mobile inspection robot with `count: 1`, each with an `Activity` holding `id` and `offers` drawn from `examples/common/capability_types.yaml`. Write the three invalid documents that need no other group. Add four rows to `EXAMPLES`. Rebuild and commit as `feat(resource): add RobotUnit, RobotStatus and the Activity group`.
 
 **Acceptance criteria:**
-- [ ] `uv run linkml-lint schema/resource.yaml` reports no problems, and `linkml-validate -C RobotUnit` accepts `robot_units.yaml`
-- [ ] The three invalid documents fail naming `activity`, `count`, and `offers` respectively
-- [ ] `dist/resource.schema.json` declares draft 2020-12, has `minimum: 1` on `count`, an array of strings for `offers`, a `$ref` for `activity`, and no root `properties`
+- [x] `uv run linkml-lint schema/resource.yaml` reports no problems, and `linkml-validate -C RobotUnit` accepts `robot_units.yaml`
+- [x] The three invalid documents fail naming `activity`, `count`, and `offers` respectively
+- [x] `dist/resource.schema.json` declares draft 2020-12, has `minimum: 1` on `count`, an array of strings for `offers`, a `$ref` for `activity`, and no root `properties`
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest` with four new rows collected
-- [ ] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` clean after the commit
-- [ ] Manual check: `docs/model/resource/index.md` lists this module's classes, slots, and enum only; `status.md` shows or states the `idle` default; `dist/README.md` lists resource
+- [x] Tests pass: `uv run pytest` with four new rows collected
+- [x] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` clean after the commit
+- [x] Manual check: `docs/model/resource/index.md` lists this module's classes, slots, and enum only; `status.md` shows or states the `idle` default; `dist/README.md` lists resource
 
 **Dependencies:** Task 1
 
