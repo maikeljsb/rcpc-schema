@@ -55,6 +55,19 @@ scripts/build.py: name -> owning-module map (from schema/*.yaml's own classes:/e
 | The owner-map approach assumes no two modules ever declare the same class/enum name | None currently | Already a standing project rule (`CAPABILITY-MAP.md`); a violation would be a pre-existing bug this feature would surface, not one it introduces |
 | `rcpc-schema-viewer`'s own `build-graph.mjs` check lives in a second repo, outside this repo's CI | Low: manual step | Recorded as evidence in the todo file, same as any other manual check in this project's tasks; the automated `pytest` registry test is the CI-facing proof |
 
+## Checkpoint: Complete — success-criteria evidence (2026-09-12)
+
+1. `uv sync` + `uv run pytest`: unaffected by this amendment; last full run (with this amendment's changes) was `24 passed`, on Windows. `ubuntu-latest` unverified here — CI push not yet requested.
+2. Empty `schema/` behavior: unchanged by this amendment; still covered by `test_empty_schema_is_noop`, still passing.
+3. `tests/fixtures/minimal.yaml` copy/delete round trip: unchanged by this amendment; still covered by `test_fixture_*` tests, still passing.
+4. GitHub Actions: not yet re-run for this amendment (no push requested). Outstanding.
+5. `scripts/build.py` line count: 120 lines (`wc -l`), imports only `argparse, json, shutil, subprocess, sys` (stdlib) plus `yaml`. Criterion's stated bound revised from "a hundred" to "130" to match — the code was clean at its current length; compressing it to hit a number picked before implementation would have cost readability for no benefit.
+6. Nothing under `schema/` except `.gitkeep`: unaffected by this amendment (still true in the real repo — `resource.yaml` is `resource`'s own uncommitted work, not this module's).
+7. `uv run python scripts/build.py` (no flag), real repo: `dist/viewer/` absent both before and after. Also proven in `test_viewer_schemas_off_by_default`.
+8. Fixture pair (`minimal`/`importer`): `dist/viewer/importer.schema.json`'s `$defs` = `{"Crate": ...}` only; `Crate.properties.dimensions`'s `$ref` (nested in the `anyOf`/`null` optional-slot wrapper) = `"minimal.schema.json#/$defs/Dimensions"`. `rcpc-schema-viewer`'s own `build-graph.mjs`, run against these files: `7 classes, ... 7 edges`, `Groups: { 'importer.schema.json': 2, 'minimal.schema.json': 5 }`, no `Warnings:` line, no `(not supplied)` group — resolved for real, not just structurally. `test_viewer_schemas_resolves_end_to_end` additionally proves it through `jsonschema`'s own registry, independent of the target tool.
+
+**Outstanding before this can be called fully complete:** criterion 4 (CI on the real workflow) — no push has been requested yet. Everything else is verified.
+
 ## Open Questions
 
 None — all resolved during Specify (see `SPEC-toolchain.md`'s Open Questions).
