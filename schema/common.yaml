@@ -85,3 +85,19 @@ slots:
     description: The numeric value.
   unit:
     description: The unit of the value.
+  length:
+    range: Quantity
+    inlined: true
+    description: How long the item is, recommended in metres.
+  width:
+    range: Quantity
+    inlined: true
+    description: How wide the item is, recommended in metres.
+  height:
+    range: Quantity
+    inlined: true
+    description: How tall the item is, recommended in metres.
+  weight:
+    range: Quantity
+    inlined: true
+    description: How much the item weighs, recommended in kilograms.

@@ -7,14 +7,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 **Description:** Declare `length`, `width`, `height`, `weight` in `schema/common.yaml` under `slots:`, each `range: Quantity`, `inlined: true`, with a one-sentence description. No class in common lists them. Rebuild and commit YAML with generated outputs as `feat(common): add the four dimension slots`.
 
 **Acceptance criteria:**
-- [ ] `uv run linkml-lint schema/common.yaml` reports no problems
-- [ ] `docs/model/common/index.md` lists eleven slots, the four new ones each with a description
-- [ ] `dist/common.schema.json` `$defs` are unchanged: `CapabilityType`, `ParameterKind`, `Position`, `Quantity`
+- [x] `uv run linkml-lint schema/common.yaml` reports no problems
+- [x] `docs/model/common/index.md` lists eleven slots, the four new ones each with a description
+- [x] `dist/common.schema.json` `$defs` are unchanged: `CapabilityType`, `ParameterKind`, `Position`, `Quantity`
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`
+- [x] Tests pass: `uv run pytest`
 - [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing after the commit
-- [ ] Manual check: `docs/model/common/weight.md` exists and reads correctly
+- [x] Manual check: `docs/model/common/weight.md` exists and reads correctly
 
 **Dependencies:** None
 
