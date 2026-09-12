@@ -2,14 +2,16 @@
 
 Rules in SPEC-toolchain.md: one draft 2020-12 JSON Schema per module, docs per module,
 a generated dist/README.md, stale outputs removed, empty schema/ is a no-op, fail fast.
+With --viewer-schemas: also write dist/viewer/, a cross-file $ref variant for a schema
+viewer, gitignored and never drift-tested.
 """
 from pathlib import Path
-import json, shutil, subprocess, sys
+import argparse, json, shutil, subprocess, sys
 
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMA, DIST, DOCS = ROOT / "schema", ROOT / "dist", ROOT / "docs" / "model"
+SCHEMA, DIST, DOCS, VIEWER = ROOT / "schema", ROOT / "dist", ROOT / "docs" / "model", ROOT / "dist" / "viewer"
 DRAFT = "https://json-schema.org/draft/2020-12/schema"
 
 
@@ -21,14 +23,15 @@ def write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
-def build(module: Path) -> str:
-    """Emit the module's JSON Schema and docs; return its description for the README."""
+def build(module: Path) -> tuple[str, dict]:
+    """Emit the module's JSON Schema and docs; return its description and schema dict."""
     schema = json.loads(run("gen-json-schema", str(module)))
     schema["$schema"] = DRAFT
     write(DIST / f"{module.stem}.schema.json", json.dumps(schema, indent=2) + "\n")
     shutil.rmtree(DOCS / module.stem, ignore_errors=True)
     run("gen-doc", "--no-mergeimports", "-d", str(DOCS / module.stem), str(module))
-    return str(yaml.safe_load(module.read_text(encoding="utf-8")).get("description", "")).strip()
+    description = str(yaml.safe_load(module.read_text(encoding="utf-8")).get("description", "")).strip()
+    return description, schema
 
 
 def remove_stale(keep: set[str]) -> None:
@@ -39,15 +42,62 @@ def remove_stale(keep: set[str]) -> None:
         shutil.rmtree(stale)
 
 
+def owners(modules: list[Path]) -> dict[str, str]:
+    """Map every class/enum name to the module stem whose own YAML declares it."""
+    result: dict[str, str] = {}
+    for module in modules:
+        doc = yaml.safe_load(module.read_text(encoding="utf-8"))
+        for name in {**doc.get("classes", {}), **doc.get("enums", {})}:
+            result[name] = module.stem
+    return result
+
+
+def link(schema: dict, stem: str, owner: dict[str, str]) -> dict:
+    """Cross-file $ref variant: keep only this module's own $defs, ref the rest by filename."""
+    linked = json.loads(json.dumps(schema))
+
+    def rewrite(node: object) -> None:
+        if isinstance(node, dict):
+            ref = node.get("$ref", "")
+            if isinstance(ref, str) and ref.startswith("#/$defs/"):
+                name = ref.removeprefix("#/$defs/")
+                if owner.get(name, stem) != stem:
+                    node["$ref"] = f"{owner[name]}.schema.json#/$defs/{name}"
+            for value in node.values():
+                rewrite(value)
+        elif isinstance(node, list):
+            for item in node:
+                rewrite(item)
+
+    rewrite(linked)
+    linked["$defs"] = {name: d for name, d in linked["$defs"].items() if owner.get(name, stem) == stem}
+    return linked
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--viewer-schemas", action="store_true")
+    args = parser.parse_args()
+
     modules = sorted(SCHEMA.glob("*.yaml"))
     DIST.mkdir(exist_ok=True)
     DOCS.mkdir(parents=True, exist_ok=True)
     lines = ["# Generated schemas", "", "Generated from `schema/` by `uv run python scripts/build.py`. Do not edit.", ""]
-    lines += [f"- `{m.stem}.schema.json` (JSON Schema draft 2020-12): {build(m)}" for m in modules]
+    schemas: dict[str, dict] = {}
+    for m in modules:
+        description, schema = build(m)
+        schemas[m.stem] = schema
+        lines.append(f"- `{m.stem}.schema.json` (JSON Schema draft 2020-12): {description}")
     lines += ["No modules exist under `schema/` yet."] if not modules else []
     remove_stale({m.stem for m in modules})
     write(DIST / "README.md", "\n".join(lines) + "\n")
+
+    if args.viewer_schemas:
+        shutil.rmtree(VIEWER, ignore_errors=True)
+        VIEWER.mkdir(parents=True, exist_ok=True)
+        owner = owners(modules)
+        for m in modules:
+            write(VIEWER / f"{m.stem}.schema.json", json.dumps(link(schemas[m.stem], m.stem, owner), indent=2) + "\n")
     return 0
 
 

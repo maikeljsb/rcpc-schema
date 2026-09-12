@@ -1,0 +1,28 @@
+id: https://example.org/importer
+name: importer
+version: 0.1.0
+description: >-
+  A second fixture, importing minimal, so the toolchain can prove its
+  cross-file $ref rewrite against a real import without depending on any
+  domain module's current shape.
+prefixes:
+  importer: https://example.org/importer/
+  linkml: https://w3id.org/linkml/
+default_prefix: importer
+default_range: string
+imports:
+  - linkml:types
+  - minimal
+
+classes:
+  Crate:
+    description: Something built to hold one widget's dimensions, for this fixture only.
+    slots:
+      - id
+      - dimensions
+
+slots:
+  dimensions:
+    description: The dimensions this crate was built to hold. Minimal's own Dimensions class.
+    range: Dimensions
+    inlined: true

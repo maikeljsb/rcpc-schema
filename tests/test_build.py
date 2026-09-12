@@ -13,6 +13,7 @@ import sys
 from jsonschema import Draft202012Validator
 
 FIXTURE = "tests/fixtures/minimal.yaml"
+IMPORTER = "tests/fixtures/importer.yaml"
 DRAFT = "https://json-schema.org/draft/2020-12/schema"
 
 
@@ -29,9 +30,9 @@ def make_tree(tmp_path: Path, root: Path, modules: list[str]) -> Path:
     return tmp_path
 
 
-def build(tree: Path) -> subprocess.CompletedProcess[str]:
+def build(tree: Path, *args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, str(tree / "scripts" / "build.py")],
+        [sys.executable, str(tree / "scripts" / "build.py"), *args],
         capture_output=True,
         text=True,
         encoding="utf-8",
@@ -90,3 +91,28 @@ def test_empty_schema_is_noop(tmp_path: Path, root: Path) -> None:
     assert sorted(p.name for p in (tree / "dist").iterdir()) == ["README.md"]
     assert "no modules" in (tree / "dist" / "README.md").read_text(encoding="utf-8").lower()
     assert sorted(p.name for p in (tree / "docs" / "model").iterdir()) == [".gitkeep"]
+
+
+def test_viewer_schemas_off_by_default(tmp_path: Path, root: Path) -> None:
+    tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
+    assert build(tree).returncode == 0
+    assert not (tree / "dist" / "viewer").exists()
+
+
+def test_viewer_schemas_splits_defs(tmp_path: Path, root: Path) -> None:
+    tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
+    result = build(tree, "--viewer-schemas")
+    assert result.returncode == 0, result.stderr
+    linked = json.loads((tree / "dist" / "viewer" / "importer.schema.json").read_text(encoding="utf-8"))
+    assert set(linked["$defs"]) == {"Crate"}
+    dimensions = linked["$defs"]["Crate"]["properties"]["dimensions"]
+    ref = next(branch["$ref"] for branch in dimensions["anyOf"] if "$ref" in branch)
+    assert ref == "minimal.schema.json#/$defs/Dimensions"
+
+
+def test_viewer_schemas_noop_module(tmp_path: Path, root: Path) -> None:
+    tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
+    assert build(tree, "--viewer-schemas").returncode == 0
+    plain = (tree / "dist" / "minimal.schema.json").read_text(encoding="utf-8")
+    linked = (tree / "dist" / "viewer" / "minimal.schema.json").read_text(encoding="utf-8")
+    assert plain == linked
