@@ -1,0 +1,150 @@
+{
+  "$defs": {
+    "Activity": {
+      "additionalProperties": false,
+      "description": "CRS group 4: the capabilities a robot offers and how it performs them. The one required group, because offers is required.",
+      "properties": {
+        "id": {
+          "description": "Identifier, unique among instances of its class.",
+          "type": "string"
+        },
+        "offers": {
+          "description": "The capability types this robot offers. The CRS Task Type.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "offers"
+      ],
+      "title": "Activity",
+      "type": "object"
+    },
+    "CapabilityType": {
+      "additionalProperties": false,
+      "description": "Something a robot can do, named by a verb. Required by primitive tasks and offered by robots.",
+      "properties": {
+        "description": {
+          "description": "What this is, in one or two plain sentences.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Identifier, unique among instances of its class.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description"
+      ],
+      "title": "CapabilityType",
+      "type": "object"
+    },
+    "ParameterKind": {
+      "description": "The kinds of value a task parameter can hold.",
+      "enum": [
+        "position",
+        "component_reference",
+        "quantity"
+      ],
+      "title": "ParameterKind",
+      "type": "string"
+    },
+    "Position": {
+      "additionalProperties": false,
+      "description": "A cartesian point in the IFC project coordinate frame.",
+      "properties": {
+        "x_coord": {
+          "description": "Cartesian x coordinate.",
+          "type": "number"
+        },
+        "y_coord": {
+          "description": "Cartesian y coordinate.",
+          "type": "number"
+        },
+        "z_coord": {
+          "description": "Cartesian z coordinate.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x_coord",
+        "y_coord",
+        "z_coord"
+      ],
+      "title": "Position",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "description": "A number with a unit.",
+      "properties": {
+        "unit": {
+          "description": "The unit of the value.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The numeric value.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    },
+    "RobotStatus": {
+      "description": "The runtime state of one machine.",
+      "enum": [
+        "idle",
+        "deployed",
+        "charging",
+        "out_of_service"
+      ],
+      "title": "RobotStatus",
+      "type": "string"
+    },
+    "RobotUnit": {
+      "additionalProperties": false,
+      "description": "One robot product, entered from its Construction Robot Schema attributes. Identical machines are one entry with a count.",
+      "properties": {
+        "activity": {
+          "$ref": "#/$defs/Activity",
+          "description": "The Activity group holding this robot's offered capabilities."
+        },
+        "count": {
+          "description": "How many identical machines this entry stands for.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "id": {
+          "description": "The robot's name, a readable product slug. The CRS Name.",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/RobotStatus",
+          "description": "The runtime state of one machine."
+        }
+      },
+      "required": [
+        "id",
+        "count",
+        "activity"
+      ],
+      "title": "RobotUnit",
+      "type": "object"
+    }
+  },
+  "$id": "https://rcpc.for5672/schema/resource",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "metamodel_version": "1.11.0",
+  "title": "resource",
+  "type": "object",
+  "version": "0.1.0"
+}

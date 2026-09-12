@@ -1,0 +1,71 @@
+id: https://rcpc.for5672/schema/resource
+name: resource
+version: 0.1.0
+description: >-
+  Robots as resources. One RobotUnit entry per robot product, holding the four
+  Construction Robot Schema groups and the capabilities the robot offers.
+prefixes:
+  rcpc: https://rcpc.for5672/schema/
+  linkml: https://w3id.org/linkml/
+default_prefix: rcpc
+default_range: string
+imports:
+  - linkml:types
+  - common
+
+enums:
+  RobotStatus:
+    description: The runtime state of one machine.
+    permissible_values:
+      idle:
+        description: Not currently assigned to any task.
+      deployed:
+        description: Actively performing a task.
+      charging:
+        description: Recharging and unavailable for assignment.
+      out_of_service:
+        description: Unavailable for assignment due to maintenance or failure.
+
+classes:
+  RobotUnit:
+    description: >-
+      One robot product, entered from its Construction Robot Schema attributes.
+      Identical machines are one entry with a count.
+    slots:
+      - id
+      - count
+      - status
+      - activity
+    slot_usage:
+      id:
+        description: The robot's name, a readable product slug. The CRS Name.
+      activity:
+        required: true
+
+  Activity:
+    description: >-
+      CRS group 4: the capabilities a robot offers and how it performs them.
+      The one required group, because offers is required.
+    slots:
+      - id
+      - offers
+
+slots:
+  count:
+    range: integer
+    minimum_value: 1
+    required: true
+    description: How many identical machines this entry stands for.
+  status:
+    range: RobotStatus
+    ifabsent: RobotStatus(idle)
+    description: The runtime state of one machine.
+  activity:
+    range: Activity
+    inlined: true
+    description: The Activity group holding this robot's offered capabilities.
+  offers:
+    range: CapabilityType
+    multivalued: true
+    required: true
+    description: The capability types this robot offers. The CRS Task Type.

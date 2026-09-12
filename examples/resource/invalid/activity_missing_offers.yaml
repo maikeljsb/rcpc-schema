@@ -1,0 +1,4 @@
+- id: no_offers_bot
+  count: 1
+  activity:
+    id: no_offers_bot_activity
