@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import sys
 
+import pytest
 from jsonschema import Draft202012Validator
 
 FIXTURE = "tests/fixtures/minimal.yaml"
@@ -116,3 +117,31 @@ def test_viewer_schemas_noop_module(tmp_path: Path, root: Path) -> None:
     plain = (tree / "dist" / "minimal.schema.json").read_text(encoding="utf-8")
     linked = (tree / "dist" / "viewer" / "minimal.schema.json").read_text(encoding="utf-8")
     assert plain == linked
+
+
+def test_viewer_schemas_readme_written(tmp_path: Path, root: Path) -> None:
+    tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
+    assert build(tree, "--viewer-schemas").returncode == 0
+    readme = (tree / "dist" / "viewer" / "README.md").read_text(encoding="utf-8")
+    assert "not committed" in readme.lower()
+    assert "$ref" in readme
+
+
+def test_viewer_schemas_resolves_end_to_end(tmp_path: Path, root: Path) -> None:
+    from referencing import Registry, Resource
+
+    tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
+    assert build(tree, "--viewer-schemas").returncode == 0
+    minimal = json.loads((tree / "dist" / "viewer" / "minimal.schema.json").read_text(encoding="utf-8"))
+    importer = json.loads((tree / "dist" / "viewer" / "importer.schema.json").read_text(encoding="utf-8"))
+
+    registry = Registry().with_resources([
+        ("minimal.schema.json", Resource.from_contents(minimal)),
+        ("importer.schema.json", Resource.from_contents(importer)),
+    ])
+    validator = Draft202012Validator(schema=importer["$defs"]["Crate"], registry=registry)
+
+    validator.validate({"id": "c1", "dimensions": {"width": 1.0, "height": 2.0}})
+
+    with pytest.raises(Exception):
+        validator.validate({"id": "c1", "dimensions": {"width": 1.0}})
