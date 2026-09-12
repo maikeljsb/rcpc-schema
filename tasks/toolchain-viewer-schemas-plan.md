@@ -68,6 +68,10 @@ scripts/build.py: name -> owning-module map (from schema/*.yaml's own classes:/e
 
 All 8 criteria verified. Nothing outstanding.
 
+## Amendment 2026-09-12: default flipped to on
+
+After Task 2 closed this out, the user asked for `dist/viewer/` to be produced by default rather than opt-in. Changed: `--viewer-schemas` (opt-in) became `--no-viewer-schemas` (opt-out, `dest="viewer_schemas"`, `action="store_false"`); the viewer block now also skips when `schema/` has no modules, so `test_empty_schema_is_noop` needed no change; `test_dist.py`'s `tree_contents()` now excludes any `viewer/` top-level path, since a plain build's temp-tree comparison would otherwise pick up the now-always-generated folder that the committed real `dist/` (correctly) never has. `test_viewer_schemas_off_by_default` became `test_viewer_schemas_on_by_default` plus a new `test_viewer_schemas_opt_out`; the other viewer tests dropped their now-nonexistent `--viewer-schemas` argument. `SPEC-toolchain.md` rule 7, its Commands example, Success Criterion 7, the Users section, and Project Structure updated to match. Verified on the real repo: plain build now produces `dist/viewer/`; `--no-viewer-schemas` suppresses it; `git status` stays clean either way. `uv run pytest` → 25 passed (was 24, `test_viewer_schemas_opt_out` added).
+
 ## Open Questions
 
 None — all resolved during Specify (see `SPEC-toolchain.md`'s Open Questions).
