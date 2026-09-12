@@ -94,15 +94,22 @@ def test_empty_schema_is_noop(tmp_path: Path, root: Path) -> None:
     assert sorted(p.name for p in (tree / "docs" / "model").iterdir()) == [".gitkeep"]
 
 
-def test_viewer_schemas_off_by_default(tmp_path: Path, root: Path) -> None:
+def test_viewer_schemas_on_by_default(tmp_path: Path, root: Path) -> None:
     tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
     assert build(tree).returncode == 0
+    assert (tree / "dist" / "viewer" / "minimal.schema.json").is_file()
+    assert (tree / "dist" / "viewer" / "importer.schema.json").is_file()
+
+
+def test_viewer_schemas_opt_out(tmp_path: Path, root: Path) -> None:
+    tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
+    assert build(tree, "--no-viewer-schemas").returncode == 0
     assert not (tree / "dist" / "viewer").exists()
 
 
 def test_viewer_schemas_splits_defs(tmp_path: Path, root: Path) -> None:
     tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
-    result = build(tree, "--viewer-schemas")
+    result = build(tree)
     assert result.returncode == 0, result.stderr
     linked = json.loads((tree / "dist" / "viewer" / "importer.schema.json").read_text(encoding="utf-8"))
     assert set(linked["$defs"]) == {"Crate"}
@@ -113,7 +120,7 @@ def test_viewer_schemas_splits_defs(tmp_path: Path, root: Path) -> None:
 
 def test_viewer_schemas_noop_module(tmp_path: Path, root: Path) -> None:
     tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
-    assert build(tree, "--viewer-schemas").returncode == 0
+    assert build(tree).returncode == 0
     plain = (tree / "dist" / "minimal.schema.json").read_text(encoding="utf-8")
     linked = (tree / "dist" / "viewer" / "minimal.schema.json").read_text(encoding="utf-8")
     assert plain == linked
@@ -121,7 +128,7 @@ def test_viewer_schemas_noop_module(tmp_path: Path, root: Path) -> None:
 
 def test_viewer_schemas_readme_written(tmp_path: Path, root: Path) -> None:
     tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
-    assert build(tree, "--viewer-schemas").returncode == 0
+    assert build(tree).returncode == 0
     readme = (tree / "dist" / "viewer" / "README.md").read_text(encoding="utf-8")
     assert "not committed" in readme.lower()
     assert "$ref" in readme
@@ -131,7 +138,7 @@ def test_viewer_schemas_resolves_end_to_end(tmp_path: Path, root: Path) -> None:
     from referencing import Registry, Resource
 
     tree = make_tree(tmp_path, root, [FIXTURE, IMPORTER])
-    assert build(tree, "--viewer-schemas").returncode == 0
+    assert build(tree).returncode == 0
     minimal = json.loads((tree / "dist" / "viewer" / "minimal.schema.json").read_text(encoding="utf-8"))
     importer = json.loads((tree / "dist" / "viewer" / "importer.schema.json").read_text(encoding="utf-8"))
 

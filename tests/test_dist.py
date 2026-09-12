@@ -16,10 +16,11 @@ SCHEMAS = sorted(p.name for p in (ROOT / "dist").glob("*.schema.json"))
 
 
 def tree_contents(folder: Path) -> dict[str, str]:
+    """Committed-equivalent files only: dist/viewer/ is gitignored and never drift-tested."""
     return {
         p.relative_to(folder).as_posix(): p.read_text(encoding="utf-8")
         for p in folder.rglob("*")
-        if p.is_file() and p.name != ".gitkeep"
+        if p.is_file() and p.name != ".gitkeep" and p.relative_to(folder).parts[0] != "viewer"
     }
 
 

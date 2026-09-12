@@ -2,8 +2,8 @@
 
 Rules in SPEC-toolchain.md: one draft 2020-12 JSON Schema per module, docs per module,
 a generated dist/README.md, stale outputs removed, empty schema/ is a no-op, fail fast.
-With --viewer-schemas: also write dist/viewer/, a cross-file $ref variant for a schema
-viewer, gitignored and never drift-tested.
+Also writes dist/viewer/ by default (skip with --no-viewer-schemas), a cross-file $ref
+variant for a schema viewer, gitignored and never drift-tested.
 """
 from pathlib import Path
 import argparse, json, shutil, subprocess, sys
@@ -86,7 +86,7 @@ def link(schema: dict, stem: str, owner: dict[str, str]) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--viewer-schemas", action="store_true")
+    parser.add_argument("--no-viewer-schemas", dest="viewer_schemas", action="store_false")
     args = parser.parse_args()
 
     modules = sorted(SCHEMA.glob("*.yaml"))
@@ -102,7 +102,7 @@ def main() -> int:
     remove_stale({m.stem for m in modules})
     write(DIST / "README.md", "\n".join(lines) + "\n")
 
-    if args.viewer_schemas:
+    if args.viewer_schemas and modules:
         shutil.rmtree(VIEWER, ignore_errors=True)
         VIEWER.mkdir(parents=True, exist_ok=True)
         owner = owners(modules)
