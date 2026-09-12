@@ -73,6 +73,6 @@ Plan: `tasks/toolchain-viewer-schemas-plan.md`. Spec: `SPEC-toolchain.md` (amend
 **Estimated scope:** Medium
 
 ## Checkpoint: Complete
-- [ ] Both tasks committed
-- [x] All 8 success criteria in `SPEC-toolchain.md` verified with evidence, recorded in the plan (criterion 4, CI, outstanding — no push requested yet)
+- [x] Both tasks committed
+- [x] All 8 success criteria in `SPEC-toolchain.md` verified with evidence, recorded in the plan (CI run `34689708562` passed on the pushed head)
 - [x] `resource`'s `tasks/plan.md`/`tasks/todo.md` untouched throughout; ready to resume its Task 3
