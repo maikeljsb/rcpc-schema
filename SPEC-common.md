@@ -151,7 +151,7 @@ No new test files. This module lights up the tests the toolchain left waiting an
 
 **Ask first.** Adding a class, type, slot, or enum value beyond the ones listed under The Model, including the foreseen additions before their trigger arrives. Adding a fourth parameter kind. Making `unit` an enum. Changing the schema `id` or prefix. Moving anything into common from another module.
 
-**Never.** `tree_root: true` on any class. Graph vocabulary or annotations. Hand edits under `dist/` or `docs/model/`. Redefining `id`, `label`, or `description` in another module. A container or payload class.
+**Never.** `tree_root: true` on any class. Graph vocabulary or annotations. Hand edits under `dist/` or `docs/model/`. Redefining any slot this module declares, `id`, `description`, `value`, `unit`, or the coordinate slots, in another module; a module lists them and refines them with `slot_usage`. A container or payload class.
 
 ## Success Criteria
 
