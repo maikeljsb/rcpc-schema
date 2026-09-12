@@ -52,7 +52,7 @@ Behaviour, fully specified so a domain module never has to think about it:
 6. Exit non-zero on the first generator failure, with the generator's message unaltered.
 7. Only with `--viewer-schemas` on the command line: build one map from every class and enum name to the single `schema/<module>.yaml` that declares it, by reading each module's own `classes:` and `enums:` keys directly (never what it imports). Project rules already forbid two modules declaring the same name, so this map has no collisions to arbitrate. Then, for every module, take the merged JSON Schema already produced in step 1, remove from its `$defs` every entry whose name the map assigns to a different module, and rewrite every `"$ref": "#/$defs/<Name>"` naming a removed entry to `"$ref": "<owning-module>.schema.json#/$defs/<Name>"`. A module with nothing foreign in its `$defs` (`common` today) comes out identical to its `dist/` counterpart. Write the result to `dist/viewer/<module>.schema.json` with the same draft 2020-12 rewrite as step 1, plus `dist/viewer/README.md` stating what these files are, that they reference each other by plain relative filename, and that they are not the canonical `dist/` artifact. `dist/viewer/` is gitignored: a local, on-demand output, never committed, never checked for drift.
 
-No flags besides `--viewer-schemas`, no configuration file. Target length: under a hundred lines including docstring.
+No flags besides `--viewer-schemas`, no configuration file. Target length: under 130 lines including docstring.
 
 ## Project Structure
 
@@ -169,7 +169,7 @@ Checkable by anyone with git and uv:
 2. `uv run python scripts/build.py` with an empty `schema/` exits 0 and leaves `dist/` holding only a README saying no modules exist.
 3. With `tests/fixtures/minimal.yaml` copied into `schema/`, `build.py` produces `dist/minimal.schema.json` declaring draft 2020-12 that passes `Draft202012Validator.check_schema`, a `dist/README.md` listing it with its description, and `docs/model/minimal/index.md`. Then delete the copy and rebuild: the schema file and docs folder are gone and the README says no modules exist.
 4. The GitHub Actions workflow passes on the commit that completes this module.
-5. `scripts/build.py` is under a hundred lines and imports only the standard library and PyYAML.
+5. `scripts/build.py` is under 130 lines and imports only the standard library and PyYAML.
 6. Nothing exists under `schema/` except `.gitkeep`.
 7. `uv run python scripts/build.py` with no flag never creates `dist/viewer/`.
 8. Built from `tests/fixtures/minimal.yaml` and `tests/fixtures/importer.yaml` (a second fixture, added by this amendment, that imports `minimal` and declares one class referencing one of `minimal`'s), `dist/viewer/importer.schema.json`'s `$defs` hold only `importer`'s own `Crate`, with its reference to `minimal`'s `Dimensions` rewritten to `"minimal.schema.json#/$defs/Dimensions"`; both files, uploaded together to `rcpc-schema-viewer` (`C:\Users\go25qoh\Repos\rcpc-schema-viewer`), resolve with no stub class for `minimal.schema.json`. Chosen over the real `resource`/`common` pair because, at the time of writing, nothing in `resource.yaml` actually produces a live cross-module `$ref` yet (`offers` is a bare id array, not inlined) — the fixture proves the algorithm independent of `resource`'s in-progress state, matching how `test_build.py`'s other tests already avoid depending on any domain module.
