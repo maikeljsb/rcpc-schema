@@ -127,7 +127,9 @@ classes:
       - worker_type
       - worker_responsibilities
 
+
 slots:
+  # Slots of RobotUnit
   count:
     range: integer
     minimum_value: 1
@@ -137,15 +139,6 @@ slots:
     range: RobotStatus
     ifabsent: RobotStatus(idle)
     description: The runtime state of one machine.
-  activity_group:
-    range: Activity
-    inlined: true
-    description: The Activity group holding this robot's offered capabilities.
-  offers:
-    range: CapabilityType
-    multivalued: true
-    required: true
-    description: The capability types this robot offers. The CRS Task Type.
   physical_property:
     range: PhysicalProperty
     inlined: true
@@ -158,12 +151,12 @@ slots:
     range: Safety
     inlined: true
     description: The Safety group holding how the robot protects the people and objects around it.
-  sensors:
-    range: Sensor
-    multivalued: true
+  activity_group:
+    range: Activity
     inlined: true
-    inlined_as_list: true
-    description: The sensors mounted on or around the robot.
+    description: The Activity group holding this robot's offered capabilities.
+
+  # Slots of PhysicalProperty
   manufacturer:
     description: Who makes the robot.
   level_of_autonomy:
@@ -189,14 +182,6 @@ slots:
     range: Quantity
     inlined: true
     description: How long the robot can run continuously on its power source, recommended in minutes.
-  sensor_type:
-    description: What kind of sensor this is.
-  sensor_requirements:
-    description: What installing the sensor requires.
-  sensor_location:
-    range: Position
-    inlined: true
-    description: Where the sensor sits on the robot, a point in the robot's own frame.
   end_effector:
     multivalued: true
     description: The tools the robot's manipulator can attach, such as a bucket or gripper.
@@ -229,6 +214,24 @@ slots:
     range: Quantity
     inlined: true
     description: The maximum weight the manipulator can lift during operation, recommended in kilograms.
+  sensors:
+    range: Sensor
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: The sensors mounted on or around the robot.
+
+  # Slots of Sensor
+  sensor_type:
+    description: What kind of sensor this is.
+  sensor_requirements:
+    description: What installing the sensor requires.
+  sensor_location:
+    range: Position
+    inlined: true
+    description: Where the sensor sits on the robot, a point in the robot's own frame.
+
+  # Slots of OperationalRequirement
   grade_min:
     range: Quantity
     inlined: true
@@ -256,6 +259,8 @@ slots:
     description: How many people control the robot.
   operator_responsibilities:
     description: What the operator does while the robot performs its tasks.
+
+  # Slots of Safety
   emergency_stop:
     range: boolean
     description: Whether the robot stops automatically and immediately when specific conditions are triggered.
@@ -277,6 +282,13 @@ slots:
     range: Quantity
     inlined: true
     description: The minimum space the robot needs to operate without collisions, recommended in metres.
+
+  # Slots of Activity
+  offers:
+    range: CapabilityType
+    multivalued: true
+    required: true
+    description: The capability types this robot offers. The CRS Task Type.
   productivity:
     range: Quantity
     inlined: true
