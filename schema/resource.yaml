@@ -35,11 +35,11 @@ classes:
       - id
       - count
       - status
-      - activity
+      - activity_group
     slot_usage:
       id:
         description: The robot's name, a readable product slug. The CRS Name.
-      activity:
+      activity_group:
         required: true
 
   Activity:
@@ -60,7 +60,7 @@ slots:
     range: RobotStatus
     ifabsent: RobotStatus(idle)
     description: The runtime state of one machine.
-  activity:
+  activity_group:
     range: Activity
     inlined: true
     description: The Activity group holding this robot's offered capabilities.

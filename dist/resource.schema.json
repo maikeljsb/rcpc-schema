@@ -113,7 +113,7 @@
       "additionalProperties": false,
       "description": "One robot product, entered from its Construction Robot Schema attributes. Identical machines are one entry with a count.",
       "properties": {
-        "activity": {
+        "activity_group": {
           "$ref": "#/$defs/Activity",
           "description": "The Activity group holding this robot's offered capabilities."
         },
@@ -134,7 +134,7 @@
       "required": [
         "id",
         "count",
-        "activity"
+        "activity_group"
       ],
       "title": "RobotUnit",
       "type": "object"

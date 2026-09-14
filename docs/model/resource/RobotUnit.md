@@ -24,13 +24,13 @@ URI: [rcpc:RobotUnit](https://rcpc.for5672/schema/RobotUnit)
  classDiagram
     class RobotUnit
     click RobotUnit href "../RobotUnit/"
-      RobotUnit : activity
+      RobotUnit : activity_group
         
           
     
         
         
-        RobotUnit --> "1" Activity : activity
+        RobotUnit --> "1" Activity : activity_group
         click Activity href "../Activity/"
     
 
@@ -83,7 +83,7 @@ URI: [rcpc:RobotUnit](https://rcpc.for5672/schema/RobotUnit)
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The robot's name, a readable product slug | direct |
 | [count](count.md) | 1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | How many identical machines this entry stands for | direct |
 | [status](status.md) | 0..1 <br/> [RobotStatus](RobotStatus.md) | The runtime state of one machine | direct |
-| [activity](activity.md) | 1 <br/> [Activity](Activity.md) | The Activity group holding this robot's offered capabilities | direct |
+| [activity_group](activity_group.md) | 1 <br/> [Activity](Activity.md) | The Activity group holding this robot's offered capabilities | direct |
 
 
 
@@ -141,13 +141,13 @@ slots:
 - id
 - count
 - status
-- activity
+- activity_group
 slot_usage:
   id:
     name: id
     description: The robot's name, a readable product slug. The CRS Name.
-  activity:
-    name: activity
+  activity_group:
+    name: activity_group
     required: true
 
 ```
@@ -165,8 +165,8 @@ slot_usage:
   id:
     name: id
     description: The robot's name, a readable product slug. The CRS Name.
-  activity:
-    name: activity
+  activity_group:
+    name: activity_group
     required: true
 attributes:
   id:
@@ -202,8 +202,8 @@ attributes:
     domain_of:
     - RobotUnit
     range: RobotStatus
-  activity:
-    name: activity
+  activity_group:
+    name: activity_group
     description: The Activity group holding this robot's offered capabilities.
     from_schema: https://rcpc.for5672/schema/resource
     rank: 1000

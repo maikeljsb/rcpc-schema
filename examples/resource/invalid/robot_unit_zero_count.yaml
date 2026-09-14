@@ -1,5 +1,5 @@
 - id: zero_count_bot
   count: 0
-  activity:
+  activity_group:
     id: zero_count_bot_activity
     offers: [locomote]

@@ -21,7 +21,7 @@ Name: resource
 
 | Slot | Description |
 | --- | --- |
-| [activity](activity.md) | The Activity group holding this robot's offered capabilities |
+| [activity_group](activity_group.md) | The Activity group holding this robot's offered capabilities |
 | [count](count.md) | How many identical machines this entry stands for |
 | [offers](offers.md) | The capability types this robot offers |
 | [status](status.md) | The runtime state of one machine |

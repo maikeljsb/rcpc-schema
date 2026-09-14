@@ -16,7 +16,7 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "examples/common/capability_types.yaml": ("schema/common.yaml", "CapabilityType", None),
     "examples/common/invalid/capability_type_missing_id.yaml": ("schema/common.yaml", "CapabilityType", "id"),
     "examples/resource/robot_units.yaml": ("schema/resource.yaml", "RobotUnit", None),
-    "examples/resource/invalid/robot_unit_missing_activity.yaml": ("schema/resource.yaml", "RobotUnit", "activity"),
+    "examples/resource/invalid/robot_unit_missing_activity.yaml": ("schema/resource.yaml", "RobotUnit", "activity_group"),
     "examples/resource/invalid/robot_unit_zero_count.yaml": ("schema/resource.yaml", "RobotUnit", "count"),
     "examples/resource/invalid/activity_missing_offers.yaml": ("schema/resource.yaml", "RobotUnit", "offers"),
 }

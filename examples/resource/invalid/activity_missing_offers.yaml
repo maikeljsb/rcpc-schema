@@ -1,4 +1,4 @@
 - id: no_offers_bot
   count: 1
-  activity:
+  activity_group:
     id: no_offers_bot_activity

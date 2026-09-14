@@ -1,10 +1,10 @@
 - id: mason_m1
   count: 2
-  activity:
+  activity_group:
     id: mason_m1_activity
     offers: [grip, align, lift]
 - id: scout_v1
   count: 1
-  activity:
+  activity_group:
     id: scout_v1_activity
     offers: [locomote]

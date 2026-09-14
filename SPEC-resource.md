@@ -79,7 +79,7 @@ imports:
 
 | Class | Slots | Notes |
 |---|---|---|
-| `RobotUnit` | `id`, `count`, `status`, `physical_property`, `operational_requirement`, `safety`, `activity` | The entry. One per robot product; identical machines are one entry with a higher `count`. `id` is a readable product slug and is the CRS Name. Required: `id`, `count`, `activity`. |
+| `RobotUnit` | `id`, `count`, `status`, `physical_property`, `operational_requirement`, `safety`, `activity_group` | The entry. One per robot product; identical machines are one entry with a higher `count`. `id` is a readable product slug and is the CRS Name. Required: `id`, `count`, `activity_group`. |
 | `PhysicalProperty` | `id`, 24 attribute slots, `sensors` | CRS group 1. Holds the robot's sensors as a list of `Sensor` objects. |
 | `Sensor` | `id`, `sensor_type`, `sensor_capability`, `sensor_requirements`, `sensor_site_position`, `sensor_mount_position` | One sensor. Carries the four CRS sensor attributes, so it belongs to the PhysicalProperty group one hop down. A sensor is either on the robot, with a mount position, or on site, with a site position. Required: `id`. |
 | `MountPosition` | `x_coord`, `y_coord`, `z_coord`, `unit`, all required | A point in the robot's own frame, with a unit. Distinct from common's `Position`, which is the project frame and has no unit. Value object, always inlined, never a document on its own. |
@@ -97,7 +97,7 @@ Every group class and `Sensor` has an authored `id`, so by the projection rule i
 
 ### Slots declared in this module
 
-The group slots on `RobotUnit`: `physical_property`, `operational_requirement`, `safety`, `activity`, each single-valued, `inlined: true`, range the class of the same name. `sensors` on `PhysicalProperty`: multivalued, `inlined: true`, `inlined_as_list: true`, range `Sensor`. `count`: `integer`, `minimum_value: 1`, required. `status`: range `RobotStatus`, `ifabsent: RobotStatus(idle)`. `offers`: multivalued, range `CapabilityType`, not inlined, so a document carries capability ids. Plus the attribute slots in the lineage table. Every object-valued slot states `inlined: true` even where LinkML would infer it, so the document shape is visible in the YAML.
+The group slots on `RobotUnit`: `physical_property`, `operational_requirement`, `safety`, `activity_group`, each single-valued, `inlined: true`, range the class of the same name — except `activity_group`, ranging `Activity`, named with a `_group` suffix because a slot named plain `activity` collides with the `Activity` class's own generated doc page on a case-insensitive filesystem (both would write to `Activity.md`/`activity.md`, indistinguishable on Windows). `sensors` on `PhysicalProperty`: multivalued, `inlined: true`, `inlined_as_list: true`, range `Sensor`. `count`: `integer`, `minimum_value: 1`, required. `status`: range `RobotStatus`, `ifabsent: RobotStatus(idle)`. `offers`: multivalued, range `CapabilityType`, not inlined, so a document carries capability ids. Plus the attribute slots in the lineage table. Every object-valued slot states `inlined: true` even where LinkML would infer it, so the document shape is visible in the YAML.
 
 Reused from common: `id`, `x_coord`, `y_coord`, `z_coord`, `unit`, and the four dimension slots.
 
@@ -322,6 +322,7 @@ All decided 2026-09-12 in Phase 1.
 9. **`length`, `width`, `height`, `weight` are declared in common.** Product cannot see a slot resource declares, and the brief's Capacity check compares component weight against load capacity.
 10. **Multivalued strings: `end_effector`, `data_output_type`, `data_output_file_type`, `additional_ppe_requirements`, `worker_type`.** The sensor attributes became single-valued on `Sensor`. Prose attributes stay single sentences.
 11. **`status` default is written by the projection component**, since `ifabsent` reaches neither the validator nor the JSON Schema. Documents may omit `status`.
+12. **Decided 2026-09-14: `RobotUnit`'s group-pointer slot for `Activity` is named `activity_group`, not `activity`.** A same-named slot and class produce the same generated doc filename (`Activity.md`/`activity.md`) on a case-insensitive filesystem — one silently overwrites the other on Windows, which passed locally but failed `test_committed_outputs_match_fresh_build` on Linux CI. Fixed by suffixing the slot, not the class: the class name is the paper's own CRS category name (section 3.6, "CRS has four categories... Safety, and Activity") and isn't ours to rename; the group-pointer slot is local plumbing with no CRS equivalent. `Safety`'s group-pointer slot will hit the same collision when Task 4 adds it — flag it then and name it `safety_group` to match.
 
 ## Open Questions
 
