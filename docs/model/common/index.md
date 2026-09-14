@@ -13,7 +13,7 @@ Name: common
 | Class | Description |
 | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |
-| [Position](Position.md) | A cartesian point and the unit its coordinates are in |
+| [Position](Position.md) | Three cartesian coordinates and their unit: a point, or an extent along each ... |
 | [Quantity](Quantity.md) | A number with a unit |
 
 

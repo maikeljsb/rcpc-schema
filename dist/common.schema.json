@@ -32,7 +32,7 @@
     },
     "Position": {
       "additionalProperties": false,
-      "description": "A cartesian point and the unit its coordinates are in. On site, in the IFC project coordinate frame.",
+      "description": "Three cartesian coordinates and their unit: a point, or an extent along each axis.",
       "properties": {
         "unit": {
           "description": "The unit of the value, or of the coordinates.",

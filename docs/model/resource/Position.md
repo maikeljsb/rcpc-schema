@@ -6,7 +6,7 @@ search:
 # Class: Position 
 
 
-_A cartesian point and the unit its coordinates are in. On site, in the IFC project coordinate frame._
+_Three cartesian coordinates and their unit: a point, or an extent along each axis._
 
 
 
@@ -142,8 +142,8 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 <details>
 ```yaml
 name: Position
-description: A cartesian point and the unit its coordinates are in. On site, in the
-  IFC project coordinate frame.
+description: 'Three cartesian coordinates and their unit: a point, or an extent along
+  each axis.'
 from_schema: https://rcpc.for5672/schema/common
 slots:
 - x_coord
@@ -172,8 +172,8 @@ slot_usage:
 <details>
 ```yaml
 name: Position
-description: A cartesian point and the unit its coordinates are in. On site, in the
-  IFC project coordinate frame.
+description: 'Three cartesian coordinates and their unit: a point, or an extent along
+  each axis.'
 from_schema: https://rcpc.for5672/schema/common
 slot_usage:
   x_coord:

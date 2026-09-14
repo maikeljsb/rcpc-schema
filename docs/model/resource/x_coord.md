@@ -25,7 +25,7 @@ URI: [rcpc:x_coord](https://rcpc.for5672/schema/x_coord)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Position](Position.md) | A cartesian point and the unit its coordinates are in |  yes  |
+| [Position](Position.md) | Three cartesian coordinates and their unit: a point, or an extent along each ... |  yes  |
 
 
 
