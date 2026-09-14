@@ -44,7 +44,7 @@ uv run python scripts/build.py --no-viewer-schemas
 
 Behaviour, fully specified so a domain module never has to think about it:
 
-1. For every `schema/<module>.yaml`, in file-name order: run `gen-json-schema` with imports merged (the default) and write the result to `dist/<module>.schema.json`. Before writing, replace the value of the top-level `$schema` key with `https://json-schema.org/draft/2020-12/schema`. LinkML hardcodes draft 2019-09 and offers no option to change it; this is the one place the contract diverges from what LinkML emits, and the meta-schema test in this module proves the rewrite is valid on every build.
+1. For every `schema/<module>.yaml`, in file-name order: build the JSON Schema in-process with `JsonSchemaGenerator(path, include_null=False).generate()`, imports merged (the default), replace the value of the top-level `$schema` key with `https://json-schema.org/draft/2020-12/schema`, and write the dict with `json.dumps(indent=2)` and no key sorting to `dist/<module>.schema.json`. The contract diverges from what the `gen-json-schema` command emits in exactly three ways, all decided here and all proven by tests in this module: the draft (LinkML hardcodes 2019-09 and offers no option), the absence of `"null"` from every optional slot's type (the generator's `include_null` default, which the command exposes no flag for, hence the in-process call), and key order (the command sorts every key alphabetically, putting `$defs` before `$id` and `$schema`; the dict's natural order opens with `$schema`, `$id`, like the draft 2020-12 meta-schema, and every nested object follows the generator's insertion order; a module with a `tree_root` class gets that class's properties appended after `$defs`).
 2. For every `schema/<module>.yaml`: run `gen-doc` with imports not merged and write to `docs/model/<module>/`, so each module's documentation covers its own elements only and a team reads one folder.
 3. Write `dist/README.md`: one heading, one sentence saying these files are generated from `schema/` and how to regenerate them, then one line per module: the file name, the draft, and the module's `description` read from its YAML. Written on every build so it can never disagree with the folder.
 4. Remove stale outputs: any `dist/*.schema.json` or `docs/model/<dir>/` with no matching module file is deleted, so a renamed module does not leave ghosts. Each module's docs folder is cleared before `gen-doc` writes it, so a removed class, slot, or enum does not leave its old page behind (added 2026-09-11 after the drift test caught exactly that).
@@ -108,16 +108,15 @@ import json
 import subprocess
 import sys
 
+from linkml.generators.jsonschemagen import JsonSchemaGenerator
+
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA, DIST, DOCS = ROOT / "schema", ROOT / "dist", ROOT / "docs" / "model"
 DRAFT = "https://json-schema.org/draft/2020-12/schema"
 
 
 def json_schema(module: Path) -> None:
-    out = subprocess.run(
-        ["gen-json-schema", str(module)], check=True, capture_output=True, text=True
-    ).stdout
-    schema = json.loads(out)
+    schema = dict(JsonSchemaGenerator(str(module), include_null=False).generate())
     schema["$schema"] = DRAFT
     (DIST / f"{module.stem}.schema.json").write_text(
         json.dumps(schema, indent=2) + "\n", encoding="utf-8", newline="\n"
@@ -126,7 +125,7 @@ def json_schema(module: Path) -> None:
 
 Conventions:
 
-- **Standard library first.** The build script imports only the standard library plus PyYAML, which LinkML already depends on, to read each module's `description`; it shells out to the LinkML CLIs rather than importing their Python API, so a LinkML internal change cannot break the build silently.
+- **Standard library first.** The build script imports the standard library, PyYAML (which LinkML already depends on) to read each module's `description`, and exactly one LinkML class, `JsonSchemaGenerator`, because dropping `"null"` has no command-line switch. Everything else shells out to the LinkML CLIs rather than importing their Python API, so a LinkML internal change cannot break the build silently; the one import fails loudly at start-up if LinkML renames it, and the drift test catches any silent change in its output.
 - **Paths are `pathlib`, relative to `ROOT`.** Never `os.getcwd()`, never string concatenation.
 - **Files are written with explicit `encoding="utf-8"` and `newline="\n"`.** The `.gitattributes` already pins LF; the code should not rely on it.
 - **Tests are plain functions with plain `assert`.** Parametrise over files with `pytest.mark.parametrize`. No test classes, no fixtures beyond the repo root path.
@@ -141,6 +140,8 @@ There is one thing under test in this module, the build script, and one thing to
 |---|---|---|
 | `test_build.py::test_fixture_produces_2020_12` | The rewrite works | Run `build.py` against a temp copy of the repo whose `schema/` holds `fixtures/minimal.yaml`; the output declares draft 2020-12 |
 | `test_build.py::test_fixture_passes_metaschema` | The rewrite is valid | `Draft202012Validator.check_schema` on the output raises nothing |
+| `test_build.py::test_fixture_has_no_null_type` | `include_null=False` took effect | The fixture's optional slot has a plain `"type"` and no `"null"` appears anywhere in the output |
+| `test_build.py::test_fixture_key_order` | No key sorting | The output's top-level keys begin `$schema`, `$id` |
 | `test_build.py::test_fixture_docs_generated` | Docs per module | `docs/model/minimal/` exists and contains an `index.md` |
 | `test_build.py::test_readme_lists_modules` | Rule 3 | `dist/README.md` names `minimal.schema.json` and contains the fixture's description |
 | `test_build.py::test_stale_outputs_removed` | Rule 4 | Pre-seed `dist/ghost.schema.json`, a `docs/model/ghost/` folder, and a stale page inside the fixture's own docs folder; after build all three are gone |
@@ -158,11 +159,11 @@ The build tests operate on a temporary copy so they never touch the committed `d
 
 ## Boundaries
 
-**Always.** `uv run pytest` passes before every commit. Conventional Commits 1.0.0. LF line endings. Rebuild and commit `dist/` and `docs/model/` in the same commit as any `schema/` change. Standard library plus PyYAML only in `scripts/`.
+**Always.** `uv run pytest` passes before every commit. Conventional Commits 1.0.0. LF line endings. Rebuild and commit `dist/` and `docs/model/` in the same commit as any `schema/` change. Standard library, PyYAML and `linkml.generators.jsonschemagen.JsonSchemaGenerator` only in `scripts/`.
 
 **Ask first.** Adding a dependency to `pyproject.toml`. Changing the CI workflow. Changing the Python version. Adding a flag or configuration to `build.py`. Adding a second script.
 
-**Never.** Hand-edit anything under `dist/` or `docs/model/`. Import LinkML's Python API in the build script. Delete or skip a failing test. Put domain content in this module: `schema/` stays empty until `common` lands.
+**Never.** Hand-edit anything under `dist/` or `docs/model/`. Import anything from LinkML's Python API in the build script other than `JsonSchemaGenerator`; docs keep going through `gen-doc`. Delete or skip a failing test. Put domain content in this module: `schema/` stays empty until `common` lands.
 
 ## Success Criteria
 
@@ -172,14 +173,16 @@ Checkable by anyone with git and uv:
 2. `uv run python scripts/build.py` with an empty `schema/` exits 0 and leaves `dist/` holding only a README saying no modules exist.
 3. With `tests/fixtures/minimal.yaml` copied into `schema/`, `build.py` produces `dist/minimal.schema.json` declaring draft 2020-12 that passes `Draft202012Validator.check_schema`, a `dist/README.md` listing it with its description, and `docs/model/minimal/index.md`. Then delete the copy and rebuild: the schema file and docs folder are gone and the README says no modules exist.
 4. The GitHub Actions workflow passes on the commit that completes this module.
-5. `scripts/build.py` is under 130 lines and imports only the standard library and PyYAML.
+5. `scripts/build.py` is under 130 lines and imports only the standard library, PyYAML and `JsonSchemaGenerator`.
 6. Nothing exists under `schema/` except `.gitkeep`.
 7. `uv run python scripts/build.py` with no flag creates `dist/viewer/` by default; `--no-viewer-schemas` suppresses it; an empty `schema/` creates neither `dist/viewer/` nor its README (nothing to link).
 8. Built from `tests/fixtures/minimal.yaml` and `tests/fixtures/importer.yaml` (a second fixture, added by this amendment, that imports `minimal` and declares one class referencing one of `minimal`'s), `dist/viewer/importer.schema.json`'s `$defs` hold only `importer`'s own `Crate`, with its reference to `minimal`'s `Dimensions` rewritten to `"minimal.schema.json#/$defs/Dimensions"`; both files, uploaded together to `rcpc-schema-viewer` (`C:\Users\go25qoh\Repos\rcpc-schema-viewer`), resolve with no stub class for `minimal.schema.json`. Chosen over the real `resource`/`common` pair because, at the time of writing, nothing in `resource.yaml` actually produces a live cross-module `$ref` yet (`offers` is a bare id array, not inlined) — the fixture proves the algorithm independent of `resource`'s in-progress state, matching how `test_build.py`'s other tests already avoid depending on any domain module.
+9. No `dist/*.schema.json` or `dist/viewer/*.schema.json` contains `"null"` as a type, and each opens with `$schema` then `$id`.
 
 ## Open Questions
 
 - Resolved 2026-09-11: `gen-doc --no-mergeimports` lists only the module's own classes, slots, and enums in its index, and still writes pages for the imported elements the module references, so every link resolves. Verified on a two-module probe. Per-module folders stand; no fallback needed.
 - Resolved 2026-09-12: `gen-json-schema --no-mergeimports` was checked against `--mergeimports` on `schema/resource.yaml` and produced byte-identical `$defs`; LinkML's JSON Schema generator has no built-in unmerged mode, unlike `gen-doc`. Cross-file `$ref` output for the viewer is therefore hand-built as a post-processing step in `build.py` (rule 7), not a generator flag.
 - Resolved 2026-09-12: the target viewer, `rcpc-schema-viewer` (`src/extract.mjs`'s `resolveRef`), matches a `$ref`'s file part by plain basename against every uploaded filename, checked before any `$id`/URL resolution, and degrades a `$ref` into a file that wasn't uploaded to one stub class rather than erroring. This is why rule 7 rewrites to a bare relative filename rather than a full `$id`-based URI, and why partial uploads stay safe.
+- Resolved 2026-09-14: `"null"` in every optional slot's type and the alphabetical key order both came from the `gen-json-schema` command (the generator's `include_null=True` default, which has no CLI flag, and `sort_keys=True` in its `serialize()`). Fixed by calling the generator in-process, the one permitted LinkML import; the "never import LinkML's Python API" boundary was narrowed accordingly.
 - Resolved 2026-09-12: `dist/viewer/` generation flipped from opt-in (`--viewer-schemas`) to on by default, with `--no-viewer-schemas` to skip it, per direct instruction. Still gitignored, never committed, never drift-tested; still skipped entirely when `schema/` has no modules.
