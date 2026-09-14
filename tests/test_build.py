@@ -148,6 +148,7 @@ def test_viewer_schemas_readme_written(tmp_path: Path, root: Path) -> None:
     readme = (tree / "dist" / "viewer" / "README.md").read_text(encoding="utf-8")
     assert "not committed" in readme.lower()
     assert "$ref" in readme
+    assert "--viewer-schemas" not in readme and "--no-viewer-schemas" in readme
 
 
 def test_viewer_schemas_resolves_end_to_end(tmp_path: Path, root: Path) -> None:
