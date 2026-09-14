@@ -54,9 +54,9 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 **Amendment 2026-09-14:** committed 2026-09-12 as `2312d64 feat(resource): add RobotUnit, RobotStatus and the Activity group`, then broke Linux CI (`test_committed_outputs_match_fresh_build`): `RobotUnit`'s group-pointer slot, named `activity`, collided with the `Activity` class on the case-insensitive filesystem this was built on, silently overwriting one generated doc page with the other. Fixed by renaming the slot to `activity_group` throughout — see `SPEC-resource.md` decision 12.
 
 ## Checkpoint: Phase 1
-- [ ] `uv run pytest` passes with four resource rows collected
-- [ ] Generated schema checked as above
-- [ ] Review with human before Task 3
+- [x] `uv run pytest` passes with four resource rows collected
+- [x] Generated schema checked as above
+- [x] Review with human before Task 3
 
 ## Task 3: `PhysicalProperty`, `Sensor`, `MountPosition`, and the fifth invalid document
 
