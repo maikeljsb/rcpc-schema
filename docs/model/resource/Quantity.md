@@ -178,7 +178,6 @@ attributes:
     domain_of:
     - Position
     - Quantity
-    - MountPosition
     range: string
     required: true
 

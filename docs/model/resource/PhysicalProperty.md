@@ -162,8 +162,8 @@ URI: [rcpc:PhysicalProperty](https://rcpc.for5672/schema/PhysicalProperty)
     
         
         
-        PhysicalProperty --> "0..1" MountPosition : manipulator_position
-        click MountPosition href "../MountPosition/"
+        PhysicalProperty --> "0..1" Position : manipulator_position
+        click Position href "../Position/"
     
 
         
@@ -344,7 +344,7 @@ URI: [rcpc:PhysicalProperty](https://rcpc.for5672/schema/PhysicalProperty)
 | [yaw](yaw.md) | 0..1 <br/> [Quantity](Quantity.md) | The manipulator's rotation range around the vertical axis, recommended in deg... | direct |
 | [pitch](pitch.md) | 0..1 <br/> [Quantity](Quantity.md) | The manipulator's rotation range around the lateral axis, recommended in degr... | direct |
 | [roll](roll.md) | 0..1 <br/> [Quantity](Quantity.md) | The manipulator's rotation range around the longitudinal axis, recommended in... | direct |
-| [manipulator_position](manipulator_position.md) | 0..1 <br/> [MountPosition](MountPosition.md) | Where the manipulator is mounted on the robot, in the robot's own frame | direct |
+| [manipulator_position](manipulator_position.md) | 0..1 <br/> [Position](Position.md) | Where the manipulator is mounted on the robot, a point in the robot's own fra... | direct |
 | [degree_of_freedom](degree_of_freedom.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | How many axes of the manipulator can rotate or extend | direct |
 | [lifting_capacity](lifting_capacity.md) | 0..1 <br/> [Quantity](Quantity.md) | The maximum weight the manipulator can lift during operation, recommended in ... | direct |
 | [sensors](sensors.md) | * <br/> [Sensor](Sensor.md) | The sensors mounted on or around the robot | direct |
@@ -671,14 +671,14 @@ attributes:
     inlined: true
   manipulator_position:
     name: manipulator_position
-    description: Where the manipulator is mounted on the robot, in the robot's own
-      frame.
+    description: Where the manipulator is mounted on the robot, a point in the robot's
+      own frame.
     from_schema: https://rcpc.for5672/schema/resource
     rank: 1000
     owner: PhysicalProperty
     domain_of:
     - PhysicalProperty
-    range: MountPosition
+    range: Position
     inlined: true
   degree_of_freedom:
     name: degree_of_freedom

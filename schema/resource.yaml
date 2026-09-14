@@ -86,25 +86,6 @@ classes:
       - sensor_site_position
       - sensor_mount_position
 
-  MountPosition:
-    description: >-
-      A point in the robot's own frame, with a unit. Distinct from common's
-      Position, which is the project frame and has no unit.
-    slots:
-      - x_coord
-      - y_coord
-      - z_coord
-      - unit
-    slot_usage:
-      x_coord:
-        required: true
-      y_coord:
-        required: true
-      z_coord:
-        required: true
-      unit:
-        required: true
-
   Activity:
     description: >-
       CRS group 4: the capabilities a robot offers and how it performs them.
@@ -178,9 +159,9 @@ slots:
     inlined: true
     description: Where the sensor is mounted on site, in the project frame. Names the CRS Sensor Location.
   sensor_mount_position:
-    range: MountPosition
+    range: Position
     inlined: true
-    description: Where the sensor is mounted on the robot, in the robot's own frame. Names the CRS Sensor Location.
+    description: Where the sensor is mounted on the robot, a point in the robot's own frame. Names the CRS Sensor Location.
   end_effector:
     multivalued: true
     description: The tools the robot's manipulator can attach, such as a bucket or gripper.
@@ -211,9 +192,9 @@ slots:
     inlined: true
     description: The manipulator's rotation range around the longitudinal axis, recommended in degrees.
   manipulator_position:
-    range: MountPosition
+    range: Position
     inlined: true
-    description: Where the manipulator is mounted on the robot, in the robot's own frame.
+    description: Where the manipulator is mounted on the robot, a point in the robot's own frame.
   degree_of_freedom:
     range: integer
     description: How many axes of the manipulator can rotate or extend.

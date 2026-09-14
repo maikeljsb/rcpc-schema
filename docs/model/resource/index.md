@@ -13,7 +13,6 @@ Name: resource
 | Class | Description |
 | --- | --- |
 | [Activity](Activity.md) | CRS group 4: the capabilities a robot offers and how it performs them |
-| [MountPosition](MountPosition.md) | A point in the robot's own frame, with a unit |
 | [PhysicalProperty](PhysicalProperty.md) | CRS group 1: the robot's physical dimensions, hardware, and performance |
 | [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |
 | [Sensor](Sensor.md) | One sensor on or around the robot |
@@ -35,7 +34,7 @@ Name: resource
 | [lifting_capacity](lifting_capacity.md) | The maximum weight the manipulator can lift during operation, recommended in ... |
 | [load_capacity](load_capacity.md) | The maximum weight the robot can carry for extended work, recommended in kilo... |
 | [manipulator](manipulator.md) | The robot's arm: the links and joints that perform tasks |
-| [manipulator_position](manipulator_position.md) | Where the manipulator is mounted on the robot, in the robot's own frame |
+| [manipulator_position](manipulator_position.md) | Where the manipulator is mounted on the robot, a point in the robot's own fra... |
 | [manufacturer](manufacturer.md) | Who makes the robot |
 | [mobility](mobility.md) | How the robot moves from one place to another |
 | [navigation](navigation.md) | Whether the robot can find its own position and plan a path to a destination |
@@ -47,7 +46,7 @@ Name: resource
 | [roll](roll.md) | The manipulator's rotation range around the longitudinal axis, recommended in... |
 | [run_duration](run_duration.md) | How long the robot can run continuously on its power source, recommended in m... |
 | [sensor_capability](sensor_capability.md) | What the sensor senses or measures |
-| [sensor_mount_position](sensor_mount_position.md) | Where the sensor is mounted on the robot, in the robot's own frame |
+| [sensor_mount_position](sensor_mount_position.md) | Where the sensor is mounted on the robot, a point in the robot's own frame |
 | [sensor_requirements](sensor_requirements.md) | What installing the sensor requires |
 | [sensor_site_position](sensor_site_position.md) | Where the sensor is mounted on site, in the project frame |
 | [sensor_type](sensor_type.md) | What kind of sensor this is |

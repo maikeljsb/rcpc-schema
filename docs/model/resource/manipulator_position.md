@@ -6,7 +6,7 @@ search:
 # Slot: manipulator_position 
 
 
-_Where the manipulator is mounted on the robot, in the robot's own frame._
+_Where the manipulator is mounted on the robot, a point in the robot's own frame._
 
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:manipulator_position](https://rcpc.for5672/schema/manipulator_positio
 
 | Property | Value |
 | --- | --- |
-| Range | [MountPosition](MountPosition.md) |
+| Range | [Position](Position.md) |
 | Domain Of | [PhysicalProperty](PhysicalProperty.md) |
 
 ### Cardinality and Requirements
@@ -84,12 +84,13 @@ URI: [rcpc:manipulator_position](https://rcpc.for5672/schema/manipulator_positio
 <details>
 ```yaml
 name: manipulator_position
-description: Where the manipulator is mounted on the robot, in the robot's own frame.
+description: Where the manipulator is mounted on the robot, a point in the robot's
+  own frame.
 from_schema: https://rcpc.for5672/schema/resource
 rank: 1000
 domain_of:
 - PhysicalProperty
-range: MountPosition
+range: Position
 inlined: true
 
 ```

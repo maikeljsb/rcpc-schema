@@ -52,8 +52,8 @@ URI: [rcpc:Sensor](https://rcpc.for5672/schema/Sensor)
     
         
         
-        Sensor --> "0..1" MountPosition : sensor_mount_position
-        click MountPosition href "../MountPosition/"
+        Sensor --> "0..1" Position : sensor_mount_position
+        click Position href "../Position/"
     
 
         
@@ -107,7 +107,7 @@ URI: [rcpc:Sensor](https://rcpc.for5672/schema/Sensor)
 | [sensor_capability](sensor_capability.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What the sensor senses or measures | direct |
 | [sensor_requirements](sensor_requirements.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What installing the sensor requires | direct |
 | [sensor_site_position](sensor_site_position.md) | 0..1 <br/> [Position](Position.md) | Where the sensor is mounted on site, in the project frame | direct |
-| [sensor_mount_position](sensor_mount_position.md) | 0..1 <br/> [MountPosition](MountPosition.md) | Where the sensor is mounted on the robot, in the robot's own frame | direct |
+| [sensor_mount_position](sensor_mount_position.md) | 0..1 <br/> [Position](Position.md) | Where the sensor is mounted on the robot, a point in the robot's own frame | direct |
 
 
 
@@ -242,14 +242,14 @@ attributes:
     inlined: true
   sensor_mount_position:
     name: sensor_mount_position
-    description: Where the sensor is mounted on the robot, in the robot's own frame.
-      Names the CRS Sensor Location.
+    description: Where the sensor is mounted on the robot, a point in the robot's
+      own frame. Names the CRS Sensor Location.
     from_schema: https://rcpc.for5672/schema/resource
     rank: 1000
     owner: Sensor
     domain_of:
     - Sensor
-    range: MountPosition
+    range: Position
     inlined: true
 
 ```

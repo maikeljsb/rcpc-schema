@@ -27,7 +27,6 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 | --- | --- | --- |
 | [Position](Position.md) | A cartesian point and the unit its coordinates are in |  yes  |
 | [Quantity](Quantity.md) | A number with a unit |  yes  |
-| [MountPosition](MountPosition.md) | A point in the robot's own frame, with a unit |  yes  |
 
 
 
@@ -41,7 +40,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Position](Position.md), [Quantity](Quantity.md), [MountPosition](MountPosition.md) |
+| Domain Of | [Position](Position.md), [Quantity](Quantity.md) |
 
 ### Cardinality and Requirements
 
@@ -91,7 +90,6 @@ from_schema: https://rcpc.for5672/schema/common
 domain_of:
 - Position
 - Quantity
-- MountPosition
 range: string
 
 ```

@@ -43,36 +43,6 @@
       "title": "CapabilityType",
       "type": "object"
     },
-    "MountPosition": {
-      "additionalProperties": false,
-      "description": "A point in the robot's own frame, with a unit. Distinct from common's Position, which is the project frame and has no unit.",
-      "properties": {
-        "unit": {
-          "description": "The unit of the value, or of the coordinates.",
-          "type": "string"
-        },
-        "x_coord": {
-          "description": "Cartesian x coordinate.",
-          "type": "number"
-        },
-        "y_coord": {
-          "description": "Cartesian y coordinate.",
-          "type": "number"
-        },
-        "z_coord": {
-          "description": "Cartesian z coordinate.",
-          "type": "number"
-        }
-      },
-      "required": [
-        "x_coord",
-        "y_coord",
-        "z_coord",
-        "unit"
-      ],
-      "title": "MountPosition",
-      "type": "object"
-    },
     "ParameterKind": {
       "description": "The kinds of value a task parameter can hold.",
       "enum": [
@@ -202,13 +172,13 @@
         "manipulator_position": {
           "anyOf": [
             {
-              "$ref": "#/$defs/MountPosition"
+              "$ref": "#/$defs/Position"
             },
             {
               "type": "null"
             }
           ],
-          "description": "Where the manipulator is mounted on the robot, in the robot's own frame."
+          "description": "Where the manipulator is mounted on the robot, a point in the robot's own frame."
         },
         "manufacturer": {
           "description": "Who makes the robot.",
@@ -459,13 +429,13 @@
         "sensor_mount_position": {
           "anyOf": [
             {
-              "$ref": "#/$defs/MountPosition"
+              "$ref": "#/$defs/Position"
             },
             {
               "type": "null"
             }
           ],
-          "description": "Where the sensor is mounted on the robot, in the robot's own frame. Names the CRS Sensor Location."
+          "description": "Where the sensor is mounted on the robot, a point in the robot's own frame. Names the CRS Sensor Location."
         },
         "sensor_requirements": {
           "description": "What installing the sensor requires.",

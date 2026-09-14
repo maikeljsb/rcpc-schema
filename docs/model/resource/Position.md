@@ -93,7 +93,9 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
+| [PhysicalProperty](PhysicalProperty.md) | [manipulator_position](manipulator_position.md) | range | [Position](Position.md) |
 | [Sensor](Sensor.md) | [sensor_site_position](sensor_site_position.md) | range | [Position](Position.md) |
+| [Sensor](Sensor.md) | [sensor_mount_position](sensor_mount_position.md) | range | [Position](Position.md) |
 
 
 
@@ -195,7 +197,6 @@ attributes:
     owner: Position
     domain_of:
     - Position
-    - MountPosition
     range: float
     required: true
   y_coord:
@@ -205,7 +206,6 @@ attributes:
     owner: Position
     domain_of:
     - Position
-    - MountPosition
     range: float
     required: true
   z_coord:
@@ -215,7 +215,6 @@ attributes:
     owner: Position
     domain_of:
     - Position
-    - MountPosition
     range: float
     required: true
   unit:
@@ -226,7 +225,6 @@ attributes:
     domain_of:
     - Position
     - Quantity
-    - MountPosition
     range: string
     required: true
 

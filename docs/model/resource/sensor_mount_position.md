@@ -6,7 +6,7 @@ search:
 # Slot: sensor_mount_position 
 
 
-_Where the sensor is mounted on the robot, in the robot's own frame. Names the CRS Sensor Location._
+_Where the sensor is mounted on the robot, a point in the robot's own frame. Names the CRS Sensor Location._
 
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:sensor_mount_position](https://rcpc.for5672/schema/sensor_mount_posit
 
 | Property | Value |
 | --- | --- |
-| Range | [MountPosition](MountPosition.md) |
+| Range | [Position](Position.md) |
 | Domain Of | [Sensor](Sensor.md) |
 
 ### Cardinality and Requirements
@@ -84,13 +84,13 @@ URI: [rcpc:sensor_mount_position](https://rcpc.for5672/schema/sensor_mount_posit
 <details>
 ```yaml
 name: sensor_mount_position
-description: Where the sensor is mounted on the robot, in the robot's own frame. Names
-  the CRS Sensor Location.
+description: Where the sensor is mounted on the robot, a point in the robot's own
+  frame. Names the CRS Sensor Location.
 from_schema: https://rcpc.for5672/schema/resource
 rank: 1000
 domain_of:
 - Sensor
-range: MountPosition
+range: Position
 inlined: true
 
 ```
