@@ -24,9 +24,7 @@ Name: resource
 | Slot | Description |
 | --- | --- |
 | [activity_group](activity_group.md) | The Activity group holding this robot's offered capabilities |
-| [coordinate_reach_x](coordinate_reach_x.md) | How far the manipulator reaches along the robot's x-axis, recommended in metr... |
-| [coordinate_reach_y](coordinate_reach_y.md) | How far the manipulator reaches along the robot's y-axis, recommended in metr... |
-| [coordinate_reach_z](coordinate_reach_z.md) | How far the manipulator reaches along the robot's z-axis, recommended in metr... |
+| [coordinate_reach](coordinate_reach.md) | How far the manipulator reaches along each of the robot's three axes, recomme... |
 | [count](count.md) | How many identical machines this entry stands for |
 | [degree_of_freedom](degree_of_freedom.md) | How many axes of the manipulator can rotate or extend |
 | [end_effector](end_effector.md) | The tools the robot's manipulator can attach, such as a bucket or gripper |

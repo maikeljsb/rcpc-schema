@@ -24,36 +24,14 @@ URI: [rcpc:PhysicalProperty](https://rcpc.for5672/schema/PhysicalProperty)
  classDiagram
     class PhysicalProperty
     click PhysicalProperty href "../PhysicalProperty/"
-      PhysicalProperty : coordinate_reach_x
+      PhysicalProperty : coordinate_reach
         
           
     
         
         
-        PhysicalProperty --> "0..1" Quantity : coordinate_reach_x
-        click Quantity href "../Quantity/"
-    
-
-        
-      PhysicalProperty : coordinate_reach_y
-        
-          
-    
-        
-        
-        PhysicalProperty --> "0..1" Quantity : coordinate_reach_y
-        click Quantity href "../Quantity/"
-    
-
-        
-      PhysicalProperty : coordinate_reach_z
-        
-          
-    
-        
-        
-        PhysicalProperty --> "0..1" Quantity : coordinate_reach_z
-        click Quantity href "../Quantity/"
+        PhysicalProperty --> "0..1" Position : coordinate_reach
+        click Position href "../Position/"
     
 
         
@@ -338,9 +316,7 @@ URI: [rcpc:PhysicalProperty](https://rcpc.for5672/schema/PhysicalProperty)
 | [run_duration](run_duration.md) | 0..1 <br/> [Quantity](Quantity.md) | How long the robot can run continuously on its power source, recommended in m... | direct |
 | [end_effector](end_effector.md) | * <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The tools the robot's manipulator can attach, such as a bucket or gripper | direct |
 | [manipulator](manipulator.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The robot's arm: the links and joints that perform tasks | direct |
-| [coordinate_reach_x](coordinate_reach_x.md) | 0..1 <br/> [Quantity](Quantity.md) | How far the manipulator reaches along the robot's x-axis, recommended in metr... | direct |
-| [coordinate_reach_y](coordinate_reach_y.md) | 0..1 <br/> [Quantity](Quantity.md) | How far the manipulator reaches along the robot's y-axis, recommended in metr... | direct |
-| [coordinate_reach_z](coordinate_reach_z.md) | 0..1 <br/> [Quantity](Quantity.md) | How far the manipulator reaches along the robot's z-axis, recommended in metr... | direct |
+| [coordinate_reach](coordinate_reach.md) | 0..1 <br/> [Position](Position.md) | How far the manipulator reaches along each of the robot's three axes, recomme... | direct |
 | [yaw](yaw.md) | 0..1 <br/> [Quantity](Quantity.md) | The manipulator's rotation range around the vertical axis, recommended in deg... | direct |
 | [pitch](pitch.md) | 0..1 <br/> [Quantity](Quantity.md) | The manipulator's rotation range around the lateral axis, recommended in degr... | direct |
 | [roll](roll.md) | 0..1 <br/> [Quantity](Quantity.md) | The manipulator's rotation range around the longitudinal axis, recommended in... | direct |
@@ -424,9 +400,7 @@ slots:
 - run_duration
 - end_effector
 - manipulator
-- coordinate_reach_x
-- coordinate_reach_y
-- coordinate_reach_z
+- coordinate_reach
 - yaw
 - pitch
 - roll
@@ -603,38 +577,16 @@ attributes:
     domain_of:
     - PhysicalProperty
     range: string
-  coordinate_reach_x:
-    name: coordinate_reach_x
-    description: How far the manipulator reaches along the robot's x-axis, recommended
-      in metres.
+  coordinate_reach:
+    name: coordinate_reach
+    description: How far the manipulator reaches along each of the robot's three axes,
+      recommended in metres. The CRS Coordinate Reach X, Y and Z.
     from_schema: https://rcpc.for5672/schema/resource
     rank: 1000
     owner: PhysicalProperty
     domain_of:
     - PhysicalProperty
-    range: Quantity
-    inlined: true
-  coordinate_reach_y:
-    name: coordinate_reach_y
-    description: How far the manipulator reaches along the robot's y-axis, recommended
-      in metres.
-    from_schema: https://rcpc.for5672/schema/resource
-    rank: 1000
-    owner: PhysicalProperty
-    domain_of:
-    - PhysicalProperty
-    range: Quantity
-    inlined: true
-  coordinate_reach_z:
-    name: coordinate_reach_z
-    description: How far the manipulator reaches along the robot's z-axis, recommended
-      in metres.
-    from_schema: https://rcpc.for5672/schema/resource
-    rank: 1000
-    owner: PhysicalProperty
-    domain_of:
-    - PhysicalProperty
-    range: Quantity
+    range: Position
     inlined: true
   yaw:
     name: yaw

@@ -76,9 +76,6 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 | [PhysicalProperty](PhysicalProperty.md) | [load_capacity](load_capacity.md) | range | [Quantity](Quantity.md) |
 | [PhysicalProperty](PhysicalProperty.md) | [speed](speed.md) | range | [Quantity](Quantity.md) |
 | [PhysicalProperty](PhysicalProperty.md) | [run_duration](run_duration.md) | range | [Quantity](Quantity.md) |
-| [PhysicalProperty](PhysicalProperty.md) | [coordinate_reach_x](coordinate_reach_x.md) | range | [Quantity](Quantity.md) |
-| [PhysicalProperty](PhysicalProperty.md) | [coordinate_reach_y](coordinate_reach_y.md) | range | [Quantity](Quantity.md) |
-| [PhysicalProperty](PhysicalProperty.md) | [coordinate_reach_z](coordinate_reach_z.md) | range | [Quantity](Quantity.md) |
 | [PhysicalProperty](PhysicalProperty.md) | [yaw](yaw.md) | range | [Quantity](Quantity.md) |
 | [PhysicalProperty](PhysicalProperty.md) | [pitch](pitch.md) | range | [Quantity](Quantity.md) |
 | [PhysicalProperty](PhysicalProperty.md) | [roll](roll.md) | range | [Quantity](Quantity.md) |

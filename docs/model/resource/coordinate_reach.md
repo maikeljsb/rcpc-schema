@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: coordinate_reach_x 
+# Slot: coordinate_reach 
 
 
-_How far the manipulator reaches along the robot's x-axis, recommended in metres._
+_How far the manipulator reaches along each of the robot's three axes, recommended in metres. The CRS Coordinate Reach X, Y and Z._
 
 
 
@@ -14,7 +14,7 @@ _How far the manipulator reaches along the robot's x-axis, recommended in metres
 
 
 
-URI: [rcpc:coordinate_reach_x](https://rcpc.for5672/schema/coordinate_reach_x)
+URI: [rcpc:coordinate_reach](https://rcpc.for5672/schema/coordinate_reach)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:coordinate_reach_x](https://rcpc.for5672/schema/coordinate_reach_x)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [Position](Position.md) |
 | Domain Of | [PhysicalProperty](PhysicalProperty.md) |
 
 ### Cardinality and Requirements
@@ -73,8 +73,8 @@ URI: [rcpc:coordinate_reach_x](https://rcpc.for5672/schema/coordinate_reach_x)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:coordinate_reach_x |
-| native | rcpc:coordinate_reach_x |
+| self | rcpc:coordinate_reach |
+| native | rcpc:coordinate_reach |
 
 
 
@@ -83,14 +83,14 @@ URI: [rcpc:coordinate_reach_x](https://rcpc.for5672/schema/coordinate_reach_x)
 
 <details>
 ```yaml
-name: coordinate_reach_x
-description: How far the manipulator reaches along the robot's x-axis, recommended
-  in metres.
+name: coordinate_reach
+description: How far the manipulator reaches along each of the robot's three axes,
+  recommended in metres. The CRS Coordinate Reach X, Y and Z.
 from_schema: https://rcpc.for5672/schema/resource
 rank: 1000
 domain_of:
 - PhysicalProperty
-range: Quantity
+range: Position
 inlined: true
 
 ```

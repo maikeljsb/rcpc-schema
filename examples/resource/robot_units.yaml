@@ -11,6 +11,7 @@
     height: {value: 1.5, unit: m}
     weight: {value: 800, unit: kg}
     load_capacity: {value: 15, unit: kg}
+    coordinate_reach: {x_coord: 2.0, y_coord: 2.0, z_coord: 3.5, unit: m}
     sensors:
       - id: mason_m1_lidar
         sensor_type: LiDAR

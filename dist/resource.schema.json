@@ -57,38 +57,16 @@
       "additionalProperties": false,
       "description": "CRS group 1: the robot's physical dimensions, hardware, and performance.",
       "properties": {
-        "coordinate_reach_x": {
+        "coordinate_reach": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Quantity"
+              "$ref": "#/$defs/Position"
             },
             {
               "type": "null"
             }
           ],
-          "description": "How far the manipulator reaches along the robot's x-axis, recommended in metres."
-        },
-        "coordinate_reach_y": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How far the manipulator reaches along the robot's y-axis, recommended in metres."
-        },
-        "coordinate_reach_z": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How far the manipulator reaches along the robot's z-axis, recommended in metres."
+          "description": "How far the manipulator reaches along each of the robot's three axes, recommended in metres. The CRS Coordinate Reach X, Y and Z."
         },
         "degree_of_freedom": {
           "description": "How many axes of the manipulator can rotate or extend.",
