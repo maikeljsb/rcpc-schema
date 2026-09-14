@@ -87,6 +87,8 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 **Amendment 2026-09-14, second:** `Sensor` slimmed in the same review. `sensor_capability` dropped, it restated `sensor_type`; `sensor_site_position` dropped, this module describes the robot, not the site; `sensor_mount_position` renamed `sensor_location`, the paper's name, now that it is the only one. `Sensor` is `id`, `sensor_type`, `sensor_requirements`, `sensor_location`. Both example sensors are mounted. See `SPEC-resource.md` decisions 4 and 13. The manual check above was reworded to match.
 
+**Amendment 2026-09-14, third:** `coordinate_reach_x`, `_y`, `_z` merged into one `coordinate_reach`, range `Position`: three extents along the robot's axes with one unit are one value once `Position` carries a unit. Common's `Position` description widened to "a point, or an extent along each axis" (`refactor(common)`, `35b163f`). `mason_m1` carries a reach in the example. See `SPEC-common.md` decision 13 and `SPEC-resource.md` decision 8.
+
 ## Task 4: `OperationalRequirement`, `Safety`, and Activity's remaining attributes
 
 **Description:** Add `OperationalRequirement` (`id` plus 8 slots) and `Safety` (`id` plus 6 slots) with their two slots on `RobotUnit`, and the 9 remaining `Activity` attribute slots, in lineage order with descriptions and the attribution clauses the spec names for the four bounds and the three merged quantities. Grow `mason_m1` to hold all four groups so the example file matches success criterion 5. Rebuild and commit as `feat(resource): add OperationalRequirement, Safety and the Activity attributes`.
