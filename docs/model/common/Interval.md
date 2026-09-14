@@ -3,10 +3,10 @@ search:
   boost: 10.0
 ---
 
-# Class: Quantity 
+# Class: Interval 
 
 
-_A number with a unit._
+_A lower and an upper bound with their unit._
 
 
 
@@ -14,7 +14,7 @@ _A number with a unit._
 
 
 
-URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
+URI: [rcpc:Interval](https://rcpc.for5672/schema/Interval)
 
 
 
@@ -22,27 +22,38 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 
 ```mermaid
  classDiagram
-    class Quantity
-    click Quantity href "../Quantity/"
-      Quantity : unit
+    class Interval
+    click Interval href "../Interval/"
+      Interval : maximum
         
           
     
         
         
-        Quantity --> "1" String : unit
-        click String href "../http://www.w3.org/2001/XMLSchema#string/"
+        Interval --> "1" Float : maximum
+        click Float href "../http://www.w3.org/2001/XMLSchema#float/"
     
 
         
-      Quantity : value
+      Interval : minimum
         
           
     
         
         
-        Quantity --> "1" Float : value
+        Interval --> "1" Float : minimum
         click Float href "../http://www.w3.org/2001/XMLSchema#float/"
+    
+
+        
+      Interval : unit
+        
+          
+    
+        
+        
+        Interval --> "1" String : unit
+        click String href "../http://www.w3.org/2001/XMLSchema#string/"
     
 
         
@@ -58,7 +69,8 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [value](value.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | The numeric value | direct |
+| [minimum](minimum.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | The lower bound | direct |
+| [maximum](maximum.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | The upper bound | direct |
 | [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value, of the coordinates, or of the bounds | direct |
 
 
@@ -93,8 +105,8 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:Quantity |
-| native | rcpc:Quantity |
+| self | rcpc:Interval |
+| native | rcpc:Interval |
 
 
 
@@ -109,15 +121,19 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 
 <details>
 ```yaml
-name: Quantity
-description: A number with a unit.
+name: Interval
+description: A lower and an upper bound with their unit.
 from_schema: https://rcpc.for5672/schema/common
 slots:
-- value
+- minimum
+- maximum
 - unit
 slot_usage:
-  value:
-    name: value
+  minimum:
+    name: minimum
+    required: true
+  maximum:
+    name: maximum
     required: true
   unit:
     name: unit
@@ -130,25 +146,38 @@ slot_usage:
 
 <details>
 ```yaml
-name: Quantity
-description: A number with a unit.
+name: Interval
+description: A lower and an upper bound with their unit.
 from_schema: https://rcpc.for5672/schema/common
 slot_usage:
-  value:
-    name: value
+  minimum:
+    name: minimum
+    required: true
+  maximum:
+    name: maximum
     required: true
   unit:
     name: unit
     required: true
 attributes:
-  value:
-    name: value
-    description: The numeric value.
+  minimum:
+    name: minimum
+    description: The lower bound.
     from_schema: https://rcpc.for5672/schema/common
     rank: 1000
-    owner: Quantity
+    owner: Interval
     domain_of:
-    - Quantity
+    - Interval
+    range: float
+    required: true
+  maximum:
+    name: maximum
+    description: The upper bound.
+    from_schema: https://rcpc.for5672/schema/common
+    rank: 1000
+    owner: Interval
+    domain_of:
+    - Interval
     range: float
     required: true
   unit:
@@ -156,7 +185,7 @@ attributes:
     description: The unit of the value, of the coordinates, or of the bounds.
     from_schema: https://rcpc.for5672/schema/common
     rank: 1000
-    owner: Quantity
+    owner: Interval
     domain_of:
     - Position
     - Quantity

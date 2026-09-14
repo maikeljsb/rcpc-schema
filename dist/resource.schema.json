@@ -127,6 +127,31 @@
       "title": "CapabilityType",
       "type": "object"
     },
+    "Interval": {
+      "additionalProperties": false,
+      "description": "A lower and an upper bound with their unit.",
+      "properties": {
+        "maximum": {
+          "description": "The upper bound.",
+          "type": "number"
+        },
+        "minimum": {
+          "description": "The lower bound.",
+          "type": "number"
+        },
+        "unit": {
+          "description": "The unit of the value, of the coordinates, or of the bounds.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum",
+        "unit"
+      ],
+      "title": "Interval",
+      "type": "object"
+    },
     "OperationalRequirement": {
       "additionalProperties": false,
       "description": "CRS group 2: the site conditions and the people the robot needs to work.",
@@ -467,7 +492,7 @@
       "description": "Three cartesian coordinates and their unit: a point, or an extent along each axis.",
       "properties": {
         "unit": {
-          "description": "The unit of the value, or of the coordinates.",
+          "description": "The unit of the value, of the coordinates, or of the bounds.",
           "type": "string"
         },
         "x_coord": {
@@ -497,7 +522,7 @@
       "description": "A number with a unit.",
       "properties": {
         "unit": {
-          "description": "The unit of the value, or of the coordinates.",
+          "description": "The unit of the value, of the coordinates, or of the bounds.",
           "type": "string"
         },
         "value": {

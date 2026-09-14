@@ -13,6 +13,7 @@ Name: common
 | Class | Description |
 | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |
+| [Interval](Interval.md) | A lower and an upper bound with their unit |
 | [Position](Position.md) | Three cartesian coordinates and their unit: a point, or an extent along each ... |
 | [Quantity](Quantity.md) | A number with a unit |
 
@@ -26,7 +27,9 @@ Name: common
 | [height](height.md) | How tall the item is, recommended in metres |
 | [id](id.md) | Identifier, unique among instances of its class |
 | [length](length.md) | How long the item is, recommended in metres |
-| [unit](unit.md) | The unit of the value, or of the coordinates |
+| [maximum](maximum.md) | The upper bound |
+| [minimum](minimum.md) | The lower bound |
+| [unit](unit.md) | The unit of the value, of the coordinates, or of the bounds |
 | [value](value.md) | The numeric value |
 | [weight](weight.md) | How much the item weighs, recommended in kilograms |
 | [width](width.md) | How wide the item is, recommended in metres |

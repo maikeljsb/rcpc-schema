@@ -83,7 +83,7 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 | [x_coord](x_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian x coordinate | direct |
 | [y_coord](y_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian y coordinate | direct |
 | [z_coord](z_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian z coordinate | direct |
-| [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value, or of the coordinates | direct |
+| [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value, of the coordinates, or of the bounds | direct |
 
 
 
@@ -213,13 +213,14 @@ attributes:
     required: true
   unit:
     name: unit
-    description: The unit of the value, or of the coordinates.
+    description: The unit of the value, of the coordinates, or of the bounds.
     from_schema: https://rcpc.for5672/schema/common
     rank: 1000
     owner: Position
     domain_of:
     - Position
     - Quantity
+    - Interval
     range: string
     required: true
 

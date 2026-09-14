@@ -6,7 +6,7 @@ search:
 # Slot: unit 
 
 
-_The unit of the value, or of the coordinates._
+_The unit of the value, of the coordinates, or of the bounds._
 
 
 
@@ -27,6 +27,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 | --- | --- | --- |
 | [Position](Position.md) | Three cartesian coordinates and their unit: a point, or an extent along each ... |  yes  |
 | [Quantity](Quantity.md) | A number with a unit |  yes  |
+| [Interval](Interval.md) | A lower and an upper bound with their unit |  yes  |
 
 
 
@@ -40,7 +41,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Position](Position.md), [Quantity](Quantity.md) |
+| Domain Of | [Position](Position.md), [Quantity](Quantity.md), [Interval](Interval.md) |
 
 ### Cardinality and Requirements
 
@@ -85,12 +86,13 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 <details>
 ```yaml
 name: unit
-description: The unit of the value, or of the coordinates.
+description: The unit of the value, of the coordinates, or of the bounds.
 from_schema: https://rcpc.for5672/schema/common
 rank: 1000
 domain_of:
 - Position
 - Quantity
+- Interval
 range: string
 
 ```

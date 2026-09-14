@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: unit 
+# Slot: minimum 
 
 
-_The unit of the value, of the coordinates, or of the bounds._
+_The lower bound._
 
 
 
@@ -14,7 +14,7 @@ _The unit of the value, of the coordinates, or of the bounds._
 
 
 
-URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
+URI: [rcpc:minimum](https://rcpc.for5672/schema/minimum)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,8 +25,6 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Position](Position.md) | Three cartesian coordinates and their unit: a point, or an extent along each ... |  yes  |
-| [Quantity](Quantity.md) | A number with a unit |  yes  |
 | [Interval](Interval.md) | A lower and an upper bound with their unit |  yes  |
 
 
@@ -40,8 +38,8 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 
 | Property | Value |
 | --- | --- |
-| Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Position](Position.md), [Quantity](Quantity.md), [Interval](Interval.md) |
+| Range | [xsd:float](http://www.w3.org/2001/XMLSchema#float) |
+| Domain Of | [Interval](Interval.md) |
 
 ### Cardinality and Requirements
 
@@ -75,8 +73,8 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:unit |
-| native | rcpc:unit |
+| self | rcpc:minimum |
+| native | rcpc:minimum |
 
 
 
@@ -85,14 +83,13 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 
 <details>
 ```yaml
-name: unit
-description: The unit of the value, of the coordinates, or of the bounds.
+name: minimum
+description: The lower bound.
 from_schema: https://rcpc.for5672/schema/common
+rank: 1000
 domain_of:
-- Position
-- Quantity
 - Interval
-range: string
+range: float
 
 ```
 </details></div>
