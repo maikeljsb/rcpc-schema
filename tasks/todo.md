@@ -95,7 +95,7 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 **Acceptance criteria:**
 - [ ] Both entries validate; `mason_m1` has all four groups, `count: 2`, and a mounted sensor; the second entry has `count: 1` and a mounted sensor
-- [ ] Every row of the lineage table is covered: 51 attribute slots across the four groups and `Sensor`, plus `id` and `offers`
+- [ ] Every row of the lineage table is covered: 48 attribute slots across the four groups and `Sensor` (22, 3, 8, 6, 9), plus `id` and `offers`
 - [ ] Every id in `offers` across both entries appears in `examples/common/capability_types.yaml`
 
 **Verification:**
