@@ -71,7 +71,7 @@ imports:
 
 | Class | Slots | Notes |
 |---|---|---|
-| `Position` | `x_coord`, `y_coord`, `z_coord`, all `float`, all required | A Cartesian point in the IFC project coordinate frame. Units are the model's project units and are not stated in the schema. The one frame the model uses. Always inlined by its owner; never a document on its own. |
+| `Position` | `x_coord`, `y_coord`, `z_coord`, all `float`; `unit` string; all required | A Cartesian point and the unit its coordinates are in. Site positions are in the IFC project coordinate frame, the one frame the model resolves to a Space; an owning slot may say its point is in another frame, such as a robot's own, and the unit still travels with the point. Always inlined by its owner; never a document on its own. Amended 2026-09-14, see decision 12. |
 | `Quantity` | `value` `float` required; `unit` string required | A number with a unit. UCUM case-sensitive codes are the recommended convention; not enforced and not stated in the schema. Always inlined. |
 | `CapabilityType` | `id` identifier; `description` required | Something a robot can do, named by a bare verb. The id is the name; no separate label. Matching is by id, no levels or qualifiers. The only document class in this module. |
 
@@ -89,7 +89,7 @@ imports:
 
 ### Shared slots
 
-`id` (`identifier: true`), `description`, `x_coord`, `y_coord`, `z_coord`, `value`, `unit`, and the four dimension slots `length`, `width`, `height`, `weight`, each range `Quantity`, `inlined: true`, added 2026-09-12 for resource and product. Defined here once; domain modules reuse them and never redeclare them. `id` is unique among instances of its class, not across the document set: every reference slot declares its range, so the class is always known and the id carries no namespace. There is no `label` slot in common. A class whose id is not a readable name, such as a robot type, brings `label` with it when its module is specified.
+`id` (`identifier: true`), `description`, `x_coord`, `y_coord`, `z_coord`, `value`, `unit` (shared by `Quantity` and `Position`), and the four dimension slots `length`, `width`, `height`, `weight`, each range `Quantity`, `inlined: true`, added 2026-09-12 for resource and product. Defined here once; domain modules reuse them and never redeclare them. `id` is unique among instances of its class, not across the document set: every reference slot declares its range, so the class is always known and the id carries no namespace. There is no `label` slot in common. A class whose id is not a readable name, such as a robot type, brings `label` with it when its module is specified.
 
 ### Foreseen additions
 
@@ -104,7 +104,7 @@ Other shared classes are added as the project identifies them, by amending this 
 
 ### Fixed by the brief
 
-Closed parameter kinds are Position, ComponentReference, Quantity (research note `parameter-kinds-mapping.md`). Duration is a Quantity-typed slot, not a kind. CapabilityType lives here because process `requires` it and resource `offers` it. `offers` is a flat set, so CapabilityType carries no level or qualifier. One coordinate frame, no frame slot. No graph vocabulary or annotations. Every element has a description.
+Closed parameter kinds are Position, ComponentReference, Quantity (research note `parameter-kinds-mapping.md`). Duration is a Quantity-typed slot, not a kind. CapabilityType lives here because process `requires` it and resource `offers` it. `offers` is a flat set, so CapabilityType carries no level or qualifier. One coordinate frame, no frame slot; a unit slot is not a frame slot. No graph vocabulary or annotations. Every element has a description.
 
 ## Code Style
 
@@ -176,6 +176,7 @@ No new test files. This module lights up the tests the toolchain left waiting an
 9. **Coordinate slots are `x_coord`, `y_coord`, `z_coord`.** Decided 2026-09-11: `linkml-lint`'s snake_case rule requires at least two characters and rejects hyphens, so single letters and `x-coord` both fail. A lint exemption for three names was considered and declined in favour of names that pass the rule as it stands.
 10. **No `tree_root` anywhere, and no container classes.** LinkML recommends a `tree_root` container for serialisation, and that is right for a single self-contained schema. Here modules merge on import, and a probe on 2026-09-11 showed the consequence: with a container in common and another in product, product's generated schema took common's root and rejected a product document as having unexpected properties. So documents are top-level lists, validation always names the class with `-C`, and the `dist/` files are definition libraries with no root properties. Container classes without `tree_root` were considered and declined to avoid a wrapper class per module and an extra projection rule.
 11. **The four dimension slots live here.** Decided 2026-09-12 in resource's Phase 1: slots are global to the merged schema and product does not import resource, so a slot both need is declared in the module both import. `weight` is also what the brief's Capacity check compares against load capacity.
+12. **`Position` carries `unit`, required.** Decided 2026-09-14 in resource's Task 3 review. Before this, `Position` was three floats whose unit was a sentence in its description, "the project's units, read from the IFC," which the schema itself could not see: a `Position` was only meaningful inside the document that produced it. Resource's mount offsets, a sensor's or manipulator's installation point on the robot body, needed a unit-carrying point and got a second class, `MountPosition`, which sidestepped the brief's one-frame rule by name. Putting `unit` on `Position` makes a point self-describing wherever it is written, retires `MountPosition`, and leaves the brief untouched: it forbids a frame slot, and a unit is not a frame. Product's derived positions write the unit the IFC parse read them in, redundant with the IFC and harmless. The schema stays at eleven shared slots; `unit` was already declared for `Quantity`.
 
 ## Open Questions
 
