@@ -79,7 +79,7 @@ imports:
 
 | Class | Slots | Notes |
 |---|---|---|
-| `RobotUnit` | `id`, `count`, `status`, `physical_property`, `operational_requirement`, `safety_group`, `activity_group` | The entry. One per robot product; identical machines are one entry with a higher `count`. `id` is a readable product slug and is the CRS Name. Required: `id`, `count`, `activity_group`. |
+| `RobotUnit` | `id`, `count`, `status`, `physical_property_group`, `operational_requirement_group`, `safety_group`, `activity_group` | The entry. One per robot product; identical machines are one entry with a higher `count`. `id` is a readable product slug and is the CRS Name. Required: `id`, `count`, `activity_group`. |
 | `PhysicalProperty` | `id`, 22 attribute slots, `sensors` | CRS group 1. Holds the robot's sensors as a list of `Sensor` objects. |
 | `Sensor` | `id`, `sensor_type`, `sensor_requirements`, `sensor_location` | One sensor mounted on the robot. Carries the CRS sensor attributes, so it belongs to the PhysicalProperty group one hop down. Required: `id`. |
 | `OperationalRequirement` | `id`, 6 attribute slots | CRS group 2. |
@@ -96,7 +96,7 @@ Every group class and `Sensor` has an authored `id`, so by the projection rule i
 
 ### Slots declared in this module
 
-The group slots on `RobotUnit`: `physical_property`, `operational_requirement`, `safety_group`, `activity_group`, each single-valued, `inlined: true`, range the class of the same name — except `activity_group` and `safety_group`, ranging `Activity` and `Safety`, named with a `_group` suffix because a slot named plain `activity` or `safety` collides with its class's own generated doc page on a case-insensitive filesystem (both would write to `Activity.md`/`activity.md`, indistinguishable on Windows). `sensors` on `PhysicalProperty`: multivalued, `inlined: true`, `inlined_as_list: true`, range `Sensor`. `count`: `integer`, `minimum_value: 1`, required. `status`: range `RobotStatus`, `ifabsent: RobotStatus(idle)`. `offers`: multivalued, range `CapabilityType`, not inlined, so a document carries capability ids. Plus the attribute slots in the lineage table. Every object-valued slot states `inlined: true` even where LinkML would infer it, so the document shape is visible in the YAML.
+The group slots on `RobotUnit`: `physical_property_group`, `operational_requirement_group`, `safety_group`, `activity_group`, each single-valued, `inlined: true`, ranging the class named before the `_group` suffix. The suffix is there because a slot named plain `activity` or `safety` collides with its class's own generated doc page on a case-insensitive filesystem (both would write to `Activity.md`/`activity.md`, indistinguishable on Windows); all four carry it so the pointer slots read alike. `sensors` on `PhysicalProperty`: multivalued, `inlined: true`, `inlined_as_list: true`, range `Sensor`. `count`: `integer`, `minimum_value: 1`, required. `status`: range `RobotStatus`, `ifabsent: RobotStatus(idle)`. `offers`: multivalued, range `CapabilityType`, not inlined, so a document carries capability ids. Plus the attribute slots in the lineage table. Every object-valued slot states `inlined: true` even where LinkML would infer it, so the document shape is visible in the YAML.
 
 Reused from common: `id` and the four dimension slots as slots; `Position`, `Quantity`, and `Interval` as ranges.
 
@@ -201,7 +201,7 @@ Everything else is optional. An entry with `id`, `count`, and an `Activity` hold
     id: mason_m1_activity
     offers: [grip, align, lift]
     productivity: {value: 250, unit: brick/h}
-  physical_property:
+  physical_property_group:
     id: mason_m1_physical
     manufacturer: Fictional Robotics
     length: {value: 3.0, unit: m}
@@ -210,7 +210,7 @@ Everything else is optional. An entry with `id`, `count`, and an `Activity` hold
       - id: mason_m1_lidar
         sensor_type: LiDAR
         sensor_location: {x_coord: 0, y_coord: 0.2, z_coord: 0.5, unit: m}
-  operational_requirement:
+  operational_requirement_group:
     id: mason_m1_operational
     temperature: {minimum: 5, maximum: 40, unit: Cel}
     req_number_operators: 1
@@ -240,8 +240,8 @@ classes:
       - id
       - count
       - status
-      - physical_property
-      - operational_requirement
+      - physical_property_group
+      - operational_requirement_group
       - safety
       - activity_group
     slot_usage:
