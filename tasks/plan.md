@@ -54,11 +54,11 @@ schema/common.yaml  (+ length, width, height, weight)                         (T
 
 ### Phase 2: The groups
 - [x] Task 3: `PhysicalProperty`, `Sensor`, `MountPosition`, and the fifth invalid document (`MountPosition` withdrawn in review, see Amendments)
-- [ ] Task 4: `OperationalRequirement`, `Safety`, and Activity's remaining attributes
+- [x] Task 4: `OperationalRequirement`, `Safety`, and Activity's remaining attributes
 
 ### Checkpoint: Phase 2
-- [ ] All 56 lineage rows have their slot in `schema/resource.yaml`
-- [ ] Example file matches success criterion 5
+- [x] All 56 lineage rows have their slot in `schema/resource.yaml`
+- [x] Example file matches success criterion 5
 - [ ] Review with human
 
 ### Phase 3: Close

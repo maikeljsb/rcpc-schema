@@ -94,14 +94,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 **Description:** Add `OperationalRequirement` (`id` plus 8 slots) and `Safety` (`id` plus 6 slots) with their two slots on `RobotUnit`, and the 9 remaining `Activity` attribute slots, in lineage order with descriptions and the attribution clauses the spec names for the four bounds and the three merged quantities. Grow `mason_m1` to hold all four groups so the example file matches success criterion 5. Rebuild and commit as `feat(resource): add OperationalRequirement, Safety and the Activity attributes`.
 
 **Acceptance criteria:**
-- [ ] Both entries validate; `mason_m1` has all four groups, `count: 2`, and a mounted sensor; the second entry has `count: 1` and a mounted sensor
-- [ ] Every row of the lineage table is covered: 48 attribute slots across the four groups and `Sensor` (22, 3, 8, 6, 9), plus `id` and `offers`
-- [ ] Every id in `offers` across both entries appears in `examples/common/capability_types.yaml`
+- [x] Both entries validate; `mason_m1` has all four groups, `count: 2`, and a mounted sensor; the second entry has `count: 1` and a mounted sensor
+- [x] Every row of the lineage table is covered: 48 attribute slots across the four groups and `Sensor` (22, 3, 8, 6, 9), plus `id` and `offers`
+- [x] Every id in `offers` across both entries appears in `examples/common/capability_types.yaml`
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` clean after the commit
-- [ ] Manual check: read `schema/resource.yaml` top to bottom against the lineage table; every slot in the table order, no extra slot
+- [x] Tests pass: `uv run pytest`
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` clean after the commit
+- [x] Manual check: read `schema/resource.yaml` top to bottom against the lineage table; every slot in the table order, no extra slot
 
 **Dependencies:** Task 3
 
@@ -112,9 +112,11 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 **Estimated scope:** Medium
 
+**Done:** Committed 2026-09-14 as `671412a feat(resource): add OperationalRequirement, Safety and the Activity attributes`. Three red-green slices: each group's slots were added to the example first, the validator rejected them by name, then the class and slots were declared. `Safety`'s pointer slot is `safety_group` (decision 12); `Safety.md` and `safety_group.md` are distinct pages. 52 slots declared, every one in the lineage table or the group-slot list; `$defs` are exactly the eleven the spec names; 26 tests pass.
+
 ## Checkpoint: Phase 2
-- [ ] All 56 lineage rows have their slot in `schema/resource.yaml`
-- [ ] Example file matches success criterion 5
+- [x] All 56 lineage rows have their slot in `schema/resource.yaml`
+- [x] Example file matches success criterion 5
 - [ ] Review with human before Task 5
 
 ## Task 5: Verify success criteria, push, confirm CI
