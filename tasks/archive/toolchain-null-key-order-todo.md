@@ -1,6 +1,6 @@
 Clo# Tasks: toolchain — no `"null"`, natural key order
 
-Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md` (changed 2026-09-14). One Conventional Commit for the code plus rebuilt `dist/`, and a separate `docs(plan): ...` commit for this file and the plan, per this project's established pattern. `uv run pytest` passes before every commit.
+Plan: `tasks/archive/toolchain-null-key-order-plan.md`. Spec: `SPEC-toolchain.md` (changed 2026-09-14). One Conventional Commit for the code plus rebuilt `dist/`, and a separate `docs(plan): ...` commit for this file and the plan, per this project's established pattern. `uv run pytest` passes before every commit.
 
 ## Task 1: In-process JSON Schema generation without null, tests, rebuilt `dist/`
 
