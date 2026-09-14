@@ -4,7 +4,7 @@
 
 ## Objective
 
-Define the shared vocabulary every other module imports: the two value types, `Position` and `Quantity`, the `MaterialName` string type that joins product to process, the closed set of parameter kinds, and the capability vocabulary that the process side requires and the resource side offers. Deliver it as `schema/common.yaml`, the first real module through the toolchain, with its example document, generated JSON Schema, and generated documentation.
+Define the shared vocabulary every other module imports: the three value types, `Position`, `Quantity`, and `Interval`, the `MaterialName` string type that joins product to process, the closed set of parameter kinds, and the capability vocabulary that the process side requires and the resource side offers. Deliver it as `schema/common.yaml`, the first real module through the toolchain, with its example document, generated JSON Schema, and generated documentation.
 
 **Users.** The three domain modules, which import it and must not redefine anything it provides. Other project teams, who read `docs/model/common/` to learn what a position, a quantity, and a capability look like before they read anything else. The schema viewer, which loads `dist/common.schema.json`.
 
@@ -73,6 +73,7 @@ imports:
 |---|---|---|
 | `Position` | `x_coord`, `y_coord`, `z_coord`, all `float`; `unit` string; all required | Three cartesian coordinates and their unit: a point, or an extent along each axis. Site positions are in the IFC project coordinate frame, the one frame the model resolves to a Space; an owning slot may say its value is in another frame, such as a robot's own, or is an extent rather than a point. Always inlined by its owner; never a document on its own. Amended 2026-09-14, see decisions 12 and 13. |
 | `Quantity` | `value` `float` required; `unit` string required | A number with a unit. UCUM case-sensitive codes are the recommended convention; not enforced and not stated in the schema. Always inlined. |
+| `Interval` | `minimum`, `maximum`, both `float`; `unit` string; all required | A lower and an upper bound with their unit. Always inlined. |
 | `CapabilityType` | `id` identifier; `description` required | Something a robot can do, named by a bare verb. The id is the name; no separate label. Matching is by id, no levels or qualifiers. The only document class in this module. |
 
 ### Type
@@ -89,7 +90,7 @@ imports:
 
 ### Shared slots
 
-`id` (`identifier: true`), `description`, `x_coord`, `y_coord`, `z_coord`, `value`, `unit` (shared by `Quantity` and `Position`), and the four dimension slots `length`, `width`, `height`, `weight`, each range `Quantity`, `inlined: true`, added 2026-09-12 for resource and product. Defined here once; domain modules reuse them and never redeclare them. `id` is unique among instances of its class, not across the document set: every reference slot declares its range, so the class is always known and the id carries no namespace. There is no `label` slot in common. A class whose id is not a readable name, such as a robot type, brings `label` with it when its module is specified.
+`id` (`identifier: true`), `description`, `x_coord`, `y_coord`, `z_coord`, `value`, `minimum`, `maximum`, `unit` (shared by `Quantity`, `Position`, and `Interval`), and the four dimension slots `length`, `width`, `height`, `weight`, each range `Quantity`, `inlined: true`, added 2026-09-12 for resource and product. Defined here once; domain modules reuse them and never redeclare them. `id` is unique among instances of its class, not across the document set: every reference slot declares its range, so the class is always known and the id carries no namespace. There is no `label` slot in common. A class whose id is not a readable name, such as a robot type, brings `label` with it when its module is specified.
 
 ### Foreseen additions
 
@@ -143,7 +144,7 @@ No new test files. This module lights up the tests the toolchain left waiting an
 | `test_dist.py` | committed `dist/common.schema.json` and `docs/model/common/` equal a fresh build; the schema passes the 2020-12 meta-schema | none, it collects the files |
 | `test_build.py` | unchanged; still runs on the fixture | none |
 
-`Position` and `Quantity` have no example document because they are never top-level. They are exercised by the first consumer module's examples. If that feels like a gap, the mitigation is a fixture-style probe, not a container class.
+`Position`, `Quantity`, and `Interval` have no example document because they are never top-level. They are exercised by the first consumer module's examples. If that feels like a gap, the mitigation is a fixture-style probe, not a container class.
 
 ## Boundaries
 
@@ -156,9 +157,9 @@ No new test files. This module lights up the tests the toolchain left waiting an
 ## Success Criteria
 
 1. `uv run pytest` passes with `test_lint.py` and `test_dist.py` no longer skipped: 1 lint test, 1 meta-schema test, and 2 new example rows collected and passing.
-2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `CapabilityType`, and `ParameterKind`. `MaterialName` does not appear: LinkML inlines types onto the slots that use them by default, so a `MaterialName` slot renders as a plain string, which is the preferred rendering for the viewer. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
+2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `Interval`, `CapabilityType`, and `ParameterKind`. `MaterialName` does not appear: LinkML inlines types onto the slots that use them by default, so a `MaterialName` slot renders as a plain string, which is the preferred rendering for the viewer. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
 3. `dist/README.md` lists `common.schema.json` with the module description.
-4. `docs/model/common/index.md` lists three classes, eleven slots, one enum, and one type, `MaterialName`. Every page has a description.
+4. `docs/model/common/index.md` lists four classes, thirteen slots, one enum, and one type, `MaterialName`. Every page has a description.
 5. `examples/common/capability_types.yaml` contains the four core capability types, `locomote`, `grip`, `lift`, `align`, with `id` and `description` only; every id is a bare verb and the word "element" appears in none of them.
 6. Another team's check: given only `docs/model/common/`, a person adds an eleventh capability type to the example file and `uv run pytest` still passes. Recorded as done when it has happened once; not blocking.
 7. The toolchain was not changed by this module's own work. One exception, recorded: using common surfaced a toolchain bug, stale pages surviving inside a module's docs folder when an element is removed, fixed in a separate `fix(build)` commit with its own test. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows that commit and no other from this module.

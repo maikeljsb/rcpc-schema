@@ -82,11 +82,11 @@ imports:
 | `RobotUnit` | `id`, `count`, `status`, `physical_property`, `operational_requirement`, `safety_group`, `activity_group` | The entry. One per robot product; identical machines are one entry with a higher `count`. `id` is a readable product slug and is the CRS Name. Required: `id`, `count`, `activity_group`. |
 | `PhysicalProperty` | `id`, 22 attribute slots, `sensors` | CRS group 1. Holds the robot's sensors as a list of `Sensor` objects. |
 | `Sensor` | `id`, `sensor_type`, `sensor_requirements`, `sensor_location` | One sensor mounted on the robot. Carries the CRS sensor attributes, so it belongs to the PhysicalProperty group one hop down. Required: `id`. |
-| `OperationalRequirement` | `id`, 8 attribute slots | CRS group 2. |
+| `OperationalRequirement` | `id`, 6 attribute slots | CRS group 2. |
 | `Safety` | `id`, 6 attribute slots | CRS group 3. |
 | `Activity` | `id`, `offers`, 9 attribute slots | CRS group 4. The one required group, because `offers` is required. |
 
-Every group class and `Sensor` has an authored `id`, so by the projection rule it becomes a node with an edge from its holder, whether written inline or by reference. `Quantity` and `Position` have no `id` and flatten into the node that holds them. Every `Position` on this side is an installation point on the robot body, in the robot's own frame, and carries its unit.
+Every group class and `Sensor` has an authored `id`, so by the projection rule it becomes a node with an edge from its holder, whether written inline or by reference. `Quantity`, `Position`, and `Interval` have no `id` and flatten into the node that holds them. Every `Position` on this side is an installation point on the robot body, in the robot's own frame, and carries its unit.
 
 ### Enum
 
@@ -98,7 +98,7 @@ Every group class and `Sensor` has an authored `id`, so by the projection rule i
 
 The group slots on `RobotUnit`: `physical_property`, `operational_requirement`, `safety_group`, `activity_group`, each single-valued, `inlined: true`, range the class of the same name — except `activity_group` and `safety_group`, ranging `Activity` and `Safety`, named with a `_group` suffix because a slot named plain `activity` or `safety` collides with its class's own generated doc page on a case-insensitive filesystem (both would write to `Activity.md`/`activity.md`, indistinguishable on Windows). `sensors` on `PhysicalProperty`: multivalued, `inlined: true`, `inlined_as_list: true`, range `Sensor`. `count`: `integer`, `minimum_value: 1`, required. `status`: range `RobotStatus`, `ifabsent: RobotStatus(idle)`. `offers`: multivalued, range `CapabilityType`, not inlined, so a document carries capability ids. Plus the attribute slots in the lineage table. Every object-valued slot states `inlined: true` even where LinkML would infer it, so the document shape is visible in the YAML.
 
-Reused from common: `id` and the four dimension slots as slots; `Position` and `Quantity` as ranges.
+Reused from common: `id` and the four dimension slots as slots; `Position`, `Quantity`, and `Interval` as ranges.
 
 ### Lineage: CRS attribute to slot
 
@@ -142,9 +142,9 @@ Every row is one attribute of the paper's Table 3, in the paper's order. "Type" 
 
 | CRS attribute | Type | Slot | Class | Range | Note |
 |---|---|---|---|---|---|
-| Grade | String | `grade_min`, `grade_max` | `OperationalRequirement` | Quantity, deg | Split into bounds. Descriptions name the CRS Grade. |
-| Temperature | String | `temperature_min`, `temperature_max` | `OperationalRequirement` | Quantity, Cel | Split into bounds. Descriptions name the CRS Temperature. |
-| Humidity | Decimal | `humidity` | `OperationalRequirement` | Quantity, % | |
+| Grade | String | `grade` | `OperationalRequirement` | Interval, deg | |
+| Temperature | String | `temperature` | `OperationalRequirement` | Interval, Cel | |
+| Humidity | Decimal | `humidity` | `OperationalRequirement` | Interval, % | |
 | Site Preparation | String | `site_preparation` | `OperationalRequirement` | string | |
 | Req Number Operators | Int | `req_number_operators` | `OperationalRequirement` | integer | |
 | Operator Responsibilities | String | `operator_responsibilities` | `OperationalRequirement` | string | |
@@ -212,8 +212,7 @@ Everything else is optional. An entry with `id`, `count`, and an `Activity` hold
         sensor_location: {x_coord: 0, y_coord: 0.2, z_coord: 0.5, unit: m}
   operational_requirement:
     id: mason_m1_operational
-    temperature_min: {value: 5, unit: Cel}
-    temperature_max: {value: 40, unit: Cel}
+    temperature: {minimum: 5, maximum: 40, unit: Cel}
     req_number_operators: 1
   safety_group:
     id: mason_m1_safety
@@ -266,7 +265,7 @@ slots:
 Conventions specific to this module:
 
 - **Names follow the linter's `standard_naming` rule**: CamelCase classes and enums, snake_case slots and permissible values. Attribute slots are the paper's names in snake_case, verbatim.
-- **Attribution only where the name changed.** `id`, `offers`, the three merged quantities, the merged reach, and the four bounds say which CRS attribute they come from. Nothing else mentions the paper.
+- **Attribution only where the name changed.** `id`, `offers`, the three merged quantities, and the merged reach say which CRS attribute they come from. Nothing else mentions the paper.
 - **No inheritance features.** Six concrete classes listing global slots, `slot_usage` for per-class `required`. No `abstract`, `mixins`, `union_of`, or `designates_type`.
 - **Every object-valued slot states `inlined: true`.** Mandatory on the group slots and `sensors`, whose ranges have identifiers; stated on the Quantity and position slots too, for a uniform read.
 - **Group ids follow the entry id**: `mason_m1_physical`, `mason_m1_operational`, `mason_m1_safety`, `mason_m1_activity`, and sensors `mason_m1_<sensor>`.
@@ -298,7 +297,7 @@ What the validator does not check, and who does: that every id in `offers` names
 ## Success Criteria
 
 1. `uv run pytest` passes with five new rows collected and passing, and no test file other than `test_examples.py` changed.
-2. `dist/resource.schema.json` declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `RobotUnit`, `PhysicalProperty`, `Sensor`, `OperationalRequirement`, `Safety`, `Activity`, `RobotStatus`, and common's `Position`, `Quantity`, `CapabilityType`, `ParameterKind`. `RobotUnit.properties.count` has `minimum: 1`; `sensors` is an array of `Sensor`; `offers` is an array of strings.
+2. `dist/resource.schema.json` declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `RobotUnit`, `PhysicalProperty`, `Sensor`, `OperationalRequirement`, `Safety`, `Activity`, `RobotStatus`, and common's `Position`, `Quantity`, `Interval`, `CapabilityType`, `ParameterKind`. `RobotUnit.properties.count` has `minimum: 1`; `sensors` is an array of `Sensor`; `offers` is an array of strings.
 3. `dist/README.md` lists `resource.schema.json` with the module description.
 4. `docs/model/resource/index.md` lists exactly the six classes, `RobotStatus`, and this module's own slots, every entry with a description. The folder also holds unlinked pages for common's elements and a `common.md` schema page: `gen-doc --no-mergeimports` drops the built-in types but still writes pages for a project import. Accepted as is; stripping them would be a toolchain change.
 5. `examples/resource/robot_units.yaml` holds two fictional entries. Both carry a sensor with a `sensor_location`; one has `count: 2` and all four groups, the other `count: 1`. Every id in `offers` appears in `examples/common/capability_types.yaml`.
@@ -311,7 +310,7 @@ All decided 2026-09-12 in Phase 1.
 
 1. **Attribute names are the paper's, snake_cased, verbatim**, including `req_number_operators`. Lineage stays trivial.
 2. **The five Enum attributes are open strings.** The paper publishes no values. Closing one later is additive.
-3. **Grade and Temperature are min and max Quantities**, four slots, no range class. Only two attributes need it.
+3. **Grade, Temperature, and Humidity are `Interval`s**, common's lower-and-upper-bound value type with a unit. The paper defines each as a range.
 4. **Sensor Location is one `Position` on a `Sensor` object, in the robot's own frame.** Revised 2026-09-14 in the Task 3 review. The paper's definition allows a sensor on the robot or outside it; this module describes the robot, so `sensor_location` is where a sensor sits on the robot body, and sensors standing on site are not modelled here. The 2026-09-12 version split the attribute into a site position and a mount position; the site half is withdrawn. `Sensor` stays a class because a robot carries several, each with its own attributes.
 5. **`Sensor` is an identified class, not a keyed map.** A keyed map would flatten three sensors into some twenty prefixed properties, the wide-node shape the one-pager rejected.
 6. **Mount offsets are common's `Position`; `MountPosition` is withdrawn.** Revised 2026-09-14 in the Task 3 review. The 2026-09-12 decision was a second value class, `MountPosition`, because common's `Position` had no unit and the brief declines a frame slot. That put a robot-frame point in the model under a different name, which is the brief's rule sidestepped rather than kept. The paper's `String` type for these two attributes was considered and overruled: a position is not a string. Resolution: `Position` gains `unit` in common (`SPEC-common.md` decision 12), so a point carries its unit wherever it is written, and `sensor_location` and `manipulator_position` are plain `Position` whose descriptions state the robot's own frame. One point class, no second frame class, and the brief's one-frame rule stands as written: it forbids a frame slot, not a unit.
