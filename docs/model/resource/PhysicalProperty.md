@@ -431,6 +431,8 @@ attributes:
     - RobotUnit
     - PhysicalProperty
     - Sensor
+    - OperationalRequirement
+    - Safety
     - Activity
     range: string
     required: true

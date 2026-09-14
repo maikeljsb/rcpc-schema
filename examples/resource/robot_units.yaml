@@ -3,6 +3,15 @@
   activity_group:
     id: mason_m1_activity
     offers: [grip, align, lift]
+    productivity: {value: 250, unit: brick/h}
+    precision: {value: 2, unit: mm}
+    accuracy: {value: 3, unit: mm}
+    data_output_type: [as-built point cloud, placement log]
+    data_output_file_type: [e57, csv]
+    crew_information: One operator and one mason working alongside the robot.
+    crew_responsibilities: The mason points and finishes joints behind the robot.
+    worker_type: [mason]
+    worker_responsibilities: Checks the first course and corrects placement drift.
   physical_property:
     id: mason_m1_physical
     manufacturer: Fictional Robotics
@@ -16,11 +25,32 @@
       - id: mason_m1_lidar
         sensor_type: LiDAR
         sensor_location: {x_coord: 0, y_coord: 0.2, z_coord: 0.5, unit: m}
+  operational_requirement:
+    id: mason_m1_operational
+    grade_min: {value: 0, unit: deg}
+    grade_max: {value: 5, unit: deg}
+    temperature_min: {value: 5, unit: Cel}
+    temperature_max: {value: 40, unit: Cel}
+    humidity: {value: 80, unit: '%'}
+    site_preparation: Level, compacted ground and a cleared strip along the wall line.
+    req_number_operators: 1
+    operator_responsibilities: Loads the brick pallets and supervises the run.
+  safety_group:
+    id: mason_m1_safety
+    emergency_stop: true
+    safe_distance: {value: 2.0, unit: m}
+    object_detection_range: {value: 5.0, unit: m}
+    safety_barrier: true
+    additional_ppe_requirements: [hearing protection, safety glasses]
+    minimum_workspace: {value: 4.0, unit: m}
 - id: scout_v1
   count: 1
   activity_group:
     id: scout_v1_activity
     offers: [locomote]
+    productivity: {value: 1200, unit: m2/h}
+    data_output_type: [progress images]
+    data_output_file_type: [jpg]
   physical_property:
     id: scout_v1_physical
     manufacturer: Fictional Robotics

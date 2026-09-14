@@ -80,6 +80,17 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 | [PhysicalProperty](PhysicalProperty.md) | [pitch](pitch.md) | range | [Quantity](Quantity.md) |
 | [PhysicalProperty](PhysicalProperty.md) | [roll](roll.md) | range | [Quantity](Quantity.md) |
 | [PhysicalProperty](PhysicalProperty.md) | [lifting_capacity](lifting_capacity.md) | range | [Quantity](Quantity.md) |
+| [OperationalRequirement](OperationalRequirement.md) | [grade_min](grade_min.md) | range | [Quantity](Quantity.md) |
+| [OperationalRequirement](OperationalRequirement.md) | [grade_max](grade_max.md) | range | [Quantity](Quantity.md) |
+| [OperationalRequirement](OperationalRequirement.md) | [temperature_min](temperature_min.md) | range | [Quantity](Quantity.md) |
+| [OperationalRequirement](OperationalRequirement.md) | [temperature_max](temperature_max.md) | range | [Quantity](Quantity.md) |
+| [OperationalRequirement](OperationalRequirement.md) | [humidity](humidity.md) | range | [Quantity](Quantity.md) |
+| [Safety](Safety.md) | [safe_distance](safe_distance.md) | range | [Quantity](Quantity.md) |
+| [Safety](Safety.md) | [object_detection_range](object_detection_range.md) | range | [Quantity](Quantity.md) |
+| [Safety](Safety.md) | [minimum_workspace](minimum_workspace.md) | range | [Quantity](Quantity.md) |
+| [Activity](Activity.md) | [productivity](productivity.md) | range | [Quantity](Quantity.md) |
+| [Activity](Activity.md) | [precision](precision.md) | range | [Quantity](Quantity.md) |
+| [Activity](Activity.md) | [accuracy](accuracy.md) | range | [Quantity](Quantity.md) |
 
 
 

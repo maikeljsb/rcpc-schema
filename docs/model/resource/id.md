@@ -29,6 +29,8 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |  yes  |
 | [PhysicalProperty](PhysicalProperty.md) | CRS group 1: the robot's physical dimensions, hardware, and performance |  no  |
 | [Sensor](Sensor.md) | One sensor on or around the robot |  no  |
+| [OperationalRequirement](OperationalRequirement.md) | CRS group 2: the site conditions and the people the robot needs to work |  no  |
+| [Safety](Safety.md) | CRS group 3: how the robot protects the people and objects around it |  no  |
 | [Activity](Activity.md) | CRS group 4: the capabilities a robot offers and how it performs them |  no  |
 
 
@@ -43,7 +45,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [Activity](Activity.md) |
+| Domain Of | [CapabilityType](CapabilityType.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [OperationalRequirement](OperationalRequirement.md), [Safety](Safety.md), [Activity](Activity.md) |
 
 ### Cardinality and Requirements
 
@@ -104,6 +106,8 @@ domain_of:
 - RobotUnit
 - PhysicalProperty
 - Sensor
+- OperationalRequirement
+- Safety
 - Activity
 range: string
 required: true

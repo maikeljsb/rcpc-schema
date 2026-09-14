@@ -36,6 +36,8 @@ classes:
       - count
       - status
       - physical_property
+      - operational_requirement
+      - safety_group
       - activity_group
     slot_usage:
       id:
@@ -82,6 +84,32 @@ classes:
       - sensor_requirements
       - sensor_location
 
+  OperationalRequirement:
+    description: >-
+      CRS group 2: the site conditions and the people the robot needs to work.
+    slots:
+      - id
+      - grade_min
+      - grade_max
+      - temperature_min
+      - temperature_max
+      - humidity
+      - site_preparation
+      - req_number_operators
+      - operator_responsibilities
+
+  Safety:
+    description: >-
+      CRS group 3: how the robot protects the people and objects around it.
+    slots:
+      - id
+      - emergency_stop
+      - safe_distance
+      - object_detection_range
+      - safety_barrier
+      - additional_ppe_requirements
+      - minimum_workspace
+
   Activity:
     description: >-
       CRS group 4: the capabilities a robot offers and how it performs them.
@@ -89,6 +117,15 @@ classes:
     slots:
       - id
       - offers
+      - productivity
+      - precision
+      - accuracy
+      - data_output_type
+      - data_output_file_type
+      - crew_information
+      - crew_responsibilities
+      - worker_type
+      - worker_responsibilities
 
 slots:
   count:
@@ -113,6 +150,14 @@ slots:
     range: PhysicalProperty
     inlined: true
     description: The Physical Property group holding the robot's dimensions, hardware, and performance.
+  operational_requirement:
+    range: OperationalRequirement
+    inlined: true
+    description: The Operational Requirement group holding the site conditions and people the robot needs.
+  safety_group:
+    range: Safety
+    inlined: true
+    description: The Safety group holding how the robot protects the people and objects around it.
   sensors:
     range: Sensor
     multivalued: true
@@ -184,3 +229,78 @@ slots:
     range: Quantity
     inlined: true
     description: The maximum weight the manipulator can lift during operation, recommended in kilograms.
+  grade_min:
+    range: Quantity
+    inlined: true
+    description: The gentlest ground slope the robot can work on, recommended in degrees. The lower bound of the CRS Grade.
+  grade_max:
+    range: Quantity
+    inlined: true
+    description: The steepest ground slope the robot can work on, recommended in degrees. The upper bound of the CRS Grade.
+  temperature_min:
+    range: Quantity
+    inlined: true
+    description: The lowest temperature at which the robot works properly, recommended in degrees Celsius. The lower bound of the CRS Temperature.
+  temperature_max:
+    range: Quantity
+    inlined: true
+    description: The highest temperature at which the robot works properly, recommended in degrees Celsius. The upper bound of the CRS Temperature.
+  humidity:
+    range: Quantity
+    inlined: true
+    description: The highest relative humidity at which the robot works properly, recommended in percent.
+  site_preparation:
+    description: What the site needs before the robot can work properly on it.
+  req_number_operators:
+    range: integer
+    description: How many people control the robot.
+  operator_responsibilities:
+    description: What the operator does while the robot performs its tasks.
+  emergency_stop:
+    range: boolean
+    description: Whether the robot stops automatically and immediately when specific conditions are triggered.
+  safe_distance:
+    range: Quantity
+    inlined: true
+    description: The minimum distance to keep between humans and the robot while they work together, recommended in metres.
+  object_detection_range:
+    range: Quantity
+    inlined: true
+    description: How far away the robot can detect and recognise objects, recommended in metres.
+  safety_barrier:
+    range: boolean
+    description: Whether the robot has a facility to avoid collisions with humans or objects.
+  additional_ppe_requirements:
+    multivalued: true
+    description: Extra personal protective equipment required when humans operate or work with the robot.
+  minimum_workspace:
+    range: Quantity
+    inlined: true
+    description: The minimum space the robot needs to operate without collisions, recommended in metres.
+  productivity:
+    range: Quantity
+    inlined: true
+    description: How much work the robot does per unit of time, in a unit that fits the activity, for example brick/h. The CRS Productivity with its Productivity Units.
+  precision:
+    range: Quantity
+    inlined: true
+    description: How finely the robot repeats its work, recommended in millimetres. The CRS Precision with its Precision Units.
+  accuracy:
+    range: Quantity
+    inlined: true
+    description: How close the robot's work comes to the target, recommended in millimetres. The CRS Accuracy with its Accuracy Units.
+  data_output_type:
+    multivalued: true
+    description: The forms of data the robot's sensors output.
+  data_output_file_type:
+    multivalued: true
+    description: The file formats of the data the robot's sensors output.
+  crew_information:
+    description: The composition of the team working with the robot.
+  crew_responsibilities:
+    description: What the crew does while the robot performs its tasks.
+  worker_type:
+    multivalued: true
+    description: The kinds of worker who work with the robot.
+  worker_responsibilities:
+    description: What the workers do while the robot performs its tasks.
