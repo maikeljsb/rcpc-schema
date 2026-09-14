@@ -45,15 +45,15 @@ schema/common.yaml  (+ length, width, height, weight)                         (T
 
 ### Phase 1: Prerequisite and the entry
 - [x] Task 1: Add the four dimension slots to common
-- [ ] Task 2: `RobotUnit`, `RobotStatus`, and `Activity` with `offers`, end to end
+- [x] Task 2: `RobotUnit`, `RobotStatus`, and `Activity` with `offers`, end to end
 
 ### Checkpoint: Phase 1
-- [ ] `uv run pytest` passes with four resource rows collected
-- [ ] `dist/resource.schema.json` shows `minimum: 1` on `count`, `offers` as an array of strings, `activity` as a `$ref`
-- [ ] Review with human
+- [x] `uv run pytest` passes with four resource rows collected
+- [x] `dist/resource.schema.json` shows `minimum: 1` on `count`, `offers` as an array of strings, `activity_group` as a `$ref`
+- [x] Review with human
 
 ### Phase 2: The groups
-- [ ] Task 3: `PhysicalProperty`, `Sensor`, `MountPosition`, and the fifth invalid document
+- [x] Task 3: `PhysicalProperty`, `Sensor`, `MountPosition`, and the fifth invalid document (`MountPosition` withdrawn in review, see Amendments)
 - [ ] Task 4: `OperationalRequirement`, `Safety`, and Activity's remaining attributes
 
 ### Checkpoint: Phase 2
@@ -66,7 +66,7 @@ schema/common.yaml  (+ length, width, height, weight)                         (T
 
 ### Checkpoint: Complete
 - [ ] Every success criterion in `SPEC-resource.md` verified with evidence
-- [ ] `schema/common.yaml` changed only in Task 1; no commit touched `scripts/` or the toolchain tests
+- [ ] `schema/common.yaml` changed only in Task 1 and the Task 3 review (`unit` on `Position`); no commit touched `scripts/` or the toolchain tests
 - [ ] Ready for `SPEC-product.md`
 
 ## Risks and Mitigations
@@ -82,6 +82,11 @@ schema/common.yaml  (+ length, width, height, weight)                         (T
 ## Parallelisation
 
 None. Five sequential tasks on one schema file and one example file.
+
+## Amendments
+
+- **2026-09-14, after Task 2:** `RobotUnit.activity` renamed `activity_group`; a slot and a class of the same word produce one doc filename on a case-insensitive filesystem. `Safety`'s pointer slot will be `safety_group` for the same reason. `SPEC-resource.md` decision 12.
+- **2026-09-14, Task 3 review:** `MountPosition` withdrawn. It existed because common's `Position` had no unit; it put a robot-frame point in the model under a second name. Common's `Position` gained `unit` (`feat(common)`, `24b8c3e`), and the two mount slots became plain `Position` in the robot's own frame (`refactor(resource)`, `6874c7c`). The architecture decision "Sensor and MountPosition before the plain groups" still held its purpose: the new shape surfaced the problem in Task 3, not at the end. `SPEC-common.md` decision 12, `SPEC-resource.md` decision 6.
 
 ## Open Questions
 

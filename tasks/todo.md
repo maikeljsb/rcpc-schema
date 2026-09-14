@@ -64,13 +64,13 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 **Acceptance criteria:**
 - [x] Both entries validate; the new invalid document fails naming `id`
-- [x] `dist/resource.schema.json` has `sensors` as an array of `$ref` `Sensor`, and `MountPosition` requires all four of its properties
+- [x] `dist/resource.schema.json` has `sensors` as an array of `$ref` `Sensor`, and `Position` requires all four of its properties
 - [x] Every Physical Property row of the lineage table except Name has its slot declared, with a description
 
 **Verification:**
 - [x] Tests pass: `uv run pytest` with five resource rows collected
 - [x] Build succeeds: `uv run python scripts/build.py` run three times with no further diff; `git status --porcelain` stable
-- [x] Manual check: `docs/model/resource/Sensor.md` lists six slots; `MountPosition.md` states the robot frame
+- [x] Manual check: `docs/model/resource/Sensor.md` lists six slots; `sensor_mount_position.md` states the robot's own frame
 
 **Dependencies:** Task 2
 
@@ -82,6 +82,8 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 - `dist/resource.schema.json`, `docs/model/resource/*` (generated)
 
 **Estimated scope:** Medium
+
+**Amendment 2026-09-14:** committed as `663c1ff feat(resource): add PhysicalProperty with Sensor and MountPosition`. In review, `MountPosition` was withdrawn: it existed only because common's `Position` had no unit, and it put a robot-frame point in the model under a second name. `Position` gained `unit` in common (`24b8c3e`), `sensor_mount_position` and `manipulator_position` became plain `Position` (refactor commit following it), and the two criteria above were reworded to match. See `SPEC-common.md` decision 12 and `SPEC-resource.md` decision 6.
 
 ## Task 4: `OperationalRequirement`, `Safety`, and Activity's remaining attributes
 
