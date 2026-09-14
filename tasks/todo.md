@@ -1,4 +1,4 @@
-# Tasks: toolchain — no `"null"`, natural key order
+Clo# Tasks: toolchain — no `"null"`, natural key order
 
 Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md` (changed 2026-09-14). One Conventional Commit for the code plus rebuilt `dist/`, and a separate `docs(plan): ...` commit for this file and the plan, per this project's established pattern. `uv run pytest` passes before every commit.
 
@@ -38,6 +38,6 @@ Plan: `tasks/plan.md`. Spec: `SPEC-toolchain.md` (changed 2026-09-14). One Conve
 - `git diff --stat`: `dist/resource.schema.json` 890 lines changed, `dist/common.schema.json` 150 (reordering only, it has no optional slots).
 
 ## Checkpoint: Complete
-- [ ] Task 1 committed with the rebuilt `dist/` in the same commit
+- [x] Task 1 committed with the rebuilt `dist/` in the same commit (`9aa182e`; spec `c27513d`; README wording `b2c2dd6`)
 - [x] Success criteria 1, 3, 5 and 9 in `SPEC-toolchain.md` verified with evidence, recorded in the plan
-- [ ] CI run on the pushed head recorded in the plan
+- [x] CI run `34853901768` on `b2c2dd6` passed, recorded in the plan

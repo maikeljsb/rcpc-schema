@@ -34,21 +34,21 @@ scripts/build.py: import JsonSchemaGenerator; build() calls generate() with incl
 - Corrected during Implement: the spec briefly claimed every file also ends with `$defs`. False for a module with a `tree_root` class (the fixture's `Widget`), whose properties the generator appends after `$defs`. The requirement was only the opening; the claim was dropped from rule 1, criterion 9 and the test.
 - [x] `docs/model/` byte-identical to before (docs path untouched)
 - [x] Success criteria 1, 3, 5 and 9 of `SPEC-toolchain.md` verified with evidence (below)
-- [ ] CI run on the pushed head recorded here
+- [x] CI run `34853901768` on the pushed head `b2c2dd6` passed (`ubuntu-latest`)
 
 ## Checkpoint: Complete — success-criteria evidence (2026-09-14)
 
-1. `uv run pytest` → `28 passed in 60.28s` on Windows. `ubuntu-latest` pending the push.
+1. `uv run pytest` → `28 passed in 60.28s` on Windows; `ubuntu-latest` green in CI run `34853901768`.
 2. Empty `schema/`: unchanged by this change; `test_empty_schema_is_noop` still passes.
 3. Fixture round trip: `test_fixture_produces_2020_12`, `test_fixture_passes_metaschema`, `test_fixture_docs_generated`, `test_readme_lists_modules`, `test_stale_outputs_removed` all pass against the in-process generator.
-4. GitHub Actions: pending the push.
+4. GitHub Actions: run `34853901768` on `b2c2dd6` (the head after the `dist/viewer/README.md` wording fix) passed.
 5. `scripts/build.py`: 122 lines (`wc -l`); imports `pathlib`, `argparse, json, shutil, subprocess, sys`, `yaml`, `JsonSchemaGenerator`. Nothing else.
 6. Unaffected.
 7. `dist/viewer/` still produced by default and suppressed by `--no-viewer-schemas`; `test_viewer_schemas_on_by_default`, `test_viewer_schemas_opt_out` pass.
 8. Fixture pair: `test_viewer_schemas_splits_defs` now reads `Crate.properties.dimensions.$ref` directly (no `anyOf` wrapper) and finds `"minimal.schema.json#/$defs/Dimensions"`; `test_viewer_schemas_resolves_end_to_end` passes unchanged.
 9. `grep -c '"null"'` → 0 in `dist/common.schema.json`, `dist/resource.schema.json`, `dist/viewer/common.schema.json`, `dist/viewer/resource.schema.json`; each opens `{"$schema": ..., "$id": ...}`.
 
-Decided the same day, outside this change: the root `type: object` and `additionalProperties: true` LinkML emits stay; the stray "(document root)" box they cause in rcpc-schema-viewer is a viewer-side fix (`hasRootStructure`).
+Decided the same day, outside this change: the root `type: object` and `additionalProperties: true` LinkML emits stay; the stray "(document root)" box they cause in rcpc-schema-viewer is a viewer-side fix (`hasRootStructure`), done the same day in rcpc-schema-viewer.
 
 ## Risks and Mitigations
 
