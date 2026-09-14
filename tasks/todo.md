@@ -63,14 +63,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 **Description:** Add `MountPosition` (the four common slots, all required), `Sensor` (`id` plus five slots), and `PhysicalProperty` (`id`, the 24 attribute slots in lineage order, `sensors`), plus the `physical_property` slot on `RobotUnit`. Declare the new slots with the ranges and units from the lineage table; `sensors` is multivalued, `inlined: true`, `inlined_as_list: true`. Grow both example entries: `mason_m1` gets a `PhysicalProperty` with dimensions, load capacity, and a sensor with `sensor_mount_position`; the inspection robot gets one with a sensor carrying `sensor_site_position`. Add `invalid/robot_unit_group_missing_id.yaml` and its row. Rebuild and commit as `feat(resource): add PhysicalProperty with Sensor and MountPosition`.
 
 **Acceptance criteria:**
-- [ ] Both entries validate; the new invalid document fails naming `id`
-- [ ] `dist/resource.schema.json` has `sensors` as an array of `$ref` `Sensor`, and `MountPosition` requires all four of its properties
-- [ ] Every Physical Property row of the lineage table except Name has its slot declared, with a description
+- [x] Both entries validate; the new invalid document fails naming `id`
+- [x] `dist/resource.schema.json` has `sensors` as an array of `$ref` `Sensor`, and `MountPosition` requires all four of its properties
+- [x] Every Physical Property row of the lineage table except Name has its slot declared, with a description
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest` with five resource rows collected
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` clean after the commit
-- [ ] Manual check: `docs/model/resource/Sensor.md` lists six slots; `MountPosition.md` states the robot frame
+- [x] Tests pass: `uv run pytest` with five resource rows collected
+- [x] Build succeeds: `uv run python scripts/build.py` run three times with no further diff; `git status --porcelain` stable
+- [x] Manual check: `docs/model/resource/Sensor.md` lists six slots; `MountPosition.md` states the robot frame
 
 **Dependencies:** Task 2
 
