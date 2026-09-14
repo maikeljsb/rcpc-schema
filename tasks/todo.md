@@ -32,7 +32,7 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 **Acceptance criteria:**
 - [x] `uv run linkml-lint schema/resource.yaml` reports no problems, and `linkml-validate -C RobotUnit` accepts `robot_units.yaml`
-- [x] The three invalid documents fail naming `activity`, `count`, and `offers` respectively
+- [x] The three invalid documents fail naming `activity_group`, `count`, and `offers` respectively
 - [x] `dist/resource.schema.json` declares draft 2020-12, has `minimum: 1` on `count`, an array of strings for `offers`, a `$ref` for `activity`, and no root `properties`
 
 **Verification:**
@@ -50,6 +50,8 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 - `dist/resource.schema.json`, `dist/README.md`, `docs/model/resource/*` (generated)
 
 **Estimated scope:** Medium
+
+**Amendment 2026-09-14:** committed 2026-09-12 as `2312d64 feat(resource): add RobotUnit, RobotStatus and the Activity group`, then broke Linux CI (`test_committed_outputs_match_fresh_build`): `RobotUnit`'s group-pointer slot, named `activity`, collided with the `Activity` class on the case-insensitive filesystem this was built on, silently overwriting one generated doc page with the other. Fixed by renaming the slot to `activity_group` throughout — see `SPEC-resource.md` decision 12.
 
 ## Checkpoint: Phase 1
 - [ ] `uv run pytest` passes with four resource rows collected
