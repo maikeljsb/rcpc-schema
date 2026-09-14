@@ -125,13 +125,13 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 **Acceptance criteria:**
 - [x] Each of the seven criteria has a line of evidence with the command or file it came from
-- [ ] CI is green on the pushed head
+- [x] CI is green on the pushed head
 - [x] `tasks/plan.md` checkpoints ticked
 
 **Verification:**
 - [x] Tests pass: `uv run pytest`
 - [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` clean
-- [ ] Manual check: the CI run page shows the same passing count as local
+- [x] Manual check: the CI run page shows the same passing count as local
 
 **Dependencies:** Task 4
 
@@ -143,9 +143,9 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 ## Checkpoint: Complete
 - [x] All five tasks committed
-- [ ] CI passes on the last commit
+- [x] CI passes on the last commit
 - [x] Common changed only by the four dimension slots, `unit` on `Position`, its widened description, and `Interval`; toolchain untouched
-- [ ] Ready for `SPEC-product.md`
+- [x] Ready for `SPEC-product.md`
 
 ## Checkpoint: Complete — evidence, 2026-09-14
 
@@ -156,3 +156,5 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 5. `examples/resource/robot_units.yaml`: `mason_m1` with `count: 2` and all four groups, `scout_v1` with `count: 1`; each carries a sensor with a `sensor_location`. `offers` ids `grip`, `align`, `lift`, `locomote` all appear in `examples/common/capability_types.yaml`.
 6. The lineage table has 56 attribute rows (29, 6, 6, 15), and every one of the 50 declared slots appears in the table or in the group-slot paragraph, checked by script on 2026-09-14.
 7. `git log 115b937..HEAD -- schema/common.yaml`: `317eaf0` dimension slots, `24b8c3e` `unit` on `Position`, `35b163f` `Position` description, `082aad0` `Interval`. `git log 115b937..HEAD -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py`: only the three `feat(toolchain)` commits `3b201bb`, `b29359d`, `ed759c1`, none from this module.
+
+CI: run 34846662515 on `39f5986` passed, 26 passed as locally. Task 5 committed 2026-09-14 as `39f5986 docs(plan): mark resource complete with the success-criteria evidence`.

@@ -62,12 +62,12 @@ schema/common.yaml  (+ length, width, height, weight)                         (T
 - [x] Review with human
 
 ### Phase 3: Close
-- [ ] Task 5: Verify the seven success criteria, push, confirm CI
+- [x] Task 5: Verify the seven success criteria, push, confirm CI
 
 ### Checkpoint: Complete
 - [x] Every success criterion in `SPEC-resource.md` verified with evidence
 - [x] `schema/common.yaml` changed only by the four dimension slots, `unit` on `Position`, its widened description, and `Interval`; no commit from this module touched `scripts/` or the toolchain tests
-- [ ] Ready for `SPEC-product.md`
+- [x] Ready for `SPEC-product.md`
 
 ## Risks and Mitigations
 
