@@ -55,6 +55,23 @@ def test_fixture_passes_metaschema(tmp_path: Path, root: Path) -> None:
     Draft202012Validator.check_schema(schema)
 
 
+def test_fixture_has_no_null_type(tmp_path: Path, root: Path) -> None:
+    tree = make_tree(tmp_path, root, [FIXTURE])
+    assert build(tree).returncode == 0
+    text = (tree / "dist" / "minimal.schema.json").read_text(encoding="utf-8")
+    assert '"null"' not in text
+    schema = json.loads(text)
+    optional = schema["$defs"]["Widget"]["properties"]["size"]
+    assert "anyOf" not in optional and optional["$ref"] == "#/$defs/Dimensions"
+
+
+def test_fixture_key_order(tmp_path: Path, root: Path) -> None:
+    tree = make_tree(tmp_path, root, [FIXTURE])
+    assert build(tree).returncode == 0
+    keys = list(json.loads((tree / "dist" / "minimal.schema.json").read_text(encoding="utf-8")))
+    assert keys[:2] == ["$schema", "$id"]
+
+
 def test_fixture_docs_generated(tmp_path: Path, root: Path) -> None:
     tree = make_tree(tmp_path, root, [FIXTURE])
     assert build(tree).returncode == 0
@@ -114,8 +131,7 @@ def test_viewer_schemas_splits_defs(tmp_path: Path, root: Path) -> None:
     linked = json.loads((tree / "dist" / "viewer" / "importer.schema.json").read_text(encoding="utf-8"))
     assert set(linked["$defs"]) == {"Crate"}
     dimensions = linked["$defs"]["Crate"]["properties"]["dimensions"]
-    ref = next(branch["$ref"] for branch in dimensions["anyOf"] if "$ref" in branch)
-    assert ref == "minimal.schema.json#/$defs/Dimensions"
+    assert dimensions["$ref"] == "minimal.schema.json#/$defs/Dimensions"
 
 
 def test_viewer_schemas_noop_module(tmp_path: Path, root: Path) -> None:

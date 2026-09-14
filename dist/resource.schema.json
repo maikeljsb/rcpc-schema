@@ -1,489 +1,53 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rcpc.for5672/schema/resource",
+  "metamodel_version": "1.11.0",
+  "version": "0.1.0",
+  "title": "resource",
+  "type": "object",
+  "additionalProperties": true,
   "$defs": {
-    "Activity": {
-      "additionalProperties": false,
-      "description": "CRS group 4: the capabilities a robot offers and how it performs them. The one required group, because offers is required.",
-      "properties": {
-        "accuracy": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How close the robot's work comes to the target, recommended in millimetres. The CRS Accuracy with its Accuracy Units."
-        },
-        "crew_information": {
-          "description": "The composition of the team working with the robot.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "crew_responsibilities": {
-          "description": "What the crew does while the robot performs its tasks.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "data_output_file_type": {
-          "description": "The file formats of the data the robot's sensors output.",
-          "items": {
-            "type": "string"
-          },
-          "type": [
-            "array",
-            "null"
-          ]
-        },
-        "data_output_type": {
-          "description": "The forms of data the robot's sensors output.",
-          "items": {
-            "type": "string"
-          },
-          "type": [
-            "array",
-            "null"
-          ]
-        },
-        "id": {
-          "description": "Identifier, unique among instances of its class.",
-          "type": "string"
-        },
-        "offers": {
-          "description": "The capability types this robot offers. The CRS Task Type.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "precision": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How finely the robot repeats its work, recommended in millimetres. The CRS Precision with its Precision Units."
-        },
-        "productivity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How much work the robot does per unit of time, in a unit that fits the activity, for example brick/h. The CRS Productivity with its Productivity Units."
-        },
-        "worker_responsibilities": {
-          "description": "What the workers do while the robot performs its tasks.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "worker_type": {
-          "description": "The kinds of worker who work with the robot.",
-          "items": {
-            "type": "string"
-          },
-          "type": [
-            "array",
-            "null"
-          ]
-        }
-      },
-      "required": [
-        "id",
-        "offers"
-      ],
-      "title": "Activity",
-      "type": "object"
-    },
-    "CapabilityType": {
-      "additionalProperties": false,
-      "description": "Something a robot can do, named by a verb. Required by primitive tasks and offered by robots.",
-      "properties": {
-        "description": {
-          "description": "What this is, in one or two plain sentences.",
-          "type": "string"
-        },
-        "id": {
-          "description": "Identifier, unique among instances of its class.",
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "description"
-      ],
-      "title": "CapabilityType",
-      "type": "object"
-    },
-    "Interval": {
-      "additionalProperties": false,
-      "description": "A lower and an upper bound with their unit.",
-      "properties": {
-        "maximum": {
-          "description": "The upper bound.",
-          "type": "number"
-        },
-        "minimum": {
-          "description": "The lower bound.",
-          "type": "number"
-        },
-        "unit": {
-          "description": "The unit of the value, of the coordinates, or of the bounds.",
-          "type": "string"
-        }
-      },
-      "required": [
-        "minimum",
-        "maximum",
-        "unit"
-      ],
-      "title": "Interval",
-      "type": "object"
-    },
-    "OperationalRequirement": {
-      "additionalProperties": false,
-      "description": "CRS group 2: the site conditions and the people the robot needs to work.",
-      "properties": {
-        "grade": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Interval"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The range of ground slopes the robot can work on, recommended in degrees."
-        },
-        "humidity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Interval"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The range of relative humidity at which the robot works properly, recommended in percent."
-        },
-        "id": {
-          "description": "Identifier, unique among instances of its class.",
-          "type": "string"
-        },
-        "operator_responsibilities": {
-          "description": "What the operator does while the robot performs its tasks.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "req_number_operators": {
-          "description": "How many people control the robot.",
-          "type": [
-            "integer",
-            "null"
-          ]
-        },
-        "site_preparation": {
-          "description": "What the site needs before the robot can work properly on it.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "temperature": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Interval"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The range of temperatures at which the robot works properly, recommended in degrees Celsius."
-        }
-      },
-      "required": [
-        "id"
-      ],
-      "title": "OperationalRequirement",
-      "type": "object"
-    },
     "ParameterKind": {
+      "type": "string",
       "description": "The kinds of value a task parameter can hold.",
       "enum": [
         "position",
         "component_reference",
         "quantity"
       ],
-      "title": "ParameterKind",
-      "type": "string"
+      "title": "ParameterKind"
     },
-    "PhysicalProperty": {
-      "additionalProperties": false,
-      "description": "CRS group 1: the robot's physical dimensions, hardware, and performance.",
-      "properties": {
-        "coordinate_reach": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Position"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How far the manipulator reaches along each of the robot's three axes, recommended in metres. The CRS Coordinate Reach X, Y and Z."
-        },
-        "degree_of_freedom": {
-          "description": "How many axes of the manipulator can rotate or extend.",
-          "type": [
-            "integer",
-            "null"
-          ]
-        },
-        "end_effector": {
-          "description": "The tools the robot's manipulator can attach, such as a bucket or gripper.",
-          "items": {
-            "type": "string"
-          },
-          "type": [
-            "array",
-            "null"
-          ]
-        },
-        "height": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How tall the item is, recommended in metres."
-        },
-        "id": {
-          "description": "Identifier, unique among instances of its class.",
-          "type": "string"
-        },
-        "length": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How long the item is, recommended in metres."
-        },
-        "level_of_autonomy": {
-          "description": "How independently the robot performs its tasks.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "lifting_capacity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The maximum weight the manipulator can lift during operation, recommended in kilograms."
-        },
-        "load_capacity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The maximum weight the robot can carry for extended work, recommended in kilograms."
-        },
-        "manipulator": {
-          "description": "The robot's arm: the links and joints that perform tasks.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "manipulator_position": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Position"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Where the manipulator is mounted on the robot, a point in the robot's own frame."
-        },
-        "manufacturer": {
-          "description": "Who makes the robot.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "mobility": {
-          "description": "How the robot moves from one place to another.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "navigation": {
-          "description": "Whether the robot can find its own position and plan a path to a destination.",
-          "type": [
-            "boolean",
-            "null"
-          ]
-        },
-        "network": {
-          "description": "How the robot communicates and exchanges data.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "pitch": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The manipulator's rotation range around the lateral axis, recommended in degrees."
-        },
-        "power_source": {
-          "description": "What supplies the robot's energy.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "roll": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The manipulator's rotation range around the longitudinal axis, recommended in degrees."
-        },
-        "run_duration": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How long the robot can run continuously on its power source, recommended in minutes."
-        },
-        "sensors": {
-          "description": "The sensors mounted on or around the robot.",
-          "items": {
-            "$ref": "#/$defs/Sensor"
-          },
-          "type": [
-            "array",
-            "null"
-          ]
-        },
-        "speed": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How fast the robot travels, recommended in metres per second."
-        },
-        "weight": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How much the item weighs, recommended in kilograms."
-        },
-        "width": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How wide the item is, recommended in metres."
-        },
-        "yaw": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The manipulator's rotation range around the vertical axis, recommended in degrees."
-        }
-      },
-      "required": [
-        "id"
+    "RobotStatus": {
+      "type": "string",
+      "description": "The runtime state of one machine.",
+      "enum": [
+        "idle",
+        "deployed",
+        "charging",
+        "out_of_service"
       ],
-      "title": "PhysicalProperty",
-      "type": "object"
+      "title": "RobotStatus"
     },
     "Position": {
+      "type": "object",
       "additionalProperties": false,
       "description": "Three cartesian coordinates and their unit: a point, or an extent along each axis.",
       "properties": {
-        "unit": {
-          "description": "The unit of the value, of the coordinates, or of the bounds.",
-          "type": "string"
-        },
         "x_coord": {
-          "description": "Cartesian x coordinate.",
-          "type": "number"
+          "type": "number",
+          "description": "Cartesian x coordinate."
         },
         "y_coord": {
-          "description": "Cartesian y coordinate.",
-          "type": "number"
+          "type": "number",
+          "description": "Cartesian y coordinate."
         },
         "z_coord": {
-          "description": "Cartesian z coordinate.",
-          "type": "number"
+          "type": "number",
+          "description": "Cartesian z coordinate."
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit of the value, of the coordinates, or of the bounds."
         }
       },
       "required": [
@@ -492,93 +56,106 @@
         "z_coord",
         "unit"
       ],
-      "title": "Position",
-      "type": "object"
+      "title": "Position"
     },
     "Quantity": {
+      "type": "object",
       "additionalProperties": false,
       "description": "A number with a unit.",
       "properties": {
-        "unit": {
-          "description": "The unit of the value, of the coordinates, or of the bounds.",
-          "type": "string"
-        },
         "value": {
-          "description": "The numeric value.",
-          "type": "number"
+          "type": "number",
+          "description": "The numeric value."
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit of the value, of the coordinates, or of the bounds."
         }
       },
       "required": [
         "value",
         "unit"
       ],
-      "title": "Quantity",
-      "type": "object"
+      "title": "Quantity"
     },
-    "RobotStatus": {
-      "description": "The runtime state of one machine.",
-      "enum": [
-        "idle",
-        "deployed",
-        "charging",
-        "out_of_service"
+    "Interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A lower and an upper bound with their unit.",
+      "properties": {
+        "minimum": {
+          "type": "number",
+          "description": "The lower bound."
+        },
+        "maximum": {
+          "type": "number",
+          "description": "The upper bound."
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit of the value, of the coordinates, or of the bounds."
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum",
+        "unit"
       ],
-      "title": "RobotStatus",
-      "type": "string"
+      "title": "Interval"
+    },
+    "CapabilityType": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Something a robot can do, named by a verb. Required by primitive tasks and offered by robots.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
+        },
+        "description": {
+          "type": "string",
+          "description": "What this is, in one or two plain sentences."
+        }
+      },
+      "required": [
+        "id",
+        "description"
+      ],
+      "title": "CapabilityType"
     },
     "RobotUnit": {
+      "type": "object",
       "additionalProperties": false,
       "description": "One robot product, entered from its Construction Robot Schema attributes. Identical machines are one entry with a count.",
       "properties": {
-        "activity_group": {
-          "$ref": "#/$defs/Activity",
-          "description": "The Activity group holding this robot's offered capabilities."
+        "id": {
+          "type": "string",
+          "description": "The robot's name, a readable product slug. The CRS Name."
         },
         "count": {
+          "type": "integer",
           "description": "How many identical machines this entry stands for.",
-          "minimum": 1,
-          "type": "integer"
-        },
-        "id": {
-          "description": "The robot's name, a readable product slug. The CRS Name.",
-          "type": "string"
-        },
-        "operational_requirement_group": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/OperationalRequirement"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The Operational Requirement group holding the site conditions and people the robot needs."
-        },
-        "physical_property_group": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/PhysicalProperty"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The Physical Property group holding the robot's dimensions, hardware, and performance."
-        },
-        "safety_group": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Safety"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The Safety group holding how the robot protects the people and objects around it."
+          "minimum": 1
         },
         "status": {
           "$ref": "#/$defs/RobotStatus",
           "description": "The runtime state of one machine."
+        },
+        "physical_property_group": {
+          "$ref": "#/$defs/PhysicalProperty",
+          "description": "The Physical Property group holding the robot's dimensions, hardware, and performance."
+        },
+        "operational_requirement_group": {
+          "$ref": "#/$defs/OperationalRequirement",
+          "description": "The Operational Requirement group holding the site conditions and people the robot needs."
+        },
+        "safety_group": {
+          "$ref": "#/$defs/Safety",
+          "description": "The Safety group holding how the robot protects the people and objects around it."
+        },
+        "activity_group": {
+          "$ref": "#/$defs/Activity",
+          "description": "The Activity group holding this robot's offered capabilities."
         }
       },
       "required": [
@@ -586,127 +163,296 @@
         "count",
         "activity_group"
       ],
-      "title": "RobotUnit",
-      "type": "object"
+      "title": "RobotUnit"
     },
-    "Safety": {
+    "PhysicalProperty": {
+      "type": "object",
       "additionalProperties": false,
-      "description": "CRS group 3: how the robot protects the people and objects around it.",
+      "description": "CRS group 1: the robot's physical dimensions, hardware, and performance.",
       "properties": {
-        "additional_ppe_requirements": {
-          "description": "Extra personal protective equipment required when humans operate or work with the robot.",
+        "id": {
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Who makes the robot."
+        },
+        "level_of_autonomy": {
+          "type": "string",
+          "description": "How independently the robot performs its tasks."
+        },
+        "network": {
+          "type": "string",
+          "description": "How the robot communicates and exchanges data."
+        },
+        "length": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How long the item is, recommended in metres."
+        },
+        "width": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How wide the item is, recommended in metres."
+        },
+        "height": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How tall the item is, recommended in metres."
+        },
+        "weight": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How much the item weighs, recommended in kilograms."
+        },
+        "load_capacity": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The maximum weight the robot can carry for extended work, recommended in kilograms."
+        },
+        "mobility": {
+          "type": "string",
+          "description": "How the robot moves from one place to another."
+        },
+        "speed": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How fast the robot travels, recommended in metres per second."
+        },
+        "navigation": {
+          "type": "boolean",
+          "description": "Whether the robot can find its own position and plan a path to a destination."
+        },
+        "power_source": {
+          "type": "string",
+          "description": "What supplies the robot's energy."
+        },
+        "run_duration": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How long the robot can run continuously on its power source, recommended in minutes."
+        },
+        "end_effector": {
+          "type": "array",
           "items": {
             "type": "string"
           },
-          "type": [
-            "array",
-            "null"
-          ]
+          "description": "The tools the robot's manipulator can attach, such as a bucket or gripper."
         },
-        "emergency_stop": {
-          "description": "Whether the robot stops automatically and immediately when specific conditions are triggered.",
-          "type": [
-            "boolean",
-            "null"
-          ]
+        "manipulator": {
+          "type": "string",
+          "description": "The robot's arm: the links and joints that perform tasks."
         },
-        "id": {
-          "description": "Identifier, unique among instances of its class.",
-          "type": "string"
+        "coordinate_reach": {
+          "$ref": "#/$defs/Position",
+          "description": "How far the manipulator reaches along each of the robot's three axes, recommended in metres. The CRS Coordinate Reach X, Y and Z."
         },
-        "minimum_workspace": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The minimum space the robot needs to operate without collisions, recommended in metres."
+        "yaw": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The manipulator's rotation range around the vertical axis, recommended in degrees."
         },
-        "object_detection_range": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "How far away the robot can detect and recognise objects, recommended in metres."
+        "pitch": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The manipulator's rotation range around the lateral axis, recommended in degrees."
         },
-        "safe_distance": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The minimum distance to keep between humans and the robot while they work together, recommended in metres."
+        "roll": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The manipulator's rotation range around the longitudinal axis, recommended in degrees."
         },
-        "safety_barrier": {
-          "description": "Whether the robot has a facility to avoid collisions with humans or objects.",
-          "type": [
-            "boolean",
-            "null"
-          ]
+        "manipulator_position": {
+          "$ref": "#/$defs/Position",
+          "description": "Where the manipulator is mounted on the robot, a point in the robot's own frame."
+        },
+        "degree_of_freedom": {
+          "type": "integer",
+          "description": "How many axes of the manipulator can rotate or extend."
+        },
+        "lifting_capacity": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The maximum weight the manipulator can lift during operation, recommended in kilograms."
+        },
+        "sensors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Sensor"
+          },
+          "description": "The sensors mounted on or around the robot."
         }
       },
       "required": [
         "id"
       ],
-      "title": "Safety",
-      "type": "object"
+      "title": "PhysicalProperty"
     },
     "Sensor": {
+      "type": "object",
       "additionalProperties": false,
       "description": "One sensor on or around the robot. Belongs to the PhysicalProperty group one hop down.",
       "properties": {
         "id": {
-          "description": "Identifier, unique among instances of its class.",
-          "type": "string"
-        },
-        "sensor_location": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Position"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Where the sensor sits on the robot, a point in the robot's own frame."
-        },
-        "sensor_requirements": {
-          "description": "What installing the sensor requires.",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
         },
         "sensor_type": {
-          "description": "What kind of sensor this is.",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string",
+          "description": "What kind of sensor this is."
+        },
+        "sensor_requirements": {
+          "type": "string",
+          "description": "What installing the sensor requires."
+        },
+        "sensor_location": {
+          "$ref": "#/$defs/Position",
+          "description": "Where the sensor sits on the robot, a point in the robot's own frame."
         }
       },
       "required": [
         "id"
       ],
-      "title": "Sensor",
-      "type": "object"
+      "title": "Sensor"
+    },
+    "OperationalRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "CRS group 2: the site conditions and the people the robot needs to work.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
+        },
+        "grade": {
+          "$ref": "#/$defs/Interval",
+          "description": "The range of ground slopes the robot can work on, recommended in degrees."
+        },
+        "temperature": {
+          "$ref": "#/$defs/Interval",
+          "description": "The range of temperatures at which the robot works properly, recommended in degrees Celsius."
+        },
+        "humidity": {
+          "$ref": "#/$defs/Interval",
+          "description": "The range of relative humidity at which the robot works properly, recommended in percent."
+        },
+        "site_preparation": {
+          "type": "string",
+          "description": "What the site needs before the robot can work properly on it."
+        },
+        "req_number_operators": {
+          "type": "integer",
+          "description": "How many people control the robot."
+        },
+        "operator_responsibilities": {
+          "type": "string",
+          "description": "What the operator does while the robot performs its tasks."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "OperationalRequirement"
+    },
+    "Safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "CRS group 3: how the robot protects the people and objects around it.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
+        },
+        "emergency_stop": {
+          "type": "boolean",
+          "description": "Whether the robot stops automatically and immediately when specific conditions are triggered."
+        },
+        "safe_distance": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The minimum distance to keep between humans and the robot while they work together, recommended in metres."
+        },
+        "object_detection_range": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How far away the robot can detect and recognise objects, recommended in metres."
+        },
+        "safety_barrier": {
+          "type": "boolean",
+          "description": "Whether the robot has a facility to avoid collisions with humans or objects."
+        },
+        "additional_ppe_requirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Extra personal protective equipment required when humans operate or work with the robot."
+        },
+        "minimum_workspace": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The minimum space the robot needs to operate without collisions, recommended in metres."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "Safety"
+    },
+    "Activity": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "CRS group 4: the capabilities a robot offers and how it performs them. The one required group, because offers is required.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
+        },
+        "offers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The capability types this robot offers. The CRS Task Type."
+        },
+        "productivity": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How much work the robot does per unit of time, in a unit that fits the activity, for example brick/h. The CRS Productivity with its Productivity Units."
+        },
+        "precision": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How finely the robot repeats its work, recommended in millimetres. The CRS Precision with its Precision Units."
+        },
+        "accuracy": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How close the robot's work comes to the target, recommended in millimetres. The CRS Accuracy with its Accuracy Units."
+        },
+        "data_output_type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The forms of data the robot's sensors output."
+        },
+        "data_output_file_type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The file formats of the data the robot's sensors output."
+        },
+        "crew_information": {
+          "type": "string",
+          "description": "The composition of the team working with the robot."
+        },
+        "crew_responsibilities": {
+          "type": "string",
+          "description": "What the crew does while the robot performs its tasks."
+        },
+        "worker_type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The kinds of worker who work with the robot."
+        },
+        "worker_responsibilities": {
+          "type": "string",
+          "description": "What the workers do while the robot performs its tasks."
+        }
+      },
+      "required": [
+        "id",
+        "offers"
+      ],
+      "title": "Activity"
     }
-  },
-  "$id": "https://rcpc.for5672/schema/resource",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
-  "metamodel_version": "1.11.0",
-  "title": "resource",
-  "type": "object",
-  "version": "0.1.0"
+  }
 }

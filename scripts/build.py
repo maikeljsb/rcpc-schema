@@ -1,7 +1,8 @@
 """Regenerate dist/ and docs/model/ from every LinkML module under schema/.
 
-Rules in SPEC-toolchain.md: one draft 2020-12 JSON Schema per module, docs per module,
-a generated dist/README.md, stale outputs removed, empty schema/ is a no-op, fail fast.
+Rules in SPEC-toolchain.md: one draft 2020-12 JSON Schema per module (built in-process
+without "null" types and without key sorting), docs per module, a generated dist/README.md,
+stale outputs removed, empty schema/ is a no-op, fail fast.
 Also writes dist/viewer/ by default (skip with --no-viewer-schemas), a cross-file $ref
 variant for a schema viewer, gitignored and never drift-tested.
 """
@@ -9,6 +10,7 @@ from pathlib import Path
 import argparse, json, shutil, subprocess, sys
 
 import yaml
+from linkml.generators.jsonschemagen import JsonSchemaGenerator
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA, DIST, DOCS, VIEWER = ROOT / "schema", ROOT / "dist", ROOT / "docs" / "model", ROOT / "dist" / "viewer"
@@ -35,7 +37,7 @@ def write(path: Path, text: str) -> None:
 
 def build(module: Path) -> tuple[str, dict]:
     """Emit the module's JSON Schema and docs; return its description and schema dict."""
-    schema = json.loads(run("gen-json-schema", str(module)))
+    schema = dict(JsonSchemaGenerator(str(module), include_null=False).generate())
     schema["$schema"] = DRAFT
     write(DIST / f"{module.stem}.schema.json", json.dumps(schema, indent=2) + "\n")
     shutil.rmtree(DOCS / module.stem, ignore_errors=True)
