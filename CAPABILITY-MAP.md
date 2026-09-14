@@ -5,7 +5,7 @@ Approved 2026-09-10. This map is the index of module specs: each module id names
 | Module id | Responsibility | Depends on |
 |---|---|---|
 | `toolchain` | uv project, pyproject and lockfile, `scripts/build.py` (one JSON Schema per module with the draft 2020-12 rewrite, generated docs per module), pytest harness, one CI workflow | none |
-| `common` | Position, Quantity, ParameterKind, CapabilityType | toolchain |
+| `common` | Position, Quantity, Interval, ParameterKind, CapabilityType | toolchain |
 | `product` | BuildingComponent, Space, Opening, and their enums | common |
 | `resource` | RobotUnit with id, count and status; PhysicalProperty, OperationalRequirement, Safety, Activity | common |
 | `process` | PrimitiveTask, CompoundTask, Method, Subtask, Precedence, the instantiated task classes | common, product, resource |
