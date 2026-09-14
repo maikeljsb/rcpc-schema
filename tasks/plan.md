@@ -59,14 +59,14 @@ schema/common.yaml  (+ length, width, height, weight)                         (T
 ### Checkpoint: Phase 2
 - [x] All 56 lineage rows have their slot in `schema/resource.yaml`
 - [x] Example file matches success criterion 5
-- [ ] Review with human
+- [x] Review with human
 
 ### Phase 3: Close
 - [ ] Task 5: Verify the seven success criteria, push, confirm CI
 
 ### Checkpoint: Complete
-- [ ] Every success criterion in `SPEC-resource.md` verified with evidence
-- [ ] `schema/common.yaml` changed only in Task 1 and the Task 3 review (`unit` on `Position`); no commit touched `scripts/` or the toolchain tests
+- [x] Every success criterion in `SPEC-resource.md` verified with evidence
+- [x] `schema/common.yaml` changed only by the four dimension slots, `unit` on `Position`, its widened description, and `Interval`; no commit from this module touched `scripts/` or the toolchain tests
 - [ ] Ready for `SPEC-product.md`
 
 ## Risks and Mitigations

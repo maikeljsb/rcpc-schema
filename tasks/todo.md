@@ -117,20 +117,20 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 ## Checkpoint: Phase 2
 - [x] All 56 lineage rows have their slot in `schema/resource.yaml`
 - [x] Example file matches success criterion 5
-- [ ] Review with human before Task 5
+- [x] Review with human before Task 5
 
 ## Task 5: Verify success criteria, push, confirm CI
 
 **Description:** Walk the seven success criteria in `SPEC-resource.md` and record evidence for each in this file under a dated "Checkpoint: Complete" section, as the common module did. Confirm `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module and `git log -- schema/common.yaml` shows only Task 1. Push and confirm the CI run passes. Commit the evidence as `docs(plan): mark resource complete with the success-criteria evidence`.
 
 **Acceptance criteria:**
-- [ ] Each of the seven criteria has a line of evidence with the command or file it came from
+- [x] Each of the seven criteria has a line of evidence with the command or file it came from
 - [ ] CI is green on the pushed head
-- [ ] `tasks/plan.md` checkpoints ticked
+- [x] `tasks/plan.md` checkpoints ticked
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` clean
+- [x] Tests pass: `uv run pytest`
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` clean
 - [ ] Manual check: the CI run page shows the same passing count as local
 
 **Dependencies:** Task 4
@@ -142,7 +142,17 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 **Estimated scope:** Small
 
 ## Checkpoint: Complete
-- [ ] All five tasks committed
+- [x] All five tasks committed
 - [ ] CI passes on the last commit
-- [ ] Common changed only in Task 1; toolchain untouched
+- [x] Common changed only by the four dimension slots, `unit` on `Position`, its widened description, and `Interval`; toolchain untouched
 - [ ] Ready for `SPEC-product.md`
+
+## Checkpoint: Complete — evidence, 2026-09-14
+
+1. `uv run pytest`: 26 passed; five `examples/resource` rows in `EXAMPLES`. `git log 115b937..HEAD -- tests/` shows only `test_examples.py` rows from this module's commits, plus the three `feat(toolchain)` viewer-schemas commits, which are the toolchain's own work.
+2. `dist/resource.schema.json`: `$schema` is draft 2020-12, no root `properties`; `$defs` are exactly `Activity`, `CapabilityType`, `Interval`, `OperationalRequirement`, `ParameterKind`, `PhysicalProperty`, `Position`, `Quantity`, `RobotStatus`, `RobotUnit`, `Safety`, `Sensor`. `count` has `minimum: 1`; `sensors` is an array of `$ref Sensor`; `offers` is an array of strings. The meta-schema check is `test_dist.py`, passing.
+3. `dist/README.md` line 6 lists `resource.schema.json` (draft 2020-12) with the module description.
+4. `docs/model/resource/index.md`: 6 classes, 50 slots, 1 enumeration, no empty description cell. The 50 listed slots are exactly the 50 declared in `schema/resource.yaml`; the unlinked common pages sit beside them, as accepted.
+5. `examples/resource/robot_units.yaml`: `mason_m1` with `count: 2` and all four groups, `scout_v1` with `count: 1`; each carries a sensor with a `sensor_location`. `offers` ids `grip`, `align`, `lift`, `locomote` all appear in `examples/common/capability_types.yaml`.
+6. The lineage table has 56 attribute rows (29, 6, 6, 15), and every one of the 50 declared slots appears in the table or in the group-slot paragraph, checked by script on 2026-09-14.
+7. `git log 115b937..HEAD -- schema/common.yaml`: `317eaf0` dimension slots, `24b8c3e` `unit` on `Position`, `35b163f` `Position` description, `082aad0` `Interval`. `git log 115b937..HEAD -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py`: only the three `feat(toolchain)` commits `3b201bb`, `b29359d`, `ed759c1`, none from this module.
