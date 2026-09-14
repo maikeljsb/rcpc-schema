@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: grade_min 
+# Slot: grade 
 
 
-_The gentlest ground slope the robot can work on, recommended in degrees. The lower bound of the CRS Grade._
+_The range of ground slopes the robot can work on, recommended in degrees._
 
 
 
@@ -14,7 +14,7 @@ _The gentlest ground slope the robot can work on, recommended in degrees. The lo
 
 
 
-URI: [rcpc:grade_min](https://rcpc.for5672/schema/grade_min)
+URI: [rcpc:grade](https://rcpc.for5672/schema/grade)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:grade_min](https://rcpc.for5672/schema/grade_min)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [Interval](Interval.md) |
 | Domain Of | [OperationalRequirement](OperationalRequirement.md) |
 
 ### Cardinality and Requirements
@@ -73,8 +73,8 @@ URI: [rcpc:grade_min](https://rcpc.for5672/schema/grade_min)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:grade_min |
-| native | rcpc:grade_min |
+| self | rcpc:grade |
+| native | rcpc:grade |
 
 
 
@@ -83,14 +83,13 @@ URI: [rcpc:grade_min](https://rcpc.for5672/schema/grade_min)
 
 <details>
 ```yaml
-name: grade_min
-description: The gentlest ground slope the robot can work on, recommended in degrees.
-  The lower bound of the CRS Grade.
+name: grade
+description: The range of ground slopes the robot can work on, recommended in degrees.
 from_schema: https://rcpc.for5672/schema/resource
 rank: 1000
 domain_of:
 - OperationalRequirement
-range: Quantity
+range: Interval
 inlined: true
 
 ```

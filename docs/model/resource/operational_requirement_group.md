@@ -3,7 +3,7 @@ search:
   boost: 5.0
 ---
 
-# Slot: operational_requirement 
+# Slot: operational_requirement_group 
 
 
 _The Operational Requirement group holding the site conditions and people the robot needs._
@@ -14,7 +14,7 @@ _The Operational Requirement group holding the site conditions and people the ro
 
 
 
-URI: [rcpc:operational_requirement](https://rcpc.for5672/schema/operational_requirement)
+URI: [rcpc:operational_requirement_group](https://rcpc.for5672/schema/operational_requirement_group)
 <!-- no inheritance hierarchy -->
 
 
@@ -73,8 +73,8 @@ URI: [rcpc:operational_requirement](https://rcpc.for5672/schema/operational_requ
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:operational_requirement |
-| native | rcpc:operational_requirement |
+| self | rcpc:operational_requirement_group |
+| native | rcpc:operational_requirement_group |
 
 
 
@@ -83,7 +83,7 @@ URI: [rcpc:operational_requirement](https://rcpc.for5672/schema/operational_requ
 
 <details>
 ```yaml
-name: operational_requirement
+name: operational_requirement_group
 description: The Operational Requirement group holding the site conditions and people
   the robot needs.
 from_schema: https://rcpc.for5672/schema/resource

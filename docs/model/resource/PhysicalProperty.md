@@ -333,7 +333,7 @@ URI: [rcpc:PhysicalProperty](https://rcpc.for5672/schema/PhysicalProperty)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [RobotUnit](RobotUnit.md) | [physical_property](physical_property.md) | range | [PhysicalProperty](PhysicalProperty.md) |
+| [RobotUnit](RobotUnit.md) | [physical_property_group](physical_property_group.md) | range | [PhysicalProperty](PhysicalProperty.md) |
 
 
 

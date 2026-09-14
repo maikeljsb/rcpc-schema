@@ -57,24 +57,24 @@ URI: [rcpc:RobotUnit](https://rcpc.for5672/schema/RobotUnit)
     
 
         
-      RobotUnit : operational_requirement
+      RobotUnit : operational_requirement_group
         
           
     
         
         
-        RobotUnit --> "0..1" OperationalRequirement : operational_requirement
+        RobotUnit --> "0..1" OperationalRequirement : operational_requirement_group
         click OperationalRequirement href "../OperationalRequirement/"
     
 
         
-      RobotUnit : physical_property
+      RobotUnit : physical_property_group
         
           
     
         
         
-        RobotUnit --> "0..1" PhysicalProperty : physical_property
+        RobotUnit --> "0..1" PhysicalProperty : physical_property_group
         click PhysicalProperty href "../PhysicalProperty/"
     
 
@@ -116,8 +116,8 @@ URI: [rcpc:RobotUnit](https://rcpc.for5672/schema/RobotUnit)
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The robot's name, a readable product slug | direct |
 | [count](count.md) | 1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | How many identical machines this entry stands for | direct |
 | [status](status.md) | 0..1 <br/> [RobotStatus](RobotStatus.md) | The runtime state of one machine | direct |
-| [physical_property](physical_property.md) | 0..1 <br/> [PhysicalProperty](PhysicalProperty.md) | The Physical Property group holding the robot's dimensions, hardware, and per... | direct |
-| [operational_requirement](operational_requirement.md) | 0..1 <br/> [OperationalRequirement](OperationalRequirement.md) | The Operational Requirement group holding the site conditions and people the ... | direct |
+| [physical_property_group](physical_property_group.md) | 0..1 <br/> [PhysicalProperty](PhysicalProperty.md) | The Physical Property group holding the robot's dimensions, hardware, and per... | direct |
+| [operational_requirement_group](operational_requirement_group.md) | 0..1 <br/> [OperationalRequirement](OperationalRequirement.md) | The Operational Requirement group holding the site conditions and people the ... | direct |
 | [safety_group](safety_group.md) | 0..1 <br/> [Safety](Safety.md) | The Safety group holding how the robot protects the people and objects around... | direct |
 | [activity_group](activity_group.md) | 1 <br/> [Activity](Activity.md) | The Activity group holding this robot's offered capabilities | direct |
 
@@ -177,8 +177,8 @@ slots:
 - id
 - count
 - status
-- physical_property
-- operational_requirement
+- physical_property_group
+- operational_requirement_group
 - safety_group
 - activity_group
 slot_usage:
@@ -245,8 +245,8 @@ attributes:
     domain_of:
     - RobotUnit
     range: RobotStatus
-  physical_property:
-    name: physical_property
+  physical_property_group:
+    name: physical_property_group
     description: The Physical Property group holding the robot's dimensions, hardware,
       and performance.
     from_schema: https://rcpc.for5672/schema/resource
@@ -256,8 +256,8 @@ attributes:
     - RobotUnit
     range: PhysicalProperty
     inlined: true
-  operational_requirement:
-    name: operational_requirement
+  operational_requirement_group:
+    name: operational_requirement_group
     description: The Operational Requirement group holding the site conditions and
       people the robot needs.
     from_schema: https://rcpc.for5672/schema/resource

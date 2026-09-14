@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: grade_max 
+# Slot: physical_property_group 
 
 
-_The steepest ground slope the robot can work on, recommended in degrees. The upper bound of the CRS Grade._
+_The Physical Property group holding the robot's dimensions, hardware, and performance._
 
 
 
@@ -14,7 +14,7 @@ _The steepest ground slope the robot can work on, recommended in degrees. The up
 
 
 
-URI: [rcpc:grade_max](https://rcpc.for5672/schema/grade_max)
+URI: [rcpc:physical_property_group](https://rcpc.for5672/schema/physical_property_group)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:grade_max](https://rcpc.for5672/schema/grade_max)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [OperationalRequirement](OperationalRequirement.md) | CRS group 2: the site conditions and the people the robot needs to work |  no  |
+| [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |  no  |
 
 
 
@@ -38,8 +38,8 @@ URI: [rcpc:grade_max](https://rcpc.for5672/schema/grade_max)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
-| Domain Of | [OperationalRequirement](OperationalRequirement.md) |
+| Range | [PhysicalProperty](PhysicalProperty.md) |
+| Domain Of | [RobotUnit](RobotUnit.md) |
 
 ### Cardinality and Requirements
 
@@ -73,8 +73,8 @@ URI: [rcpc:grade_max](https://rcpc.for5672/schema/grade_max)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:grade_max |
-| native | rcpc:grade_max |
+| self | rcpc:physical_property_group |
+| native | rcpc:physical_property_group |
 
 
 
@@ -83,14 +83,14 @@ URI: [rcpc:grade_max](https://rcpc.for5672/schema/grade_max)
 
 <details>
 ```yaml
-name: grade_max
-description: The steepest ground slope the robot can work on, recommended in degrees.
-  The upper bound of the CRS Grade.
+name: physical_property_group
+description: The Physical Property group holding the robot's dimensions, hardware,
+  and performance.
 from_schema: https://rcpc.for5672/schema/resource
 rank: 1000
 domain_of:
-- OperationalRequirement
-range: Quantity
+- RobotUnit
+range: PhysicalProperty
 inlined: true
 
 ```

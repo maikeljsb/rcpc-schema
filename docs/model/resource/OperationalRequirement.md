@@ -24,25 +24,14 @@ URI: [rcpc:OperationalRequirement](https://rcpc.for5672/schema/OperationalRequir
  classDiagram
     class OperationalRequirement
     click OperationalRequirement href "../OperationalRequirement/"
-      OperationalRequirement : grade_max
+      OperationalRequirement : grade
         
           
     
         
         
-        OperationalRequirement --> "0..1" Quantity : grade_max
-        click Quantity href "../Quantity/"
-    
-
-        
-      OperationalRequirement : grade_min
-        
-          
-    
-        
-        
-        OperationalRequirement --> "0..1" Quantity : grade_min
-        click Quantity href "../Quantity/"
+        OperationalRequirement --> "0..1" Interval : grade
+        click Interval href "../Interval/"
     
 
         
@@ -52,8 +41,8 @@ URI: [rcpc:OperationalRequirement](https://rcpc.for5672/schema/OperationalRequir
     
         
         
-        OperationalRequirement --> "0..1" Quantity : humidity
-        click Quantity href "../Quantity/"
+        OperationalRequirement --> "0..1" Interval : humidity
+        click Interval href "../Interval/"
     
 
         
@@ -101,25 +90,14 @@ URI: [rcpc:OperationalRequirement](https://rcpc.for5672/schema/OperationalRequir
     
 
         
-      OperationalRequirement : temperature_max
+      OperationalRequirement : temperature
         
           
     
         
         
-        OperationalRequirement --> "0..1" Quantity : temperature_max
-        click Quantity href "../Quantity/"
-    
-
-        
-      OperationalRequirement : temperature_min
-        
-          
-    
-        
-        
-        OperationalRequirement --> "0..1" Quantity : temperature_min
-        click Quantity href "../Quantity/"
+        OperationalRequirement --> "0..1" Interval : temperature
+        click Interval href "../Interval/"
     
 
         
@@ -136,11 +114,9 @@ URI: [rcpc:OperationalRequirement](https://rcpc.for5672/schema/OperationalRequir
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Identifier, unique among instances of its class | direct |
-| [grade_min](grade_min.md) | 0..1 <br/> [Quantity](Quantity.md) | The gentlest ground slope the robot can work on, recommended in degrees | direct |
-| [grade_max](grade_max.md) | 0..1 <br/> [Quantity](Quantity.md) | The steepest ground slope the robot can work on, recommended in degrees | direct |
-| [temperature_min](temperature_min.md) | 0..1 <br/> [Quantity](Quantity.md) | The lowest temperature at which the robot works properly, recommended in degr... | direct |
-| [temperature_max](temperature_max.md) | 0..1 <br/> [Quantity](Quantity.md) | The highest temperature at which the robot works properly, recommended in deg... | direct |
-| [humidity](humidity.md) | 0..1 <br/> [Quantity](Quantity.md) | The highest relative humidity at which the robot works properly, recommended ... | direct |
+| [grade](grade.md) | 0..1 <br/> [Interval](Interval.md) | The range of ground slopes the robot can work on, recommended in degrees | direct |
+| [temperature](temperature.md) | 0..1 <br/> [Interval](Interval.md) | The range of temperatures at which the robot works properly, recommended in d... | direct |
+| [humidity](humidity.md) | 0..1 <br/> [Interval](Interval.md) | The range of relative humidity at which the robot works properly, recommended... | direct |
 | [site_preparation](site_preparation.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What the site needs before the robot can work properly on it | direct |
 | [req_number_operators](req_number_operators.md) | 0..1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | How many people control the robot | direct |
 | [operator_responsibilities](operator_responsibilities.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What the operator does while the robot performs its tasks | direct |
@@ -153,7 +129,7 @@ URI: [rcpc:OperationalRequirement](https://rcpc.for5672/schema/OperationalRequir
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [RobotUnit](RobotUnit.md) | [operational_requirement](operational_requirement.md) | range | [OperationalRequirement](OperationalRequirement.md) |
+| [RobotUnit](RobotUnit.md) | [operational_requirement_group](operational_requirement_group.md) | range | [OperationalRequirement](OperationalRequirement.md) |
 
 
 
@@ -205,10 +181,8 @@ description: 'CRS group 2: the site conditions and the people the robot needs to
 from_schema: https://rcpc.for5672/schema/resource
 slots:
 - id
-- grade_min
-- grade_max
-- temperature_min
-- temperature_max
+- grade
+- temperature
 - humidity
 - site_preparation
 - req_number_operators
@@ -241,60 +215,38 @@ attributes:
     - Activity
     range: string
     required: true
-  grade_min:
-    name: grade_min
-    description: The gentlest ground slope the robot can work on, recommended in degrees.
-      The lower bound of the CRS Grade.
+  grade:
+    name: grade
+    description: The range of ground slopes the robot can work on, recommended in
+      degrees.
     from_schema: https://rcpc.for5672/schema/resource
     rank: 1000
     owner: OperationalRequirement
     domain_of:
     - OperationalRequirement
-    range: Quantity
+    range: Interval
     inlined: true
-  grade_max:
-    name: grade_max
-    description: The steepest ground slope the robot can work on, recommended in degrees.
-      The upper bound of the CRS Grade.
+  temperature:
+    name: temperature
+    description: The range of temperatures at which the robot works properly, recommended
+      in degrees Celsius.
     from_schema: https://rcpc.for5672/schema/resource
     rank: 1000
     owner: OperationalRequirement
     domain_of:
     - OperationalRequirement
-    range: Quantity
-    inlined: true
-  temperature_min:
-    name: temperature_min
-    description: The lowest temperature at which the robot works properly, recommended
-      in degrees Celsius. The lower bound of the CRS Temperature.
-    from_schema: https://rcpc.for5672/schema/resource
-    rank: 1000
-    owner: OperationalRequirement
-    domain_of:
-    - OperationalRequirement
-    range: Quantity
-    inlined: true
-  temperature_max:
-    name: temperature_max
-    description: The highest temperature at which the robot works properly, recommended
-      in degrees Celsius. The upper bound of the CRS Temperature.
-    from_schema: https://rcpc.for5672/schema/resource
-    rank: 1000
-    owner: OperationalRequirement
-    domain_of:
-    - OperationalRequirement
-    range: Quantity
+    range: Interval
     inlined: true
   humidity:
     name: humidity
-    description: The highest relative humidity at which the robot works properly,
+    description: The range of relative humidity at which the robot works properly,
       recommended in percent.
     from_schema: https://rcpc.for5672/schema/resource
     rank: 1000
     owner: OperationalRequirement
     domain_of:
     - OperationalRequirement
-    range: Quantity
+    range: Interval
     inlined: true
   site_preparation:
     name: site_preparation

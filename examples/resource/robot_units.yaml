@@ -12,7 +12,7 @@
     crew_responsibilities: The mason points and finishes joints behind the robot.
     worker_type: [mason]
     worker_responsibilities: Checks the first course and corrects placement drift.
-  physical_property:
+  physical_property_group:
     id: mason_m1_physical
     manufacturer: Fictional Robotics
     length: {value: 3.0, unit: m}
@@ -25,13 +25,11 @@
       - id: mason_m1_lidar
         sensor_type: LiDAR
         sensor_location: {x_coord: 0, y_coord: 0.2, z_coord: 0.5, unit: m}
-  operational_requirement:
+  operational_requirement_group:
     id: mason_m1_operational
-    grade_min: {value: 0, unit: deg}
-    grade_max: {value: 5, unit: deg}
-    temperature_min: {value: 5, unit: Cel}
-    temperature_max: {value: 40, unit: Cel}
-    humidity: {value: 80, unit: '%'}
+    grade: {minimum: 0, maximum: 5, unit: deg}
+    temperature: {minimum: 5, maximum: 40, unit: Cel}
+    humidity: {minimum: 20, maximum: 80, unit: '%'}
     site_preparation: Level, compacted ground and a cleared strip along the wall line.
     req_number_operators: 1
     operator_responsibilities: Loads the brick pallets and supervises the run.
@@ -51,7 +49,7 @@
     productivity: {value: 1200, unit: m2/h}
     data_output_type: [progress images]
     data_output_file_type: [jpg]
-  physical_property:
+  physical_property_group:
     id: scout_v1_physical
     manufacturer: Fictional Robotics
     length: {value: 0.8, unit: m}

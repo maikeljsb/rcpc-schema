@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: physical_property 
+# Slot: temperature 
 
 
-_The Physical Property group holding the robot's dimensions, hardware, and performance._
+_The range of temperatures at which the robot works properly, recommended in degrees Celsius._
 
 
 
@@ -14,7 +14,7 @@ _The Physical Property group holding the robot's dimensions, hardware, and perfo
 
 
 
-URI: [rcpc:physical_property](https://rcpc.for5672/schema/physical_property)
+URI: [rcpc:temperature](https://rcpc.for5672/schema/temperature)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:physical_property](https://rcpc.for5672/schema/physical_property)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |  no  |
+| [OperationalRequirement](OperationalRequirement.md) | CRS group 2: the site conditions and the people the robot needs to work |  no  |
 
 
 
@@ -38,8 +38,8 @@ URI: [rcpc:physical_property](https://rcpc.for5672/schema/physical_property)
 
 | Property | Value |
 | --- | --- |
-| Range | [PhysicalProperty](PhysicalProperty.md) |
-| Domain Of | [RobotUnit](RobotUnit.md) |
+| Range | [Interval](Interval.md) |
+| Domain Of | [OperationalRequirement](OperationalRequirement.md) |
 
 ### Cardinality and Requirements
 
@@ -73,8 +73,8 @@ URI: [rcpc:physical_property](https://rcpc.for5672/schema/physical_property)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:physical_property |
-| native | rcpc:physical_property |
+| self | rcpc:temperature |
+| native | rcpc:temperature |
 
 
 
@@ -83,14 +83,14 @@ URI: [rcpc:physical_property](https://rcpc.for5672/schema/physical_property)
 
 <details>
 ```yaml
-name: physical_property
-description: The Physical Property group holding the robot's dimensions, hardware,
-  and performance.
+name: temperature
+description: The range of temperatures at which the robot works properly, recommended
+  in degrees Celsius.
 from_schema: https://rcpc.for5672/schema/resource
 rank: 1000
 domain_of:
-- RobotUnit
-range: PhysicalProperty
+- OperationalRequirement
+range: Interval
 inlined: true
 
 ```

@@ -37,9 +37,8 @@ Name: resource
 | [degree_of_freedom](degree_of_freedom.md) | How many axes of the manipulator can rotate or extend |
 | [emergency_stop](emergency_stop.md) | Whether the robot stops automatically and immediately when specific condition... |
 | [end_effector](end_effector.md) | The tools the robot's manipulator can attach, such as a bucket or gripper |
-| [grade_max](grade_max.md) | The steepest ground slope the robot can work on, recommended in degrees |
-| [grade_min](grade_min.md) | The gentlest ground slope the robot can work on, recommended in degrees |
-| [humidity](humidity.md) | The highest relative humidity at which the robot works properly, recommended ... |
+| [grade](grade.md) | The range of ground slopes the robot can work on, recommended in degrees |
+| [humidity](humidity.md) | The range of relative humidity at which the robot works properly, recommended... |
 | [level_of_autonomy](level_of_autonomy.md) | How independently the robot performs its tasks |
 | [lifting_capacity](lifting_capacity.md) | The maximum weight the manipulator can lift during operation, recommended in ... |
 | [load_capacity](load_capacity.md) | The maximum weight the robot can carry for extended work, recommended in kilo... |
@@ -52,9 +51,9 @@ Name: resource
 | [network](network.md) | How the robot communicates and exchanges data |
 | [object_detection_range](object_detection_range.md) | How far away the robot can detect and recognise objects, recommended in metre... |
 | [offers](offers.md) | The capability types this robot offers |
-| [operational_requirement](operational_requirement.md) | The Operational Requirement group holding the site conditions and people the ... |
+| [operational_requirement_group](operational_requirement_group.md) | The Operational Requirement group holding the site conditions and people the ... |
 | [operator_responsibilities](operator_responsibilities.md) | What the operator does while the robot performs its tasks |
-| [physical_property](physical_property.md) | The Physical Property group holding the robot's dimensions, hardware, and per... |
+| [physical_property_group](physical_property_group.md) | The Physical Property group holding the robot's dimensions, hardware, and per... |
 | [pitch](pitch.md) | The manipulator's rotation range around the lateral axis, recommended in degr... |
 | [power_source](power_source.md) | What supplies the robot's energy |
 | [precision](precision.md) | How finely the robot repeats its work, recommended in millimetres |
@@ -72,8 +71,7 @@ Name: resource
 | [site_preparation](site_preparation.md) | What the site needs before the robot can work properly on it |
 | [speed](speed.md) | How fast the robot travels, recommended in metres per second |
 | [status](status.md) | The runtime state of one machine |
-| [temperature_max](temperature_max.md) | The highest temperature at which the robot works properly, recommended in deg... |
-| [temperature_min](temperature_min.md) | The lowest temperature at which the robot works properly, recommended in degr... |
+| [temperature](temperature.md) | The range of temperatures at which the robot works properly, recommended in d... |
 | [worker_responsibilities](worker_responsibilities.md) | What the workers do while the robot performs its tasks |
 | [worker_type](worker_type.md) | The kinds of worker who work with the robot |
 | [yaw](yaw.md) | The manipulator's rotation range around the vertical axis, recommended in deg... |

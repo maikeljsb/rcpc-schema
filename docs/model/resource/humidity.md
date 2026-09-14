@@ -6,7 +6,7 @@ search:
 # Slot: humidity 
 
 
-_The highest relative humidity at which the robot works properly, recommended in percent._
+_The range of relative humidity at which the robot works properly, recommended in percent._
 
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:humidity](https://rcpc.for5672/schema/humidity)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [Interval](Interval.md) |
 | Domain Of | [OperationalRequirement](OperationalRequirement.md) |
 
 ### Cardinality and Requirements
@@ -84,13 +84,13 @@ URI: [rcpc:humidity](https://rcpc.for5672/schema/humidity)
 <details>
 ```yaml
 name: humidity
-description: The highest relative humidity at which the robot works properly, recommended
+description: The range of relative humidity at which the robot works properly, recommended
   in percent.
 from_schema: https://rcpc.for5672/schema/resource
 rank: 1000
 domain_of:
 - OperationalRequirement
-range: Quantity
+range: Interval
 inlined: true
 
 ```

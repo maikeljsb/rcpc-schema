@@ -77,6 +77,15 @@ URI: [rcpc:Interval](https://rcpc.for5672/schema/Interval)
 
 
 
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [OperationalRequirement](OperationalRequirement.md) | [grade](grade.md) | range | [Interval](Interval.md) |
+| [OperationalRequirement](OperationalRequirement.md) | [temperature](temperature.md) | range | [Interval](Interval.md) |
+| [OperationalRequirement](OperationalRequirement.md) | [humidity](humidity.md) | range | [Interval](Interval.md) |
+
+
 
 
 
