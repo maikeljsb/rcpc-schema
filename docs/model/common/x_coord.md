@@ -25,7 +25,7 @@ URI: [rcpc:x_coord](https://rcpc.for5672/schema/x_coord)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Position](Position.md) | A cartesian point in the IFC project coordinate frame |  yes  |
+| [Position](Position.md) | A cartesian point and the unit its coordinates are in |  yes  |
 
 
 

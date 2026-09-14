@@ -59,7 +59,7 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [value](value.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | The numeric value | direct |
-| [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value | direct |
+| [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value, or of the coordinates | direct |
 
 
 
@@ -153,11 +153,12 @@ attributes:
     required: true
   unit:
     name: unit
-    description: The unit of the value.
+    description: The unit of the value, or of the coordinates.
     from_schema: https://rcpc.for5672/schema/common
     rank: 1000
     owner: Quantity
     domain_of:
+    - Position
     - Quantity
     range: string
     required: true

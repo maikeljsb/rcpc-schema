@@ -30,17 +30,20 @@ enums:
 
 classes:
   Position:
-    description: A cartesian point in the IFC project coordinate frame.
+    description: A cartesian point and the unit its coordinates are in. On site, in the IFC project coordinate frame.
     slots:
       - x_coord
       - y_coord
       - z_coord
+      - unit
     slot_usage:
       x_coord:
         required: true
       y_coord:
         required: true
       z_coord:
+        required: true
+      unit:
         required: true
 
   Quantity:
@@ -84,7 +87,7 @@ slots:
     range: float
     description: The numeric value.
   unit:
-    description: The unit of the value.
+    description: The unit of the value, or of the coordinates.
   length:
     range: Quantity
     inlined: true

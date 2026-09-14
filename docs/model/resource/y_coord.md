@@ -25,7 +25,7 @@ URI: [rcpc:y_coord](https://rcpc.for5672/schema/y_coord)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Position](Position.md) | A cartesian point in the IFC project coordinate frame |  yes  |
+| [Position](Position.md) | A cartesian point and the unit its coordinates are in |  yes  |
 | [MountPosition](MountPosition.md) | A point in the robot's own frame, with a unit |  yes  |
 
 

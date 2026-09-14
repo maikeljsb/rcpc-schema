@@ -32,4 +32,4 @@
       - id: scout_v1_camera
         sensor_type: Camera
         sensor_capability: Site imagery for remote inspection.
-        sensor_site_position: {x_coord: 10.0, y_coord: 4.5, z_coord: 0.0}
+        sensor_site_position: {x_coord: 10.0, y_coord: 4.5, z_coord: 0.0, unit: m}

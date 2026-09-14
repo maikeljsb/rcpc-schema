@@ -32,8 +32,12 @@
     },
     "Position": {
       "additionalProperties": false,
-      "description": "A cartesian point in the IFC project coordinate frame.",
+      "description": "A cartesian point and the unit its coordinates are in. On site, in the IFC project coordinate frame.",
       "properties": {
+        "unit": {
+          "description": "The unit of the value, or of the coordinates.",
+          "type": "string"
+        },
         "x_coord": {
           "description": "Cartesian x coordinate.",
           "type": "number"
@@ -50,7 +54,8 @@
       "required": [
         "x_coord",
         "y_coord",
-        "z_coord"
+        "z_coord",
+        "unit"
       ],
       "title": "Position",
       "type": "object"
@@ -60,7 +65,7 @@
       "description": "A number with a unit.",
       "properties": {
         "unit": {
-          "description": "The unit of the value.",
+          "description": "The unit of the value, or of the coordinates.",
           "type": "string"
         },
         "value": {

@@ -6,7 +6,7 @@ search:
 # Slot: unit 
 
 
-_The unit of the value._
+_The unit of the value, or of the coordinates._
 
 
 
@@ -25,6 +25,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [Position](Position.md) | A cartesian point and the unit its coordinates are in |  yes  |
 | [Quantity](Quantity.md) | A number with a unit |  yes  |
 | [MountPosition](MountPosition.md) | A point in the robot's own frame, with a unit |  yes  |
 
@@ -40,7 +41,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Quantity](Quantity.md), [MountPosition](MountPosition.md) |
+| Domain Of | [Position](Position.md), [Quantity](Quantity.md), [MountPosition](MountPosition.md) |
 
 ### Cardinality and Requirements
 
@@ -85,9 +86,10 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 <details>
 ```yaml
 name: unit
-description: The unit of the value.
+description: The unit of the value, or of the coordinates.
 from_schema: https://rcpc.for5672/schema/common
 domain_of:
+- Position
 - Quantity
 - MountPosition
 range: string

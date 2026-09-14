@@ -83,7 +83,7 @@ URI: [rcpc:MountPosition](https://rcpc.for5672/schema/MountPosition)
 | [x_coord](x_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian x coordinate | direct |
 | [y_coord](y_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian y coordinate | direct |
 | [z_coord](z_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian z coordinate | direct |
-| [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value | direct |
+| [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value, or of the coordinates | direct |
 
 
 
@@ -221,10 +221,11 @@ attributes:
     required: true
   unit:
     name: unit
-    description: The unit of the value.
+    description: The unit of the value, or of the coordinates.
     from_schema: https://rcpc.for5672/schema/common
     owner: MountPosition
     domain_of:
+    - Position
     - Quantity
     - MountPosition
     range: string

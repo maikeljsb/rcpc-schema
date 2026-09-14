@@ -6,7 +6,7 @@ search:
 # Class: Position 
 
 
-_A cartesian point in the IFC project coordinate frame._
+_A cartesian point and the unit its coordinates are in. On site, in the IFC project coordinate frame._
 
 
 
@@ -24,6 +24,17 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
  classDiagram
     class Position
     click Position href "../Position/"
+      Position : unit
+        
+          
+    
+        
+        
+        Position --> "1" String : unit
+        click String href "../http://www.w3.org/2001/XMLSchema#string/"
+    
+
+        
       Position : x_coord
         
           
@@ -72,6 +83,7 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 | [x_coord](x_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian x coordinate | direct |
 | [y_coord](y_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian y coordinate | direct |
 | [z_coord](z_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian z coordinate | direct |
+| [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value, or of the coordinates | direct |
 
 
 
@@ -129,12 +141,14 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 <details>
 ```yaml
 name: Position
-description: A cartesian point in the IFC project coordinate frame.
+description: A cartesian point and the unit its coordinates are in. On site, in the
+  IFC project coordinate frame.
 from_schema: https://rcpc.for5672/schema/common
 slots:
 - x_coord
 - y_coord
 - z_coord
+- unit
 slot_usage:
   x_coord:
     name: x_coord
@@ -144,6 +158,9 @@ slot_usage:
     required: true
   z_coord:
     name: z_coord
+    required: true
+  unit:
+    name: unit
     required: true
 
 ```
@@ -154,7 +171,8 @@ slot_usage:
 <details>
 ```yaml
 name: Position
-description: A cartesian point in the IFC project coordinate frame.
+description: A cartesian point and the unit its coordinates are in. On site, in the
+  IFC project coordinate frame.
 from_schema: https://rcpc.for5672/schema/common
 slot_usage:
   x_coord:
@@ -165,6 +183,9 @@ slot_usage:
     required: true
   z_coord:
     name: z_coord
+    required: true
+  unit:
+    name: unit
     required: true
 attributes:
   x_coord:
@@ -196,6 +217,17 @@ attributes:
     - Position
     - MountPosition
     range: float
+    required: true
+  unit:
+    name: unit
+    description: The unit of the value, or of the coordinates.
+    from_schema: https://rcpc.for5672/schema/common
+    owner: Position
+    domain_of:
+    - Position
+    - Quantity
+    - MountPosition
+    range: string
     required: true
 
 ```

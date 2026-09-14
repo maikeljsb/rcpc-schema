@@ -13,7 +13,7 @@ Name: common
 | Class | Description |
 | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |
-| [Position](Position.md) | A cartesian point in the IFC project coordinate frame |
+| [Position](Position.md) | A cartesian point and the unit its coordinates are in |
 | [Quantity](Quantity.md) | A number with a unit |
 
 
@@ -26,7 +26,7 @@ Name: common
 | [height](height.md) | How tall the item is, recommended in metres |
 | [id](id.md) | Identifier, unique among instances of its class |
 | [length](length.md) | How long the item is, recommended in metres |
-| [unit](unit.md) | The unit of the value |
+| [unit](unit.md) | The unit of the value, or of the coordinates |
 | [value](value.md) | The numeric value |
 | [weight](weight.md) | How much the item weighs, recommended in kilograms |
 | [width](width.md) | How wide the item is, recommended in metres |
