@@ -128,9 +128,9 @@ Every row is one attribute of the paper's Table 3, in the paper's order. "Type" 
 | Sensor Capability | String | dropped | | | Covered by `sensor_type`. |
 | End Effector | String | `end_effector` | `PhysicalProperty` | string, multivalued | |
 | Manipulator | String | `manipulator` | `PhysicalProperty` | string | |
-| Coordinate Reach X | Decimal | `coordinate_reach_x` | `PhysicalProperty` | Quantity, m | |
-| Coordinate Reach Y | Decimal | `coordinate_reach_y` | `PhysicalProperty` | Quantity, m | |
-| Coordinate Reach Z | Decimal | `coordinate_reach_z` | `PhysicalProperty` | Quantity, m | |
+| Coordinate Reach X | Decimal | `coordinate_reach` | `PhysicalProperty` | Position, m | Merged with Y and Z into one triple. Description names the CRS Coordinate Reach X, Y and Z. |
+| Coordinate Reach Y | Decimal | folded into `coordinate_reach` | | | |
+| Coordinate Reach Z | Decimal | folded into `coordinate_reach` | | | |
 | Yaw | Decimal | `yaw` | `PhysicalProperty` | Quantity, deg | |
 | Pitch | Decimal | `pitch` | `PhysicalProperty` | Quantity, deg | |
 | Roll | Decimal | `roll` | `PhysicalProperty` | Quantity, deg | |
@@ -266,7 +266,7 @@ slots:
 Conventions specific to this module:
 
 - **Names follow the linter's `standard_naming` rule**: CamelCase classes and enums, snake_case slots and permissible values. Attribute slots are the paper's names in snake_case, verbatim.
-- **Attribution only where the name changed.** `id`, `offers`, the three merged quantities, and the four bounds say which CRS attribute they come from. Nothing else mentions the paper.
+- **Attribution only where the name changed.** `id`, `offers`, the three merged quantities, the merged reach, and the four bounds say which CRS attribute they come from. Nothing else mentions the paper.
 - **No inheritance features.** Six concrete classes listing global slots, `slot_usage` for per-class `required`. No `abstract`, `mixins`, `union_of`, or `designates_type`.
 - **Every object-valued slot states `inlined: true`.** Mandatory on the group slots and `sensors`, whose ranges have identifiers; stated on the Quantity and position slots too, for a uniform read.
 - **Group ids follow the entry id**: `mason_m1_physical`, `mason_m1_operational`, `mason_m1_safety`, `mason_m1_activity`, and sensors `mason_m1_<sensor>`.
@@ -316,7 +316,7 @@ All decided 2026-09-12 in Phase 1.
 5. **`Sensor` is an identified class, not a keyed map.** A keyed map would flatten three sensors into some twenty prefixed properties, the wide-node shape the one-pager rejected.
 6. **Mount offsets are common's `Position`; `MountPosition` is withdrawn.** Revised 2026-09-14 in the Task 3 review. The 2026-09-12 decision was a second value class, `MountPosition`, because common's `Position` had no unit and the brief declines a frame slot. That put a robot-frame point in the model under a different name, which is the brief's rule sidestepped rather than kept. The paper's `String` type for these two attributes was considered and overruled: a position is not a string. Resolution: `Position` gains `unit` in common (`SPEC-common.md` decision 12), so a point carries its unit wherever it is written, and `sensor_location` and `manipulator_position` are plain `Position` whose descriptions state the robot's own frame. One point class, no second frame class, and the brief's one-frame rule stands as written: it forbids a frame slot, not a unit.
 7. **Emergency Stop is boolean.** Has one or not; the trigger condition is not planning input.
-8. **Coordinate Reach X, Y, Z are three Quantities.** No object exists for them without the frame problem of decision 6.
+8. **Coordinate Reach X, Y, Z are one `Position`, `coordinate_reach`.** Revised 2026-09-14 in the Task 3 review: the 2026-09-12 version was three Quantities, because no object existed for them without the frame problem of decision 6. With `unit` on `Position` that problem is gone, and common's `Position` is described as a point or an extent along each axis (`SPEC-common.md` decision 13). Three extents with one unit are one value.
 9. **`length`, `width`, `height`, `weight` are declared in common.** Product cannot see a slot resource declares, and the brief's Capacity check compares component weight against load capacity.
 10. **Multivalued strings: `end_effector`, `data_output_type`, `data_output_file_type`, `additional_ppe_requirements`, `worker_type`.** The sensor attributes became single-valued on `Sensor`. Prose attributes stay single sentences.
 11. **`status` default is written by the projection component**, since `ifabsent` reaches neither the validator nor the JSON Schema. Documents may omit `status`.
