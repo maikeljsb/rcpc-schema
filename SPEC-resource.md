@@ -187,7 +187,7 @@ Every row is one attribute of the paper's Table 3, in the paper's order. "Type" 
 |---|---|
 | `RobotUnit.id` | Every machine id is derived from it. |
 | `RobotUnit.count`, at least one | Without it the component cannot create a machine node. |
-| `RobotUnit.activity`, and `Activity.offers` with at least one | Without a capability the entry can never be matched to a task. |
+| `RobotUnit.activity_group`, and `Activity.offers` with at least one | Without a capability the entry can never be matched to a task. |
 | `id` on any group or sensor object that is present | It projects to a node, and a node needs an identifier. |
 | `MountPosition` coordinates and unit | A point without all three coordinates or a unit means nothing. |
 
@@ -198,7 +198,7 @@ Everything else is optional. An entry with `id`, `count`, and an `Activity` hold
 ```yaml
 - id: mason_m1
   count: 2
-  activity:
+  activity_group:
     id: mason_m1_activity
     offers: [grip, align, lift]
     productivity: {value: 250, unit: brick/h}
@@ -246,11 +246,11 @@ classes:
       - physical_property
       - operational_requirement
       - safety
-      - activity
+      - activity_group
     slot_usage:
       id:
         description: The robot's name, a readable product slug. The CRS Name.
-      activity:
+      activity_group:
         required: true
 
 slots:
