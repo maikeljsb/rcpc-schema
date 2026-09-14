@@ -27,6 +27,8 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | --- | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |  no  |
 | [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |  yes  |
+| [PhysicalProperty](PhysicalProperty.md) | CRS group 1: the robot's physical dimensions, hardware, and performance |  no  |
+| [Sensor](Sensor.md) | One sensor on or around the robot |  no  |
 | [Activity](Activity.md) | CRS group 4: the capabilities a robot offers and how it performs them |  no  |
 
 
@@ -41,7 +43,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md), [RobotUnit](RobotUnit.md), [Activity](Activity.md) |
+| Domain Of | [CapabilityType](CapabilityType.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [Activity](Activity.md) |
 
 ### Cardinality and Requirements
 
@@ -100,6 +102,8 @@ identifier: true
 domain_of:
 - CapabilityType
 - RobotUnit
+- PhysicalProperty
+- Sensor
 - Activity
 range: string
 required: true

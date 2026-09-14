@@ -19,6 +19,7 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "examples/resource/invalid/robot_unit_missing_activity.yaml": ("schema/resource.yaml", "RobotUnit", "activity_group"),
     "examples/resource/invalid/robot_unit_zero_count.yaml": ("schema/resource.yaml", "RobotUnit", "count"),
     "examples/resource/invalid/activity_missing_offers.yaml": ("schema/resource.yaml", "RobotUnit", "offers"),
+    "examples/resource/invalid/robot_unit_group_missing_id.yaml": ("schema/resource.yaml", "RobotUnit", "id"),
 }
 
 

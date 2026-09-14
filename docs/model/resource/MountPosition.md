@@ -3,10 +3,10 @@ search:
   boost: 10.0
 ---
 
-# Class: Position 
+# Class: MountPosition 
 
 
-_A cartesian point in the IFC project coordinate frame._
+_A point in the robot's own frame, with a unit. Distinct from common's Position, which is the project frame and has no unit._
 
 
 
@@ -14,7 +14,7 @@ _A cartesian point in the IFC project coordinate frame._
 
 
 
-URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
+URI: [rcpc:MountPosition](https://rcpc.for5672/schema/MountPosition)
 
 
 
@@ -22,37 +22,48 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 
 ```mermaid
  classDiagram
-    class Position
-    click Position href "../Position/"
-      Position : x_coord
+    class MountPosition
+    click MountPosition href "../MountPosition/"
+      MountPosition : unit
         
           
     
         
         
-        Position --> "1" Float : x_coord
+        MountPosition --> "1" String : unit
+        click String href "../http://www.w3.org/2001/XMLSchema#string/"
+    
+
+        
+      MountPosition : x_coord
+        
+          
+    
+        
+        
+        MountPosition --> "1" Float : x_coord
         click Float href "../http://www.w3.org/2001/XMLSchema#float/"
     
 
         
-      Position : y_coord
+      MountPosition : y_coord
         
           
     
         
         
-        Position --> "1" Float : y_coord
+        MountPosition --> "1" Float : y_coord
         click Float href "../http://www.w3.org/2001/XMLSchema#float/"
     
 
         
-      Position : z_coord
+      MountPosition : z_coord
         
           
     
         
         
-        Position --> "1" Float : z_coord
+        MountPosition --> "1" Float : z_coord
         click Float href "../http://www.w3.org/2001/XMLSchema#float/"
     
 
@@ -72,6 +83,7 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 | [x_coord](x_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian x coordinate | direct |
 | [y_coord](y_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian y coordinate | direct |
 | [z_coord](z_coord.md) | 1 <br/> [xsd:float](http://www.w3.org/2001/XMLSchema#float) | Cartesian z coordinate | direct |
+| [unit](unit.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The unit of the value | direct |
 
 
 
@@ -81,7 +93,8 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [Sensor](Sensor.md) | [sensor_site_position](sensor_site_position.md) | range | [Position](Position.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [manipulator_position](manipulator_position.md) | range | [MountPosition](MountPosition.md) |
+| [Sensor](Sensor.md) | [sensor_mount_position](sensor_mount_position.md) | range | [MountPosition](MountPosition.md) |
 
 
 
@@ -103,7 +116,7 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/resource
 
 
 
@@ -112,8 +125,8 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:Position |
-| native | rcpc:Position |
+| self | rcpc:MountPosition |
+| native | rcpc:MountPosition |
 
 
 
@@ -128,13 +141,15 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 
 <details>
 ```yaml
-name: Position
-description: A cartesian point in the IFC project coordinate frame.
-from_schema: https://rcpc.for5672/schema/common
+name: MountPosition
+description: A point in the robot's own frame, with a unit. Distinct from common's
+  Position, which is the project frame and has no unit.
+from_schema: https://rcpc.for5672/schema/resource
 slots:
 - x_coord
 - y_coord
 - z_coord
+- unit
 slot_usage:
   x_coord:
     name: x_coord
@@ -144,6 +159,9 @@ slot_usage:
     required: true
   z_coord:
     name: z_coord
+    required: true
+  unit:
+    name: unit
     required: true
 
 ```
@@ -153,9 +171,10 @@ slot_usage:
 
 <details>
 ```yaml
-name: Position
-description: A cartesian point in the IFC project coordinate frame.
-from_schema: https://rcpc.for5672/schema/common
+name: MountPosition
+description: A point in the robot's own frame, with a unit. Distinct from common's
+  Position, which is the project frame and has no unit.
+from_schema: https://rcpc.for5672/schema/resource
 slot_usage:
   x_coord:
     name: x_coord
@@ -166,12 +185,15 @@ slot_usage:
   z_coord:
     name: z_coord
     required: true
+  unit:
+    name: unit
+    required: true
 attributes:
   x_coord:
     name: x_coord
     description: Cartesian x coordinate.
     from_schema: https://rcpc.for5672/schema/common
-    owner: Position
+    owner: MountPosition
     domain_of:
     - Position
     - MountPosition
@@ -181,7 +203,7 @@ attributes:
     name: y_coord
     description: Cartesian y coordinate.
     from_schema: https://rcpc.for5672/schema/common
-    owner: Position
+    owner: MountPosition
     domain_of:
     - Position
     - MountPosition
@@ -191,11 +213,21 @@ attributes:
     name: z_coord
     description: Cartesian z coordinate.
     from_schema: https://rcpc.for5672/schema/common
-    owner: Position
+    owner: MountPosition
     domain_of:
     - Position
     - MountPosition
     range: float
+    required: true
+  unit:
+    name: unit
+    description: The unit of the value.
+    from_schema: https://rcpc.for5672/schema/common
+    owner: MountPosition
+    domain_of:
+    - Quantity
+    - MountPosition
+    range: string
     required: true
 
 ```

@@ -57,6 +57,17 @@ URI: [rcpc:RobotUnit](https://rcpc.for5672/schema/RobotUnit)
     
 
         
+      RobotUnit : physical_property
+        
+          
+    
+        
+        
+        RobotUnit --> "0..1" PhysicalProperty : physical_property
+        click PhysicalProperty href "../PhysicalProperty/"
+    
+
+        
       RobotUnit : status
         
           
@@ -83,6 +94,7 @@ URI: [rcpc:RobotUnit](https://rcpc.for5672/schema/RobotUnit)
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The robot's name, a readable product slug | direct |
 | [count](count.md) | 1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | How many identical machines this entry stands for | direct |
 | [status](status.md) | 0..1 <br/> [RobotStatus](RobotStatus.md) | The runtime state of one machine | direct |
+| [physical_property](physical_property.md) | 0..1 <br/> [PhysicalProperty](PhysicalProperty.md) | The Physical Property group holding the robot's dimensions, hardware, and per... | direct |
 | [activity_group](activity_group.md) | 1 <br/> [Activity](Activity.md) | The Activity group holding this robot's offered capabilities | direct |
 
 
@@ -141,6 +153,7 @@ slots:
 - id
 - count
 - status
+- physical_property
 - activity_group
 slot_usage:
   id:
@@ -178,6 +191,8 @@ attributes:
     domain_of:
     - CapabilityType
     - RobotUnit
+    - PhysicalProperty
+    - Sensor
     - Activity
     range: string
     required: true
@@ -202,6 +217,17 @@ attributes:
     domain_of:
     - RobotUnit
     range: RobotStatus
+  physical_property:
+    name: physical_property
+    description: The Physical Property group holding the robot's dimensions, hardware,
+      and performance.
+    from_schema: https://rcpc.for5672/schema/resource
+    rank: 1000
+    owner: RobotUnit
+    domain_of:
+    - RobotUnit
+    range: PhysicalProperty
+    inlined: true
   activity_group:
     name: activity_group
     description: The Activity group holding this robot's offered capabilities.

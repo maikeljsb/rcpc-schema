@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: weight 
+# Slot: sensors 
 
 
-_How much the item weighs, recommended in kilograms._
+_The sensors mounted on or around the robot._
 
 
 
@@ -14,7 +14,7 @@ _How much the item weighs, recommended in kilograms._
 
 
 
-URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
+URI: [rcpc:sensors](https://rcpc.for5672/schema/sensors)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,13 +38,14 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [Sensor](Sensor.md) |
 | Domain Of | [PhysicalProperty](PhysicalProperty.md) |
 
 ### Cardinality and Requirements
 
 | Property | Value |
 | --- | --- |
+| Multivalued | Yes |
 
 
 
@@ -64,7 +65,7 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/resource
 
 
 
@@ -73,8 +74,8 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:weight |
-| native | rcpc:weight |
+| self | rcpc:sensors |
+| native | rcpc:sensors |
 
 
 
@@ -83,13 +84,16 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 <details>
 ```yaml
-name: weight
-description: How much the item weighs, recommended in kilograms.
-from_schema: https://rcpc.for5672/schema/common
+name: sensors
+description: The sensors mounted on or around the robot.
+from_schema: https://rcpc.for5672/schema/resource
+rank: 1000
 domain_of:
 - PhysicalProperty
-range: Quantity
+range: Sensor
+multivalued: true
 inlined: true
+inlined_as_list: true
 
 ```
 </details></div>

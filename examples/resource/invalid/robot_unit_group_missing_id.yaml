@@ -1,0 +1,7 @@
+- id: no_group_id_bot
+  count: 1
+  activity_group:
+    id: no_group_id_bot_activity
+    offers: [locomote]
+  physical_property:
+    manufacturer: Fictional Robotics

@@ -43,6 +43,36 @@
       "title": "CapabilityType",
       "type": "object"
     },
+    "MountPosition": {
+      "additionalProperties": false,
+      "description": "A point in the robot's own frame, with a unit. Distinct from common's Position, which is the project frame and has no unit.",
+      "properties": {
+        "unit": {
+          "description": "The unit of the value.",
+          "type": "string"
+        },
+        "x_coord": {
+          "description": "Cartesian x coordinate.",
+          "type": "number"
+        },
+        "y_coord": {
+          "description": "Cartesian y coordinate.",
+          "type": "number"
+        },
+        "z_coord": {
+          "description": "Cartesian z coordinate.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x_coord",
+        "y_coord",
+        "z_coord",
+        "unit"
+      ],
+      "title": "MountPosition",
+      "type": "object"
+    },
     "ParameterKind": {
       "description": "The kinds of value a task parameter can hold.",
       "enum": [
@@ -52,6 +82,262 @@
       ],
       "title": "ParameterKind",
       "type": "string"
+    },
+    "PhysicalProperty": {
+      "additionalProperties": false,
+      "description": "CRS group 1: the robot's physical dimensions, hardware, and performance.",
+      "properties": {
+        "coordinate_reach_x": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How far the manipulator reaches along the robot's x-axis, recommended in metres."
+        },
+        "coordinate_reach_y": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How far the manipulator reaches along the robot's y-axis, recommended in metres."
+        },
+        "coordinate_reach_z": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How far the manipulator reaches along the robot's z-axis, recommended in metres."
+        },
+        "degree_of_freedom": {
+          "description": "How many axes of the manipulator can rotate or extend.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "end_effector": {
+          "description": "The tools the robot's manipulator can attach, such as a bucket or gripper.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "height": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How tall the item is, recommended in metres."
+        },
+        "id": {
+          "description": "Identifier, unique among instances of its class.",
+          "type": "string"
+        },
+        "length": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How long the item is, recommended in metres."
+        },
+        "level_of_autonomy": {
+          "description": "How independently the robot performs its tasks.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lifting_capacity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The maximum weight the manipulator can lift during operation, recommended in kilograms."
+        },
+        "load_capacity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The maximum weight the robot can carry for extended work, recommended in kilograms."
+        },
+        "manipulator": {
+          "description": "The robot's arm: the links and joints that perform tasks.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "manipulator_position": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MountPosition"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Where the manipulator is mounted on the robot, in the robot's own frame."
+        },
+        "manufacturer": {
+          "description": "Who makes the robot.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mobility": {
+          "description": "How the robot moves from one place to another.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "navigation": {
+          "description": "Whether the robot can find its own position and plan a path to a destination.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "network": {
+          "description": "How the robot communicates and exchanges data.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pitch": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The manipulator's rotation range around the lateral axis, recommended in degrees."
+        },
+        "power_source": {
+          "description": "What supplies the robot's energy.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "roll": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The manipulator's rotation range around the longitudinal axis, recommended in degrees."
+        },
+        "run_duration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How long the robot can run continuously on its power source, recommended in minutes."
+        },
+        "sensors": {
+          "description": "The sensors mounted on or around the robot.",
+          "items": {
+            "$ref": "#/$defs/Sensor"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "speed": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How fast the robot travels, recommended in metres per second."
+        },
+        "weight": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How much the item weighs, recommended in kilograms."
+        },
+        "width": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How wide the item is, recommended in metres."
+        },
+        "yaw": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The manipulator's rotation range around the vertical axis, recommended in degrees."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "PhysicalProperty",
+      "type": "object"
     },
     "Position": {
       "additionalProperties": false,
@@ -126,6 +412,17 @@
           "description": "The robot's name, a readable product slug. The CRS Name.",
           "type": "string"
         },
+        "physical_property": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PhysicalProperty"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The Physical Property group holding the robot's dimensions, hardware, and performance."
+        },
         "status": {
           "$ref": "#/$defs/RobotStatus",
           "description": "The runtime state of one machine."
@@ -137,6 +434,64 @@
         "activity_group"
       ],
       "title": "RobotUnit",
+      "type": "object"
+    },
+    "Sensor": {
+      "additionalProperties": false,
+      "description": "One sensor on or around the robot. Belongs to the PhysicalProperty group one hop down.",
+      "properties": {
+        "id": {
+          "description": "Identifier, unique among instances of its class.",
+          "type": "string"
+        },
+        "sensor_capability": {
+          "description": "What the sensor senses or measures.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sensor_mount_position": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MountPosition"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Where the sensor is mounted on the robot, in the robot's own frame. Names the CRS Sensor Location."
+        },
+        "sensor_requirements": {
+          "description": "What installing the sensor requires.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sensor_site_position": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Position"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Where the sensor is mounted on site, in the project frame. Names the CRS Sensor Location."
+        },
+        "sensor_type": {
+          "description": "What kind of sensor this is.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "Sensor",
       "type": "object"
     }
   },

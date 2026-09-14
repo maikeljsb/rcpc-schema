@@ -65,6 +65,26 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 
 
 
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [PhysicalProperty](PhysicalProperty.md) | [length](length.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [width](width.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [height](height.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [weight](weight.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [load_capacity](load_capacity.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [speed](speed.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [run_duration](run_duration.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [coordinate_reach_x](coordinate_reach_x.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [coordinate_reach_y](coordinate_reach_y.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [coordinate_reach_z](coordinate_reach_z.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [yaw](yaw.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [pitch](pitch.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [roll](roll.md) | range | [Quantity](Quantity.md) |
+| [PhysicalProperty](PhysicalProperty.md) | [lifting_capacity](lifting_capacity.md) | range | [Quantity](Quantity.md) |
+
+
 
 
 
@@ -157,6 +177,7 @@ attributes:
     owner: Quantity
     domain_of:
     - Quantity
+    - MountPosition
     range: string
     required: true
 

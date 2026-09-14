@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: weight 
+# Slot: end_effector 
 
 
-_How much the item weighs, recommended in kilograms._
+_The tools the robot's manipulator can attach, such as a bucket or gripper._
 
 
 
@@ -14,7 +14,7 @@ _How much the item weighs, recommended in kilograms._
 
 
 
-URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
+URI: [rcpc:end_effector](https://rcpc.for5672/schema/end_effector)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,13 +38,14 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
 | Domain Of | [PhysicalProperty](PhysicalProperty.md) |
 
 ### Cardinality and Requirements
 
 | Property | Value |
 | --- | --- |
+| Multivalued | Yes |
 
 
 
@@ -64,7 +65,7 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/resource
 
 
 
@@ -73,8 +74,8 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:weight |
-| native | rcpc:weight |
+| self | rcpc:end_effector |
+| native | rcpc:end_effector |
 
 
 
@@ -83,13 +84,14 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 <details>
 ```yaml
-name: weight
-description: How much the item weighs, recommended in kilograms.
-from_schema: https://rcpc.for5672/schema/common
+name: end_effector
+description: The tools the robot's manipulator can attach, such as a bucket or gripper.
+from_schema: https://rcpc.for5672/schema/resource
+rank: 1000
 domain_of:
 - PhysicalProperty
-range: Quantity
-inlined: true
+range: string
+multivalued: true
 
 ```
 </details></div>

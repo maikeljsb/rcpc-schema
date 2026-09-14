@@ -35,11 +35,74 @@ classes:
       - id
       - count
       - status
+      - physical_property
       - activity_group
     slot_usage:
       id:
         description: The robot's name, a readable product slug. The CRS Name.
       activity_group:
+        required: true
+
+  PhysicalProperty:
+    description: >-
+      CRS group 1: the robot's physical dimensions, hardware, and performance.
+    slots:
+      - id
+      - manufacturer
+      - level_of_autonomy
+      - network
+      - length
+      - width
+      - height
+      - weight
+      - load_capacity
+      - mobility
+      - speed
+      - navigation
+      - power_source
+      - run_duration
+      - end_effector
+      - manipulator
+      - coordinate_reach_x
+      - coordinate_reach_y
+      - coordinate_reach_z
+      - yaw
+      - pitch
+      - roll
+      - manipulator_position
+      - degree_of_freedom
+      - lifting_capacity
+      - sensors
+
+  Sensor:
+    description: >-
+      One sensor on or around the robot. Belongs to the PhysicalProperty
+      group one hop down.
+    slots:
+      - id
+      - sensor_type
+      - sensor_capability
+      - sensor_requirements
+      - sensor_site_position
+      - sensor_mount_position
+
+  MountPosition:
+    description: >-
+      A point in the robot's own frame, with a unit. Distinct from common's
+      Position, which is the project frame and has no unit.
+    slots:
+      - x_coord
+      - y_coord
+      - z_coord
+      - unit
+    slot_usage:
+      x_coord:
+        required: true
+      y_coord:
+        required: true
+      z_coord:
+        required: true
+      unit:
         required: true
 
   Activity:
@@ -69,3 +132,92 @@ slots:
     multivalued: true
     required: true
     description: The capability types this robot offers. The CRS Task Type.
+  physical_property:
+    range: PhysicalProperty
+    inlined: true
+    description: The Physical Property group holding the robot's dimensions, hardware, and performance.
+  sensors:
+    range: Sensor
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    description: The sensors mounted on or around the robot.
+  manufacturer:
+    description: Who makes the robot.
+  level_of_autonomy:
+    description: How independently the robot performs its tasks.
+  network:
+    description: How the robot communicates and exchanges data.
+  load_capacity:
+    range: Quantity
+    inlined: true
+    description: The maximum weight the robot can carry for extended work, recommended in kilograms.
+  mobility:
+    description: How the robot moves from one place to another.
+  speed:
+    range: Quantity
+    inlined: true
+    description: How fast the robot travels, recommended in metres per second.
+  navigation:
+    range: boolean
+    description: Whether the robot can find its own position and plan a path to a destination.
+  power_source:
+    description: What supplies the robot's energy.
+  run_duration:
+    range: Quantity
+    inlined: true
+    description: How long the robot can run continuously on its power source, recommended in minutes.
+  sensor_type:
+    description: What kind of sensor this is.
+  sensor_capability:
+    description: What the sensor senses or measures.
+  sensor_requirements:
+    description: What installing the sensor requires.
+  sensor_site_position:
+    range: Position
+    inlined: true
+    description: Where the sensor is mounted on site, in the project frame. Names the CRS Sensor Location.
+  sensor_mount_position:
+    range: MountPosition
+    inlined: true
+    description: Where the sensor is mounted on the robot, in the robot's own frame. Names the CRS Sensor Location.
+  end_effector:
+    multivalued: true
+    description: The tools the robot's manipulator can attach, such as a bucket or gripper.
+  manipulator:
+    description: "The robot's arm: the links and joints that perform tasks."
+  coordinate_reach_x:
+    range: Quantity
+    inlined: true
+    description: How far the manipulator reaches along the robot's x-axis, recommended in metres.
+  coordinate_reach_y:
+    range: Quantity
+    inlined: true
+    description: How far the manipulator reaches along the robot's y-axis, recommended in metres.
+  coordinate_reach_z:
+    range: Quantity
+    inlined: true
+    description: How far the manipulator reaches along the robot's z-axis, recommended in metres.
+  yaw:
+    range: Quantity
+    inlined: true
+    description: The manipulator's rotation range around the vertical axis, recommended in degrees.
+  pitch:
+    range: Quantity
+    inlined: true
+    description: The manipulator's rotation range around the lateral axis, recommended in degrees.
+  roll:
+    range: Quantity
+    inlined: true
+    description: The manipulator's rotation range around the longitudinal axis, recommended in degrees.
+  manipulator_position:
+    range: MountPosition
+    inlined: true
+    description: Where the manipulator is mounted on the robot, in the robot's own frame.
+  degree_of_freedom:
+    range: integer
+    description: How many axes of the manipulator can rotate or extend.
+  lifting_capacity:
+    range: Quantity
+    inlined: true
+    description: The maximum weight the manipulator can lift during operation, recommended in kilograms.

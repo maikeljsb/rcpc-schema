@@ -13,7 +13,10 @@ Name: resource
 | Class | Description |
 | --- | --- |
 | [Activity](Activity.md) | CRS group 4: the capabilities a robot offers and how it performs them |
+| [MountPosition](MountPosition.md) | A point in the robot's own frame, with a unit |
+| [PhysicalProperty](PhysicalProperty.md) | CRS group 1: the robot's physical dimensions, hardware, and performance |
 | [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |
+| [Sensor](Sensor.md) | One sensor on or around the robot |
 
 
 
@@ -22,9 +25,36 @@ Name: resource
 | Slot | Description |
 | --- | --- |
 | [activity_group](activity_group.md) | The Activity group holding this robot's offered capabilities |
+| [coordinate_reach_x](coordinate_reach_x.md) | How far the manipulator reaches along the robot's x-axis, recommended in metr... |
+| [coordinate_reach_y](coordinate_reach_y.md) | How far the manipulator reaches along the robot's y-axis, recommended in metr... |
+| [coordinate_reach_z](coordinate_reach_z.md) | How far the manipulator reaches along the robot's z-axis, recommended in metr... |
 | [count](count.md) | How many identical machines this entry stands for |
+| [degree_of_freedom](degree_of_freedom.md) | How many axes of the manipulator can rotate or extend |
+| [end_effector](end_effector.md) | The tools the robot's manipulator can attach, such as a bucket or gripper |
+| [level_of_autonomy](level_of_autonomy.md) | How independently the robot performs its tasks |
+| [lifting_capacity](lifting_capacity.md) | The maximum weight the manipulator can lift during operation, recommended in ... |
+| [load_capacity](load_capacity.md) | The maximum weight the robot can carry for extended work, recommended in kilo... |
+| [manipulator](manipulator.md) | The robot's arm: the links and joints that perform tasks |
+| [manipulator_position](manipulator_position.md) | Where the manipulator is mounted on the robot, in the robot's own frame |
+| [manufacturer](manufacturer.md) | Who makes the robot |
+| [mobility](mobility.md) | How the robot moves from one place to another |
+| [navigation](navigation.md) | Whether the robot can find its own position and plan a path to a destination |
+| [network](network.md) | How the robot communicates and exchanges data |
 | [offers](offers.md) | The capability types this robot offers |
+| [physical_property](physical_property.md) | The Physical Property group holding the robot's dimensions, hardware, and per... |
+| [pitch](pitch.md) | The manipulator's rotation range around the lateral axis, recommended in degr... |
+| [power_source](power_source.md) | What supplies the robot's energy |
+| [roll](roll.md) | The manipulator's rotation range around the longitudinal axis, recommended in... |
+| [run_duration](run_duration.md) | How long the robot can run continuously on its power source, recommended in m... |
+| [sensor_capability](sensor_capability.md) | What the sensor senses or measures |
+| [sensor_mount_position](sensor_mount_position.md) | Where the sensor is mounted on the robot, in the robot's own frame |
+| [sensor_requirements](sensor_requirements.md) | What installing the sensor requires |
+| [sensor_site_position](sensor_site_position.md) | Where the sensor is mounted on site, in the project frame |
+| [sensor_type](sensor_type.md) | What kind of sensor this is |
+| [sensors](sensors.md) | The sensors mounted on or around the robot |
+| [speed](speed.md) | How fast the robot travels, recommended in metres per second |
 | [status](status.md) | The runtime state of one machine |
+| [yaw](yaw.md) | The manipulator's rotation range around the vertical axis, recommended in deg... |
 
 
 ## Enumerations

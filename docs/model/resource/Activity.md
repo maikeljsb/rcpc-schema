@@ -145,6 +145,8 @@ attributes:
     domain_of:
     - CapabilityType
     - RobotUnit
+    - PhysicalProperty
+    - Sensor
     - Activity
     range: string
     required: true

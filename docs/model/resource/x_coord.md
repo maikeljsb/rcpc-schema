@@ -26,6 +26,7 @@ URI: [rcpc:x_coord](https://rcpc.for5672/schema/x_coord)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Position](Position.md) | A cartesian point in the IFC project coordinate frame |  yes  |
+| [MountPosition](MountPosition.md) | A point in the robot's own frame, with a unit |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [rcpc:x_coord](https://rcpc.for5672/schema/x_coord)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:float](http://www.w3.org/2001/XMLSchema#float) |
-| Domain Of | [Position](Position.md) |
+| Domain Of | [Position](Position.md), [MountPosition](MountPosition.md) |
 
 ### Cardinality and Requirements
 
@@ -88,6 +89,7 @@ description: Cartesian x coordinate.
 from_schema: https://rcpc.for5672/schema/common
 domain_of:
 - Position
+- MountPosition
 range: float
 
 ```

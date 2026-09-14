@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: unit 
+# Slot: sensor_requirements 
 
 
-_The unit of the value._
+_What installing the sensor requires._
 
 
 
@@ -14,7 +14,7 @@ _The unit of the value._
 
 
 
-URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
+URI: [rcpc:sensor_requirements](https://rcpc.for5672/schema/sensor_requirements)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,8 +25,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Quantity](Quantity.md) | A number with a unit |  yes  |
-| [MountPosition](MountPosition.md) | A point in the robot's own frame, with a unit |  yes  |
+| [Sensor](Sensor.md) | One sensor on or around the robot |  no  |
 
 
 
@@ -40,7 +39,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Quantity](Quantity.md), [MountPosition](MountPosition.md) |
+| Domain Of | [Sensor](Sensor.md) |
 
 ### Cardinality and Requirements
 
@@ -65,7 +64,7 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/resource
 
 
 
@@ -74,8 +73,8 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:unit |
-| native | rcpc:unit |
+| self | rcpc:sensor_requirements |
+| native | rcpc:sensor_requirements |
 
 
 
@@ -84,12 +83,12 @@ URI: [rcpc:unit](https://rcpc.for5672/schema/unit)
 
 <details>
 ```yaml
-name: unit
-description: The unit of the value.
-from_schema: https://rcpc.for5672/schema/common
+name: sensor_requirements
+description: What installing the sensor requires.
+from_schema: https://rcpc.for5672/schema/resource
+rank: 1000
 domain_of:
-- Quantity
-- MountPosition
+- Sensor
 range: string
 
 ```

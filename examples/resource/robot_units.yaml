@@ -3,8 +3,33 @@
   activity_group:
     id: mason_m1_activity
     offers: [grip, align, lift]
+  physical_property:
+    id: mason_m1_physical
+    manufacturer: Fictional Robotics
+    length: {value: 3.0, unit: m}
+    width: {value: 1.2, unit: m}
+    height: {value: 1.5, unit: m}
+    weight: {value: 800, unit: kg}
+    load_capacity: {value: 15, unit: kg}
+    sensors:
+      - id: mason_m1_lidar
+        sensor_type: LiDAR
+        sensor_capability: Distance and 3D map of the work face.
+        sensor_mount_position: {x_coord: 0, y_coord: 0.2, z_coord: 0.5, unit: m}
 - id: scout_v1
   count: 1
   activity_group:
     id: scout_v1_activity
     offers: [locomote]
+  physical_property:
+    id: scout_v1_physical
+    manufacturer: Fictional Robotics
+    length: {value: 0.8, unit: m}
+    width: {value: 0.5, unit: m}
+    height: {value: 0.6, unit: m}
+    weight: {value: 45, unit: kg}
+    sensors:
+      - id: scout_v1_camera
+        sensor_type: Camera
+        sensor_capability: Site imagery for remote inspection.
+        sensor_site_position: {x_coord: 10.0, y_coord: 4.5, z_coord: 0.0}

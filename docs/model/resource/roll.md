@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: weight 
+# Slot: roll 
 
 
-_How much the item weighs, recommended in kilograms._
+_The manipulator's rotation range around the longitudinal axis, recommended in degrees._
 
 
 
@@ -14,7 +14,7 @@ _How much the item weighs, recommended in kilograms._
 
 
 
-URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
+URI: [rcpc:roll](https://rcpc.for5672/schema/roll)
 <!-- no inheritance hierarchy -->
 
 
@@ -64,7 +64,7 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/resource
 
 
 
@@ -73,8 +73,8 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:weight |
-| native | rcpc:weight |
+| self | rcpc:roll |
+| native | rcpc:roll |
 
 
 
@@ -83,9 +83,11 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 <details>
 ```yaml
-name: weight
-description: How much the item weighs, recommended in kilograms.
-from_schema: https://rcpc.for5672/schema/common
+name: roll
+description: The manipulator's rotation range around the longitudinal axis, recommended
+  in degrees.
+from_schema: https://rcpc.for5672/schema/resource
+rank: 1000
 domain_of:
 - PhysicalProperty
 range: Quantity

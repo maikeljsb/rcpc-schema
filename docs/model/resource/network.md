@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: weight 
+# Slot: network 
 
 
-_How much the item weighs, recommended in kilograms._
+_How the robot communicates and exchanges data._
 
 
 
@@ -14,7 +14,7 @@ _How much the item weighs, recommended in kilograms._
 
 
 
-URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
+URI: [rcpc:network](https://rcpc.for5672/schema/network)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
 | Domain Of | [PhysicalProperty](PhysicalProperty.md) |
 
 ### Cardinality and Requirements
@@ -64,7 +64,7 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/resource
 
 
 
@@ -73,8 +73,8 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:weight |
-| native | rcpc:weight |
+| self | rcpc:network |
+| native | rcpc:network |
 
 
 
@@ -83,13 +83,13 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 <details>
 ```yaml
-name: weight
-description: How much the item weighs, recommended in kilograms.
-from_schema: https://rcpc.for5672/schema/common
+name: network
+description: How the robot communicates and exchanges data.
+from_schema: https://rcpc.for5672/schema/resource
+rank: 1000
 domain_of:
 - PhysicalProperty
-range: Quantity
-inlined: true
+range: string
 
 ```
 </details></div>
