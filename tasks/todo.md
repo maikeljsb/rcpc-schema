@@ -70,7 +70,7 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 **Verification:**
 - [x] Tests pass: `uv run pytest` with five resource rows collected
 - [x] Build succeeds: `uv run python scripts/build.py` run three times with no further diff; `git status --porcelain` stable
-- [x] Manual check: `docs/model/resource/Sensor.md` lists six slots; `sensor_mount_position.md` states the robot's own frame
+- [x] Manual check: `docs/model/resource/Sensor.md` lists four slots; `sensor_location.md` states the robot's own frame
 
 **Dependencies:** Task 2
 
@@ -85,12 +85,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-resource.md`. Each task is one Conventional C
 
 **Amendment 2026-09-14:** committed as `663c1ff feat(resource): add PhysicalProperty with Sensor and MountPosition`. In review, `MountPosition` was withdrawn: it existed only because common's `Position` had no unit, and it put a robot-frame point in the model under a second name. `Position` gained `unit` in common (`24b8c3e`), `sensor_mount_position` and `manipulator_position` became plain `Position` (refactor commit following it), and the two criteria above were reworded to match. See `SPEC-common.md` decision 12 and `SPEC-resource.md` decision 6.
 
+**Amendment 2026-09-14, second:** `Sensor` slimmed in the same review. `sensor_capability` dropped, it restated `sensor_type`; `sensor_site_position` dropped, this module describes the robot, not the site; `sensor_mount_position` renamed `sensor_location`, the paper's name, now that it is the only one. `Sensor` is `id`, `sensor_type`, `sensor_requirements`, `sensor_location`. Both example sensors are mounted. See `SPEC-resource.md` decisions 4 and 13. The manual check above was reworded to match.
+
 ## Task 4: `OperationalRequirement`, `Safety`, and Activity's remaining attributes
 
 **Description:** Add `OperationalRequirement` (`id` plus 8 slots) and `Safety` (`id` plus 6 slots) with their two slots on `RobotUnit`, and the 9 remaining `Activity` attribute slots, in lineage order with descriptions and the attribution clauses the spec names for the four bounds and the three merged quantities. Grow `mason_m1` to hold all four groups so the example file matches success criterion 5. Rebuild and commit as `feat(resource): add OperationalRequirement, Safety and the Activity attributes`.
 
 **Acceptance criteria:**
-- [ ] Both entries validate; `mason_m1` has all four groups, `count: 2`, and a mounted sensor; the second entry has `count: 1` and a site-positioned sensor
+- [ ] Both entries validate; `mason_m1` has all four groups, `count: 2`, and a mounted sensor; the second entry has `count: 1` and a mounted sensor
 - [ ] Every row of the lineage table is covered: 51 attribute slots across the four groups and `Sensor`, plus `id` and `offers`
 - [ ] Every id in `offers` across both entries appears in `examples/common/capability_types.yaml`
 
