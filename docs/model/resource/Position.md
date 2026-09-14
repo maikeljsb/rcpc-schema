@@ -94,8 +94,7 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [PhysicalProperty](PhysicalProperty.md) | [manipulator_position](manipulator_position.md) | range | [Position](Position.md) |
-| [Sensor](Sensor.md) | [sensor_site_position](sensor_site_position.md) | range | [Position](Position.md) |
-| [Sensor](Sensor.md) | [sensor_mount_position](sensor_mount_position.md) | range | [Position](Position.md) |
+| [Sensor](Sensor.md) | [sensor_location](sensor_location.md) | range | [Position](Position.md) |
 
 
 

@@ -419,14 +419,7 @@
           "description": "Identifier, unique among instances of its class.",
           "type": "string"
         },
-        "sensor_capability": {
-          "description": "What the sensor senses or measures.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "sensor_mount_position": {
+        "sensor_location": {
           "anyOf": [
             {
               "$ref": "#/$defs/Position"
@@ -435,7 +428,7 @@
               "type": "null"
             }
           ],
-          "description": "Where the sensor is mounted on the robot, a point in the robot's own frame. Names the CRS Sensor Location."
+          "description": "Where the sensor sits on the robot, a point in the robot's own frame."
         },
         "sensor_requirements": {
           "description": "What installing the sensor requires.",
@@ -443,17 +436,6 @@
             "string",
             "null"
           ]
-        },
-        "sensor_site_position": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Position"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Where the sensor is mounted on site, in the project frame. Names the CRS Sensor Location."
         },
         "sensor_type": {
           "description": "What kind of sensor this is.",

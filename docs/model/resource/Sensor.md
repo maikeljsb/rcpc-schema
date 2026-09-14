@@ -35,24 +35,13 @@ URI: [rcpc:Sensor](https://rcpc.for5672/schema/Sensor)
     
 
         
-      Sensor : sensor_capability
+      Sensor : sensor_location
         
           
     
         
         
-        Sensor --> "0..1" String : sensor_capability
-        click String href "../http://www.w3.org/2001/XMLSchema#string/"
-    
-
-        
-      Sensor : sensor_mount_position
-        
-          
-    
-        
-        
-        Sensor --> "0..1" Position : sensor_mount_position
+        Sensor --> "0..1" Position : sensor_location
         click Position href "../Position/"
     
 
@@ -65,17 +54,6 @@ URI: [rcpc:Sensor](https://rcpc.for5672/schema/Sensor)
         
         Sensor --> "0..1" String : sensor_requirements
         click String href "../http://www.w3.org/2001/XMLSchema#string/"
-    
-
-        
-      Sensor : sensor_site_position
-        
-          
-    
-        
-        
-        Sensor --> "0..1" Position : sensor_site_position
-        click Position href "../Position/"
     
 
         
@@ -104,10 +82,8 @@ URI: [rcpc:Sensor](https://rcpc.for5672/schema/Sensor)
 | ---  | --- | --- | --- |
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Identifier, unique among instances of its class | direct |
 | [sensor_type](sensor_type.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What kind of sensor this is | direct |
-| [sensor_capability](sensor_capability.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What the sensor senses or measures | direct |
 | [sensor_requirements](sensor_requirements.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What installing the sensor requires | direct |
-| [sensor_site_position](sensor_site_position.md) | 0..1 <br/> [Position](Position.md) | Where the sensor is mounted on site, in the project frame | direct |
-| [sensor_mount_position](sensor_mount_position.md) | 0..1 <br/> [Position](Position.md) | Where the sensor is mounted on the robot, a point in the robot's own frame | direct |
+| [sensor_location](sensor_location.md) | 0..1 <br/> [Position](Position.md) | Where the sensor sits on the robot, a point in the robot's own frame | direct |
 
 
 
@@ -171,10 +147,8 @@ from_schema: https://rcpc.for5672/schema/resource
 slots:
 - id
 - sensor_type
-- sensor_capability
 - sensor_requirements
-- sensor_site_position
-- sensor_mount_position
+- sensor_location
 
 ```
 </details>
@@ -211,15 +185,6 @@ attributes:
     domain_of:
     - Sensor
     range: string
-  sensor_capability:
-    name: sensor_capability
-    description: What the sensor senses or measures.
-    from_schema: https://rcpc.for5672/schema/resource
-    rank: 1000
-    owner: Sensor
-    domain_of:
-    - Sensor
-    range: string
   sensor_requirements:
     name: sensor_requirements
     description: What installing the sensor requires.
@@ -229,21 +194,9 @@ attributes:
     domain_of:
     - Sensor
     range: string
-  sensor_site_position:
-    name: sensor_site_position
-    description: Where the sensor is mounted on site, in the project frame. Names
-      the CRS Sensor Location.
-    from_schema: https://rcpc.for5672/schema/resource
-    rank: 1000
-    owner: Sensor
-    domain_of:
-    - Sensor
-    range: Position
-    inlined: true
-  sensor_mount_position:
-    name: sensor_mount_position
-    description: Where the sensor is mounted on the robot, a point in the robot's
-      own frame. Names the CRS Sensor Location.
+  sensor_location:
+    name: sensor_location
+    description: Where the sensor sits on the robot, a point in the robot's own frame.
     from_schema: https://rcpc.for5672/schema/resource
     rank: 1000
     owner: Sensor

@@ -81,10 +81,8 @@ classes:
     slots:
       - id
       - sensor_type
-      - sensor_capability
       - sensor_requirements
-      - sensor_site_position
-      - sensor_mount_position
+      - sensor_location
 
   Activity:
     description: >-
@@ -150,18 +148,12 @@ slots:
     description: How long the robot can run continuously on its power source, recommended in minutes.
   sensor_type:
     description: What kind of sensor this is.
-  sensor_capability:
-    description: What the sensor senses or measures.
   sensor_requirements:
     description: What installing the sensor requires.
-  sensor_site_position:
+  sensor_location:
     range: Position
     inlined: true
-    description: Where the sensor is mounted on site, in the project frame. Names the CRS Sensor Location.
-  sensor_mount_position:
-    range: Position
-    inlined: true
-    description: Where the sensor is mounted on the robot, a point in the robot's own frame. Names the CRS Sensor Location.
+    description: Where the sensor sits on the robot, a point in the robot's own frame.
   end_effector:
     multivalued: true
     description: The tools the robot's manipulator can attach, such as a bucket or gripper.

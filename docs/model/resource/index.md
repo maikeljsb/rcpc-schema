@@ -45,10 +45,8 @@ Name: resource
 | [power_source](power_source.md) | What supplies the robot's energy |
 | [roll](roll.md) | The manipulator's rotation range around the longitudinal axis, recommended in... |
 | [run_duration](run_duration.md) | How long the robot can run continuously on its power source, recommended in m... |
-| [sensor_capability](sensor_capability.md) | What the sensor senses or measures |
-| [sensor_mount_position](sensor_mount_position.md) | Where the sensor is mounted on the robot, a point in the robot's own frame |
+| [sensor_location](sensor_location.md) | Where the sensor sits on the robot, a point in the robot's own frame |
 | [sensor_requirements](sensor_requirements.md) | What installing the sensor requires |
-| [sensor_site_position](sensor_site_position.md) | Where the sensor is mounted on site, in the project frame |
 | [sensor_type](sensor_type.md) | What kind of sensor this is |
 | [sensors](sensors.md) | The sensors mounted on or around the robot |
 | [speed](speed.md) | How fast the robot travels, recommended in metres per second |

@@ -14,8 +14,7 @@
     sensors:
       - id: mason_m1_lidar
         sensor_type: LiDAR
-        sensor_capability: Distance and 3D map of the work face.
-        sensor_mount_position: {x_coord: 0, y_coord: 0.2, z_coord: 0.5, unit: m}
+        sensor_location: {x_coord: 0, y_coord: 0.2, z_coord: 0.5, unit: m}
 - id: scout_v1
   count: 1
   activity_group:
@@ -31,5 +30,4 @@
     sensors:
       - id: scout_v1_camera
         sensor_type: Camera
-        sensor_capability: Site imagery for remote inspection.
-        sensor_site_position: {x_coord: 10.0, y_coord: 4.5, z_coord: 0.0, unit: m}
+        sensor_location: {x_coord: 0.3, y_coord: 0, z_coord: 0.4, unit: m}
