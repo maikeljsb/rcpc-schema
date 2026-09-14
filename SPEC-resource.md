@@ -304,7 +304,7 @@ What the validator does not check, and who does: that every id in `offers` names
 4. `docs/model/resource/index.md` lists exactly the six classes, `RobotStatus`, and this module's own slots, every entry with a description. The folder also holds unlinked pages for common's elements and a `common.md` schema page: `gen-doc --no-mergeimports` drops the built-in types but still writes pages for a project import. Accepted as is; stripping them would be a toolchain change.
 5. `examples/resource/robot_units.yaml` holds two fictional entries. One has `count: 2`, all four groups, and a sensor with a mount position. The other has `count: 1` and a sensor with a site position. Every id in `offers` appears in `examples/common/capability_types.yaml`.
 6. The lineage table has exactly 56 attribute rows, and every slot declared in `schema/resource.yaml` appears in it or in the group-slot list. Checked by reading, recorded as done once.
-7. `schema/common.yaml` changed only by the four dimension slots, and the toolchain did not change. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module.
+7. `schema/common.yaml` changed only by the four dimension slots and, in the Task 3 review, by `unit` on `Position` (decision 6; `SPEC-common.md` decision 12), and the toolchain did not change. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module.
 
 ## Decisions Made Here (for review)
 
