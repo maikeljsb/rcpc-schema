@@ -20,6 +20,10 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "examples/resource/invalid/robot_unit_zero_count.yaml": ("schema/resource.yaml", "RobotUnit", "count"),
     "examples/resource/invalid/activity_missing_offers.yaml": ("schema/resource.yaml", "RobotUnit", "offers"),
     "examples/resource/invalid/robot_unit_group_missing_id.yaml": ("schema/resource.yaml", "RobotUnit", "id"),
+    "examples/product/storeys.yaml": ("schema/product.yaml", "Storey", None),
+    "examples/product/spaces.yaml": ("schema/product.yaml", "Space", None),
+    "examples/product/invalid/space_missing_source.yaml": ("schema/product.yaml", "Space", "source"),
+    "examples/product/invalid/storey_id_not_global_id.yaml": ("schema/product.yaml", "Storey", "id"),
 }
 
 

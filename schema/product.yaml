@@ -1,0 +1,81 @@
+id: https://rcpc.for5672/schema/product
+name: product
+version: 0.1.0
+description: >-
+  Building components as planning targets. BuildingComponent identified by its IFC
+  GlobalId, with lifetime and provenance; Connector for what a robot passes through;
+  Space and Storey as the topology they sit in.
+prefixes:
+  rcpc: https://rcpc.for5672/schema/
+  linkml: https://w3id.org/linkml/
+default_prefix: rcpc
+default_range: string
+imports:
+  - linkml:types
+  - common
+
+enums:
+  RecordSource:
+    description: >-
+      Where a component or Space came from: parsed from the IFC model, or
+      produced by derivation.
+    permissible_values:
+      ifc:
+        description: Parsed directly from the IFC model.
+      derived:
+        description: Produced by derivation.
+
+classes:
+  Storey:
+    description: A building storey.
+    slots:
+      - id
+      - name
+      - long_name
+      - elevation
+    slot_usage:
+      id:
+        pattern: "^[0-3][0-9A-Za-z_$]{21}$"
+        description: >-
+          The IFC GlobalId in its 22-character form: the entity's own when parsed,
+          minted in the same format when derived.
+
+  Space:
+    description: >-
+      A room, or the exterior region of one storey. Parsed from IfcSpace, or
+      derived.
+    slots:
+      - id
+      - name
+      - long_name
+      - source
+      - contained_in
+    slot_usage:
+      id:
+        pattern: "^[0-3][0-9A-Za-z_$]{21}$"
+        description: >-
+          The IFC GlobalId in its 22-character form: the entity's own when parsed,
+          minted in the same format when derived.
+      source:
+        required: true
+
+slots:
+  name:
+    description: The IFC Name.
+  long_name:
+    description: The IFC LongName of a Space or Storey.
+  source:
+    range: RecordSource
+    description: >-
+      Where a component or Space came from: parsed from the IFC model, or
+      produced by the derivation.
+  contained_in:
+    range: Storey
+    description: >-
+      IFC's containment relation under its own name. On a BuildingComponent, its
+      storey; on a Space, the storey that aggregates it or, for a derived Space,
+      the storey it was cut for.
+  elevation:
+    range: Quantity
+    inlined: true
+    description: The storey's level in the project frame.

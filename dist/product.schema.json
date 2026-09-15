@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rcpc.for5672/schema/product",
+  "metamodel_version": "1.11.0",
+  "version": "0.1.0",
+  "title": "product",
+  "type": "object",
+  "additionalProperties": true,
+  "$defs": {
+    "ParameterKind": {
+      "type": "string",
+      "description": "The kinds of value a task parameter can hold.",
+      "enum": [
+        "position",
+        "component_reference",
+        "quantity"
+      ],
+      "title": "ParameterKind"
+    },
+    "RecordSource": {
+      "type": "string",
+      "description": "Where a component or Space came from: parsed from the IFC model, or produced by derivation.",
+      "enum": [
+        "ifc",
+        "derived"
+      ],
+      "title": "RecordSource"
+    },
+    "Position": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Three cartesian coordinates and their unit: a point, or an extent along each axis.",
+      "properties": {
+        "x_coord": {
+          "type": "number",
+          "description": "Cartesian x coordinate."
+        },
+        "y_coord": {
+          "type": "number",
+          "description": "Cartesian y coordinate."
+        },
+        "z_coord": {
+          "type": "number",
+          "description": "Cartesian z coordinate."
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit of the value, of the coordinates, or of the bounds."
+        }
+      },
+      "required": [
+        "x_coord",
+        "y_coord",
+        "z_coord",
+        "unit"
+      ],
+      "title": "Position"
+    },
+    "Quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A number with a unit.",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The numeric value."
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit of the value, of the coordinates, or of the bounds."
+        }
+      },
+      "required": [
+        "value",
+        "unit"
+      ],
+      "title": "Quantity"
+    },
+    "Interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A lower and an upper bound with their unit.",
+      "properties": {
+        "minimum": {
+          "type": "number",
+          "description": "The lower bound."
+        },
+        "maximum": {
+          "type": "number",
+          "description": "The upper bound."
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit of the value, of the coordinates, or of the bounds."
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum",
+        "unit"
+      ],
+      "title": "Interval"
+    },
+    "CapabilityType": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Something a robot can do, named by a verb. Required by primitive tasks and offered by robots.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
+        },
+        "description": {
+          "type": "string",
+          "description": "What this is, in one or two plain sentences."
+        }
+      },
+      "required": [
+        "id",
+        "description"
+      ],
+      "title": "CapabilityType"
+    },
+    "Storey": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A building storey.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The IFC GlobalId in its 22-character form: the entity's own when parsed, minted in the same format when derived.",
+          "pattern": "^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "The IFC Name."
+        },
+        "long_name": {
+          "type": "string",
+          "description": "The IFC LongName of a Space or Storey."
+        },
+        "elevation": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The storey's level in the project frame."
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "Storey"
+    },
+    "Space": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A room, or the exterior region of one storey. Parsed from IfcSpace, or derived.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The IFC GlobalId in its 22-character form: the entity's own when parsed, minted in the same format when derived.",
+          "pattern": "^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "The IFC Name."
+        },
+        "long_name": {
+          "type": "string",
+          "description": "The IFC LongName of a Space or Storey."
+        },
+        "source": {
+          "$ref": "#/$defs/RecordSource",
+          "description": "Where a component or Space came from: parsed from the IFC model, or produced by the derivation."
+        },
+        "contained_in": {
+          "type": "string",
+          "description": "IFC's containment relation under its own name. On a BuildingComponent, its storey; on a Space, the storey that aggregates it or, for a derived Space, the storey it was cut for."
+        }
+      },
+      "required": [
+        "id",
+        "source"
+      ],
+      "title": "Space"
+    }
+  }
+}

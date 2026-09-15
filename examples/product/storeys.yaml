@@ -1,0 +1,12 @@
+- id: 1xS3BCk291UvhgP2dvNsgp
+  name: T/FDN
+  elevation: {value: -1.25, unit: m}
+- id: 1xS3BCk291UvhgP2dvNMKI
+  name: Level 1
+  elevation: {value: 0.0, unit: m}
+- id: 1xS3BCk291UvhgP2dvNMQJ
+  name: Level 2
+  elevation: {value: 3.1, unit: m}
+- id: 1xS3BCk291UvhgP2dvNtSE
+  name: Roof
+  elevation: {value: 6.0, unit: m}
