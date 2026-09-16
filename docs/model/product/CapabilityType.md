@@ -147,6 +147,7 @@ attributes:
     - CapabilityType
     - Storey
     - Space
+    - BuildingComponent
     range: string
     required: true
   description:

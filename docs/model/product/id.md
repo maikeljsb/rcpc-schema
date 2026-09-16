@@ -28,6 +28,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |  no  |
 | [Storey](Storey.md) | A building storey |  yes  |
 | [Space](Space.md) | A room, or the exterior region of one storey |  yes  |
+| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
 
 
 
@@ -41,7 +42,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md), [Storey](Storey.md), [Space](Space.md) |
+| Domain Of | [CapabilityType](CapabilityType.md), [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
 
@@ -101,6 +102,7 @@ domain_of:
 - CapabilityType
 - Storey
 - Space
+- BuildingComponent
 range: string
 required: true
 

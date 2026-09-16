@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: height 
+# Slot: target_location 
 
 
-_How tall the item is, recommended in metres._
+_The centroid of the component's body in the IFC project frame, in the project length unit. Where the design puts it and what a placement task binds to._
 
 
 
@@ -14,7 +14,7 @@ _How tall the item is, recommended in metres._
 
 
 
-URI: [rcpc:height](https://rcpc.for5672/schema/height)
+URI: [rcpc:target_location](https://rcpc.for5672/schema/target_location)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [Position](Position.md) |
 | Domain Of | [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
@@ -64,7 +64,7 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/product
 
 
 
@@ -73,8 +73,8 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:height |
-| native | rcpc:height |
+| self | rcpc:target_location |
+| native | rcpc:target_location |
 
 
 
@@ -83,12 +83,14 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 <details>
 ```yaml
-name: height
-description: How tall the item is, recommended in metres.
-from_schema: https://rcpc.for5672/schema/common
+name: target_location
+description: The centroid of the component's body in the IFC project frame, in the
+  project length unit. Where the design puts it and what a placement task binds to.
+from_schema: https://rcpc.for5672/schema/product
+rank: 1000
 domain_of:
 - BuildingComponent
-range: Quantity
+range: Position
 inlined: true
 
 ```

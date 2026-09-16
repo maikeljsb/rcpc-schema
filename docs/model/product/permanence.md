@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: height 
+# Slot: permanence 
 
 
-_How tall the item is, recommended in metres._
+_Whether the component stays in the building._
 
 
 
@@ -14,7 +14,7 @@ _How tall the item is, recommended in metres._
 
 
 
-URI: [rcpc:height](https://rcpc.for5672/schema/height)
+URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [ComponentPermanence](ComponentPermanence.md) |
 | Domain Of | [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
@@ -64,7 +64,7 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/product
 
 
 
@@ -73,8 +73,8 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:height |
-| native | rcpc:height |
+| self | rcpc:permanence |
+| native | rcpc:permanence |
 
 
 
@@ -83,13 +83,13 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 <details>
 ```yaml
-name: height
-description: How tall the item is, recommended in metres.
-from_schema: https://rcpc.for5672/schema/common
+name: permanence
+description: Whether the component stays in the building.
+from_schema: https://rcpc.for5672/schema/product
+rank: 1000
 domain_of:
 - BuildingComponent
-range: Quantity
-inlined: true
+range: ComponentPermanence
 
 ```
 </details></div>

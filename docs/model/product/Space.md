@@ -30,7 +30,7 @@ URI: [rcpc:Space](https://rcpc.for5672/schema/Space)
     
         
         
-        Space --> "0..1" Storey : contained_in
+        Space --> "1" Storey : contained_in
         click Storey href "../Storey/"
     
 
@@ -52,7 +52,7 @@ URI: [rcpc:Space](https://rcpc.for5672/schema/Space)
     
         
         
-        Space --> "0..1" String : long_name
+        Space --> "1" String : long_name
         click String href "../http://www.w3.org/2001/XMLSchema#string/"
     
 
@@ -63,7 +63,7 @@ URI: [rcpc:Space](https://rcpc.for5672/schema/Space)
     
         
         
-        Space --> "0..1" String : name
+        Space --> "1" String : name
         click String href "../http://www.w3.org/2001/XMLSchema#string/"
     
 
@@ -92,13 +92,20 @@ URI: [rcpc:Space](https://rcpc.for5672/schema/Space)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC GlobalId in its 22-character form: the entity's own when parsed, mint... | direct |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC Name | direct |
-| [long_name](long_name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC LongName of a Space or Storey | direct |
+| [name](name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC Name | direct |
+| [long_name](long_name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC LongName of a Space or Storey | direct |
 | [source](source.md) | 1 <br/> [RecordSource](RecordSource.md) | Where a component or Space came from: parsed from the IFC model, or produced ... | direct |
-| [contained_in](contained_in.md) | 0..1 <br/> [Storey](Storey.md) | IFC's containment relation under its own name | direct |
+| [contained_in](contained_in.md) | 1 <br/> [Storey](Storey.md) | IFC's containment relation under its own name | direct |
 
 
 
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [BuildingComponent](BuildingComponent.md) | [located_in](located_in.md) | range | [Space](Space.md) |
 
 
 
@@ -164,6 +171,10 @@ slot_usage:
   source:
     name: source
     required: true
+  contained_in:
+    name: contained_in
+    required: true
+    pattern: ^[0-3][0-9A-Za-z_$]{21}$
 
 ```
 </details>
@@ -185,6 +196,10 @@ slot_usage:
   source:
     name: source
     required: true
+  contained_in:
+    name: contained_in
+    required: true
+    pattern: ^[0-3][0-9A-Za-z_$]{21}$
 attributes:
   id:
     name: id
@@ -197,22 +212,26 @@ attributes:
     - CapabilityType
     - Storey
     - Space
+    - BuildingComponent
     range: string
     required: true
     pattern: ^[0-3][0-9A-Za-z_$]{21}$
   name:
     name: name
-    description: The IFC Name.
+    description: The IFC Name. Empty when the IFC file has none.
     from_schema: https://rcpc.for5672/schema/product
     rank: 1000
     owner: Space
     domain_of:
     - Storey
     - Space
+    - BuildingComponent
     range: string
+    required: true
   long_name:
     name: long_name
-    description: The IFC LongName of a Space or Storey.
+    description: The IFC LongName of a Space or Storey. Empty when the IFC file has
+      none.
     from_schema: https://rcpc.for5672/schema/product
     rank: 1000
     owner: Space
@@ -220,6 +239,7 @@ attributes:
     - Storey
     - Space
     range: string
+    required: true
   source:
     name: source
     description: 'Where a component or Space came from: parsed from the IFC model,
@@ -229,19 +249,23 @@ attributes:
     owner: Space
     domain_of:
     - Space
+    - BuildingComponent
     range: RecordSource
     required: true
   contained_in:
     name: contained_in
     description: IFC's containment relation under its own name. On a BuildingComponent,
       its storey; on a Space, the storey that aggregates it or, for a derived Space,
-      the storey it was cut for.
+      the storey it was cut for. Empty on a part, contained only through its assembly.
     from_schema: https://rcpc.for5672/schema/product
     rank: 1000
     owner: Space
     domain_of:
     - Space
+    - BuildingComponent
     range: Storey
+    required: true
+    pattern: ^[0-3][0-9A-Za-z_$]{21}$
 
 ```
 </details></div>

@@ -21,6 +21,15 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 
 
 
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
+
+
+
+
 
 
 ## Properties
@@ -30,6 +39,7 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 | Property | Value |
 | --- | --- |
 | Range | [Quantity](Quantity.md) |
+| Domain Of | [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
 
@@ -76,6 +86,8 @@ URI: [rcpc:weight](https://rcpc.for5672/schema/weight)
 name: weight
 description: How much the item weighs, recommended in kilograms.
 from_schema: https://rcpc.for5672/schema/common
+domain_of:
+- BuildingComponent
 range: Quantity
 inlined: true
 

@@ -26,6 +26,15 @@
       ],
       "title": "RecordSource"
     },
+    "ComponentPermanence": {
+      "type": "string",
+      "description": "Whether the component stays in the building. Reinforcement is permanent, formwork temporary.",
+      "enum": [
+        "permanent",
+        "temporary"
+      ],
+      "title": "ComponentPermanence"
+    },
     "Position": {
       "type": "object",
       "additionalProperties": false,
@@ -133,19 +142,22 @@
         },
         "name": {
           "type": "string",
-          "description": "The IFC Name."
+          "description": "The IFC Name. Empty when the IFC file has none."
         },
         "long_name": {
           "type": "string",
-          "description": "The IFC LongName of a Space or Storey."
+          "description": "The IFC LongName of a Space or Storey. Empty when the IFC file has none."
         },
         "elevation": {
           "$ref": "#/$defs/Quantity",
-          "description": "The storey's level in the project frame."
+          "description": "The storey's level in the project frame. Empty when not resolved."
         }
       },
       "required": [
-        "id"
+        "id",
+        "name",
+        "long_name",
+        "elevation"
       ],
       "title": "Storey"
     },
@@ -161,11 +173,11 @@
         },
         "name": {
           "type": "string",
-          "description": "The IFC Name."
+          "description": "The IFC Name. Empty when the IFC file has none."
         },
         "long_name": {
           "type": "string",
-          "description": "The IFC LongName of a Space or Storey."
+          "description": "The IFC LongName of a Space or Storey. Empty when the IFC file has none."
         },
         "source": {
           "$ref": "#/$defs/RecordSource",
@@ -173,14 +185,138 @@
         },
         "contained_in": {
           "type": "string",
-          "description": "IFC's containment relation under its own name. On a BuildingComponent, its storey; on a Space, the storey that aggregates it or, for a derived Space, the storey it was cut for."
+          "description": "IFC's containment relation under its own name. On a BuildingComponent, its storey; on a Space, the storey that aggregates it or, for a derived Space, the storey it was cut for. Empty on a part, contained only through its assembly.",
+          "pattern": "^[0-3][0-9A-Za-z_$]{21}$"
         }
       },
       "required": [
         "id",
-        "source"
+        "name",
+        "long_name",
+        "source",
+        "contained_in"
       ],
       "title": "Space"
+    },
+    "BuildingComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "One thing a task acts on. Parsed from the IFC model or derived from a parsed component; permanent or temporary.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The IFC GlobalId in its 22-character form: the entity's own when parsed, minted in the same format when derived.",
+          "pattern": "^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "ifc_type": {
+          "type": "string",
+          "description": "The bare IFC entity name, such as IfcWall. Empty on a derived record, which has none."
+        },
+        "name": {
+          "type": "string",
+          "description": "The IFC Name. Empty when the IFC file has none."
+        },
+        "material": {
+          "type": "string",
+          "description": "The one material string the parser derives, as the IFC spells it. Empty when unresolved."
+        },
+        "permanence": {
+          "$ref": "#/$defs/ComponentPermanence",
+          "description": "Whether the component stays in the building."
+        },
+        "source": {
+          "$ref": "#/$defs/RecordSource",
+          "description": "Where a component or Space came from: parsed from the IFC model, or produced by the derivation."
+        },
+        "derived_from": {
+          "type": "string",
+          "description": "The IFC-sourced component this one was generated from. Empty except on a derived record.",
+          "pattern": "^$|^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "part_of": {
+          "type": "string",
+          "description": "The assembly this component is a part of, IFC's aggregation from the part's side. Empty on a component that is not part of an assembly.",
+          "pattern": "^$|^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "target_location": {
+          "$ref": "#/$defs/Position",
+          "description": "The centroid of the component's body in the IFC project frame, in the project length unit. Where the design puts it and what a placement task binds to."
+        },
+        "supply_location": {
+          "$ref": "#/$defs/Position",
+          "description": "Where the component is delivered or staged. Empty when not yet known."
+        },
+        "current_location": {
+          "$ref": "#/$defs/Position",
+          "description": "Where the component is now. Written by execution; the model's second runtime slot after status. Empty until execution writes one."
+        },
+        "located_in": {
+          "type": "string",
+          "description": "The Space the component's point lies in. Empty for walls and slabs.",
+          "pattern": "^$|^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "contained_in": {
+          "type": "string",
+          "description": "IFC's containment relation under its own name. On a BuildingComponent, its storey; on a Space, the storey that aggregates it or, for a derived Space, the storey it was cut for. Empty on a part, contained only through its assembly.",
+          "pattern": "^$|^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "length": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How long the item is. Empty when not measured."
+        },
+        "width": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How wide the item is. Empty when not measured."
+        },
+        "height": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How tall the item is. Empty when not measured."
+        },
+        "weight": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How much the item weighs. Empty when not measured."
+        }
+      },
+      "required": [
+        "id",
+        "ifc_type",
+        "name",
+        "material",
+        "permanence",
+        "source",
+        "derived_from",
+        "part_of",
+        "target_location",
+        "supply_location",
+        "current_location",
+        "located_in",
+        "contained_in",
+        "length",
+        "width",
+        "height",
+        "weight"
+      ],
+      "if": {
+        "properties": {
+          "source": {
+            "const": "derived"
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "then": {
+        "properties": {
+          "derived_from": {
+            "pattern": "^[0-3][0-9A-Za-z_$]{21}$"
+          }
+        },
+        "required": [
+          "derived_from"
+        ]
+      },
+      "title": "BuildingComponent"
     }
   }
 }

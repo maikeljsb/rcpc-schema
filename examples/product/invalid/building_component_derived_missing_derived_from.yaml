@@ -1,0 +1,16 @@
+- id: 30Lb4tFizKvx5X_QlBEKR9
+  ifc_type: ''
+  name: brick 0001 of Basic Wall:Exterior - Brick on Block:138062
+  material: Masonry - Brick
+  permanence: permanent
+  source: derived
+  part_of: ''
+  target_location: {x_coord: 0.12, y_coord: -0.36, z_coord: 0.035, unit: m}
+  supply_location: {x_coord: 0.0, y_coord: 0.0, z_coord: 0.0, unit: ''}
+  current_location: {x_coord: 0.0, y_coord: 0.0, z_coord: 0.0, unit: ''}
+  located_in: ''
+  contained_in: ''
+  length: {value: 0.24, unit: m}
+  width: {value: 0.115, unit: m}
+  height: {value: 0.071, unit: m}
+  weight: {value: 0.0, unit: ''}

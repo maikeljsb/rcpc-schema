@@ -6,7 +6,7 @@ search:
 # Slot: elevation 
 
 
-_The storey's level in the project frame._
+_The storey's level in the project frame. Empty when not resolved._
 
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:elevation](https://rcpc.for5672/schema/elevation)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Storey](Storey.md) | A building storey |  no  |
+| [Storey](Storey.md) | A building storey |  yes  |
 
 
 
@@ -84,7 +84,7 @@ URI: [rcpc:elevation](https://rcpc.for5672/schema/elevation)
 <details>
 ```yaml
 name: elevation
-description: The storey's level in the project frame.
+description: The storey's level in the project frame. Empty when not resolved.
 from_schema: https://rcpc.for5672/schema/product
 rank: 1000
 domain_of:

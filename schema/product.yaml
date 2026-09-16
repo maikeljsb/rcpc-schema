@@ -25,6 +25,16 @@ enums:
       derived:
         description: Produced by derivation.
 
+  ComponentPermanence:
+    description: >-
+      Whether the component stays in the building. Reinforcement is permanent,
+      formwork temporary.
+    permissible_values:
+      permanent:
+        description: The component remains in the finished building.
+      temporary:
+        description: The component is removed before the building is finished.
+
 classes:
   Storey:
     description: A building storey.
@@ -39,6 +49,8 @@ classes:
         description: >-
           The IFC GlobalId in its 22-character form: the entity's own when parsed,
           minted in the same format when derived.
+      elevation:
+        required: true
 
   Space:
     description: >-
@@ -58,12 +70,95 @@ classes:
           minted in the same format when derived.
       source:
         required: true
+      contained_in:
+        required: true
+        pattern: "^[0-3][0-9A-Za-z_$]{21}$"
+
+  BuildingComponent:
+    description: >-
+      One thing a task acts on. Parsed from the IFC model or derived from a
+      parsed component; permanent or temporary.
+    slots:
+      - id
+      - ifc_type
+      - name
+      - material
+      - permanence
+      - source
+      - derived_from
+      - part_of
+      - target_location
+      - supply_location
+      - current_location
+      - located_in
+      - contained_in
+      - length
+      - width
+      - height
+      - weight
+    slot_usage:
+      id:
+        pattern: "^[0-3][0-9A-Za-z_$]{21}$"
+        description: >-
+          The IFC GlobalId in its 22-character form: the entity's own when parsed,
+          minted in the same format when derived.
+      permanence:
+        required: true
+      source:
+        required: true
+      target_location:
+        required: true
+      ifc_type:
+        required: true
+      material:
+        required: true
+      part_of:
+        required: true
+        pattern: "^$|^[0-3][0-9A-Za-z_$]{21}$"
+      located_in:
+        required: true
+        pattern: "^$|^[0-3][0-9A-Za-z_$]{21}$"
+      contained_in:
+        required: true
+        pattern: "^$|^[0-3][0-9A-Za-z_$]{21}$"
+      derived_from:
+        required: true
+        pattern: "^$|^[0-3][0-9A-Za-z_$]{21}$"
+      supply_location:
+        required: true
+      current_location:
+        required: true
+      length:
+        required: true
+        description: How long the item is. Empty when not measured.
+      width:
+        required: true
+        description: How wide the item is. Empty when not measured.
+      height:
+        required: true
+        description: How tall the item is. Empty when not measured.
+      weight:
+        required: true
+        description: How much the item weighs. Empty when not measured.
+    rules:
+      - description: A derived component names the component it came from, with a real id, not an empty one.
+        preconditions:
+          slot_conditions:
+            source:
+              equals_string: derived
+        postconditions:
+          slot_conditions:
+            derived_from:
+              required: true
+              pattern: "^[0-3][0-9A-Za-z_$]{21}$"
 
 slots:
   name:
-    description: The IFC Name.
+    required: true
+    description: The IFC Name. Empty when the IFC file has none.
   long_name:
-    description: The IFC LongName of a Space or Storey.
+    required: true
+    description: The IFC LongName of a Space or Storey. Empty when the IFC file has none.
   source:
     range: RecordSource
     description: >-
@@ -74,8 +169,50 @@ slots:
     description: >-
       IFC's containment relation under its own name. On a BuildingComponent, its
       storey; on a Space, the storey that aggregates it or, for a derived Space,
-      the storey it was cut for.
+      the storey it was cut for. Empty on a part, contained only through its assembly.
   elevation:
     range: Quantity
     inlined: true
-    description: The storey's level in the project frame.
+    description: The storey's level in the project frame. Empty when not resolved.
+  ifc_type:
+    description: >-
+      The bare IFC entity name, such as IfcWall. Empty on a derived record, which has
+      none.
+  material:
+    range: MaterialName
+    description: >-
+      The one material string the parser derives, as the IFC spells it.
+      Empty when unresolved.
+  permanence:
+    range: ComponentPermanence
+    description: Whether the component stays in the building.
+  derived_from:
+    range: BuildingComponent
+    description: >-
+      The IFC-sourced component this one was generated from. Empty except on a
+      derived record.
+  part_of:
+    range: BuildingComponent
+    description: >-
+      The assembly this component is a part of, IFC's aggregation from the
+      part's side. Empty on a component that is not part of an assembly.
+  target_location:
+    range: Position
+    inlined: true
+    description: >-
+      The centroid of the component's body in the IFC project frame, in the
+      project length unit. Where the design puts it and what a placement task
+      binds to.
+  supply_location:
+    range: Position
+    inlined: true
+    description: Where the component is delivered or staged. Empty when not yet known.
+  current_location:
+    range: Position
+    inlined: true
+    description: >-
+      Where the component is now. Written by execution; the model's second
+      runtime slot after status. Empty until execution writes one.
+  located_in:
+    range: Space
+    description: The Space the component's point lies in. Empty for walls and slabs.

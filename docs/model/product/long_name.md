@@ -6,7 +6,7 @@ search:
 # Slot: long_name 
 
 
-_The IFC LongName of a Space or Storey._
+_The IFC LongName of a Space or Storey. Empty when the IFC file has none._
 
 
 
@@ -46,6 +46,7 @@ URI: [rcpc:long_name](https://rcpc.for5672/schema/long_name)
 
 | Property | Value |
 | --- | --- |
+| Required | Yes |
 
 
 
@@ -85,13 +86,14 @@ URI: [rcpc:long_name](https://rcpc.for5672/schema/long_name)
 <details>
 ```yaml
 name: long_name
-description: The IFC LongName of a Space or Storey.
+description: The IFC LongName of a Space or Storey. Empty when the IFC file has none.
 from_schema: https://rcpc.for5672/schema/product
 rank: 1000
 domain_of:
 - Storey
 - Space
 range: string
+required: true
 
 ```
 </details></div>

@@ -6,7 +6,7 @@ search:
 # Slot: contained_in 
 
 
-_IFC's containment relation under its own name. On a BuildingComponent, its storey; on a Space, the storey that aggregates it or, for a derived Space, the storey it was cut for._
+_IFC's containment relation under its own name. On a BuildingComponent, its storey; on a Space, the storey that aggregates it or, for a derived Space, the storey it was cut for. Empty on a part, contained only through its assembly._
 
 
 
@@ -25,7 +25,8 @@ URI: [rcpc:contained_in](https://rcpc.for5672/schema/contained_in)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Space](Space.md) | A room, or the exterior region of one storey |  no  |
+| [Space](Space.md) | A room, or the exterior region of one storey |  yes  |
+| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [rcpc:contained_in](https://rcpc.for5672/schema/contained_in)
 | Property | Value |
 | --- | --- |
 | Range | [Storey](Storey.md) |
-| Domain Of | [Space](Space.md) |
+| Domain Of | [Space](Space.md), [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
 
@@ -86,11 +87,12 @@ URI: [rcpc:contained_in](https://rcpc.for5672/schema/contained_in)
 name: contained_in
 description: IFC's containment relation under its own name. On a BuildingComponent,
   its storey; on a Space, the storey that aggregates it or, for a derived Space, the
-  storey it was cut for.
+  storey it was cut for. Empty on a part, contained only through its assembly.
 from_schema: https://rcpc.for5672/schema/product
 rank: 1000
 domain_of:
 - Space
+- BuildingComponent
 range: Storey
 
 ```

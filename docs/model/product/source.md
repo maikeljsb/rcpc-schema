@@ -26,6 +26,7 @@ URI: [rcpc:source](https://rcpc.for5672/schema/source)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Space](Space.md) | A room, or the exterior region of one storey |  yes  |
+| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [rcpc:source](https://rcpc.for5672/schema/source)
 | Property | Value |
 | --- | --- |
 | Range | [RecordSource](RecordSource.md) |
-| Domain Of | [Space](Space.md) |
+| Domain Of | [Space](Space.md), [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
 
@@ -90,6 +91,7 @@ from_schema: https://rcpc.for5672/schema/product
 rank: 1000
 domain_of:
 - Space
+- BuildingComponent
 range: RecordSource
 
 ```

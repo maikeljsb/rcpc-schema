@@ -1,12 +1,16 @@
 - id: 1xS3BCk291UvhgP2dvNsgp
   name: T/FDN
+  long_name: ''
   elevation: {value: -1.25, unit: m}
 - id: 1xS3BCk291UvhgP2dvNMKI
   name: Level 1
+  long_name: ''
   elevation: {value: 0.0, unit: m}
 - id: 1xS3BCk291UvhgP2dvNMQJ
   name: Level 2
+  long_name: ''
   elevation: {value: 3.1, unit: m}
 - id: 1xS3BCk291UvhgP2dvNtSE
   name: Roof
+  long_name: ''
   elevation: {value: 6.0, unit: m}

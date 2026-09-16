@@ -30,7 +30,7 @@ URI: [rcpc:Storey](https://rcpc.for5672/schema/Storey)
     
         
         
-        Storey --> "0..1" Quantity : elevation
+        Storey --> "1" Quantity : elevation
         click Quantity href "../Quantity/"
     
 
@@ -52,7 +52,7 @@ URI: [rcpc:Storey](https://rcpc.for5672/schema/Storey)
     
         
         
-        Storey --> "0..1" String : long_name
+        Storey --> "1" String : long_name
         click String href "../http://www.w3.org/2001/XMLSchema#string/"
     
 
@@ -63,7 +63,7 @@ URI: [rcpc:Storey](https://rcpc.for5672/schema/Storey)
     
         
         
-        Storey --> "0..1" String : name
+        Storey --> "1" String : name
         click String href "../http://www.w3.org/2001/XMLSchema#string/"
     
 
@@ -81,9 +81,9 @@ URI: [rcpc:Storey](https://rcpc.for5672/schema/Storey)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC GlobalId in its 22-character form: the entity's own when parsed, mint... | direct |
-| [name](name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC Name | direct |
-| [long_name](long_name.md) | 0..1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC LongName of a Space or Storey | direct |
-| [elevation](elevation.md) | 0..1 <br/> [Quantity](Quantity.md) | The storey's level in the project frame | direct |
+| [name](name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC Name | direct |
+| [long_name](long_name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC LongName of a Space or Storey | direct |
+| [elevation](elevation.md) | 1 <br/> [Quantity](Quantity.md) | The storey's level in the project frame | direct |
 
 
 
@@ -94,6 +94,7 @@ URI: [rcpc:Storey](https://rcpc.for5672/schema/Storey)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [Space](Space.md) | [contained_in](contained_in.md) | range | [Storey](Storey.md) |
+| [BuildingComponent](BuildingComponent.md) | [contained_in](contained_in.md) | range | [Storey](Storey.md) |
 
 
 
@@ -154,6 +155,9 @@ slot_usage:
     description: 'The IFC GlobalId in its 22-character form: the entity''s own when
       parsed, minted in the same format when derived.'
     pattern: ^[0-3][0-9A-Za-z_$]{21}$
+  elevation:
+    name: elevation
+    required: true
 
 ```
 </details>
@@ -171,6 +175,9 @@ slot_usage:
     description: 'The IFC GlobalId in its 22-character form: the entity''s own when
       parsed, minted in the same format when derived.'
     pattern: ^[0-3][0-9A-Za-z_$]{21}$
+  elevation:
+    name: elevation
+    required: true
 attributes:
   id:
     name: id
@@ -183,22 +190,26 @@ attributes:
     - CapabilityType
     - Storey
     - Space
+    - BuildingComponent
     range: string
     required: true
     pattern: ^[0-3][0-9A-Za-z_$]{21}$
   name:
     name: name
-    description: The IFC Name.
+    description: The IFC Name. Empty when the IFC file has none.
     from_schema: https://rcpc.for5672/schema/product
     rank: 1000
     owner: Storey
     domain_of:
     - Storey
     - Space
+    - BuildingComponent
     range: string
+    required: true
   long_name:
     name: long_name
-    description: The IFC LongName of a Space or Storey.
+    description: The IFC LongName of a Space or Storey. Empty when the IFC file has
+      none.
     from_schema: https://rcpc.for5672/schema/product
     rank: 1000
     owner: Storey
@@ -206,15 +217,17 @@ attributes:
     - Storey
     - Space
     range: string
+    required: true
   elevation:
     name: elevation
-    description: The storey's level in the project frame.
+    description: The storey's level in the project frame. Empty when not resolved.
     from_schema: https://rcpc.for5672/schema/product
     rank: 1000
     owner: Storey
     domain_of:
     - Storey
     range: Quantity
+    required: true
     inlined: true
 
 ```

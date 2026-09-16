@@ -70,6 +70,10 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [Storey](Storey.md) | [elevation](elevation.md) | range | [Quantity](Quantity.md) |
+| [BuildingComponent](BuildingComponent.md) | [length](length.md) | range | [Quantity](Quantity.md) |
+| [BuildingComponent](BuildingComponent.md) | [width](width.md) | range | [Quantity](Quantity.md) |
+| [BuildingComponent](BuildingComponent.md) | [height](height.md) | range | [Quantity](Quantity.md) |
+| [BuildingComponent](BuildingComponent.md) | [weight](weight.md) | range | [Quantity](Quantity.md) |
 
 
 

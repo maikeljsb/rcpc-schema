@@ -24,6 +24,12 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "examples/product/spaces.yaml": ("schema/product.yaml", "Space", None),
     "examples/product/invalid/space_missing_source.yaml": ("schema/product.yaml", "Space", "source"),
     "examples/product/invalid/storey_id_not_global_id.yaml": ("schema/product.yaml", "Storey", "id"),
+    "examples/product/building_components.yaml": ("schema/product.yaml", "BuildingComponent", None),
+    "examples/product/invalid/building_component_missing_permanence.yaml": ("schema/product.yaml", "BuildingComponent", "permanence"),
+    "examples/product/invalid/building_component_id_not_global_id.yaml": ("schema/product.yaml", "BuildingComponent", "id"),
+    "examples/product/invalid/building_component_ifc_missing_ifc_type.yaml": ("schema/product.yaml", "BuildingComponent", "ifc_type"),
+    "examples/product/invalid/building_component_derived_missing_derived_from.yaml": ("schema/product.yaml", "BuildingComponent", "derived_from"),
+    "examples/product/invalid/building_component_derived_from_empty.yaml": ("schema/product.yaml", "BuildingComponent", "derived_from"),
 }
 
 

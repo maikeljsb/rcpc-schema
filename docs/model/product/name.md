@@ -6,7 +6,7 @@ search:
 # Slot: name 
 
 
-_The IFC Name._
+_The IFC Name. Empty when the IFC file has none._
 
 
 
@@ -27,6 +27,7 @@ URI: [rcpc:name](https://rcpc.for5672/schema/name)
 | --- | --- | --- |
 | [Storey](Storey.md) | A building storey |  no  |
 | [Space](Space.md) | A room, or the exterior region of one storey |  no  |
+| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  no  |
 
 
 
@@ -40,12 +41,13 @@ URI: [rcpc:name](https://rcpc.for5672/schema/name)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Storey](Storey.md), [Space](Space.md) |
+| Domain Of | [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
 
 | Property | Value |
 | --- | --- |
+| Required | Yes |
 
 
 
@@ -85,13 +87,15 @@ URI: [rcpc:name](https://rcpc.for5672/schema/name)
 <details>
 ```yaml
 name: name
-description: The IFC Name.
+description: The IFC Name. Empty when the IFC file has none.
 from_schema: https://rcpc.for5672/schema/product
 rank: 1000
 domain_of:
 - Storey
 - Space
+- BuildingComponent
 range: string
+required: true
 
 ```
 </details></div>

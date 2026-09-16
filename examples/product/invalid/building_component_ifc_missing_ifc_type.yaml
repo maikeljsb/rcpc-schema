@@ -1,0 +1,16 @@
+- id: 2O2Fr$t4X7Zf8NOew3FNtn
+  name: Basic Wall:Exterior - Brick on Block:138062
+  material: Basic Wall:Exterior - Brick on Block
+  permanence: permanent
+  source: ifc
+  derived_from: ''
+  part_of: ''
+  target_location: {x_coord: 4.4, y_coord: -0.209, z_coord: 1.55, unit: m}
+  supply_location: {x_coord: 0.0, y_coord: 0.0, z_coord: 0.0, unit: ''}
+  current_location: {x_coord: 0.0, y_coord: 0.0, z_coord: 0.0, unit: ''}
+  located_in: ''
+  contained_in: 1xS3BCk291UvhgP2dvNMKI
+  length: {value: 0.0, unit: ''}
+  width: {value: 0.0, unit: ''}
+  height: {value: 0.0, unit: ''}
+  weight: {value: 0.0, unit: ''}

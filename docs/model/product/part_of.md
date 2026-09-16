@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: height 
+# Slot: part_of 
 
 
-_How tall the item is, recommended in metres._
+_The assembly this component is a part of, IFC's aggregation from the part's side. Empty on a component that is not part of an assembly._
 
 
 
@@ -14,7 +14,7 @@ _How tall the item is, recommended in metres._
 
 
 
-URI: [rcpc:height](https://rcpc.for5672/schema/height)
+URI: [rcpc:part_of](https://rcpc.for5672/schema/part_of)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [BuildingComponent](BuildingComponent.md) |
 | Domain Of | [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
@@ -64,7 +64,7 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/product
 
 
 
@@ -73,8 +73,8 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:height |
-| native | rcpc:height |
+| self | rcpc:part_of |
+| native | rcpc:part_of |
 
 
 
@@ -83,13 +83,14 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 <details>
 ```yaml
-name: height
-description: How tall the item is, recommended in metres.
-from_schema: https://rcpc.for5672/schema/common
+name: part_of
+description: The assembly this component is a part of, IFC's aggregation from the
+  part's side. Empty on a component that is not part of an assembly.
+from_schema: https://rcpc.for5672/schema/product
+rank: 1000
 domain_of:
 - BuildingComponent
-range: Quantity
-inlined: true
+range: BuildingComponent
 
 ```
 </details></div>

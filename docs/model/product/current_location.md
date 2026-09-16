@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: height 
+# Slot: current_location 
 
 
-_How tall the item is, recommended in metres._
+_Where the component is now. Written by execution; the model's second runtime slot after status. Empty until execution writes one._
 
 
 
@@ -14,7 +14,7 @@ _How tall the item is, recommended in metres._
 
 
 
-URI: [rcpc:height](https://rcpc.for5672/schema/height)
+URI: [rcpc:current_location](https://rcpc.for5672/schema/current_location)
 <!-- no inheritance hierarchy -->
 
 
@@ -38,7 +38,7 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 | Property | Value |
 | --- | --- |
-| Range | [Quantity](Quantity.md) |
+| Range | [Position](Position.md) |
 | Domain Of | [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
@@ -64,7 +64,7 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/product
 
 
 
@@ -73,8 +73,8 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:height |
-| native | rcpc:height |
+| self | rcpc:current_location |
+| native | rcpc:current_location |
 
 
 
@@ -83,12 +83,14 @@ URI: [rcpc:height](https://rcpc.for5672/schema/height)
 
 <details>
 ```yaml
-name: height
-description: How tall the item is, recommended in metres.
-from_schema: https://rcpc.for5672/schema/common
+name: current_location
+description: Where the component is now. Written by execution; the model's second
+  runtime slot after status. Empty until execution writes one.
+from_schema: https://rcpc.for5672/schema/product
+rank: 1000
 domain_of:
 - BuildingComponent
-range: Quantity
+range: Position
 inlined: true
 
 ```
