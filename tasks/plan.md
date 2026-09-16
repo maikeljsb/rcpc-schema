@@ -79,15 +79,15 @@ schema/product.yaml  (header, RecordSource, Storey, Space)                      
 ### Checkpoint: Phase 2
 - [x] Fourteen product rows pass; `BuildingComponent` and `Connector` each carry a bare `if`/`then` pair, the one inherited rule
 - [x] Every id named in `connects`, `located_in`, `contained_in`, `derived_from`, and `part_of` exists in one of the four files
-- [ ] Review with human
+- [x] Review with human
 
 ### Phase 3: Close
-- [ ] Task 4: Verify the seven success criteria, push, confirm CI
+- [x] Task 4: Verify the seven success criteria, push, confirm CI
 
 ### Checkpoint: Complete
-- [ ] Every success criterion in `SPEC-product.md` verified with evidence
-- [ ] `schema/common.yaml`, `scripts/`, and the toolchain tests untouched by this module
-- [ ] Ready for `SPEC-process.md`
+- [x] Every success criterion in `SPEC-product.md` verified with evidence
+- [x] `schema/common.yaml`, `scripts/`, and the toolchain tests untouched by this module
+- [x] Ready for `SPEC-process.md`
 
 ## Risks and Mitigations
 

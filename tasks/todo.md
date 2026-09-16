@@ -114,14 +114,14 @@ Also reopened the same day for `record_type` on every class (decision 16): `conn
 **Description:** Walk the seven success criteria in `SPEC-product.md` and record evidence for each in this file under a dated "Checkpoint: Complete" section, as the resource module did. Criterion 5's cross-file id check and criterion 6's lineage read-through are done by a one-off script and by reading, each recorded once. Confirm `git log 732ddaf..HEAD -- schema/common.yaml scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` is empty. Push and confirm the CI run passes. Commit the evidence as `docs(plan): mark product complete with the success-criteria evidence`.
 
 **Acceptance criteria:**
-- [ ] Each of the seven criteria has a line of evidence with the command or file it came from
-- [ ] CI is green on the pushed head
-- [ ] `tasks/plan.md` checkpoints ticked
+- [x] Each of the seven criteria has a line of evidence with the command or file it came from
+- [x] CI is green on the pushed head
+- [x] `tasks/plan.md` checkpoints ticked
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
-- [ ] Manual check: the CI run page shows the same passing count as local
+- [x] Tests pass: `uv run pytest`
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
+- [x] Manual check: the CI run page shows the same passing count as local
 
 **Dependencies:** Task 3
 
@@ -132,7 +132,19 @@ Also reopened the same day for `record_type` on every class (decision 16): `conn
 **Estimated scope:** Small
 
 ## Checkpoint: Complete
-- [ ] All four tasks committed
-- [ ] CI passes on the last commit
-- [ ] Common and the toolchain untouched by this module
-- [ ] Ready for `SPEC-process.md`
+- [x] All four tasks committed
+- [x] CI passes on the last commit
+- [x] Common and the toolchain untouched by this module
+- [x] Ready for `SPEC-process.md`
+
+## Checkpoint: Complete — evidence, 2026-09-16
+
+1. `uv run pytest`: 44 passed; fourteen `examples/product` rows in `EXAMPLES`. `git log 732ddaf..HEAD -- tests/` shows only `test_examples.py`.
+2. `dist/product.schema.json`: `$schema` is the draft 2020-12 URI, passes `jsonschema.Draft202012Validator.check_schema`; `$defs` are exactly `BuildingComponent`, `CapabilityType`, `ComponentPermanence`, `Connector`, `ConnectorKind`, `Interval`, `ParameterKind`, `Position`, `Quantity`, `RecordSource`, `Space`, `Storey`. `id` carries the GlobalId pattern in all four class definitions. `Connector.properties` has 22 keys, `BuildingComponent.properties` 18, the difference its four own. `connects` has `minItems: 2` and `maxItems: 2`. `BuildingComponent` and `Connector` each carry a bare `if`/`then` (no `allOf`), the one `derived_from` rule.
+3. `dist/README.md` line 6 lists `product.schema.json` (draft 2020-12) with the module description.
+4. `docs/model/product/index.md`: four classes with `Connector` indented under `BuildingComponent`, three enumerations, nineteen module slots, no empty description cell. `BuildingComponent.md` carries a Rules table; `Connector.md` does not, its inherited rule showing only in the JSON Schema.
+5. Checked by a one-off script reading all four example files: `building_components.yaml` has an IFC-sourced component with a material, a window, a derived component whose `derived_from` names one in the same file, a temporary component, and a part whose `part_of` resolves in the same file; `connectors.yaml` has a door with real clearances, a door whose `connects` names an exterior Space, and 2 stairs among 14 doors; `spaces.yaml` has one derived exterior Space per storey (4 of 4) and every `connects`/`located_in` id resolves there; `storeys.yaml` has every `contained_in` id. All 188 ids across the four files are distinct.
+6. The 19 slots declared in `schema/product.yaml` (`record_type`, `name`, `long_name`, `source`, `contained_in`, `elevation`, `ifc_type`, `material`, `permanence`, `derived_from`, `part_of`, `target_location`, `supply_location`, `current_location`, `located_in`, `kind`, `connects`, `clear_width`, `clear_height`) each appear in the lineage table or the Code Style module's-own-words list, checked by reading 2026-09-16.
+7. `git log 732ddaf..HEAD -- schema/common.yaml scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` is empty.
+
+CI: run 35091434147 on `69b7344` passed, 44 passed as locally.
