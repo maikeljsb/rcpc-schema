@@ -33,9 +33,9 @@ schema/product.yaml  (header, RecordSource, Storey, Space)                      
     ├── tests/test_examples.py  four rows                                                (Task 1)
     └── dist/product.schema.json, dist/README.md, docs/model/product/                    (Task 1)
             │
-            └── + ComponentPermanence, BuildingComponent, its slots and two rules        (Task 2)
+            └── + ComponentPermanence, BuildingComponent, required-everywhere, one rule  (Task 2)
                     ├── examples/product/building_components.yaml   parsed + 2 derived
-                    ├── invalid/  four BuildingComponent documents, five rows
+                    ├── invalid/  five BuildingComponent documents, six rows
                     └── dist/, docs/  rebuilt
                             │
                             └── + ConnectorKind, Connector, its four slots and one rule   (Task 3)
@@ -55,7 +55,7 @@ schema/product.yaml  (header, RecordSource, Storey, Space)                      
 - **Minted ids are deterministic.** A derived record's id is `ifcopenshell.guid.compress(uuid5(NAMESPACE_URL, "https://rcpc.for5672/schema/product/<what>/<source GlobalId>[/<n>]").hex)`, so the same run always writes the same id, as the spec's derivation section requires.
 - **Four derived exterior Spaces, one per storey**, named `exterior <storey name>`, `source: derived`, `contained_in` the storey. No storey qualifies for the `IfcExternalSpatialElement` or `IsExternal` rule, so none takes a parsed id.
 - **Two derived components, the minimum success criterion 5 asks for.** One brick, `derived_from` the first Level 1 wall whose layer set is `Exterior - Brick on Block`, placed at the wall's lowest corner offset by half a brick along each axis, carrying the brick's own `length`, `width`, `height` (0.24, 0.115, 0.071 m) as the derivation's stated parameter; `material` is the brick layer's `IfcMaterial.Name`. One formwork panel, `permanence: temporary`, `derived_from` the first `IfcFooting` on `T/FDN`, at the footing's bounding-box centre, with no `material`, so the work list has a real row. Everything else in the file is parsed.
-- **`building_components.yaml` holds every built element in the model** except doors and stairs, which are Connectors, and furnishing, which is not a built element: 106 plain components, the roof's slab with `part_of` the roof, and the stairs' 8 parts with `part_of` their stair, plus the 2 derived records, about 117 records. One loop with no selection logic is the smallest honest extractor, and a whole model is what the projection component will meet. Parts carry no `contained_in`, per the spec.
+- **`building_components.yaml` holds every built element in the model** except doors and stairs, which are Connectors, and furnishing, which is not a built element: 141 parsed components (106 walls, slabs, coverings, beams, and footings; 24 windows; the roof itself; and the stairs' ten parts — two flights, four members, four railings, each `part_of` its stair), plus the 2 derived records, 143 records. Corrected 2026-09-15 during Task 2 against the real count; the drafting estimate of "8 stair parts, about 117 records" undercounted the windows and two of the five parts per stair. One loop with no selection logic is the smallest honest extractor, and a whole model is what the projection component will meet. Parts (the roof's slab and the stairs' ten) carry `part_of` and no `contained_in`, per the spec.
 - **Every parsed component is `permanence: permanent`.** The model has no temporary works and IFC has no attribute for the distinction. The one temporary record is the derived formwork.
 - **`connects` comes from space boundaries, with geometry as the fallback the brief names.** A door bounded by one Space connects it to the exterior Space of the door's storey. A door bounded by two connects them. The one door bounded by three Spaces is resolved by the brief's fallback: the two Space footprints its own footprint overlaps most; Task 3 records which. A stair has no boundaries, so its lower end is the Level 1 Space whose footprint holds the flight's lowest vertex and its upper end the Level 2 Space holding its highest. `clear_width` and `clear_height` on stairs stay absent; the spec allows it and the file carries neither.
 - **No `void` Connector in the examples.** No unfilled opening in this model cuts a wall; the two in the roof slab have no second Space the file can name. `ConnectorKind.void` is declared and documented; its example waits for a model that has one.
@@ -73,11 +73,11 @@ schema/product.yaml  (header, RecordSource, Storey, Space)                      
 - [x] Review with human
 
 ### Phase 2: Components and passages
-- [ ] Task 2: `BuildingComponent`, `ComponentPermanence`, and the two class rules, end to end
+- [x] Task 2: `BuildingComponent`, `ComponentPermanence`, and its one class rule, end to end
 - [ ] Task 3: `Connector`, `ConnectorKind`, and the clearance rule, end to end
 
 ### Checkpoint: Phase 2
-- [ ] Twelve product rows pass; `BuildingComponent` carries an `allOf` of two blocks and `Connector` of three
+- [ ] Thirteen product rows pass; `BuildingComponent` carries a bare `if`/`then` pair (one rule) and `Connector` an `allOf` of two
 - [ ] Every id named in `connects`, `located_in`, `contained_in`, `derived_from`, and `part_of` exists in one of the four files
 - [ ] Review with human
 
@@ -106,4 +106,4 @@ None. Four sequential tasks on one schema file and one extractor.
 
 ## Open Questions
 
-None. The ten decisions of the drafting report were accepted on 2026-09-15; the extractor's location moved from a sibling folder into `examples/ifc_models/`, gitignored with the model.
+None. The ten decisions of the drafting report were accepted on 2026-09-15; the extractor's location moved from a sibling folder into `examples/ifc_models/`, gitignored with the model. During Task 2, `BuildingComponent`'s shape was redesigned to required-everywhere with an empty-string convention, retiring the `ifc_type` rule and narrowing the `derived_from` rule to a pattern check; recorded as `SPEC-product.md` decisions 2 and 15, not repeated here.
