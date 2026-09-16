@@ -35,6 +35,8 @@ It reads `examples/ifc_models/20260907_1713.ifc` and rewrites the four files und
 
 **Amendment 2026-09-15:** committed as `a48a84b feat(product): add Storey and Space`. Reopened during Task 2 when every slot in the module became a required key (`SPEC-product.md` decision 2): `name`, `long_name`, `elevation` required, empty when the file has none; `Space.contained_in` required with the plain GlobalId pattern. `storeys.yaml`, `spaces.yaml`, and `storey_id_not_global_id.yaml` regenerated, to land with Task 2's commit.
 
+**Amendment 2026-09-16:** reopened again for `record_type` on every class (`SPEC-product.md` decision 16). `storeys.yaml`, `spaces.yaml`, and both existing Space/Storey invalid documents regenerated; a third invalid document, `space_record_type_mismatch.yaml`, added to pin the guarantee, one more row than Task 1 originally planned. To land with Task 3's commit.
+
 ## Checkpoint: Phase 1
 - [x] `uv run pytest` passes with four product rows collected
 - [x] Generated schema checked as above
@@ -69,34 +71,42 @@ It reads `examples/ifc_models/20260907_1713.ifc` and rewrites the four files und
 
 **Amendment 2026-09-15:** built as the spec's two-rule design, then redesigned in review before committing: every slot in the module is a required key, `""` or a Position/Quantity with `unit: ""` when unresolved; the `ifc_type` rule retired; the `derived_from` rule narrowed to a pattern check. `SPEC-product.md` decisions 2 and 15 (a split by `source`, considered and declined). A fifth invalid document, `building_component_derived_from_empty.yaml`, pins the remaining rule; the criteria above reworded to match. Real counts against the plan's estimate: 143 records, 11 `part_of`, corrected in `tasks/plan.md`. Commit pending review.
 
-## Task 3: `Connector`, `ConnectorKind`, and the clearance rule, end to end
+**Amendment 2026-09-16:** reopened for `record_type` on every class (`SPEC-product.md` decision 16, reversing the original Boundaries' Never on `designates_type`). `building_components.yaml` and all five invalid documents regenerated. Commit pending review.
 
-**Description:** Add the `ConnectorKind` enum and the `Connector` class, `is_a: BuildingComponent`, with `kind`, `connects`, `clear_width`, `clear_height` declared as the spec's slot table states, `kind` and `connects` required in `slot_usage`, and the one rule with `any_of` over `door`, `void`. Every inherited `BuildingComponent` slot keeps its required-everywhere treatment (Task 2), so each Connector record also carries `ifc_type`, `material`, `derived_from`, `part_of`, `located_in` as keys, `""` where they don't apply. Grow the extractor: the 14 doors as `kind: door` with the component slots, `clear_width` and `clear_height` from `OverallWidth` and `OverallHeight`, `connects` from space boundaries with the exterior Space as the second end when only one Space bounds the door and the footprint-overlap fallback when three do; the 2 stairs as `kind: stair` with `connects` from the flight's lowest and highest vertex against Level 1 and Level 2 Space footprints, no clearances. Print every door or stair the rule did not decide outright and stop if any remains undecided. Copy one real door into each of the two invalid documents and break it. Add three rows. Rebuild and commit as `feat(product): add Connector`.
+## Task 3: `Connector` and `ConnectorKind`, end to end
+
+**Description:** Add the `ConnectorKind` enum and the `Connector` class, `is_a: BuildingComponent`, with `kind`, `connects`, `clear_width`, `clear_height` declared as the spec's slot table states, every slot required in `slot_usage`. Every inherited `BuildingComponent` slot keeps its required-everywhere treatment (Task 2), so each Connector record also carries `ifc_type`, `material`, `derived_from`, `part_of`, `located_in` as keys, `""` where they don't apply. Grow the extractor: the 14 doors as `kind: door` with the component slots, `clear_width` and `clear_height` from `OverallWidth` and `OverallHeight`, `connects` from space boundaries with the exterior Space as the second end when only one Space bounds the door and the footprint-overlap fallback when three do; the 2 stairs as `kind: stair` with `connects` from the flight's lowest and highest vertex against Level 1 and Level 2 Space footprints, no clearances. Print every door or stair the rule did not decide outright and stop if any remains undecided. Copy one real door into each of the two invalid documents and break it. Add three rows. Rebuild and commit as `feat(product): add Connector`.
 
 **Acceptance criteria:**
-- [ ] `connectors.yaml` validates as `Connector` and holds 14 doors each with both clearances, 4 of them with an exterior Space in `connects`, and 2 stairs whose two Spaces sit on different storeys
-- [ ] `invalid/connector_one_space.yaml` fails naming `connects`; `invalid/connector_door_missing_clear_height.yaml` fails naming `clear_height`
-- [ ] `dist/product.schema.json` `Connector.properties` holds every `BuildingComponent` property plus four; `connects` has `minItems: 2` and `maxItems: 2`; `Connector` carries an `allOf` of two blocks (the inherited `derived_from` rule plus its own clearance rule)
+- [x] `connectors.yaml` validates as `Connector` and holds 14 doors each with both clearances, 4 of them with an exterior Space in `connects`, and 2 stairs whose two Spaces sit on different storeys
+- [x] `invalid/connector_one_space.yaml` fails naming `connects`; `invalid/connector_door_missing_clear_height.yaml` fails naming `clear_height`
+- [x] `dist/product.schema.json` `Connector.properties` holds every `BuildingComponent` property plus four; `connects` has `minItems: 2` and `maxItems: 2`; `Connector` carries a bare `if`/`then` pair, the inherited `derived_from` rule
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest` with three new rows collected, thirteen product rows in all
-- [ ] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
-- [ ] Manual check: `docs/model/product/index.md` shows `Connector` indented under `BuildingComponent`; `Connector.md` shows a Rules table with two rows; no two file names under `docs/model/product/` match case-insensitively
+- [x] Tests pass: `uv run pytest` with four new rows collected, fourteen product rows in all
+- [x] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
+- [x] Manual check: `docs/model/product/index.md` shows `Connector` indented under `BuildingComponent`; no two file names under `docs/model/product/` match case-insensitively
 
 **Dependencies:** Task 2
 
 **Files likely touched:**
 - `schema/product.yaml`
 - `examples/product/connectors.yaml`
-- `examples/product/invalid/connector_one_space.yaml`, `connector_door_missing_clear_height.yaml`
+- `examples/product/invalid/connector_one_space.yaml`, `connector_door_missing_clear_height.yaml`, `space_record_type_mismatch.yaml`
+- `examples/product/building_components.yaml`, `storeys.yaml`, `spaces.yaml`, and the five `building_component_*`/`space_missing_source`/`storey_id_not_global_id` invalid documents
 - `tests/test_examples.py`
+- `SPEC-product.md`
 - `dist/product.schema.json`, `docs/model/product/*` (generated)
 
 **Estimated scope:** Medium
 
+**Amendment 2026-09-16:** the clearance rule is retired like `ifc_type`'s, `SPEC-product.md` decision 4: with `clear_width` and `clear_height` required keys it checked nothing, and a rule cannot look inside a Quantity, so a door's real clearance is a tier 3 check. `exact_cardinality: 2` on `connects` is inert on LinkML 1.11.1 (the one-Space document validated), so the bound is `minimum_cardinality` plus `maximum_cardinality`, as decision 5 recorded. The three-Space door and both stair lower ends were undecided by the vertex rule alone and resolved by footprint overlap, the brief's fallback; the extractor prints each such decision. `gen-doc` does not render an inherited rule on the subclass page, so the manual check was reworded.
+
+Also reopened the same day for `record_type` on every class (decision 16): `connectors.yaml` and both invalid documents regenerated; the criteria above corrected in place to fourteen rows, counting `space_record_type_mismatch.yaml` added under Task 1. Commit pending review.
+
 ## Checkpoint: Phase 2
-- [ ] Thirteen product rows pass
-- [ ] Every id named in `connects`, `located_in`, `contained_in`, `derived_from`, and `part_of` exists in one of the four files; every `id` across the four files is distinct
+- [x] Fourteen product rows pass
+- [x] Every id named in `connects`, `located_in`, `contained_in`, `derived_from`, and `part_of` exists in one of the four files; every `id` across the four files is distinct
 - [ ] Review with human before Task 4
 
 ## Task 4: Verify success criteria, push, confirm CI

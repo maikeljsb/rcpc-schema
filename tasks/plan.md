@@ -74,11 +74,11 @@ schema/product.yaml  (header, RecordSource, Storey, Space)                      
 
 ### Phase 2: Components and passages
 - [x] Task 2: `BuildingComponent`, `ComponentPermanence`, and its one class rule, end to end
-- [ ] Task 3: `Connector`, `ConnectorKind`, and the clearance rule, end to end
+- [x] Task 3: `Connector` and `ConnectorKind`, end to end
 
 ### Checkpoint: Phase 2
-- [ ] Thirteen product rows pass; `BuildingComponent` carries a bare `if`/`then` pair (one rule) and `Connector` an `allOf` of two
-- [ ] Every id named in `connects`, `located_in`, `contained_in`, `derived_from`, and `part_of` exists in one of the four files
+- [x] Fourteen product rows pass; `BuildingComponent` and `Connector` each carry a bare `if`/`then` pair, the one inherited rule
+- [x] Every id named in `connects`, `located_in`, `contained_in`, `derived_from`, and `part_of` exists in one of the four files
 - [ ] Review with human
 
 ### Phase 3: Close
