@@ -24,6 +24,9 @@ URI: [rcpc:BuildingComponent](https://rcpc.for5672/schema/BuildingComponent)
  classDiagram
     class BuildingComponent
     click BuildingComponent href "../BuildingComponent/"
+      BuildingComponent <|-- Connector
+        click Connector href "../Connector/"
+      
       BuildingComponent : contained_in
         
           
@@ -156,6 +159,17 @@ URI: [rcpc:BuildingComponent](https://rcpc.for5672/schema/BuildingComponent)
     
 
         
+      BuildingComponent : record_type
+        
+          
+    
+        
+        
+        BuildingComponent --> "1" String : record_type
+        click String href "../http://www.w3.org/2001/XMLSchema#string/"
+    
+
+        
       BuildingComponent : source
         
           
@@ -217,12 +231,17 @@ URI: [rcpc:BuildingComponent](https://rcpc.for5672/schema/BuildingComponent)
 
 
 
-<!-- no inheritance hierarchy -->
+
+## Inheritance
+* **BuildingComponent**
+    * [Connector](Connector.md)
+
 
 ## Slots
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
+| [record_type](record_type.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Which class in this schema the record belongs to | direct |
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC GlobalId in its 22-character form: the entity's own when parsed, mint... | direct |
 | [ifc_type](ifc_type.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The bare IFC entity name, such as IfcWall | direct |
 | [name](name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC Name | direct |
@@ -251,6 +270,8 @@ URI: [rcpc:BuildingComponent](https://rcpc.for5672/schema/BuildingComponent)
 | ---  | --- | --- | --- |
 | [BuildingComponent](BuildingComponent.md) | [derived_from](derived_from.md) | range | [BuildingComponent](BuildingComponent.md) |
 | [BuildingComponent](BuildingComponent.md) | [part_of](part_of.md) | range | [BuildingComponent](BuildingComponent.md) |
+| [Connector](Connector.md) | [derived_from](derived_from.md) | range | [BuildingComponent](BuildingComponent.md) |
+| [Connector](Connector.md) | [part_of](part_of.md) | range | [BuildingComponent](BuildingComponent.md) |
 
 
 
@@ -314,6 +335,7 @@ description: One thing a task acts on. Parsed from the IFC model or derived from
   parsed component; permanent or temporary.
 from_schema: https://rcpc.for5672/schema/product
 slots:
+- record_type
 - id
 - ifc_type
 - name
@@ -476,6 +498,19 @@ slot_usage:
     description: How much the item weighs. Empty when not measured.
     required: true
 attributes:
+  record_type:
+    name: record_type
+    description: Which class in this schema the record belongs to.
+    from_schema: https://rcpc.for5672/schema/product
+    rank: 1000
+    designates_type: true
+    owner: BuildingComponent
+    domain_of:
+    - Storey
+    - Space
+    - BuildingComponent
+    range: string
+    required: true
   id:
     name: id
     description: 'The IFC GlobalId in its 22-character form: the entity''s own when

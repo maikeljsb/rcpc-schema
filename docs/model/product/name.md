@@ -28,6 +28,7 @@ URI: [rcpc:name](https://rcpc.for5672/schema/name)
 | [Storey](Storey.md) | A building storey |  no  |
 | [Space](Space.md) | A room, or the exterior region of one storey |  no  |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  no  |
+| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 
 
 

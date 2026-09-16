@@ -1,4 +1,5 @@
-- id: level-1
+- record_type: Storey
+  id: level-1
   name: Level 1
   long_name: ''
   elevation: {value: 0.0, unit: m}

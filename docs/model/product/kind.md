@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: located_in 
+# Slot: kind 
 
 
-_The Space the component's point lies in. Empty for walls and slabs._
+_What kind of passage the Connector is._
 
 
 
@@ -14,7 +14,7 @@ _The Space the component's point lies in. Empty for walls and slabs._
 
 
 
-URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
+URI: [rcpc:kind](https://rcpc.for5672/schema/kind)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,8 +25,7 @@ URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
-| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
+| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  yes  |
 
 
 
@@ -39,8 +38,8 @@ URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
 
 | Property | Value |
 | --- | --- |
-| Range | [Space](Space.md) |
-| Domain Of | [BuildingComponent](BuildingComponent.md) |
+| Range | [ConnectorKind](ConnectorKind.md) |
+| Domain Of | [Connector](Connector.md) |
 
 ### Cardinality and Requirements
 
@@ -74,8 +73,8 @@ URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:located_in |
-| native | rcpc:located_in |
+| self | rcpc:kind |
+| native | rcpc:kind |
 
 
 
@@ -84,13 +83,13 @@ URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
 
 <details>
 ```yaml
-name: located_in
-description: The Space the component's point lies in. Empty for walls and slabs.
+name: kind
+description: What kind of passage the Connector is.
 from_schema: https://rcpc.for5672/schema/product
 rank: 1000
 domain_of:
-- BuildingComponent
-range: Space
+- Connector
+range: ConnectorKind
 
 ```
 </details></div>

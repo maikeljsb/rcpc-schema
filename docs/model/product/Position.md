@@ -96,6 +96,9 @@ URI: [rcpc:Position](https://rcpc.for5672/schema/Position)
 | [BuildingComponent](BuildingComponent.md) | [target_location](target_location.md) | range | [Position](Position.md) |
 | [BuildingComponent](BuildingComponent.md) | [supply_location](supply_location.md) | range | [Position](Position.md) |
 | [BuildingComponent](BuildingComponent.md) | [current_location](current_location.md) | range | [Position](Position.md) |
+| [Connector](Connector.md) | [target_location](target_location.md) | range | [Position](Position.md) |
+| [Connector](Connector.md) | [supply_location](supply_location.md) | range | [Position](Position.md) |
+| [Connector](Connector.md) | [current_location](current_location.md) | range | [Position](Position.md) |
 
 
 

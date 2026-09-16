@@ -68,6 +68,17 @@ URI: [rcpc:Storey](https://rcpc.for5672/schema/Storey)
     
 
         
+      Storey : record_type
+        
+          
+    
+        
+        
+        Storey --> "1" String : record_type
+        click String href "../http://www.w3.org/2001/XMLSchema#string/"
+    
+
+        
       
 ```
 
@@ -80,6 +91,7 @@ URI: [rcpc:Storey](https://rcpc.for5672/schema/Storey)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
+| [record_type](record_type.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Which class in this schema the record belongs to | direct |
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC GlobalId in its 22-character form: the entity's own when parsed, mint... | direct |
 | [name](name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC Name | direct |
 | [long_name](long_name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC LongName of a Space or Storey | direct |
@@ -95,6 +107,7 @@ URI: [rcpc:Storey](https://rcpc.for5672/schema/Storey)
 | ---  | --- | --- | --- |
 | [Space](Space.md) | [contained_in](contained_in.md) | range | [Storey](Storey.md) |
 | [BuildingComponent](BuildingComponent.md) | [contained_in](contained_in.md) | range | [Storey](Storey.md) |
+| [Connector](Connector.md) | [contained_in](contained_in.md) | range | [Storey](Storey.md) |
 
 
 
@@ -145,6 +158,7 @@ name: Storey
 description: A building storey.
 from_schema: https://rcpc.for5672/schema/product
 slots:
+- record_type
 - id
 - name
 - long_name
@@ -179,6 +193,19 @@ slot_usage:
     name: elevation
     required: true
 attributes:
+  record_type:
+    name: record_type
+    description: Which class in this schema the record belongs to.
+    from_schema: https://rcpc.for5672/schema/product
+    rank: 1000
+    designates_type: true
+    owner: Storey
+    domain_of:
+    - Storey
+    - Space
+    - BuildingComponent
+    range: string
+    required: true
   id:
     name: id
     description: 'The IFC GlobalId in its 22-character form: the entity''s own when

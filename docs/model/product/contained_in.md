@@ -27,6 +27,7 @@ URI: [rcpc:contained_in](https://rcpc.for5672/schema/contained_in)
 | --- | --- | --- |
 | [Space](Space.md) | A room, or the exterior region of one storey |  yes  |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
+| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 
 
 

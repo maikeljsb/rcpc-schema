@@ -74,6 +74,12 @@ URI: [rcpc:Quantity](https://rcpc.for5672/schema/Quantity)
 | [BuildingComponent](BuildingComponent.md) | [width](width.md) | range | [Quantity](Quantity.md) |
 | [BuildingComponent](BuildingComponent.md) | [height](height.md) | range | [Quantity](Quantity.md) |
 | [BuildingComponent](BuildingComponent.md) | [weight](weight.md) | range | [Quantity](Quantity.md) |
+| [Connector](Connector.md) | [clear_width](clear_width.md) | range | [Quantity](Quantity.md) |
+| [Connector](Connector.md) | [clear_height](clear_height.md) | range | [Quantity](Quantity.md) |
+| [Connector](Connector.md) | [length](length.md) | range | [Quantity](Quantity.md) |
+| [Connector](Connector.md) | [width](width.md) | range | [Quantity](Quantity.md) |
+| [Connector](Connector.md) | [height](height.md) | range | [Quantity](Quantity.md) |
+| [Connector](Connector.md) | [weight](weight.md) | range | [Quantity](Quantity.md) |
 
 
 

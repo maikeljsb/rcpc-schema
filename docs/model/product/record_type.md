@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: id 
+# Slot: record_type 
 
 
-_Identifier, unique among instances of its class._
+_Which class in this schema the record belongs to._
 
 
 
@@ -14,7 +14,7 @@ _Identifier, unique among instances of its class._
 
 
 
-URI: [rcpc:id](https://rcpc.for5672/schema/id)
+URI: [rcpc:record_type](https://rcpc.for5672/schema/record_type)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,10 +25,9 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |  no  |
-| [Storey](Storey.md) | A building storey |  yes  |
-| [Space](Space.md) | A room, or the exterior region of one storey |  yes  |
-| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
+| [Storey](Storey.md) | A building storey |  no  |
+| [Space](Space.md) | A room, or the exterior region of one storey |  no  |
+| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  no  |
 | [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 
 
@@ -43,7 +42,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md), [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md) |
+| Domain Of | [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
 
@@ -54,7 +53,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 
 | Property | Value |
 | --- | --- |
-| Identifier | Yes |
+| Designates Type | Yes |
 
 
 
@@ -76,7 +75,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/common
+* from schema: https://rcpc.for5672/schema/product
 
 
 
@@ -85,8 +84,8 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:id |
-| native | rcpc:id |
+| self | rcpc:record_type |
+| native | rcpc:record_type |
 
 
 
@@ -95,12 +94,12 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 
 <details>
 ```yaml
-name: id
-description: Identifier, unique among instances of its class.
-from_schema: https://rcpc.for5672/schema/common
-identifier: true
+name: record_type
+description: Which class in this schema the record belongs to.
+from_schema: https://rcpc.for5672/schema/product
+rank: 1000
+designates_type: true
 domain_of:
-- CapabilityType
 - Storey
 - Space
 - BuildingComponent

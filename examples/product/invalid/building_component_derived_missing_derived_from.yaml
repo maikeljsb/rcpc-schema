@@ -1,4 +1,5 @@
-- id: 30Lb4tFizKvx5X_QlBEKR9
+- record_type: BuildingComponent
+  id: 30Lb4tFizKvx5X_QlBEKR9
   ifc_type: ''
   name: brick 0001 of Basic Wall:Exterior - Brick on Block:138062
   material: Masonry - Brick

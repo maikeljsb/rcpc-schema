@@ -1,12 +1,13 @@
-- record_type: BuildingComponent
-  id: 2O2Fr$t4X7Zf8NOew3FNtn
-  ifc_type: IfcWallStandardCase
-  name: Basic Wall:Exterior - Brick on Block:138062
-  material: Basic Wall:Exterior - Brick on Block
+- record_type: Connector
+  id: 1hOSvn6df7F8_7GcBWlRGQ
+  ifc_type: IfcDoor
+  name: M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146596
+  material: ''
+  permanence: permanent
   source: ifc
   derived_from: ''
   part_of: ''
-  target_location: {x_coord: 4.4, y_coord: -0.209, z_coord: 1.55, unit: m}
+  target_location: {x_coord: 8.591, y_coord: -16.178, z_coord: 1.043, unit: m}
   supply_location: {x_coord: 0.0, y_coord: 0.0, z_coord: 0.0, unit: ''}
   current_location: {x_coord: 0.0, y_coord: 0.0, z_coord: 0.0, unit: ''}
   located_in: ''
@@ -15,3 +16,8 @@
   width: {value: 0.0, unit: ''}
   height: {value: 0.0, unit: ''}
   weight: {value: 0.0, unit: ''}
+  kind: door
+  connects:
+  - 0BTBFw6f90Nfh9rP1dlXrr
+  - 3It7HtQdTQBQsvQlFr2iGK
+  clear_width: {value: 1.25, unit: m}

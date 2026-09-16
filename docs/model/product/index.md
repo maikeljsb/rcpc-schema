@@ -13,6 +13,7 @@ Name: product
 | Class | Description |
 | --- | --- |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |
 | [Space](Space.md) | A room, or the exterior region of one storey |
 | [Storey](Storey.md) | A building storey |
 
@@ -22,17 +23,22 @@ Name: product
 
 | Slot | Description |
 | --- | --- |
+| [clear_height](clear_height.md) | The passable height: a door's IFC OverallHeight, a void's opening height, a s... |
+| [clear_width](clear_width.md) | The passable width: a door's IFC OverallWidth, a void's opening width, a stai... |
+| [connects](connects.md) | The two Spaces the Connector joins |
 | [contained_in](contained_in.md) | IFC's containment relation under its own name |
 | [current_location](current_location.md) | Where the component is now |
 | [derived_from](derived_from.md) | The IFC-sourced component this one was generated from |
 | [elevation](elevation.md) | The storey's level in the project frame |
 | [ifc_type](ifc_type.md) | The bare IFC entity name, such as IfcWall |
+| [kind](kind.md) | What kind of passage the Connector is |
 | [located_in](located_in.md) | The Space the component's point lies in |
 | [long_name](long_name.md) | The IFC LongName of a Space or Storey |
 | [material](material.md) | The one material string the parser derives, as the IFC spells it |
 | [name](name.md) | The IFC Name |
 | [part_of](part_of.md) | The assembly this component is a part of, IFC's aggregation from the part's s... |
 | [permanence](permanence.md) | Whether the component stays in the building |
+| [record_type](record_type.md) | Which class in this schema the record belongs to |
 | [source](source.md) | Where a component or Space came from: parsed from the IFC model, or produced ... |
 | [supply_location](supply_location.md) | Where the component is delivered or staged |
 | [target_location](target_location.md) | The centroid of the component's body in the IFC project frame, in the project... |
@@ -43,6 +49,7 @@ Name: product
 | Enumeration | Description |
 | --- | --- |
 | [ComponentPermanence](ComponentPermanence.md) | Whether the component stays in the building |
+| [ConnectorKind](ConnectorKind.md) | What kind of passage a Connector is |
 | [RecordSource](RecordSource.md) | Where a component or Space came from: parsed from the IFC model, or produced ... |
 
 

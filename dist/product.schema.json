@@ -35,6 +35,16 @@
       ],
       "title": "ComponentPermanence"
     },
+    "ConnectorKind": {
+      "type": "string",
+      "description": "What kind of passage a Connector is.",
+      "enum": [
+        "door",
+        "void",
+        "stair"
+      ],
+      "title": "ConnectorKind"
+    },
     "Position": {
       "type": "object",
       "additionalProperties": false,
@@ -135,6 +145,13 @@
       "additionalProperties": false,
       "description": "A building storey.",
       "properties": {
+        "record_type": {
+          "type": "string",
+          "description": "Which class in this schema the record belongs to.",
+          "enum": [
+            "Storey"
+          ]
+        },
         "id": {
           "type": "string",
           "description": "The IFC GlobalId in its 22-character form: the entity's own when parsed, minted in the same format when derived.",
@@ -154,6 +171,7 @@
         }
       },
       "required": [
+        "record_type",
         "id",
         "name",
         "long_name",
@@ -166,6 +184,13 @@
       "additionalProperties": false,
       "description": "A room, or the exterior region of one storey. Parsed from IfcSpace, or derived.",
       "properties": {
+        "record_type": {
+          "type": "string",
+          "description": "Which class in this schema the record belongs to.",
+          "enum": [
+            "Space"
+          ]
+        },
         "id": {
           "type": "string",
           "description": "The IFC GlobalId in its 22-character form: the entity's own when parsed, minted in the same format when derived.",
@@ -190,6 +215,7 @@
         }
       },
       "required": [
+        "record_type",
         "id",
         "name",
         "long_name",
@@ -203,6 +229,13 @@
       "additionalProperties": false,
       "description": "One thing a task acts on. Parsed from the IFC model or derived from a parsed component; permanent or temporary.",
       "properties": {
+        "record_type": {
+          "type": "string",
+          "description": "Which class in this schema the record belongs to.",
+          "enum": [
+            "BuildingComponent"
+          ]
+        },
         "id": {
           "type": "string",
           "description": "The IFC GlobalId in its 22-character form: the entity's own when parsed, minted in the same format when derived.",
@@ -278,6 +311,7 @@
         }
       },
       "required": [
+        "record_type",
         "id",
         "ifc_type",
         "name",
@@ -317,6 +351,160 @@
         ]
       },
       "title": "BuildingComponent"
+    },
+    "Connector": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A door, an unfilled opening, or a stair as one node: the component a task installs and the passage a robot fits through.",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ConnectorKind",
+          "description": "What kind of passage the Connector is."
+        },
+        "connects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-3][0-9A-Za-z_$]{21}$"
+          },
+          "description": "The two Spaces the Connector joins. A stair's two Spaces are on different storeys.",
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "clear_width": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The passable width: a door's IFC OverallWidth, a void's opening width, a stair's flight width. Empty when not read."
+        },
+        "clear_height": {
+          "$ref": "#/$defs/Quantity",
+          "description": "The passable height: a door's IFC OverallHeight, a void's opening height, a stair's headroom. Empty when not read."
+        },
+        "record_type": {
+          "type": "string",
+          "description": "Which class in this schema the record belongs to.",
+          "enum": [
+            "Connector"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "description": "The IFC GlobalId in its 22-character form: the entity's own when parsed, minted in the same format when derived.",
+          "pattern": "^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "ifc_type": {
+          "type": "string",
+          "description": "The bare IFC entity name, such as IfcWall. Empty on a derived record, which has none."
+        },
+        "name": {
+          "type": "string",
+          "description": "The IFC Name. Empty when the IFC file has none."
+        },
+        "material": {
+          "type": "string",
+          "description": "The one material string the parser derives, as the IFC spells it. Empty when unresolved."
+        },
+        "permanence": {
+          "$ref": "#/$defs/ComponentPermanence",
+          "description": "Whether the component stays in the building."
+        },
+        "source": {
+          "$ref": "#/$defs/RecordSource",
+          "description": "Where a component or Space came from: parsed from the IFC model, or produced by the derivation."
+        },
+        "derived_from": {
+          "type": "string",
+          "description": "The IFC-sourced component this one was generated from. Empty except on a derived record.",
+          "pattern": "^$|^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "part_of": {
+          "type": "string",
+          "description": "The assembly this component is a part of, IFC's aggregation from the part's side. Empty on a component that is not part of an assembly.",
+          "pattern": "^$|^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "target_location": {
+          "$ref": "#/$defs/Position",
+          "description": "The centroid of the component's body in the IFC project frame, in the project length unit. Where the design puts it and what a placement task binds to."
+        },
+        "supply_location": {
+          "$ref": "#/$defs/Position",
+          "description": "Where the component is delivered or staged. Empty when not yet known."
+        },
+        "current_location": {
+          "$ref": "#/$defs/Position",
+          "description": "Where the component is now. Written by execution; the model's second runtime slot after status. Empty until execution writes one."
+        },
+        "located_in": {
+          "type": "string",
+          "description": "The Space the component's point lies in. Empty for walls and slabs.",
+          "pattern": "^$|^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "contained_in": {
+          "type": "string",
+          "description": "IFC's containment relation under its own name. On a BuildingComponent, its storey; on a Space, the storey that aggregates it or, for a derived Space, the storey it was cut for. Empty on a part, contained only through its assembly.",
+          "pattern": "^$|^[0-3][0-9A-Za-z_$]{21}$"
+        },
+        "length": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How long the item is. Empty when not measured."
+        },
+        "width": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How wide the item is. Empty when not measured."
+        },
+        "height": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How tall the item is. Empty when not measured."
+        },
+        "weight": {
+          "$ref": "#/$defs/Quantity",
+          "description": "How much the item weighs. Empty when not measured."
+        }
+      },
+      "required": [
+        "kind",
+        "connects",
+        "clear_width",
+        "clear_height",
+        "record_type",
+        "id",
+        "ifc_type",
+        "name",
+        "material",
+        "permanence",
+        "source",
+        "derived_from",
+        "part_of",
+        "target_location",
+        "supply_location",
+        "current_location",
+        "located_in",
+        "contained_in",
+        "length",
+        "width",
+        "height",
+        "weight"
+      ],
+      "if": {
+        "properties": {
+          "source": {
+            "const": "derived"
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "then": {
+        "properties": {
+          "derived_from": {
+            "pattern": "^[0-3][0-9A-Za-z_$]{21}$"
+          }
+        },
+        "required": [
+          "derived_from"
+        ]
+      },
+      "title": "Connector"
     }
   }
 }

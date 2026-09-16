@@ -1,5 +1,6 @@
-- record_type: Space
+- record_type: Storey
   id: 0BTBFw6f90Nfh9rP1dlXrr
   name: A101
   long_name: Foyer
+  source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI

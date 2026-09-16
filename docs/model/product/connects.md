@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: located_in 
+# Slot: connects 
 
 
-_The Space the component's point lies in. Empty for walls and slabs._
+_The two Spaces the Connector joins. A stair's two Spaces are on different storeys._
 
 
 
@@ -14,7 +14,7 @@ _The Space the component's point lies in. Empty for walls and slabs._
 
 
 
-URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
+URI: [rcpc:connects](https://rcpc.for5672/schema/connects)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,8 +25,7 @@ URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
-| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
+| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  yes  |
 
 
 
@@ -40,12 +39,15 @@ URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
 | Property | Value |
 | --- | --- |
 | Range | [Space](Space.md) |
-| Domain Of | [BuildingComponent](BuildingComponent.md) |
+| Domain Of | [Connector](Connector.md) |
 
 ### Cardinality and Requirements
 
 | Property | Value |
 | --- | --- |
+| Multivalued | Yes |
+| Minimum Cardinality | 2 |
+| Maximum Cardinality | 2 |
 
 
 
@@ -74,8 +76,8 @@ URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:located_in |
-| native | rcpc:located_in |
+| self | rcpc:connects |
+| native | rcpc:connects |
 
 
 
@@ -84,13 +86,17 @@ URI: [rcpc:located_in](https://rcpc.for5672/schema/located_in)
 
 <details>
 ```yaml
-name: located_in
-description: The Space the component's point lies in. Empty for walls and slabs.
+name: connects
+description: The two Spaces the Connector joins. A stair's two Spaces are on different
+  storeys.
 from_schema: https://rcpc.for5672/schema/product
 rank: 1000
 domain_of:
-- BuildingComponent
+- Connector
 range: Space
+multivalued: true
+minimum_cardinality: 2
+maximum_cardinality: 2
 
 ```
 </details></div>

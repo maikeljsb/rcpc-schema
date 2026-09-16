@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: supply_location 
+# Slot: clear_height 
 
 
-_Where the component is delivered or staged. Empty when not yet known._
+_The passable height: a door's IFC OverallHeight, a void's opening height, a stair's headroom. Empty when not read._
 
 
 
@@ -14,7 +14,7 @@ _Where the component is delivered or staged. Empty when not yet known._
 
 
 
-URI: [rcpc:supply_location](https://rcpc.for5672/schema/supply_location)
+URI: [rcpc:clear_height](https://rcpc.for5672/schema/clear_height)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,8 +25,7 @@ URI: [rcpc:supply_location](https://rcpc.for5672/schema/supply_location)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
-| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
+| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  yes  |
 
 
 
@@ -39,8 +38,8 @@ URI: [rcpc:supply_location](https://rcpc.for5672/schema/supply_location)
 
 | Property | Value |
 | --- | --- |
-| Range | [Position](Position.md) |
-| Domain Of | [BuildingComponent](BuildingComponent.md) |
+| Range | [Quantity](Quantity.md) |
+| Domain Of | [Connector](Connector.md) |
 
 ### Cardinality and Requirements
 
@@ -74,8 +73,8 @@ URI: [rcpc:supply_location](https://rcpc.for5672/schema/supply_location)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:supply_location |
-| native | rcpc:supply_location |
+| self | rcpc:clear_height |
+| native | rcpc:clear_height |
 
 
 
@@ -84,13 +83,14 @@ URI: [rcpc:supply_location](https://rcpc.for5672/schema/supply_location)
 
 <details>
 ```yaml
-name: supply_location
-description: Where the component is delivered or staged. Empty when not yet known.
+name: clear_height
+description: 'The passable height: a door''s IFC OverallHeight, a void''s opening
+  height, a stair''s headroom. Empty when not read.'
 from_schema: https://rcpc.for5672/schema/product
 rank: 1000
 domain_of:
-- BuildingComponent
-range: Position
+- Connector
+range: Quantity
 inlined: true
 
 ```

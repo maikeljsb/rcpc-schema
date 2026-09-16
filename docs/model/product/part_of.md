@@ -26,6 +26,7 @@ URI: [rcpc:part_of](https://rcpc.for5672/schema/part_of)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
+| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 
 
 

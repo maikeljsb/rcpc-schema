@@ -68,6 +68,17 @@ URI: [rcpc:Space](https://rcpc.for5672/schema/Space)
     
 
         
+      Space : record_type
+        
+          
+    
+        
+        
+        Space --> "1" String : record_type
+        click String href "../http://www.w3.org/2001/XMLSchema#string/"
+    
+
+        
       Space : source
         
           
@@ -91,6 +102,7 @@ URI: [rcpc:Space](https://rcpc.for5672/schema/Space)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
+| [record_type](record_type.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Which class in this schema the record belongs to | direct |
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC GlobalId in its 22-character form: the entity's own when parsed, mint... | direct |
 | [name](name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC Name | direct |
 | [long_name](long_name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC LongName of a Space or Storey | direct |
@@ -106,6 +118,8 @@ URI: [rcpc:Space](https://rcpc.for5672/schema/Space)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [BuildingComponent](BuildingComponent.md) | [located_in](located_in.md) | range | [Space](Space.md) |
+| [Connector](Connector.md) | [connects](connects.md) | range | [Space](Space.md) |
+| [Connector](Connector.md) | [located_in](located_in.md) | range | [Space](Space.md) |
 
 
 
@@ -157,6 +171,7 @@ description: A room, or the exterior region of one storey. Parsed from IfcSpace,
   derived.
 from_schema: https://rcpc.for5672/schema/product
 slots:
+- record_type
 - id
 - name
 - long_name
@@ -201,6 +216,19 @@ slot_usage:
     required: true
     pattern: ^[0-3][0-9A-Za-z_$]{21}$
 attributes:
+  record_type:
+    name: record_type
+    description: Which class in this schema the record belongs to.
+    from_schema: https://rcpc.for5672/schema/product
+    rank: 1000
+    designates_type: true
+    owner: Space
+    domain_of:
+    - Storey
+    - Space
+    - BuildingComponent
+    range: string
+    required: true
   id:
     name: id
     description: 'The IFC GlobalId in its 22-character form: the entity''s own when

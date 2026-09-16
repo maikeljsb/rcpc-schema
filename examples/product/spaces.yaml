@@ -1,124 +1,149 @@
-- id: 0ED2sOPufGKwpkIDztweWk
+- record_type: Space
+  id: 0ED2sOPufGKwpkIDztweWk
   name: exterior T/FDN
   long_name: ''
   source: derived
   contained_in: 1xS3BCk291UvhgP2dvNsgp
-- id: 3It7HtQdTQBQsvQlFr2iGK
+- record_type: Space
+  id: 3It7HtQdTQBQsvQlFr2iGK
   name: exterior Level 1
   long_name: ''
   source: derived
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 0BTBFw6f90Nfh9rP1dlXrr
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dlXrr
   name: A101
   long_name: Foyer
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 0BTBFw6f90Nfh9rP1dlXr2
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dlXr2
   name: A102
   long_name: Living Room
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 0BTBFw6f90Nfh9rP1dlXr$
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dlXr$
   name: A103
   long_name: Kitchen
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 0BTBFw6f90Nfh9rP1dlXru
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dlXru
   name: A104
   long_name: Bathroom 1
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 10mjSDZJj9gPS2PrQaxa3z
+- record_type: Space
+  id: 10mjSDZJj9gPS2PrQaxa3z
   name: A105
   long_name: Stair
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 0BTBFw6f90Nfh9rP1dl_3Q
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dl_3Q
   name: B101
   long_name: Foyer
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 0BTBFw6f90Nfh9rP1dl_CZ
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dl_CZ
   name: B102
   long_name: Living Room
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 0BTBFw6f90Nfh9rP1dl_3S
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dl_3S
   name: B103
   long_name: Kitchen
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 0BTBFw6f90Nfh9rP1dl_3P
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dl_3P
   name: B104
   long_name: Bathroom 1
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 10mjSDZJj9gPS2PrQaxa4o
+- record_type: Space
+  id: 10mjSDZJj9gPS2PrQaxa4o
   name: B105
   long_name: Room
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMKI
-- id: 049roi7ULI6P6121Z3vYMY
+- record_type: Space
+  id: 049roi7ULI6P6121Z3vYMY
   name: exterior Level 2
   long_name: ''
   source: derived
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 0BTBFw6f90Nfh9rP1dlXri
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dlXri
   name: A201
   long_name: Hallway
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 0BTBFw6f90Nfh9rP1dlXrc
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dlXrc
   name: A202
   long_name: Bedroom 1
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 0BTBFw6f90Nfh9rP1dlXrb
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dlXrb
   name: A203
   long_name: Bedroom 2
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 0BTBFw6f90Nfh9rP1dlXre
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dlXre
   name: A204
   long_name: Bathroom 2
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 2gRXFgjRn2HPE$YoDLX3FV
+- record_type: Space
+  id: 2gRXFgjRn2HPE$YoDLX3FV
   name: A205
   long_name: Utility
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 0BTBFw6f90Nfh9rP1dl_3G
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dl_3G
   name: B201
   long_name: Hallway
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 0BTBFw6f90Nfh9rP1dl_3A
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dl_3A
   name: B202
   long_name: Bedroom 1
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 0BTBFw6f90Nfh9rP1dl_39
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dl_39
   name: B203
   long_name: Bedroom 2
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 0BTBFw6f90Nfh9rP1dl_3C
+- record_type: Space
+  id: 0BTBFw6f90Nfh9rP1dl_3C
   name: B204
   long_name: Bathroom 2
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 2gRXFgjRn2HPE$YoDLX3FC
+- record_type: Space
+  id: 2gRXFgjRn2HPE$YoDLX3FC
   name: B205
   long_name: Utility
   source: ifc
   contained_in: 1xS3BCk291UvhgP2dvNMQJ
-- id: 3ezuLONWLLvQiAzs88iY$K
+- record_type: Space
+  id: 3ezuLONWLLvQiAzs88iY$K
   name: exterior Roof
   long_name: ''
   source: derived
   contained_in: 1xS3BCk291UvhgP2dvNtSE
-- id: 0pNy6pOyf7JPmXRLgxs3sW
+- record_type: Space
+  id: 0pNy6pOyf7JPmXRLgxs3sW
   name: R301
   long_name: Roof
   source: ifc
