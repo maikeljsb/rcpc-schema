@@ -11,10 +11,9 @@ Where things are. Open an entry when the work at hand needs it.
 - Module specs: `SPEC-<id>.md` beside the map, one per module.
 - LinkML metamodel, conformance, inheritance: `docs/research/linkml-metamodel-conformance-and-inheritance.md`.
 - LinkML to Neo4j projection: `docs/research/linkml-neo4j-and-metamodel.md`.
-- Task parameter kinds: `docs/research/parameter-kinds-mapping.md`.
+- Process module sources: `docs/research/pddl-for-process.md` (HDDL, HDDL 2.1, PDDL 2.1; the deciding source, with the subtask experiment), `docs/research/ma-pddl-for-process.md`, `docs/ideas/robot-entry-as-type.md` for PDDL background, task parameter kinds `docs/research/parameter-kinds-mapping.md`.
 - Resource module sources: `docs/ideas/robot-entry-as-type.md`, CRS paper `docs/research/2026_01-ITcon-Li.pdf`.
 - Product module sources: `docs/research/ifc43-for-product.md`, `docs/research/topologicpy-for-product.md`.
-- Plans and task lists: `tasks/`, finished ones under `tasks/archive/`.
 
 ## How work proceeds
 
