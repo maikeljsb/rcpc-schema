@@ -4,7 +4,7 @@ Research note, 2026-09-17, replacing the draft of 2026-09-16.
 
 ## Question
 
-What should `schema/process.yaml` look like if PDDL 2.1, HDDL, and HDDL 2.1 are treated as a genuine source of inspiration, given `common.yaml`, `product.yaml`, and `resource.yaml` as the foundation? Part 1 describes the languages. Part 2 derives, component by component, what each becomes in LinkML. Part 3 lists the changes to the foundation and the brief that follow. Part 4 lists what stays open. The brief (`docs/ideas/linkml-product-process-graph-schema.md`) is a prior input of the same standing as the three modules; where its decisions differ from what the sources give, part 2 names the difference.
+What should `schema/process.yaml` look like if PDDL 2.1, HDDL, and HDDL 2.1 are treated as a genuine source of inspiration, given `common.yaml`, `product.yaml`, and `resource.yaml` as the foundation? Part 1 describes the languages. Part 2 states, component by component, what each becomes in LinkML, as decided on 2026-09-17. Part 3 lists the changes to the foundation and the brief that followed. Part 4 records the questions and their decisions. The brief (`docs/ideas/linkml-product-process-graph-schema.md`) is a prior input of the same standing as the three modules; where its decisions differ from what the sources give, part 2 names the difference.
 
 ## Sources
 
@@ -231,25 +231,23 @@ The two `deliver` tasks are unordered, so, in the paper's words on its identical
 
 ## Part 2. What each component becomes in `process.yaml`
 
-Same order as part 1. Each entry says what the foundation already provides, what LinkML shape the component takes, what is recommended and on what basis, and where a prior brief decision differs. "Probe" refers to the appendix.
+Same order as part 1. Each entry says what the foundation already provides, what LinkML shape the component takes, and on what basis. The shapes are the ones decided on 2026-09-17 and recorded in part 4; where a decision changed the brief, the entry says so and part 3 lists the change.
 
 ### 2.1 Domain and problem
 
 Foundation. `product.yaml` and `resource.yaml` documents are the problem's `:objects` and `:init` (2.2, 2.3). The brief's "catalogue" is the domain; its "instance side" is the problem plus the solution.
 
-Shape. Catalogue classes for 1.4 to 1.7 in `process.yaml`. Two ground classes for 1.9 and 1.10, one per catalogue task class, each pointing at its definition and carrying bindings. A ground compound with no method and no children is an initial task, `:htn`; with them it is a decomposed one, a plan line. The IPC line `<id> <task> <args> -> <method> <child ids>` fixes what the ground compound carries: task, bindings, method, children.
-
-Recommendation. Two ground classes as above, with `children` on the ground compound. Basis: the IPC format for the slot list; placing `children` on the parent is this note's reading of HDDL's one `<tasknetwork-def>` for methods and the initial network, not a statement in a source. Names are open (part 4).
+Shape. Catalogue classes for 1.4 to 1.7 in `process.yaml`. Two ground classes for 1.9 and 1.10, `PrimitiveTaskInstance` and `CompoundTaskInstance` (part 4, question 1), one per catalogue task class, each pointing at its catalogue task and carrying its bindings. A `CompoundTaskInstance` with no method is an initial task, `:htn`; with a method it is a decomposed one, a plan line. The IPC line `<id> <task> <args> -> <method> <child ids>` fixes what the ground compound carries: task, bindings, method, children. Basis: the IPC format for the slot list. Whether the parent lists its children or each child names its parent is left to the spec; HDDL uses one `<tasknetwork-def>` for methods and the initial network and says nothing about the tree's direction.
 
 ### 2.2 Types and typed parameters
 
-Foundation. The object types are the identified classes: `BuildingComponent` with `Connector is_a` it, `Space`, `Storey`, `RobotUnit` and its machine nodes, `CapabilityType`. `common.ParameterKind` is the type vocabulary for parameters; its values are `position`, `component_reference`, `quantity`.
+Foundation. The object types are the identified classes: `BuildingComponent` with `Connector is_a` it, `Space`, `Storey`, `RobotUnit` and its machine nodes, `CapabilityType`. `ParameterKind` is the type vocabulary for parameters; it lives in process, its only reader (question 7), with the values `component`, `location`, and `robot` (questions 3 and 4).
 
-Shape. A keyed `ParameterDeclaration` class, key the parameter name, one slot for the kind. Probe: a keyed class with one other slot validates in the one-line form `parameters: {to: space}`, which reads as `?to - space`, and in the full form `{to: {parameter_kind: space}}`; the list form is rejected unless the slot says `inlined_as_list`. Slot names `name` and `kind` belong to product in the merged schema, so the declaration's slots need other names.
+Shape. A keyed class for a parameter declaration, `Parameter`, key the parameter name, one slot for the kind. Probe: a keyed class with one other slot validates in the one-line form `parameters: {to: location}`, which reads as `?to - location`, and in the full form `{to: {parameter_kind: location}}`; the list form is rejected unless the slot says `inlined_as_list`. Slot names `name` and `kind` belong to product in the merged schema, so the declaration's slots need other names.
 
-Recommendation. `ParameterKind` becomes object kinds: `component`, a reference to a `BuildingComponent` or subclass, and `space`, a reference to a `Space`; `position` and `quantity` leave the enum. Basis: PDDL forbids numbers as parameter values (1.2), and the foundation holds the positions and quantities a task needs as functions of objects (2.3): a component's `target_location`, `supply_location`, `current_location`, `weight`; a robot's `load_capacity`, `precision`. Every parameter is then a reference, so it projects as an edge and is existence-checked at tier 2. A `Space` has no coordinates today, so a leaf handed a `Space` has a node, not a point; that belongs to the derivation slice.
+Basis. Every kind is an object kind: `component` refers to a `BuildingComponent` or subclass, `location` to a `Space` for now, named so that a finer location object can join later, and `robot` to a machine id such as `sam100_1`. `position` and `quantity` are gone, because PDDL forbids numbers as parameter values (1.2) and the foundation holds the positions and quantities a task needs as functions of objects (2.3): a component's `target_location`, `supply_location`, `current_location`, `weight`; a robot's `load_capacity`, `precision`. Every parameter is then a reference, so it projects as an edge and is existence-checked at tier 2. The robot is an ordinary parameter, as Transport threads `?v - vehicle` through `deliver`, `m-deliver`, and every action (1.5, 1.6); HDDL Def. 3 lets a network stay unground until later, so binding it at stage two is within the formalism. A `Space` has no coordinates today, so a leaf handed a `Space` has a node, not a point; that belongs to the derivation slice.
 
-Brief difference. The brief's checked assumption "a closed set of parameter kinds covers every primitive in the reference" was checked with `position` and `component_reference` (`parameter-kinds-mapping.md` §1). It still holds, with different kinds. The same note's §2 item 4 excludes a resource reference as a kind, and the brief binds the robot through a special slot, `assigned_unit`. In Transport the vehicle is an ordinary parameter threaded through `deliver`, `m-deliver`, and every action (1.5, 1.6). HDDL Def. 3 lets a network stay unground until later, so a robot parameter bound at stage two is within the formalism. Adding `robot` as a kind would make every binding one construct and let a method say two subtasks use one robot by repeating the variable; keeping `assigned_unit` keeps the brief's decision as written. Left as a question (part 4).
+Brief change. The checked assumption "a closed set of parameter kinds covers every primitive in the reference" was first checked with `position` and `component_reference` (`parameter-kinds-mapping.md` §1); it holds with the new kinds and the brief's item was rewritten. `assigned_unit` is retired in favour of the `robot` parameter's binding (question 3). The brief's relation kinds table gained rows for `location` and `robot`.
 
 ### 2.3 Predicates and functions
 
@@ -257,59 +255,59 @@ Foundation. Every reference and enum slot is a predicate: `located_in`, `contain
 
 Shape. Nothing in `process.yaml`. Comparisons across them are the planner's or a tier 3 query's.
 
-Recommendation. No process slot for any predicate or function the foundation holds. Basis: the foundation. The brief's Capacity kind is such a comparison and belongs in `CHECKS.md` when specified. No brief difference.
+Basis. The foundation. The brief's Capacity row now says so: a fact on the component compared against a fact of the machine, not a parameter; it belongs in `CHECKS.md` when specified.
 
 ### 2.4 Primitive tasks
 
 Foundation. `CapabilityType` in common; `Quantity` for the duration.
 
-Shape. `PrimitiveTask` with `id`, the action name; `parameters`, the keyed map of 2.2; `requires`, a multivalued reference to `CapabilityType`, the one condition the model states; `duration`, an inlined `Quantity`; `description`. No precondition or effect slots: the brief defers effects and component state, and the sources place them in a formula language the brief excludes. `requires` is the `over all` condition `(over all (offers ?r <capability>))` that the export in `robot-entry-as-type.md` writes; the `free` lock there is the export's.
+Shape. `PrimitiveTask` with `id`, the action name; `parameters`, the keyed map of 2.2, every primitive declaring its `robot` parameter; `requires`, a multivalued reference to `CapabilityType`, the one condition the model states; `duration`, an inlined `Quantity`, required; `description`. No precondition or effect slots: the brief defers effects and component state, and the sources place them in a formula language the brief excludes. `requires` is the `over all` condition `(over all (offers ?r <capability>))` that the export in `robot-entry-as-type.md` writes; the `free` lock there is the export's.
 
-Recommendation. As above, `duration` required. Basis: HDDL 2.1 puts durations on primitive tasks only (1.4), and every Transport primitive but `noop` carries one. Limit to record: `(= ?duration (road-length ?l1 ?l2))`, a duration depending on the parameters, has no expression in a `Quantity`; the model states one value per primitive. The action name is the BT leaf's registration name, so `id` keeps the pattern `^[A-Za-z][A-Za-z0-9]*$`. No brief difference.
+Basis. HDDL 2.1 puts durations on primitive tasks only (1.4), and every Transport primitive but `noop` carries one. Limit to record: `(= ?duration (road-length ?l1 ?l2))`, a duration depending on the parameters, has no expression in a `Quantity`; the model states one value per primitive. The action name is the BT leaf's registration name, so `id` keeps the pattern `^[A-Za-z][A-Za-z0-9]*$`.
 
 ### 2.5 Compound tasks
 
 Shape. `CompoundTask` with `id`, `parameters` as in 2.2, `description`. Nothing else, as 1.5 says.
 
-Recommendation. Parameters declared, and a tier 2 check that every subtask's arguments match its task's declared parameters in number and kind. Basis: HDDL's argument for explicit declarations (1.5). Primitive and compound ids share one namespace, since a method's network is "over the names TP ∪ TC" (HDDL Def. 2); tier 2 checks that no name is both. No brief difference.
+Basis. Parameters are declared, and tier 2 checks that every subtask's parameter sequence matches its task's declared parameters in number and kind, which is HDDL's argument for explicit declarations (1.5). Primitive and compound ids share one namespace, since a method's network is "over the names TP ∪ TC" (HDDL Def. 2); tier 2 checks that no name is both.
 
 ### 2.6 Methods
 
 Foundation. `MaterialName` in common joins product's `material` to the method's applicability.
 
-Shape. `Method` with `id`; `task`, a reference to `CompoundTask`, HDDL's `:task`; `parameters`, the keyed map of 2.2; `subtasks` and `ordering` (2.7); `description`. Applicability: the brief's `applies_to`, a list of material strings, is HDDL's type constraint on a parameter (1.7, Definition 1) realised through the method's own declaration of that parameter, which HDDL says exists to restrict "the abstract task's parameters to subtypes" (1.6). Its place is therefore the method's declaration of its component parameter, an optional slot beside the kind: `c: {parameter_kind: component, applies_to: [Brick]}`. On the method it is ambiguous once a method has two component parameters.
+Shape. `Method` with `id`; `task`, a reference to `CompoundTask`, HDDL's `:task`; `parameters`, the keyed map of 2.2, declaring every variable the subtasks use, a superset of the task's parameters (HDDL §3, p. 4; question 4); `subtasks` and `ordering` (2.7); `description`. Applicability: the brief's `applies_to`, a list of material strings, is HDDL's type constraint on a parameter (1.7, Definition 1) realised through the method's own declaration of that parameter, which HDDL says exists to restrict "the abstract task's parameters to subtypes" (1.6). Its place is therefore the method's declaration of its component parameter, an optional slot beside the kind: `c: {parameter_kind: component, applies_to: [Brick]}`. On the method it would be ambiguous once a method has two component parameters.
 
-Recommendation. Applicability on the parameter declaration. Basis: HDDL §4, p. 7 and Def. 1. Brief difference: the brief's default puts `applies_to` on `Method`; the list and its matching by membership are unchanged, only the place moves.
+Basis. HDDL §4, p. 7 and Def. 1. Brief change: `applies_to` moved from `Method` to the component parameter declaration; the list and its matching by membership are unchanged.
 
 No method preconditions and no method effects. Basis: 1.6 and 1.11; the brief agrees.
 
-`subtasks` required with at least one. Basis: HDDL allows an empty network but its example gives it meaning through a method precondition, which is excluded here, and Transport writes the "already there" case as a `noop` primitive with a precondition (1.6). Brief difference: the brief's tier 3 example "a method has an empty network without declaring it" presumes a declaration that does not exist; replace it.
+`subtasks` required with at least one. Basis: HDDL allows an empty network but its example gives it meaning through a method precondition, which is excluded here, and Transport writes the "already there" case as a `noop` primitive with a precondition (1.6). Brief change: the tier 3 example "a method has an empty network without declaring it" presumed a declaration that does not exist and was replaced.
 
 ### 2.7 The task network
 
-Shape. Three classes.
+Shape. One entry class and one array slot, no ordering class, no identified occurrence. The shape is `rep_b.yaml` in Appendix B.3.
 
-`Subtask`, identified: `id`, the HDDL `<subtask-id>`; the task it stands for; `arguments`. Basis for identification: Definition 1 always has identifiers (1.7). The task is a `PrimitiveTask` or a `CompoundTask`, and no parent class is allowed in this schema set. Probe: an `any_of` range renders as two strings and checks nothing; two reference slots with an `exactly_one_of` rule reach tier 1 when the rule carries a precondition, and do not when it carries none. Recommendation: two slots plus the rule. Basis: probe.
+`Subtask`, the entry class of the method's `subtasks`, without key or identifier: the task it names, primitive or compound, and `parameters`, a list of strings in the order of that task's declared parameters, each a method variable or an object id. This is HDDL's subtask, "a task is given by its name, followed by a parameter sequence" (HDDL §2), with the entry's position in the list standing for the `<subtask-id>`. Basis for the list of strings over a keyed map: it is the source's own form, it needs no class of its own, and the brief asks for the plainest authoring entry with the checks in tier 2, which verifies the count and each entry against the task's declaration. How the entry names its task is left to the spec; the probe records what each option buys: an `any_of` range renders as two strings and checks nothing; two reference slots with an `exactly_one_of` rule reach tier 1 when the rule carries a precondition, and not when it carries none; one string slot leaves the check to tier 2.
 
-`ArgumentBinding`, keyed by the parameter name of the referenced task, one string value: a method parameter name or an object id. Basis: 1.7, arguments are method variables or constants. Tier 2 resolves which and checks that `Method.parameters` covers every variable used.
+`ordering`, a slot of the method: a list of position pairs, `[[1, 2], [2, 3], [3, 4]]`, each pair meaning that the first subtask ends before the second starts. It is a LinkML `array` slot of two dimensions, the one construct that admits a list of pairs; the validator accepts any array there (Appendix A), so pair shape and position existence are tier 2 checks. Basis for whole-task ordering: both HDDL grammars order whole tasks and Transport does too; ordering over start and end events is HDDL 2.1's Definition 6 with a proposed syntax no benchmark uses (1.7). Brief change: the default "ordering is over start and end events from the start" was reversed.
 
-`OrderingConstraint`, a class marked `represents_relationship`, no identifier, two slots `before` and `after` with `relational_role` SUBJECT and OBJECT over `Subtask`, meaning `before` ends before `after` starts. Probe: such a class lints, validates, and renders as a plain object. Recommendation: whole-task ordering, HDDL's `(t1 < t2)`. Basis: both HDDL grammars order whole tasks and Transport does too; ordering over start and end events is HDDL 2.1's Definition 6 with a proposed syntax no benchmark uses (1.7). Two optional event slots or an operator slot are additive later. Brief difference: the brief's default "ordering is over start and end events from the start" is reversed. Name: the sources call the construct an ordering constraint; the map's `Precedence` is the retired reference's word for a narrower relation.
+Not a node. The entry is flattened onto the method with its position as prefix, and its task reference becomes one edge from the method to the task carrying the position, two parallel edges when the same task occurs twice. Brief change: an unkeyed multivalued inlined object is an ordered list keyed by position, where the brief used to refuse it, and the rule table needs a case for a two-dimensional array of primitives, since a Neo4j property holds flat lists only; the spec decides how it flattens. Basis: Appendix B shows planning indifferent to whether the occurrence is a node (A), an entry (B), or the primitive itself (C), so the choice rested on the graph alone and fell to B; `rep_b.yaml` validates against a LinkML schema of this shape (Appendix A).
 
-Total order. Transport writes total orders with `:ordered-subtasks` and nothing else; the explicit form needs a constraint per pair. The sources treat both as first-class. A flag whose edges the component derives from list order would be a rule keyed on a named slot, which the brief reserves for `count`; the explicit form needs no rule. Recommendation: the explicit form. Basis: the brief's own projection rule, not the sources, which are indifferent.
+Total order. Transport writes total orders with `:ordered-subtasks` and nothing else (1.8). A document carries pairs, so every export writes the explicit labelled form, ids `t1` to `tn` made from the positions, as B.4 does; the forms are interchangeable (1.8).
 
-Constraints, `(not (= ?a ?b))`: not needed by the brief's examples; a `ParameterConstraint` class later.
+Constraints, `(not (= ?a ?b))`: not needed by the brief's examples; a class for them later.
 
 Acyclicity: "have to induce a partial order" is a whole-network property, tier 3.
 
 ### 2.8 The problem side
 
-Shape. The two ground classes of 2.1. Bindings: one keyed class, key the parameter name, one value slot per kind, exactly one filled. Probe: the exactly-one rule fires in list form or when its precondition names a slot that stays inside the object; in a dict-form map the key is lifted out, so a precondition on it never fires. Under 2.2 every value is a reference, so a single reference slot would do if the kind is read from the declaration at tier 2.
+Shape. The two ground classes of 2.1. Bindings: one keyed class, key the parameter name, one value slot holding an object id; under 2.2 every value is a reference, and the kind is read from the declaration at tier 2. Probe, for the record: an exactly-one rule over several value slots fires in list form or when its precondition names a slot that stays inside the object, and never in a dict-form map, where the key is lifted out.
 
-Ordering among roots and among children. Transport authors ordering between the initial tasks, `:ordering ( )`, and no HDDL file writes ordering among a decomposition's children; Definition 5 derives it from the method (1.10). Whether ground documents carry the derived copy is open (part 4).
+Ordering among roots and among children. Ground documents order only the parentless compounds, as Transport authors `:ordering ( )` on the initial tasks; a compound's children take their order and their bindings from the method, by Definition 5, and no copy is written (question 2). The root network can take the same shape as a method body, a list of references to `CompoundTaskInstance`s and an `ordering` of position pairs (question 8); the spec fixes it.
 
-Required keys. The catalogue is hand-authored; the ground side is planner output. Product adopted required-everywhere for pipeline output. Recommendation: the same split here. Basis: this note's reading; the sources say nothing about document shape.
+Required keys. The catalogue is hand-authored; the ground side is planner output and follows the required-everywhere rule product adopted for pipeline output. Basis: this note's reading; the sources say nothing about document shape.
 
-The robot binding. Under the brief, `assigned_unit` on the ground primitive, range `RobotUnit`, pointing at a machine id that the `count` expansion yields and no document holds; checked at tier 2 against the expanded ids. Under the alternative in 2.2, the same value is the binding of a `robot` parameter. Either way the check is tier 2.
+The robot binding. The `robot` parameter's binding on the `PrimitiveTaskInstance`, pointing at a machine id that the `count` expansion yields and no document holds; checked at tier 2 against the expanded ids. The planner binds it through `requires` and `offers`; stage two may rewrite it with another machine of the same entry (question 3).
 
 Example. The instance example names ids from `examples/product/` and machine ids from `examples/resource/`, since those documents are the objects. Basis: this note's reading of 2.1.
 
@@ -323,7 +321,7 @@ No `:goal`: the parentless ground compounds are the problem statement (1.9). No 
 
 ## Part 3. Changes to the foundation and the brief
 
-Derived from part 2. "Decided by the sources" means a passage or a probe settles it; the rest are this note's recommendations.
+Derived from part 2 and written into the brief and the map on 2026-09-17. "Decided by the sources" means a passage or a probe settles it.
 
 **common**
 1. `ParameterKind` leaves common for process (part 4, question 7); its values are `component`, `location`, `robot` (question 4). `dist/common.schema.json` and `docs/model/common/` regenerate; no document uses a kind yet.
@@ -378,7 +376,7 @@ None. Product's three location slots are what lets positions leave the parameter
 
 ## Appendix B. Experiment: does planning need `Subtask` as a record of its own?
 
-Run 2026-09-17 in the session scratchpad. Question: part 2.7 makes `Subtask` an identified record because ordering constraints must point at an occurrence. Does anything on the planning side need that, or is it only a graph concern? Method: write one method in two document shapes, export both to an HDDL `:method` block with one script, diff the outputs, and solve the resulting domain with an HTN planner. Planner: Aries through `unified-planning`, installed for the run with `uv run --with "unified-planning[aries]"`, the same route `robot-entry-as-type.md` used. Domain follows the user's framing: the material prefab selects the compound task `prefab`, refined by `m-prefab`.
+Run 2026-09-17 in the session scratchpad. Question: the first draft of part 2.7 made `Subtask` an identified record because ordering constraints must point at an occurrence. Does anything on the planning side need that, or is it only a graph concern? Method: write one method in two document shapes, export both to an HDDL `:method` block with one script, diff the outputs, and solve the resulting domain with an HTN planner. Planner: Aries through `unified-planning`, installed for the run with `uv run --with "unified-planning[aries]"`, the same route `robot-entry-as-type.md` used. Domain follows the user's framing: the material prefab selects the compound task `prefab`, refined by `m-prefab`.
 
 ### B.1 Domain and problem
 
