@@ -2,7 +2,7 @@
   count: 2
   activity_group:
     id: mason_m1_activity
-    offers: [grip, align, lift]
+    offers: [locomote, grip, align, lift]
     productivity: {value: 250, unit: brick/h}
     precision: {value: 2, unit: mm}
     accuracy: {value: 3, unit: mm}
