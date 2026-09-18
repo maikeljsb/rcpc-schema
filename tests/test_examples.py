@@ -3,12 +3,18 @@
 Domain modules add rows to EXAMPLES and nothing else. A row is
     path -> (schema, target class, expected error slot or None)
 where None means the document must validate and a slot name means it must fail
-with that slot in the error message.
+with that slot in the error message. A target class of BY_RECORD_TYPE means the
+file holds records of several classes: each record is validated against the
+class its record_type names, and a record without one fails the row.
 """
 from pathlib import Path
 import subprocess
+import tempfile
 
 import pytest
+import yaml
+
+BY_RECORD_TYPE = "by record_type"
 
 EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "tests/fixtures/minimal_instances.yaml": ("tests/fixtures/minimal.yaml", "Widget", None),
@@ -46,13 +52,39 @@ def validate(root: Path, schema: str, target: str, document: str) -> subprocess.
     )
 
 
+def validate_by_record_type(root: Path, schema: str, document: str) -> tuple[int, str]:
+    """Split a mixed file into one temporary file per record_type and validate each."""
+    records = yaml.safe_load((root / document).read_text(encoding="utf-8"))
+    groups: dict[str, list[dict]] = {}
+    for n, record in enumerate(records, 1):
+        record_type = record.get("record_type") if isinstance(record, dict) else None
+        if not record_type:
+            return 1, f"record {n} (id: {record.get('id', '?') if isinstance(record, dict) else '?'}) has no record_type"
+        groups.setdefault(record_type, []).append(record)
+    returncode, output = 0, ""
+    with tempfile.TemporaryDirectory() as tmp:
+        for record_type, group in groups.items():
+            part = Path(tmp) / f"{record_type}.yaml"
+            part.write_text(yaml.safe_dump(group, sort_keys=False), encoding="utf-8")
+            result = validate(root, schema, record_type, str(part))
+            returncode |= result.returncode
+            if result.returncode:
+                ids = ", ".join(str(r.get("id", "?")) for r in group)
+                output += f"record_type {record_type} (records: {ids}):\n"
+            output += result.stdout + result.stderr
+    return returncode, output
+
+
 @pytest.mark.parametrize("document", sorted(EXAMPLES))
 def test_example(root: Path, document: str) -> None:
     schema, target, expected_error_slot = EXAMPLES[document]
-    result = validate(root, schema, target, document)
-    output = result.stdout + result.stderr
-    if expected_error_slot is None:
-        assert result.returncode == 0, output
+    if target == BY_RECORD_TYPE:
+        returncode, output = validate_by_record_type(root, schema, document)
     else:
-        assert result.returncode != 0, "expected validation to fail but it passed"
+        result = validate(root, schema, target, document)
+        returncode, output = result.returncode, result.stdout + result.stderr
+    if expected_error_slot is None:
+        assert returncode == 0, output
+    else:
+        assert returncode != 0, "expected validation to fail but it passed"
         assert expected_error_slot in output, output
