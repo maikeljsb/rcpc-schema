@@ -42,12 +42,12 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
 - **Invalid documents are one real record each with one edit**, copied from the committed catalogue or plan file and broken on the slot the row names.
 - **The case-collision check is done on names, not on the folder listing.** On this Windows checkout gen-doc writes two pages that differ only by case into one file, so listing `docs/model/process/` cannot see the collision that Linux CI will. Tasks 3 and 4 instead lowercase every class, slot, enum, type, and schema name that `SchemaView` reports for the module with imports and assert no two coincide. Probed 2026-09-18: the spec's first shape had a `position` slot, whose page overwrote common's `Position.md` here; the current shape has no such pair, checked on the probe schema.
 - **Success criterion 5 is a one-off script in the scratchpad**, not committed, as product's criterion 5 was. It reads the catalogue, the plan, and the sibling example files and prints one line per tier 2 row of the spec; the todo records its output once.
-- **No dependency, no toolchain change, no new test file.** `test_examples.py` gains rows only; the `BY_RECORD_TYPE` row kind is already committed.
+- **No dependency, no new test file, one toolchain rule.** `test_examples.py` gains rows only; the `BY_RECORD_TYPE` row kind is already committed. `SPEC-toolchain.md` rule 8 (spec prerequisite 6, decided in Task 1 on 2026-09-18) gives a keyed class written only as dict values one JSON Schema definition; it lands in its own commit before Task 1's, as the other prerequisites did.
 
 ## Task List
 
 ### Phase 1: The catalogue
-- [ ] Task 1: `Task` with `PrimitiveTask` and `CompoundTask`, `Parameter`, and `ParameterKind`, end to end
+- [x] Task 1: `Task` with `PrimitiveTask` and `CompoundTask`, `Parameter`, and `ParameterKind`, end to end
 - [ ] Task 2: `Method` and `Subtask` with its rule, end to end
 
 ### Checkpoint: Phase 1
@@ -68,7 +68,7 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
 
 ### Checkpoint: Complete
 - [ ] Every success criterion in `SPEC-process.md` verified with evidence
-- [ ] `schema/common.yaml`, `schema/product.yaml`, `schema/resource.yaml`, `scripts/`, and the toolchain tests untouched by Tasks 1 to 4
+- [ ] `schema/common.yaml`, `schema/product.yaml`, `schema/resource.yaml`, `tests/test_lint.py`, and `tests/test_dist.py` untouched by Tasks 1 to 4; `scripts/build.py` and `tests/test_build.py` changed by the prerequisite 6 commit only
 - [ ] Ready for step 2 of the brief, the generator
 
 ## Risks and Mitigations
