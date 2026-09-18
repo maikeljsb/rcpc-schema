@@ -1,0 +1,4 @@
+- record_type: Method
+  id: Transport
+  description: Bring a component from where it lies to where it belongs.
+  parameters: {c: component}

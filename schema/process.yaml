@@ -1,0 +1,111 @@
+id: https://rcpc.for5672/schema/process
+name: process
+version: 0.1.0
+description: >-
+  Tasks and how they decompose. PrimitiveTask, CompoundTask, and Method as the
+  catalogue; TaskNetwork, CompoundTaskInstance, and PrimitiveTaskInstance as a
+  plan: what is asked for, and each planned occurrence bound to components,
+  spaces, and machines.
+prefixes:
+  rcpc: https://rcpc.for5672/schema/
+  linkml: https://w3id.org/linkml/
+default_prefix: rcpc
+default_range: string
+imports:
+  - linkml:types
+  - common
+  - product
+  - resource
+
+enums:
+  ParameterKind:
+    description: The kinds of object a parameter ranges over.
+    permissible_values:
+      component:
+        description: A BuildingComponent, or one of its subclasses.
+      location:
+        description: A Space.
+      robot:
+        description: One machine of a RobotUnit entry.
+
+classes:
+  Task:
+    description: >-
+      HDDL's task: a name and typed parameters, before it is said whether the
+      task is primitive or compound. The base of PrimitiveTask and CompoundTask;
+      never written as a record.
+    slots:
+      - record_type
+      - id
+      - description
+      - parameters
+    slot_usage:
+      id:
+        pattern: "^[A-Za-z][A-Za-z0-9_]*$"
+        description: The task name, unique among the tasks and methods of the catalogue.
+      description:
+        required: true
+      parameters:
+        required: true
+
+  PrimitiveTask:
+    is_a: Task
+    description: >-
+      HDDL's action: a task a robot performs directly, with what performing it
+      requires and how long it takes. Its name is what a behaviour tree registers.
+    slots:
+      - requires
+      - duration
+    slot_usage:
+      duration:
+        required: true
+
+  CompoundTask:
+    is_a: Task
+    description: >-
+      HDDL's abstract task: a task performed only by decomposing it through a
+      method. Adds nothing to Task; the class is the kind.
+
+  Parameter:
+    description: >-
+      One declared parameter of a task or a method: the kind of object it ranges
+      over and, on a method's component parameter, the materials the method
+      applies to. Written inline, keyed by the parameter's name.
+    slots:
+      - parameter_name
+      - parameter_kind
+      - applies_to
+    slot_usage:
+      parameter_name:
+        required: true
+      parameter_kind:
+        required: true
+
+slots:
+  parameters:
+    range: Parameter
+    multivalued: true
+    inlined: true
+    description: The declared parameters, keyed by name.
+  parameter_name:
+    key: true
+    description: The parameter's name, a plain word such as c, r, or from.
+  parameter_kind:
+    range: ParameterKind
+    description: The kind of object the parameter ranges over.
+  applies_to:
+    range: MaterialName
+    multivalued: true
+    description: >-
+      The materials a method applies to, as IFC spells them; a component matches
+      when its material is in the list. Set on a method's component parameter only.
+  requires:
+    range: CapabilityType
+    multivalued: true
+    required: true
+    minimum_cardinality: 1
+    description: The capabilities a robot must offer to perform the primitive task.
+  duration:
+    range: Quantity
+    inlined: true
+    description: How long one performance of the primitive task takes, recommended in seconds.

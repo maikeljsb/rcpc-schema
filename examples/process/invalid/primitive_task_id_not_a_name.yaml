@@ -1,0 +1,6 @@
+- record_type: PrimitiveTask
+  id: Move-To
+  description: Drive the robot to a space.
+  parameters: {r: robot, to: location}
+  requires: [locomote]
+  duration: {value: 120, unit: s}

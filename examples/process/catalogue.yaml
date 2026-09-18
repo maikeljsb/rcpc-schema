@@ -1,0 +1,32 @@
+- record_type: PrimitiveTask
+  id: MoveTo
+  description: Drive the robot to a space.
+  parameters: {r: robot, to: location}
+  requires: [locomote]
+  duration: {value: 120, unit: s}
+- record_type: PrimitiveTask
+  id: Attach
+  description: Take hold of a component where it lies.
+  parameters: {r: robot, c: component, at: location}
+  requires: [grip]
+  duration: {value: 60, unit: s}
+- record_type: PrimitiveTask
+  id: Detach
+  description: Release the held component in the space the robot has reached.
+  parameters: {r: robot, c: component, at: location}
+  requires: [grip]
+  duration: {value: 60, unit: s}
+- record_type: PrimitiveTask
+  id: Place
+  description: Lift the held component and set it down aligned at its target.
+  parameters: {r: robot, c: component, at: location}
+  requires: [lift, align]
+  duration: {value: 180, unit: s}
+- record_type: CompoundTask
+  id: Transport
+  description: Bring a component from where it lies to where it belongs.
+  parameters: {c: component}
+- record_type: CompoundTask
+  id: ConstructComponent
+  description: Build one component of the building where the design puts it.
+  parameters: {c: component}
