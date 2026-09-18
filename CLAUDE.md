@@ -2,7 +2,7 @@
 
 LinkML model of the Product Process Graph, one module per file under `schema/`. `CAPABILITY-MAP.md` indexes the modules; each has a `SPEC-<id>.md` beside it.
 
-Always read: `docs/ideas/linkml-product-process-graph-schema.md` (the brief, authoritative) and `CAPABILITY-MAP.md`.
+Read first, by phase. Specifying or planning a module: the brief `docs/ideas/linkml-product-process-graph-schema.md` (authoritative) and `CAPABILITY-MAP.md`. Implementing a task from `tasks/todo.md`: that module's `SPEC-<id>.md`, `tasks/plan.md`, and `CAPABILITY-MAP.md`; open the brief only where the spec points at it.
 
 ## Index
 
