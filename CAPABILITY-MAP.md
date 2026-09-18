@@ -8,7 +8,7 @@ Approved 2026-09-10. This map is the index of module specs: each module id names
 | `common` | Position, Quantity, Interval, CapabilityType | toolchain |
 | `product` | BuildingComponent, Connector (a subclass of it), Space, Storey, and their enums | common |
 | `resource` | RobotUnit with id, count and status; PhysicalProperty, OperationalRequirement, Safety, Activity | common |
-| `process` | PrimitiveTask, CompoundTask, Method with Subtask as its list entry, TaskNetwork, CompoundTaskInstance, PrimitiveTaskInstance, the keyed Parameter and Binding classes, ParameterKind | common, product, resource |
+| `process` | PrimitiveTask and CompoundTask with Task as their base, Method with Subtask as its list entry, TaskNetwork, CompoundTaskInstance and PrimitiveTaskInstance with TaskInstance as theirs, the keyed Parameter and Binding classes, ParameterKind | common, product, resource |
 
 Build order: `toolchain` → `common` → `product`, `resource` → `process`.
 
