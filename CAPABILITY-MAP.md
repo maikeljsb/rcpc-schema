@@ -8,7 +8,7 @@ Approved 2026-09-10. This map is the index of module specs: each module id names
 | `common` | Position, Quantity, Interval, CapabilityType | toolchain |
 | `product` | BuildingComponent, Connector (a subclass of it), Space, Storey, and their enums | common |
 | `resource` | RobotUnit with id, count and status; PhysicalProperty, OperationalRequirement, Safety, Activity | common |
-| `process` | PrimitiveTask, CompoundTask, Method with Subtask as its list entry, PrimitiveTaskInstance, CompoundTaskInstance, the keyed Parameter class, ParameterKind | common, product, resource |
+| `process` | PrimitiveTask, CompoundTask, Method with Subtask as its list entry, TaskNetwork, CompoundTaskInstance, PrimitiveTaskInstance, the keyed Parameter and Binding classes, ParameterKind | common, product, resource |
 
 Build order: `toolchain` → `common` → `product`, `resource` → `process`.
 
@@ -17,3 +17,5 @@ Rules:
 - Dependencies point one way. `product` and `resource` never reference each other.
 - The shape of anything a module exposes is specified in that module's spec, not in its consumers'.
 - Each module runs Specify → Plan → Tasks → Implement in the order above, gated on review at each phase.
+
+Follow-up, not scheduled: `product`'s four example files by class may merge into one self-describing file split by `record_type` for validation, as `process` does (`SPEC-process.md` decision 16, `SPEC-product.md` decision 16). Recorded 2026-09-18.

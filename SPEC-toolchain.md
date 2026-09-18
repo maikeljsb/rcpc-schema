@@ -89,13 +89,15 @@ tests/
                               docs folder created, stale outputs removed, empty schema/ is a no-op
   test_lint.py                every schema/*.yaml lints clean (skips cleanly when none exist)
   test_examples.py            every examples/**/*.yaml validates against the class named in
-                              EXAMPLE_TARGETS; every examples/invalid/*.yaml fails
+                              EXAMPLE_TARGETS, or, for a row whose class is "by record_type",
+                              each record against the class its record_type names; every
+                              examples/invalid/*.yaml fails
   test_dist.py                committed dist/ and docs/model/ equal a fresh build; every
                               dist/*.schema.json passes Draft202012Validator.check_schema
 .github/workflows/ci.yml      install uv, uv sync, uv run pytest
 ```
 
-`EXAMPLE_TARGETS` is one dictionary in `test_examples.py` mapping an example path to its target class. Domain modules add rows; nothing else changes.
+`EXAMPLE_TARGETS` is one dictionary in `test_examples.py` mapping an example path to its target class. Domain modules add rows; nothing else changes. One row kind besides a class name, added 2026-09-18 for process: the class value `by record_type` makes the harness group the file's records by their `record_type`, write each group to a temporary file, and validate it with `-C <record_type>`; a record with no `record_type`, or one naming no class, fails the row naming the record. `linkml-validate` itself reads one class per run and never reads a designator.
 
 ## Code Style
 
@@ -177,7 +179,7 @@ Checkable by anyone with git and uv:
 6. Nothing exists under `schema/` except `.gitkeep`.
 7. `uv run python scripts/build.py` with no flag creates `dist/viewer/` by default; `--no-viewer-schemas` suppresses it; an empty `schema/` creates neither `dist/viewer/` nor its README (nothing to link).
 8. Built from `tests/fixtures/minimal.yaml` and `tests/fixtures/importer.yaml` (a second fixture, added by this amendment, that imports `minimal` and declares one class referencing one of `minimal`'s), `dist/viewer/importer.schema.json`'s `$defs` hold only `importer`'s own `Crate`, with its reference to `minimal`'s `Dimensions` rewritten to `"minimal.schema.json#/$defs/Dimensions"`; both files, uploaded together to `rcpc-schema-viewer` (`C:\Users\go25qoh\Repos\rcpc-schema-viewer`), resolve with no stub class for `minimal.schema.json`. Chosen over the real `resource`/`common` pair because, at the time of writing, nothing in `resource.yaml` actually produces a live cross-module `$ref` yet (`offers` is a bare id array, not inlined) — the fixture proves the algorithm independent of `resource`'s in-progress state, matching how `test_build.py`'s other tests already avoid depending on any domain module.
-9. No `dist/*.schema.json` or `dist/viewer/*.schema.json` contains `"null"` as a type, and each opens with `$schema` then `$id`.
+9. No optional slot in `dist/*.schema.json` or `dist/viewer/*.schema.json` carries `"null"` in its type, and each file opens with `$schema` then `$id`. Narrowed 2026-09-18: a LinkML `array` slot renders with the generator's lax item type list, which contains the word `"null"` among six type names (linkml issue 2188); process's `ordering` slot is the first such slot, and that rendering is accepted.
 
 ## Open Questions
 

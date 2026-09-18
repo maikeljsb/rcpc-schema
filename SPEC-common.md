@@ -4,7 +4,7 @@
 
 ## Objective
 
-Define the shared vocabulary every other module imports: the three value types, `Position`, `Quantity`, and `Interval`, the `MaterialName` string type that joins product to process, the closed set of parameter kinds, and the capability vocabulary that the process side requires and the resource side offers. Deliver it as `schema/common.yaml`, the first real module through the toolchain, with its example document, generated JSON Schema, and generated documentation.
+Define the shared vocabulary every other module imports: the three value types, `Position`, `Quantity`, and `Interval`, the `MaterialName` string type that joins product to process, and the capability vocabulary that the process side requires and the resource side offers. Deliver it as `schema/common.yaml`, the first real module through the toolchain, with its example document, generated JSON Schema, and generated documentation.
 
 **Users.** The three domain modules, which import it and must not redefine anything it provides. Other project teams, who read `docs/model/common/` to learn what a position, a quantity, and a capability look like before they read anything else. The schema viewer, which loads `dist/common.schema.json`.
 
@@ -57,7 +57,7 @@ name: common
 version: 0.1.0
 description: >-
   Shared vocabulary for the Product Process Graph: value types, the material name
-  type, the parameter kinds, and the capability types. Imported by every other module.
+  type, and the capability types. Imported by every other module.
 prefixes:
   rcpc: https://rcpc.for5672/schema/
   linkml: https://w3id.org/linkml/
@@ -82,12 +82,6 @@ imports:
 |---|---|---|
 | `MaterialName` | `string` | An IFC material name exactly as it appears in the model. The product side's `material` slot and the process side's `applies_to` list both use this type, and method selection joins them by exact match. Declared once so the join is visible in the docs and neither module reaches into the other for it. In generated JSON Schema it is inlined as a plain string; its meaning is carried by the docs. |
 
-### Enum
-
-| Enum | Values | Notes |
-|---|---|---|
-| `ParameterKind` | `position`, `component_reference`, `quantity` | The closed set of value kinds a task parameter may have. Each value's description names the class or reference it binds to. |
-
 ### Shared slots
 
 `id` (`identifier: true`), `description`, `x_coord`, `y_coord`, `z_coord`, `value`, `minimum`, `maximum`, `unit` (shared by `Quantity`, `Position`, and `Interval`), and the four dimension slots `length`, `width`, `height`, `weight`, each range `Quantity`, `inlined: true`, added 2026-09-12 for resource and product. Defined here once; domain modules reuse them and never redeclare them. `id` is unique among instances of its class, not across the document set: every reference slot declares its range, so the class is always known and the id carries no namespace. There is no `label` slot in common. A class whose id is not a readable name, such as a robot type, brings `label` with it when its module is specified.
@@ -98,14 +92,13 @@ Not in this module now. Listed so they land here, and nowhere else, when they ar
 
 - **Rotation, or a Pose combining Position and Rotation.** The parameter-kinds research notes that `Detach` as a bare position drops orientation, and the product side has a rotation. Arrives with the first task that needs placement orientation, possibly as a fourth `ParameterKind`.
 - **Provenance.** Dropped from `Quantity` here and deferred with Plan and Run. Arrives with execution records as a value type shared by everything that records where a fact came from.
-- **Further `ParameterKind` values.** `enumeration` and `resource_reference` were deferred by the research note. Adding a value is additive.
 - **On `CapabilityType`:** `aliases` if a published verb is renamed and old names need a grace period; `mappings` to external ontology terms when ontology alignment begins. Explored 2026-09-11 and declined for now; `id` and `description` are enough.
 
 Other shared classes are added as the project identifies them, by amending this spec first.
 
 ### Fixed by the brief
 
-Closed parameter kinds are Position, ComponentReference, Quantity (research note `parameter-kinds-mapping.md`). Duration is a Quantity-typed slot, not a kind. CapabilityType lives here because process `requires` it and resource `offers` it. `offers` is a flat set, so CapabilityType carries no level or qualifier. One coordinate frame, no frame slot; a unit slot is not a frame slot. No graph vocabulary or annotations. Every element has a description.
+Duration is a Quantity-typed slot on `PrimitiveTask`, not a parameter kind. CapabilityType lives here because process `requires` it and resource `offers` it. `offers` is a flat set, so CapabilityType carries no level or qualifier. One coordinate frame, no frame slot; a unit slot is not a frame slot. No graph vocabulary or annotations. Every element has a description.
 
 ## Code Style
 
@@ -150,16 +143,16 @@ No new test files. This module lights up the tests the toolchain left waiting an
 
 **Always.** Every class, slot, enum, and permissible value has a description. Rebuild `dist/` and `docs/model/` in the same commit as the YAML. `uv run pytest` passes before committing. Conventional Commits. LF.
 
-**Ask first.** Adding a class, type, slot, or enum value beyond the ones listed under The Model, including the foreseen additions before their trigger arrives. Adding a fourth parameter kind. Making `unit` an enum. Changing the schema `id` or prefix. Moving anything into common from another module.
+**Ask first.** Adding a class, type, slot, or enum value beyond the ones listed under The Model, including the foreseen additions before their trigger arrives. Making `unit` an enum. Changing the schema `id` or prefix. Moving anything into common from another module.
 
 **Never.** `tree_root: true` on any class. Graph vocabulary or annotations. Hand edits under `dist/` or `docs/model/`. Redefining any slot this module declares, `id`, `description`, `value`, `unit`, or the coordinate slots, in another module; a module lists them and refines them with `slot_usage`. A container or payload class.
 
 ## Success Criteria
 
 1. `uv run pytest` passes with `test_lint.py` and `test_dist.py` no longer skipped: 1 lint test, 1 meta-schema test, and 2 new example rows collected and passing.
-2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `Interval`, `CapabilityType`, and `ParameterKind`. `MaterialName` does not appear: LinkML inlines types onto the slots that use them by default, so a `MaterialName` slot renders as a plain string, which is the preferred rendering for the viewer. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
+2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `Interval`, and `CapabilityType`. `MaterialName` does not appear: LinkML inlines types onto the slots that use them by default, so a `MaterialName` slot renders as a plain string, which is the preferred rendering for the viewer. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
 3. `dist/README.md` lists `common.schema.json` with the module description.
-4. `docs/model/common/index.md` lists four classes, thirteen slots, one enum, and one type, `MaterialName`. Every page has a description.
+4. `docs/model/common/index.md` lists four classes, thirteen slots, no enum, and one type, `MaterialName`. Every page has a description.
 5. `examples/common/capability_types.yaml` contains the four core capability types, `locomote`, `grip`, `lift`, `align`, with `id` and `description` only; every id is a bare verb and the word "element" appears in none of them.
 6. Another team's check: given only `docs/model/common/`, a person adds an eleventh capability type to the example file and `uv run pytest` still passes. Recorded as done when it has happened once; not blocking.
 7. The toolchain was not changed by this module's own work. One exception, recorded: using common surfaced a toolchain bug, stale pages surviving inside a module's docs folder when an element is removed, fixed in a separate `fix(build)` commit with its own test. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows that commit and no other from this module.
@@ -179,6 +172,7 @@ No new test files. This module lights up the tests the toolchain left waiting an
 11. **The four dimension slots live here.** Decided 2026-09-12 in resource's Phase 1: slots are global to the merged schema and product does not import resource, so a slot both need is declared in the module both import. `weight` is also what the brief's Capacity check compares against load capacity.
 12. **`Position` carries `unit`, required.** Decided 2026-09-14 in resource's Task 3 review. Before this, `Position` was three floats whose unit was a sentence in its description, "the project's units, read from the IFC," which the schema itself could not see: a `Position` was only meaningful inside the document that produced it. Resource's mount offsets, a sensor's or manipulator's installation point on the robot body, needed a unit-carrying point and got a second class, `MountPosition`, which sidestepped the brief's one-frame rule by name. Putting `unit` on `Position` makes a point self-describing wherever it is written, retires `MountPosition`, and leaves the brief untouched: it forbids a frame slot, and a unit is not a frame. Product's derived positions write the unit the IFC parse read them in, redundant with the IFC and harmless. The schema stays at eleven shared slots; `unit` was already declared for `Quantity`.
 13. **`Position` is a triple with a unit, not only a point.** Decided 2026-09-14 in resource's Task 3 review. Resource's manipulator reach is three extents along the robot's axes with one unit, the same data as a point and nothing more; a second class for it would duplicate `Position` under another name. The description now reads "a point, or an extent along each axis", and the owning slot says which it holds.
+14. **`ParameterKind` moved to process.** Decided 2026-09-17 in process's Phase 1 and applied 2026-09-18: its only reader is process, and its values, `component`, `location`, `robot`, name classes common cannot see. Common carries no enum.
 
 ## Open Questions
 
