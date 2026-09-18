@@ -48,11 +48,11 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
 
 ### Phase 1: The catalogue
 - [x] Task 1: `Task` with `PrimitiveTask` and `CompoundTask`, `Parameter`, and `ParameterKind`, end to end
-- [ ] Task 2: `Method` and `Subtask` with its rule, end to end
+- [x] Task 2: `Method` and `Subtask` with its rule, end to end
 
 ### Checkpoint: Phase 1
-- [ ] `uv run pytest` passes with ten process rows collected
-- [ ] `dist/process.schema.json` has `minItems: 1` on `requires` and `Method.subtasks`, a bare `if`/`then` on `Subtask`, and `"null"` exactly once, in `Method.ordering.items.type`
+- [x] `uv run pytest` passes with ten process rows collected
+- [x] `dist/process.schema.json` has `minItems: 1` on `requires` and `Method.subtasks`, a bare `if`/`then` on `Subtask`, and `"null"` exactly once, in `Method.ordering.items.type`
 - [ ] Review with human
 
 ### Phase 2: The plan side

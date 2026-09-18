@@ -32,14 +32,14 @@ Plan: `tasks/plan.md`. Spec: `SPEC-process.md`. Each task is one Conventional Co
 **Description:** Add `Method` and `Subtask` as the spec's Code Style block shows them, declaring `compound_task`, `primitive_task`, `subtasks`, `ordering`, and `arguments`, and the one class rule on `Subtask` with its precondition on `arguments`. Append `m_transport` and `m_prefab` to `catalogue.yaml` exactly as the spec's excerpt writes them, `m_prefab`'s `c` in the full form with `applies_to: ["Basic Wall:Exterior - Brick on Block"]`. Copy `m_transport` into each of the four invalid documents and break it. Add four rows. Rebuild and commit as `feat(process): add Method with its subtasks and ordering`.
 
 **Acceptance criteria:**
-- [ ] `catalogue.yaml` validates through the split with three groups and eight records
-- [ ] The four invalid documents fail naming `parameter_kind`, `subtasks`, `subtasks`, `ordering` respectively; the two-task document's message contains `/subtasks/`
-- [ ] `dist/process.schema.json` `Subtask` carries a bare `if`/`then`; `subtasks` carries `minItems: 1`; the string `"null"` occurs exactly once, inside `Method.ordering.items.type`
+- [x] `catalogue.yaml` validates through the split with three groups and eight records
+- [x] The four invalid documents fail naming `parameter_kind`, `subtasks`, `subtasks`, `ordering` respectively; the two-task document's message contains `/subtasks/`
+- [x] `dist/process.schema.json` `Subtask` carries a bare `if`/`then`; `subtasks` carries `minItems: 1`; the string `"null"` occurs exactly once, inside `Method.ordering.items.type`
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest` with four new rows collected, ten process rows in all
-- [ ] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
-- [ ] Manual check: `docs/model/process/Subtask.md` shows a Rules table with the rule's description; `Method.md` lists `ordering` with its description
+- [x] Tests pass: `uv run pytest` with four new rows collected, ten process rows in all
+- [x] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
+- [x] Manual check: `docs/model/process/Subtask.md` shows a Rules table (gen-doc prints its preconditions only, never a rule's description or an `exactly_one_of` postcondition, the same as product's rule); `Method.md` lists `ordering` with its description
 
 **Dependencies:** Task 1
 
@@ -53,8 +53,8 @@ Plan: `tasks/plan.md`. Spec: `SPEC-process.md`. Each task is one Conventional Co
 **Estimated scope:** Medium
 
 ## Checkpoint: Phase 1
-- [ ] `uv run pytest` passes with ten process rows collected
-- [ ] Generated schema checked as above
+- [x] `uv run pytest` passes with ten process rows collected
+- [x] Generated schema checked as above
 - [ ] Review with human before Task 3
 
 ## Task 3: `TaskInstance` with its two subclasses, `TaskNetwork`, and `Binding`, end to end

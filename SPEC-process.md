@@ -386,7 +386,7 @@ Conventions specific to this module:
 - **Two forms for a declaration, one for a binding.** `r: robot` and `c: {parameter_kind: component, applies_to: [...]}` are both valid `Parameter` entries; a `Binding` is always the one-line `r: mason_m1_1`.
 - **One ordering mechanism.** Wherever tasks are ordered, on a method, on a network, or under a decomposed compound, it is a list with positions from 1 and `ordering` as pairs of positions. A compound instance carries no `ordering` of its own; its list is in its method's order and the method's pairs apply. Nothing else orders anything.
 - **Catalogue descriptions say what the task does**, one sentence in the imperative, as a capability description opens with its verb. Nothing about which robots or methods use it.
-- **Every rule has a `description`** in the indicative, so the generated Rules table reads as prose.
+- **Every rule has a `description`** in the indicative, for the reader of the YAML. gen-doc's Rules table prints neither the description nor an `exactly_one_of` postcondition, only `slot_conditions` (seen on product's rule and on `Subtask` on 2026-09-18), so the YAML is where a rule is read.
 - **`inlined: true` stated on every object-valued slot**, `parameters`, `subtasks`, `bindings`, `duration`; a reference slot states `range` alone.
 - **No `record_type` on `Parameter`, `Subtask`, `Binding`**, which are never documents; on everything that is.
 
