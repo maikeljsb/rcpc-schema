@@ -997,6 +997,80 @@
       ],
       "title": "CompoundTask"
     },
+    "Method": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "One way to decompose a compound task into an ordered network of subtasks.",
+      "properties": {
+        "record_type": {
+          "type": "string",
+          "description": "Which class in this schema the record belongs to.",
+          "enum": [
+            "Method"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "description": "The method name.",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "description": {
+          "type": "string",
+          "description": "What this is, in one or two plain sentences."
+        },
+        "compound_task": {
+          "type": "string",
+          "description": "The compound task a method decomposes, a subtask names, or an instance realises."
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Parameter"
+              },
+              {
+                "$ref": "#/$defs/ParameterKind",
+                "description": "The kind of object the parameter ranges over."
+              }
+            ]
+          },
+          "description": "The declared parameters, keyed by name."
+        },
+        "subtasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Subtask"
+          },
+          "description": "The subtasks in list order, counted from 1. On a method, the entries of its decomposition; on a compound task instance, the instances that replaced it.",
+          "minItems": 1
+        },
+        "ordering": {
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "boolean",
+              "object",
+              "number",
+              "string",
+              "array"
+            ],
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [
+        "record_type",
+        "id",
+        "description",
+        "compound_task",
+        "parameters",
+        "subtasks",
+        "ordering"
+      ],
+      "title": "Method"
+    },
     "Parameter": {
       "type": "object",
       "additionalProperties": false,
@@ -1022,6 +1096,63 @@
         "parameter_kind"
       ],
       "title": "Parameter"
+    },
+    "Subtask": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "One entry of a method's subtask list: the task it names and the arguments it passes, in that task's parameter order. Its position in the list, counted from 1, is what ordering refers to.",
+      "properties": {
+        "primitive_task": {
+          "type": "string",
+          "description": "The primitive task a subtask names or an instance realises."
+        },
+        "compound_task": {
+          "type": "string",
+          "description": "The compound task a method decomposes, a subtask names, or an instance realises."
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The values a subtask passes, in the named task's parameter order: method parameter names or object ids."
+        }
+      },
+      "required": [
+        "arguments"
+      ],
+      "if": {
+        "properties": {
+          "arguments": {
+            "type": "array",
+            "items": {}
+          }
+        },
+        "required": [
+          "arguments"
+        ]
+      },
+      "then": {
+        "oneOf": [
+          {
+            "properties": {
+              "primitive_task": {}
+            },
+            "required": [
+              "primitive_task"
+            ]
+          },
+          {
+            "properties": {
+              "compound_task": {}
+            },
+            "required": [
+              "compound_task"
+            ]
+          }
+        ]
+      },
+      "title": "Subtask"
     }
   }
 }

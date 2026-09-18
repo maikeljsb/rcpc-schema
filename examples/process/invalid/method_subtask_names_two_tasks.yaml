@@ -1,0 +1,11 @@
+- record_type: Method
+  id: m_transport
+  description: Fetch the component and carry it to its target space with one robot.
+  compound_task: Transport
+  parameters: {c: component, r: robot, from: location, to: location}
+  subtasks:
+    - {primitive_task: MoveTo, compound_task: Transport, arguments: [r, from]}
+    - {primitive_task: Attach, arguments: [r, c, from]}
+    - {primitive_task: MoveTo, arguments: [r, to]}
+    - {primitive_task: Detach, arguments: [r, c, to]}
+  ordering: [[1, 2], [2, 3], [3, 4]]

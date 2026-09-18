@@ -180,6 +180,7 @@ attributes:
     - Safety
     - Activity
     - Task
+    - Method
     range: string
     required: true
   sensor_type:

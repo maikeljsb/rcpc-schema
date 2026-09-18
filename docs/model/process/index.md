@@ -12,7 +12,9 @@ Name: process
 
 | Class | Description |
 | --- | --- |
+| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |
 | [Parameter](Parameter.md) | One declared parameter of a task or a method: the kind of object it ranges ov... |
+| [Subtask](Subtask.md) | One entry of a method's subtask list: the task it names and the arguments it ... |
 | [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[CompoundTask](CompoundTask.md) | HDDL's abstract task: a task performed only by decomposing it through a metho... |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[PrimitiveTask](PrimitiveTask.md) | HDDL's action: a task a robot performs directly, with what performing it requ... |
@@ -24,11 +26,16 @@ Name: process
 | Slot | Description |
 | --- | --- |
 | [applies_to](applies_to.md) | The materials a method applies to, as IFC spells them; a component matches wh... |
+| [arguments](arguments.md) | The values a subtask passes, in the named task's parameter order: method para... |
+| [compound_task](compound_task.md) | The compound task a method decomposes, a subtask names, or an instance realis... |
 | [duration](duration.md) | How long one performance of the primitive task takes, recommended in seconds |
+| [ordering](ordering.md) | Pairs of positions in the owner's subtask or task list; in each pair the firs... |
 | [parameter_kind](parameter_kind.md) | The kind of object the parameter ranges over |
 | [parameter_name](parameter_name.md) | The parameter's name, a plain word such as c, r, or from |
 | [parameters](parameters.md) | The declared parameters, keyed by name |
+| [primitive_task](primitive_task.md) | The primitive task a subtask names or an instance realises |
 | [requires](requires.md) | The capabilities a robot must offer to perform the primitive task |
+| [subtasks](subtasks.md) | The subtasks in list order, counted from 1 |
 
 
 ## Enumerations

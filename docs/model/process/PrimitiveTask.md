@@ -120,6 +120,13 @@ URI: [rcpc:PrimitiveTask](https://rcpc.for5672/schema/PrimitiveTask)
 
 
 
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Subtask](Subtask.md) | [primitive_task](primitive_task.md) | range | [PrimitiveTask](PrimitiveTask.md) |
+
+
 
 
 
@@ -229,6 +236,7 @@ attributes:
     - Space
     - BuildingComponent
     - Task
+    - Method
     range: string
     required: true
   id:
@@ -249,6 +257,7 @@ attributes:
     - Safety
     - Activity
     - Task
+    - Method
     range: string
     required: true
     pattern: ^[A-Za-z][A-Za-z0-9_]*$
@@ -260,6 +269,7 @@ attributes:
     domain_of:
     - CapabilityType
     - Task
+    - Method
     range: string
     required: true
   parameters:
@@ -270,6 +280,7 @@ attributes:
     owner: PrimitiveTask
     domain_of:
     - Task
+    - Method
     range: Parameter
     required: true
     multivalued: true

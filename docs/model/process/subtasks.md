@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: parameters 
+# Slot: subtasks 
 
 
-_The declared parameters, keyed by name._
+_The subtasks in list order, counted from 1. On a method, the entries of its decomposition; on a compound task instance, the instances that replaced it._
 
 
 
@@ -14,7 +14,7 @@ _The declared parameters, keyed by name._
 
 
 
-URI: [rcpc:parameters](https://rcpc.for5672/schema/parameters)
+URI: [rcpc:subtasks](https://rcpc.for5672/schema/subtasks)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,10 +25,7 @@ URI: [rcpc:parameters](https://rcpc.for5672/schema/parameters)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |  yes  |
 | [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |  yes  |
-| [PrimitiveTask](PrimitiveTask.md) | HDDL's action: a task a robot performs directly, with what performing it requ... |  no  |
-| [CompoundTask](CompoundTask.md) | HDDL's abstract task: a task performed only by decomposing it through a metho... |  no  |
 
 
 
@@ -41,8 +38,8 @@ URI: [rcpc:parameters](https://rcpc.for5672/schema/parameters)
 
 | Property | Value |
 | --- | --- |
-| Range | [Parameter](Parameter.md) |
-| Domain Of | [Task](Task.md), [Method](Method.md) |
+| Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
+| Domain Of | [Method](Method.md) |
 
 ### Cardinality and Requirements
 
@@ -77,8 +74,8 @@ URI: [rcpc:parameters](https://rcpc.for5672/schema/parameters)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:parameters |
-| native | rcpc:parameters |
+| self | rcpc:subtasks |
+| native | rcpc:subtasks |
 
 
 
@@ -87,16 +84,15 @@ URI: [rcpc:parameters](https://rcpc.for5672/schema/parameters)
 
 <details>
 ```yaml
-name: parameters
-description: The declared parameters, keyed by name.
+name: subtasks
+description: The subtasks in list order, counted from 1. On a method, the entries
+  of its decomposition; on a compound task instance, the instances that replaced it.
 from_schema: https://rcpc.for5672/schema/process
 rank: 1000
 domain_of:
-- Task
 - Method
-range: Parameter
+range: string
 multivalued: true
-inlined: true
 
 ```
 </details></div>

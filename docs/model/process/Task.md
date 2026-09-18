@@ -200,6 +200,7 @@ attributes:
     - Space
     - BuildingComponent
     - Task
+    - Method
     range: string
     required: true
   id:
@@ -220,6 +221,7 @@ attributes:
     - Safety
     - Activity
     - Task
+    - Method
     range: string
     required: true
     pattern: ^[A-Za-z][A-Za-z0-9_]*$
@@ -231,6 +233,7 @@ attributes:
     domain_of:
     - CapabilityType
     - Task
+    - Method
     range: string
     required: true
   parameters:
@@ -241,6 +244,7 @@ attributes:
     owner: Task
     domain_of:
     - Task
+    - Method
     range: Parameter
     required: true
     multivalued: true

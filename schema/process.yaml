@@ -66,6 +66,36 @@ classes:
       HDDL's abstract task: a task performed only by decomposing it through a
       method. Adds nothing to Task; the class is the kind.
 
+  Method:
+    description: >-
+      One way to decompose a compound task into an ordered network of subtasks.
+    slots:
+      - record_type
+      - id
+      - description
+      - compound_task
+      - parameters
+      - subtasks
+      - ordering
+    slot_usage:
+      id:
+        pattern: "^[A-Za-z][A-Za-z0-9_]*$"
+        description: The method name.
+      description:
+        required: true
+      compound_task:
+        required: true
+      parameters:
+        required: true
+      subtasks:
+        range: Subtask
+        inlined: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+      ordering:
+        required: true
+
   Parameter:
     description: >-
       One declared parameter of a task or a method: the kind of object it ranges
@@ -80,6 +110,33 @@ classes:
         required: true
       parameter_kind:
         required: true
+
+  Subtask:
+    description: >-
+      One entry of a method's subtask list: the task it names and the
+      arguments it passes, in that task's parameter order. Its position in the
+      list, counted from 1, is what ordering refers to.
+    slots:
+      - primitive_task
+      - compound_task
+      - arguments
+    slot_usage:
+      arguments:
+        required: true
+    rules:
+      - description: A subtask names exactly one task, primitive or compound.
+        preconditions:
+          slot_conditions:
+            arguments:
+              required: true
+        postconditions:
+          exactly_one_of:
+            - slot_conditions:
+                primitive_task:
+                  required: true
+            - slot_conditions:
+                compound_task:
+                  required: true
 
 slots:
   parameters:
@@ -109,3 +166,29 @@ slots:
     range: Quantity
     inlined: true
     description: How long one performance of the primitive task takes, recommended in seconds.
+  compound_task:
+    range: CompoundTask
+    description: The compound task a method decomposes, a subtask names, or an instance realises.
+  primitive_task:
+    range: PrimitiveTask
+    description: The primitive task a subtask names or an instance realises.
+  subtasks:
+    multivalued: true
+    description: >-
+      The subtasks in list order, counted from 1. On a method, the entries of its
+      decomposition; on a compound task instance, the instances that replaced it.
+  ordering:
+    range: integer
+    array:
+      exact_number_dimensions: 2
+      dimensions:
+        - alias: pair
+        - exact_cardinality: 2
+    description: >-
+      Pairs of positions in the owner's subtask or task list; in each pair the
+      first ends before the second starts. Empty when unordered.
+  arguments:
+    multivalued: true
+    description: >-
+      The values a subtask passes, in the named task's parameter order: method
+      parameter names or object ids.

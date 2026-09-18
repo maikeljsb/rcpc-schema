@@ -163,6 +163,7 @@ attributes:
     - Safety
     - Activity
     - Task
+    - Method
     range: string
     required: true
   description:
@@ -173,6 +174,7 @@ attributes:
     domain_of:
     - CapabilityType
     - Task
+    - Method
     range: string
     required: true
 

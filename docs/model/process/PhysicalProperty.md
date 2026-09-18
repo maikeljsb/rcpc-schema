@@ -438,6 +438,7 @@ attributes:
     - Safety
     - Activity
     - Task
+    - Method
     range: string
     required: true
   manufacturer:

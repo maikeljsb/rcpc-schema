@@ -46,6 +46,10 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "examples/process/invalid/primitive_task_id_not_a_name.yaml": ("schema/process.yaml", "PrimitiveTask", "id"),
     "examples/process/invalid/primitive_task_parameter_unknown_kind.yaml": ("schema/process.yaml", "PrimitiveTask", "parameters"),
     "examples/process/invalid/compound_task_record_type_mismatch.yaml": ("schema/process.yaml", "CompoundTask", "record_type"),
+    "examples/process/invalid/method_parameter_missing_kind.yaml": ("schema/process.yaml", "Method", "parameter_kind"),
+    "examples/process/invalid/method_subtask_names_two_tasks.yaml": ("schema/process.yaml", "Method", "subtasks"),
+    "examples/process/invalid/method_subtasks_empty.yaml": ("schema/process.yaml", "Method", "subtasks"),
+    "examples/process/invalid/method_ordering_not_a_list.yaml": ("schema/process.yaml", "Method", "ordering"),
 }
 
 

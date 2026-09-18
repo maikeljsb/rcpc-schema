@@ -84,6 +84,7 @@ URI: [rcpc:Parameter](https://rcpc.for5672/schema/Parameter)
 | [Task](Task.md) | [parameters](parameters.md) | range | [Parameter](Parameter.md) |
 | [PrimitiveTask](PrimitiveTask.md) | [parameters](parameters.md) | range | [Parameter](Parameter.md) |
 | [CompoundTask](CompoundTask.md) | [parameters](parameters.md) | range | [Parameter](Parameter.md) |
+| [Method](Method.md) | [parameters](parameters.md) | range | [Parameter](Parameter.md) |
 
 
 

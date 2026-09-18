@@ -96,6 +96,14 @@ URI: [rcpc:CompoundTask](https://rcpc.for5672/schema/CompoundTask)
 
 
 
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Method](Method.md) | [compound_task](compound_task.md) | range | [CompoundTask](CompoundTask.md) |
+| [Subtask](Subtask.md) | [compound_task](compound_task.md) | range | [CompoundTask](CompoundTask.md) |
+
+
 
 
 
@@ -170,6 +178,7 @@ attributes:
     - Space
     - BuildingComponent
     - Task
+    - Method
     range: string
     required: true
   id:
@@ -190,6 +199,7 @@ attributes:
     - Safety
     - Activity
     - Task
+    - Method
     range: string
     required: true
     pattern: ^[A-Za-z][A-Za-z0-9_]*$
@@ -201,6 +211,7 @@ attributes:
     domain_of:
     - CapabilityType
     - Task
+    - Method
     range: string
     required: true
   parameters:
@@ -211,6 +222,7 @@ attributes:
     owner: CompoundTask
     domain_of:
     - Task
+    - Method
     range: Parameter
     required: true
     multivalued: true

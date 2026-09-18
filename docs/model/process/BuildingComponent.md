@@ -509,6 +509,7 @@ attributes:
     - Space
     - BuildingComponent
     - Task
+    - Method
     range: string
     required: true
   id:
@@ -530,6 +531,7 @@ attributes:
     - Safety
     - Activity
     - Task
+    - Method
     range: string
     required: true
     pattern: ^[0-3][0-9A-Za-z_$]{21}$
