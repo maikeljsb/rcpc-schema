@@ -15,6 +15,7 @@ from jsonschema import Draft202012Validator
 
 FIXTURE = "tests/fixtures/minimal.yaml"
 IMPORTER = "tests/fixtures/importer.yaml"
+KEYED = "tests/fixtures/keyed.yaml"
 DRAFT = "https://json-schema.org/draft/2020-12/schema"
 
 
@@ -169,3 +170,25 @@ def test_viewer_schemas_resolves_end_to_end(tmp_path: Path, root: Path) -> None:
 
     with pytest.raises(Exception):
         validator.validate({"id": "c1", "dimensions": {"width": 1.0}})
+
+
+def test_keyed_dict_values_get_one_definition(tmp_path: Path, root: Path) -> None:
+    tree = make_tree(tmp_path, root, [KEYED])
+    result = build(tree)
+    assert result.returncode == 0, result.stderr
+    schema = json.loads((tree / "dist" / "keyed.schema.json").read_text(encoding="utf-8"))
+    defs = schema["$defs"]
+    # Entry is only ever a dict value: one definition, the key not required, the dict pointing at it.
+    assert "Entry__identifier_optional" not in defs
+    assert defs["Entry"]["required"] == ["entry_value"]
+    entries = defs["Box"]["properties"]["entries"]["additionalProperties"]["anyOf"][0]
+    assert entries["$ref"] == "#/$defs/Entry"
+    # Note is also written on its own, so both shapes are real and both definitions stay.
+    assert defs["Note"]["required"] == ["note_name", "note_text"]
+    assert defs["Note__identifier_optional"]["required"] == ["note_text"]
+    assert defs["Box"]["properties"]["first_note"]["$ref"] == "#/$defs/Note"
+    # The dict value in full form validates without its name inside, as before.
+    validator = Draft202012Validator({**schema, "$ref": "#/$defs/Box"})
+    validator.validate({"id": "b1", "entries": {"a": {"entry_value": "1"}, "b": "2"}})
+    with pytest.raises(Exception):
+        validator.validate({"id": "b1", "entries": {"a": {}}})

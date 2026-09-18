@@ -2,7 +2,8 @@
 
 Rules in SPEC-toolchain.md: one draft 2020-12 JSON Schema per module (built in-process
 without "null" types and without key sorting), docs per module, a generated dist/README.md,
-stale outputs removed, empty schema/ is a no-op, fail fast.
+stale outputs removed, empty schema/ is a no-op, fail fast, and a keyed class written
+only as dict values keeps one definition.
 Also writes dist/viewer/ by default (skip with --no-viewer-schemas), a cross-file $ref
 variant for a schema viewer, gitignored and never drift-tested.
 """
@@ -36,9 +37,20 @@ def write(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
+def merge_lax_defs(schema: dict) -> dict:
+    """A keyed class the generator only references as a dict value keeps that one definition, under its own name."""
+    text = json.dumps(schema)
+    for lax in [name for name in schema["$defs"] if name.endswith("__identifier_optional")]:
+        plain = lax.removesuffix("__identifier_optional")
+        if f'"#/$defs/{plain}"' not in text:
+            schema["$defs"][plain] = schema["$defs"].pop(lax)
+            text = json.dumps(schema).replace(f'"#/$defs/{lax}"', f'"#/$defs/{plain}"')
+    return json.loads(text)
+
+
 def build(module: Path) -> tuple[str, dict]:
     """Emit the module's JSON Schema and docs; return its description and schema dict."""
-    schema = dict(JsonSchemaGenerator(str(module), include_null=False).generate())
+    schema = merge_lax_defs(dict(JsonSchemaGenerator(str(module), include_null=False).generate()))
     schema["$schema"] = DRAFT
     write(DIST / f"{module.stem}.schema.json", json.dumps(schema, indent=2) + "\n")
     shutil.rmtree(DOCS / module.stem, ignore_errors=True)

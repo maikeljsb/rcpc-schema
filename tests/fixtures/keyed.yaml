@@ -1,0 +1,73 @@
+id: https://example.org/keyed
+name: keyed
+version: 0.1.0
+description: >-
+  A fixture for keyed classes used as inlined dicts. Entry is only ever a dict
+  value; Note is a dict value and also a single inlined value.
+prefixes:
+  keyed: https://example.org/keyed/
+  linkml: https://w3id.org/linkml/
+default_prefix: keyed
+default_range: string
+imports:
+  - linkml:types
+
+classes:
+  Box:
+    description: The record. Holds a dict of entries and one note beside a dict of notes.
+    slots:
+      - id
+      - entries
+      - notes
+      - first_note
+
+  Entry:
+    description: A keyed value object written only as a dict value, so the key is its name.
+    slots:
+      - entry_name
+      - entry_value
+    slot_usage:
+      entry_name:
+        required: true
+      entry_value:
+        required: true
+
+  Note:
+    description: A keyed value object written both as a dict value and on its own.
+    slots:
+      - note_name
+      - note_text
+    slot_usage:
+      note_name:
+        required: true
+      note_text:
+        required: true
+
+slots:
+  id:
+    identifier: true
+    description: Unique identifier within the document set.
+  entries:
+    range: Entry
+    multivalued: true
+    inlined: true
+    description: The entries, keyed by name.
+  notes:
+    range: Note
+    multivalued: true
+    inlined: true
+    description: The notes, keyed by name.
+  first_note:
+    range: Note
+    inlined: true
+    description: One note on its own, with its name inside.
+  entry_name:
+    key: true
+    description: The entry's name.
+  entry_value:
+    description: The entry's value.
+  note_name:
+    key: true
+    description: The note's name.
+  note_text:
+    description: The note's text.
