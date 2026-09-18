@@ -7,16 +7,6 @@
   "type": "object",
   "additionalProperties": true,
   "$defs": {
-    "ParameterKind": {
-      "type": "string",
-      "description": "The kinds of value a task parameter can hold.",
-      "enum": [
-        "position",
-        "component_reference",
-        "quantity"
-      ],
-      "title": "ParameterKind"
-    },
     "RecordSource": {
       "type": "string",
       "description": "Where a component or Space came from: parsed from the IFC model, or produced by derivation.",

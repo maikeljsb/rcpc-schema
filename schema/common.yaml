@@ -3,7 +3,7 @@ name: common
 version: 0.1.0
 description: >-
   Shared vocabulary for the Product Process Graph: value types, the material name
-  type, the parameter kinds, and the capability types. Imported by every other module.
+  type, and the capability types. Imported by every other module.
 prefixes:
   rcpc: https://rcpc.for5672/schema/
   linkml: https://w3id.org/linkml/
@@ -16,17 +16,6 @@ types:
   MaterialName:
     typeof: string
     description: An IFC material name, exactly as it appears in the model.
-
-enums:
-  ParameterKind:
-    description: The kinds of value a task parameter can hold.
-    permissible_values:
-      position:
-        description: A Position.
-      component_reference:
-        description: A reference to a BuildingComponent, by id.
-      quantity:
-        description: A Quantity.
 
 classes:
   Position:
