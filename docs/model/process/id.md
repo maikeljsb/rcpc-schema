@@ -39,9 +39,13 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | [Activity](Activity.md) | CRS group 4: the capabilities a robot offers and how it performs them |  no  |
 | [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |  yes  |
 | [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
+| [TaskNetwork](TaskNetwork.md) | HDDL's initial task network: what the plan is asked to accomplish, the compou... |  yes  |
+| [TaskInstance](TaskInstance.md) | One planned occurrence of a task, before it is said whether the task is primi... |  yes  |
 | [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 | [PrimitiveTask](PrimitiveTask.md) | HDDL's action: a task a robot performs directly, with what performing it requ... |  no  |
 | [CompoundTask](CompoundTask.md) | HDDL's abstract task: a task performed only by decomposing it through a metho... |  no  |
+| [CompoundTaskInstance](CompoundTaskInstance.md) | One planned occurrence of a compound task: the task, the method chosen to dec... |  no  |
+| [PrimitiveTaskInstance](PrimitiveTaskInstance.md) | One planned occurrence of a primitive task: the action and every parameter of... |  no  |
 
 
 
@@ -55,7 +59,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md), [MaterialCategory](MaterialCategory.md), [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [Material](Material.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [OperationalRequirement](OperationalRequirement.md), [Safety](Safety.md), [Activity](Activity.md), [Task](Task.md), [Method](Method.md) |
+| Domain Of | [CapabilityType](CapabilityType.md), [MaterialCategory](MaterialCategory.md), [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [Material](Material.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [OperationalRequirement](OperationalRequirement.md), [Safety](Safety.md), [Activity](Activity.md), [Task](Task.md), [Method](Method.md), [TaskNetwork](TaskNetwork.md), [TaskInstance](TaskInstance.md) |
 
 ### Cardinality and Requirements
 
@@ -126,6 +130,8 @@ domain_of:
 - Activity
 - Task
 - Method
+- TaskNetwork
+- TaskInstance
 range: string
 required: true
 

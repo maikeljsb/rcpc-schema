@@ -158,6 +158,7 @@ attributes:
     owner: Parameter
     domain_of:
     - Parameter
+    - ParameterBinding
     range: string
     required: true
   parameter_kind:

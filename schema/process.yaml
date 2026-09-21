@@ -137,6 +137,83 @@ classes:
                 compound_task:
                   required: true
 
+  TaskNetwork:
+    description: >-
+      HDDL's initial task network: what the plan is asked to accomplish, the
+      compound task instances no compound lists as a subtask, in list order,
+      with the ordering among them.
+    slots:
+      - record_type
+      - id
+      - tasks
+      - ordering
+    slot_usage:
+      id:
+        pattern: "^[A-Za-z][A-Za-z0-9_]*$"
+        description: The network's name.
+      tasks:
+        required: true
+      ordering:
+        required: true
+
+  TaskInstance:
+    description: >-
+      One planned occurrence of a task, before it is said whether the task is
+      primitive or compound. The base of CompoundTaskInstance and
+      PrimitiveTaskInstance and the range a compound instance's subtasks share;
+      never written as a record.
+    slots:
+      - record_type
+      - id
+      - bindings
+    slot_usage:
+      id:
+        description: The instance's id, unique within the plan.
+      bindings:
+        required: true
+
+  CompoundTaskInstance:
+    is_a: TaskInstance
+    description: >-
+      One planned occurrence of a compound task: the task, the method chosen to
+      decompose it, and the instances that replaced it, one per line of the
+      method's subtasks and in the same order.
+    slots:
+      - compound_task
+      - decomposed_by
+      - subtasks
+    slot_usage:
+      compound_task:
+        required: true
+      decomposed_by:
+        required: true
+      subtasks:
+        range: TaskInstance
+        required: true
+
+  PrimitiveTaskInstance:
+    is_a: TaskInstance
+    description: >-
+      One planned occurrence of a primitive task: the action and every parameter
+      of it bound to an object.
+    slots:
+      - primitive_task
+    slot_usage:
+      primitive_task:
+        required: true
+
+  ParameterBinding:
+    description: >-
+      One parameter of a task instance bound to one object. Written inline,
+      keyed by the parameter's name; what kind of object the id names is read
+      from the parameter's declaration on the bound task or method.
+    slots:
+      - parameter_name
+      - bound_to
+    slot_usage:
+      bound_to:
+        required: true
+
 slots:
   parameters:
     range: Parameter
@@ -191,3 +268,22 @@ slots:
     description: >-
       The values a subtask passes, in the named task's parameter order: method
       parameter names or object ids.
+  tasks:
+    range: CompoundTaskInstance
+    multivalued: true
+    minimum_cardinality: 1
+    description: The network's tasks in list order, counted from 1, each position its label.
+  decomposed_by:
+    range: Method
+    pattern: "^$|^[A-Za-z][A-Za-z0-9_]*$"
+    description: The method chosen to decompose a compound task instance. Empty until chosen.
+  bindings:
+    range: ParameterBinding
+    multivalued: true
+    inlined: true
+    description: The instance's parameters bound to object ids, keyed by parameter name.
+  bound_to:
+    description: >-
+      The id of the object the parameter is bound to: a BuildingComponent, a
+      Space, or a machine such as mason_m1_1, as the parameter's declared kind
+      says.

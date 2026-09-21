@@ -1,0 +1,5 @@
+- record_type: CompoundTaskInstance
+  id: construct_138157
+  compound_task: ConstructComponent
+  decomposed_by: m_prefab
+  bindings: {c: 2O2Fr$t4X7Zf8NOew3FNqI}

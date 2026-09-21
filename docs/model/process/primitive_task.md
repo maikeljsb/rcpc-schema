@@ -26,6 +26,7 @@ URI: [rcpc:primitive_task](https://rcpc.for5672/schema/primitive_task)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Subtask](Subtask.md) | One entry of a method's subtask list: the task it names and the arguments it ... |  no  |
+| [PrimitiveTaskInstance](PrimitiveTaskInstance.md) | One planned occurrence of a primitive task: the action and every parameter of... |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [rcpc:primitive_task](https://rcpc.for5672/schema/primitive_task)
 | Property | Value |
 | --- | --- |
 | Range | [PrimitiveTask](PrimitiveTask.md) |
-| Domain Of | [Subtask](Subtask.md) |
+| Domain Of | [Subtask](Subtask.md), [PrimitiveTaskInstance](PrimitiveTaskInstance.md) |
 
 ### Cardinality and Requirements
 
@@ -89,6 +90,7 @@ from_schema: https://rcpc.for5672/schema/process
 rank: 1000
 domain_of:
 - Subtask
+- PrimitiveTaskInstance
 range: PrimitiveTask
 
 ```

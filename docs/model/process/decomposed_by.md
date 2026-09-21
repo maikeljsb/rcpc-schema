@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: subtasks 
+# Slot: decomposed_by 
 
 
-_The subtasks in list order, counted from 1. On a method, the entries of its decomposition; on a compound task instance, the instances that replaced it._
+_The method chosen to decompose a compound task instance. Empty until chosen._
 
 
 
@@ -14,7 +14,7 @@ _The subtasks in list order, counted from 1. On a method, the entries of its dec
 
 
 
-URI: [rcpc:subtasks](https://rcpc.for5672/schema/subtasks)
+URI: [rcpc:decomposed_by](https://rcpc.for5672/schema/decomposed_by)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,7 +25,6 @@ URI: [rcpc:subtasks](https://rcpc.for5672/schema/subtasks)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
 | [CompoundTaskInstance](CompoundTaskInstance.md) | One planned occurrence of a compound task: the task, the method chosen to dec... |  yes  |
 
 
@@ -39,14 +38,20 @@ URI: [rcpc:subtasks](https://rcpc.for5672/schema/subtasks)
 
 | Property | Value |
 | --- | --- |
-| Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Method](Method.md), [CompoundTaskInstance](CompoundTaskInstance.md) |
+| Range | [Method](Method.md) |
+| Domain Of | [CompoundTaskInstance](CompoundTaskInstance.md) |
 
 ### Cardinality and Requirements
 
 | Property | Value |
 | --- | --- |
-| Multivalued | Yes |
+### Value Constraints
+
+| Property | Value |
+| --- | --- |
+| Regex Pattern | `^$|^[A-Za-z][A-Za-z0-9_]*$` |
+
+
 
 
 
@@ -75,8 +80,8 @@ URI: [rcpc:subtasks](https://rcpc.for5672/schema/subtasks)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:subtasks |
-| native | rcpc:subtasks |
+| self | rcpc:decomposed_by |
+| native | rcpc:decomposed_by |
 
 
 
@@ -85,16 +90,15 @@ URI: [rcpc:subtasks](https://rcpc.for5672/schema/subtasks)
 
 <details>
 ```yaml
-name: subtasks
-description: The subtasks in list order, counted from 1. On a method, the entries
-  of its decomposition; on a compound task instance, the instances that replaced it.
+name: decomposed_by
+description: The method chosen to decompose a compound task instance. Empty until
+  chosen.
 from_schema: https://rcpc.for5672/schema/process
 rank: 1000
 domain_of:
-- Method
 - CompoundTaskInstance
-range: string
-multivalued: true
+range: Method
+pattern: ^$|^[A-Za-z][A-Za-z0-9_]*$
 
 ```
 </details></div>

@@ -26,6 +26,7 @@ URI: [rcpc:ordering](https://rcpc.for5672/schema/ordering)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
+| [TaskNetwork](TaskNetwork.md) | HDDL's initial task network: what the plan is asked to accomplish, the compou... |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [rcpc:ordering](https://rcpc.for5672/schema/ordering)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) |
-| Domain Of | [Method](Method.md) |
+| Domain Of | [Method](Method.md), [TaskNetwork](TaskNetwork.md) |
 
 ### Cardinality and Requirements
 
@@ -99,6 +100,7 @@ from_schema: https://rcpc.for5672/schema/process
 rank: 1000
 domain_of:
 - Method
+- TaskNetwork
 range: integer
 array:
   exact_number_dimensions: 2

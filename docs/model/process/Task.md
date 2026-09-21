@@ -202,6 +202,8 @@ attributes:
     - Material
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
   id:
@@ -225,6 +227,8 @@ attributes:
     - Activity
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
     pattern: ^[A-Za-z][A-Za-z0-9_]*$

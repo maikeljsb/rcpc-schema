@@ -27,6 +27,7 @@ URI: [rcpc:compound_task](https://rcpc.for5672/schema/compound_task)
 | --- | --- | --- |
 | [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
 | [Subtask](Subtask.md) | One entry of a method's subtask list: the task it names and the arguments it ... |  no  |
+| [CompoundTaskInstance](CompoundTaskInstance.md) | One planned occurrence of a compound task: the task, the method chosen to dec... |  yes  |
 
 
 
@@ -40,7 +41,7 @@ URI: [rcpc:compound_task](https://rcpc.for5672/schema/compound_task)
 | Property | Value |
 | --- | --- |
 | Range | [CompoundTask](CompoundTask.md) |
-| Domain Of | [Method](Method.md), [Subtask](Subtask.md) |
+| Domain Of | [Method](Method.md), [Subtask](Subtask.md), [CompoundTaskInstance](CompoundTaskInstance.md) |
 
 ### Cardinality and Requirements
 
@@ -92,6 +93,7 @@ rank: 1000
 domain_of:
 - Method
 - Subtask
+- CompoundTaskInstance
 range: CompoundTask
 
 ```

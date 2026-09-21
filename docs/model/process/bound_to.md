@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: parameter_name 
+# Slot: bound_to 
 
 
-_The parameter's name, a plain word such as c, r, or from._
+_The id of the object the parameter is bound to: a BuildingComponent, a Space, or a machine such as mason_m1_1, as the parameter's declared kind says._
 
 
 
@@ -14,7 +14,7 @@ _The parameter's name, a plain word such as c, r, or from._
 
 
 
-URI: [rcpc:parameter_name](https://rcpc.for5672/schema/parameter_name)
+URI: [rcpc:bound_to](https://rcpc.for5672/schema/bound_to)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,8 +25,7 @@ URI: [rcpc:parameter_name](https://rcpc.for5672/schema/parameter_name)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Parameter](Parameter.md) | HDDL's typed variable: one declared parameter of a task or a method, its name... |  no  |
-| [ParameterBinding](ParameterBinding.md) | One parameter of a task instance bound to one object |  no  |
+| [ParameterBinding](ParameterBinding.md) | One parameter of a task instance bound to one object |  yes  |
 
 
 
@@ -40,20 +39,12 @@ URI: [rcpc:parameter_name](https://rcpc.for5672/schema/parameter_name)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Parameter](Parameter.md), [ParameterBinding](ParameterBinding.md) |
+| Domain Of | [ParameterBinding](ParameterBinding.md) |
 
 ### Cardinality and Requirements
 
 | Property | Value |
 | --- | --- |
-| Required | Yes |
-### Slot Characteristics
-
-| Property | Value |
-| --- | --- |
-| Key | Yes |
-
-
 
 
 
@@ -82,8 +73,8 @@ URI: [rcpc:parameter_name](https://rcpc.for5672/schema/parameter_name)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:parameter_name |
-| native | rcpc:parameter_name |
+| self | rcpc:bound_to |
+| native | rcpc:bound_to |
 
 
 
@@ -92,16 +83,14 @@ URI: [rcpc:parameter_name](https://rcpc.for5672/schema/parameter_name)
 
 <details>
 ```yaml
-name: parameter_name
-description: The parameter's name, a plain word such as c, r, or from.
+name: bound_to
+description: 'The id of the object the parameter is bound to: a BuildingComponent,
+  a Space, or a machine such as mason_m1_1, as the parameter''s declared kind says.'
 from_schema: https://rcpc.for5672/schema/process
 rank: 1000
-key: true
 domain_of:
-- Parameter
 - ParameterBinding
 range: string
-required: true
 
 ```
 </details></div>

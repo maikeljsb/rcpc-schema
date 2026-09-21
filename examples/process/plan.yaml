@@ -1,0 +1,42 @@
+- record_type: TaskNetwork
+  id: level_1_walls
+  tasks: [construct_138157, construct_138062]
+  ordering: [[1, 2]]
+- record_type: CompoundTaskInstance
+  id: construct_138157
+  compound_task: ConstructComponent
+  decomposed_by: m_prefab
+  bindings: {c: 2O2Fr$t4X7Zf8NOew3FNqI}
+  subtasks: [construct_138157_1, construct_138157_2]
+- record_type: CompoundTaskInstance
+  id: construct_138157_1
+  compound_task: Transport
+  decomposed_by: m_transport
+  bindings: {c: 2O2Fr$t4X7Zf8NOew3FNqI}
+  subtasks: [construct_138157_1_1, construct_138157_1_2, construct_138157_1_3, construct_138157_1_4]
+- record_type: CompoundTaskInstance
+  id: construct_138062
+  compound_task: ConstructComponent
+  decomposed_by: ""
+  bindings: {c: 2O2Fr$t4X7Zf8NOew3FNtn}
+  subtasks: []
+- record_type: PrimitiveTaskInstance
+  id: construct_138157_1_1
+  primitive_task: MoveTo
+  bindings: {r: mason_m1_1, to: 3It7HtQdTQBQsvQlFr2iGK}
+- record_type: PrimitiveTaskInstance
+  id: construct_138157_1_2
+  primitive_task: Attach
+  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 3It7HtQdTQBQsvQlFr2iGK}
+- record_type: PrimitiveTaskInstance
+  id: construct_138157_1_3
+  primitive_task: MoveTo
+  bindings: {r: mason_m1_1, to: 0BTBFw6f90Nfh9rP1dlXrr}
+- record_type: PrimitiveTaskInstance
+  id: construct_138157_1_4
+  primitive_task: Detach
+  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 0BTBFw6f90Nfh9rP1dlXrr}
+- record_type: PrimitiveTaskInstance
+  id: construct_138157_2
+  primitive_task: Place
+  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 0BTBFw6f90Nfh9rP1dlXrr}

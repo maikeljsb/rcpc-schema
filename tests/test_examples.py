@@ -54,6 +54,9 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "examples/process/invalid/method_subtask_names_two_tasks.yaml": ("schema/process.yaml", "Method", "subtasks"),
     "examples/process/invalid/method_subtasks_empty.yaml": ("schema/process.yaml", "Method", "subtasks"),
     "examples/process/invalid/method_ordering_not_a_list.yaml": ("schema/process.yaml", "Method", "ordering"),
+    "examples/process/plan.yaml": ("schema/process.yaml", BY_RECORD_TYPE, None),
+    "examples/process/invalid/task_network_tasks_empty.yaml": ("schema/process.yaml", "TaskNetwork", "tasks"),
+    "examples/process/invalid/compound_task_instance_missing_subtasks.yaml": ("schema/process.yaml", "CompoundTaskInstance", "subtasks"),
 }
 
 

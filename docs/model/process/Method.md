@@ -137,6 +137,13 @@ URI: [rcpc:Method](https://rcpc.for5672/schema/Method)
 
 
 
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [CompoundTaskInstance](CompoundTaskInstance.md) | [decomposed_by](decomposed_by.md) | range | [Method](Method.md) |
+
+
 
 
 
@@ -268,6 +275,8 @@ attributes:
     - Material
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
   id:
@@ -291,6 +300,8 @@ attributes:
     - Activity
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
     pattern: ^[A-Za-z][A-Za-z0-9_]*$
@@ -316,6 +327,7 @@ attributes:
     domain_of:
     - Method
     - Subtask
+    - CompoundTaskInstance
     range: CompoundTask
     required: true
   applies_to:
@@ -352,6 +364,7 @@ attributes:
     owner: Method
     domain_of:
     - Method
+    - CompoundTaskInstance
     range: Subtask
     required: true
     multivalued: true
@@ -367,6 +380,7 @@ attributes:
     owner: Method
     domain_of:
     - Method
+    - TaskNetwork
     range: integer
     required: true
     array:

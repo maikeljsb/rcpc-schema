@@ -102,6 +102,7 @@ URI: [rcpc:CompoundTask](https://rcpc.for5672/schema/CompoundTask)
 | ---  | --- | --- | --- |
 | [Method](Method.md) | [compound_task](compound_task.md) | range | [CompoundTask](CompoundTask.md) |
 | [Subtask](Subtask.md) | [compound_task](compound_task.md) | range | [CompoundTask](CompoundTask.md) |
+| [CompoundTaskInstance](CompoundTaskInstance.md) | [compound_task](compound_task.md) | range | [CompoundTask](CompoundTask.md) |
 
 
 
@@ -180,6 +181,8 @@ attributes:
     - Material
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
   id:
@@ -203,6 +206,8 @@ attributes:
     - Activity
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
     pattern: ^[A-Za-z][A-Za-z0-9_]*$

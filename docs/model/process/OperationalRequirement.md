@@ -220,6 +220,8 @@ attributes:
     - Activity
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
   grade:

@@ -125,6 +125,7 @@ URI: [rcpc:PrimitiveTask](https://rcpc.for5672/schema/PrimitiveTask)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [Subtask](Subtask.md) | [primitive_task](primitive_task.md) | range | [PrimitiveTask](PrimitiveTask.md) |
+| [PrimitiveTaskInstance](PrimitiveTaskInstance.md) | [primitive_task](primitive_task.md) | range | [PrimitiveTask](PrimitiveTask.md) |
 
 
 
@@ -238,6 +239,8 @@ attributes:
     - Material
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
   id:
@@ -261,6 +264,8 @@ attributes:
     - Activity
     - Task
     - Method
+    - TaskNetwork
+    - TaskInstance
     range: string
     required: true
     pattern: ^[A-Za-z][A-Za-z0-9_]*$

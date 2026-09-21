@@ -196,6 +196,7 @@ attributes:
     owner: Subtask
     domain_of:
     - Subtask
+    - PrimitiveTaskInstance
     range: PrimitiveTask
   compound_task:
     name: compound_task
@@ -207,6 +208,7 @@ attributes:
     domain_of:
     - Method
     - Subtask
+    - CompoundTaskInstance
     range: CompoundTask
   arguments:
     name: arguments
