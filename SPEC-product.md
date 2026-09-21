@@ -69,7 +69,7 @@ The example documents are supplied by the author from a real model, not invented
 
 ## Prerequisite change to common
 
-The `MaterialCategory` enum, added to common on 2026-09-21 (`SPEC-common.md` decision 15), in its own commit before `Material` lands here; the same commit retires `MaterialName`, which `material` ranged. `Position` with its unit and the four dimension slots already existed.
+The `MaterialCategory` enum, added to common on 2026-09-21 (`SPEC-common.md` decision 15), in its own commit before `Material` lands here; `MaterialName`, which `material` ranged, is retired in process's commit, once nothing ranges it. `Position` with its unit and the four dimension slots already existed.
 
 ## The Model
 
