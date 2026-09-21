@@ -116,15 +116,16 @@ Plan: `tasks/plan.md`. Spec: `SPEC-process.md`. Each task is one Conventional Co
 
 ## Task 4: `TaskInstance` with its two subclasses, `TaskNetwork`, and `ParameterBinding`, end to end
 
-**Description:** Add `ParameterBinding` (`parameter_name` as key, `bound_to`), `TaskInstance` with `record_type`, `id`, `bindings`, then `CompoundTaskInstance` (`is_a: TaskInstance`, adding `compound_task`, `decomposed_by`, `subtasks`) and `PrimitiveTaskInstance` (`is_a: TaskInstance`, adding `primitive_task`), then `TaskNetwork`; declare `tasks`, `decomposed_by` with its pattern, `bindings`, and `bound_to`, and set `subtasks` on `CompoundTaskInstance` to range `TaskInstance` in `slot_usage`. Every plan-side slot `required: true` in `slot_usage`. Write `examples/process/plan.yaml`: the network `level_1_walls`, the three compound instances with their `subtasks` lists, and the five leaves as the plan's Architecture Decisions fix them, nine records. Copy one real record into each of the two invalid documents and break it. Add three rows. Write the criterion 5 script in the scratchpad and run it against the file before committing. Rebuild and commit as `feat(process): add TaskNetwork and the two instance classes`.
+**Description:** Add `ParameterBinding` (`parameter_name` as key, `bound_to`), `TaskInstance` with `record_type`, `id`, `bindings`, then `CompoundTaskInstance` (`is_a: TaskInstance`, adding `compound_task`, `decomposed_by`, `subtasks`) and `PrimitiveTaskInstance` (`is_a: TaskInstance`, adding `primitive_task`), then `TaskNetwork`; declare `tasks`, `decomposed_by` with its pattern, `bindings`, and `bound_to`, and set `subtasks` on `CompoundTaskInstance` to range `TaskInstance` in `slot_usage`. Every plan-side slot `required: true` in `slot_usage`. Write `examples/process/plan.yaml`: the network `level_1_walls`, the three compound instances with their `subtasks` lists, and the five leaves as the plan's Architecture Decisions fix them, nine records. Copy one real record into each of the two invalid documents and break it. Add three rows to `tests/test_examples.py`. Add six rows to `tests/test_references.py` for `plan.yaml`, the resolution checks of criterion 5: `compound_task`, `primitive_task`, and `decomposed_by` (`""` allowed) against `catalogue.yaml`; `tasks` and `subtasks` against `plan.yaml` itself; `bound_to` against the union of the ids in `examples/product/building_components.yaml`, `connectors.yaml`, and `spaces.yaml` and the machine ids `<entry>_<n>`, `1 <= n <= count`, derived from `robot_units.yaml`. The row's target becomes a tuple of documents and `unresolved` derives the machine ids; no new test file. Write each row before the schema so it fails first. Write the criterion 5 script in the scratchpad and run it against the file before committing. Rebuild and commit as `feat(process): add TaskNetwork and the two instance classes`.
 
 **Acceptance criteria:**
 - [ ] `plan.yaml` validates through the split with three groups; it holds one network with two tasks and one ordering pair, a decomposed network task listing two subtasks, a decomposed Transport listing four, an undecomposed network task listing none, and five leaves whose bindings cover all three kinds
+- [ ] `tests/test_references.py`: six `plan.yaml` rows pass, and a planted unknown id in `decomposed_by` and in `bound_to` each fail their row naming the value
 - [ ] `invalid/task_network_tasks_empty.yaml` fails naming `tasks`; `invalid/compound_task_instance_missing_subtasks.yaml` fails naming `subtasks`
 - [ ] `dist/process.schema.json` `$defs` has 32 entries including `Task`, `TaskInstance`, `ParameterBinding`, `MaterialCategory`, and `Material`, none suffixed `__identifier_optional`; both instance classes list `bindings`, `id`, `record_type` in `properties` and `required`, `record_type` an `enum` of the subclass name; `CompoundTaskInstance.subtasks` has string `items`; `tasks` carries `minItems: 1`; `bindings` is an object whose `additionalProperties` is an `anyOf` of the `ParameterBinding` object, requiring `bound_to` only, and a string; `"null"` occurs exactly twice
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest` with three new rows collected, thirteen process rows in all; note the suite's wall time
+- [ ] Tests pass: `uv run pytest` with three new example rows collected, thirteen process rows in all, and six new reference rows, twelve in all; note the suite's wall time
 - [ ] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
 - [ ] Manual check: `docs/model/process/index.md` shows the two instance classes indented under `TaskInstance`; the lowercased names of every class, slot, enum, type, and schema `SchemaView` reports for `schema/process.yaml` with imports are all distinct; the criterion 5 script prints no failing row
 
@@ -134,7 +135,7 @@ Plan: `tasks/plan.md`. Spec: `SPEC-process.md`. Each task is one Conventional Co
 - `schema/process.yaml`
 - `examples/process/plan.yaml`
 - `examples/process/invalid/task_network_tasks_empty.yaml`, `compound_task_instance_missing_subtasks.yaml`
-- `tests/test_examples.py`
+- `tests/test_examples.py`, `tests/test_references.py`
 - `dist/process.schema.json`, `docs/model/process/*` (generated)
 
 **Estimated scope:** Medium
