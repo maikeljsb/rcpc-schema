@@ -244,7 +244,7 @@ slots:
     range: MaterialCategory
     description: >-
       The Material's category, IFC's IfcMaterial.Category as this project's
-      vocabulary, assigned by a mapping step after the parse. Unassigned until
+      vocabulary, assigned by a mapping step after the parse. Empty until
       mapped.
   permanence:
     range: ComponentPermanence

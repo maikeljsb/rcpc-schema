@@ -211,7 +211,7 @@ attributes:
   category:
     name: category
     description: The Material's category, IFC's IfcMaterial.Category as this project's
-      vocabulary, assigned by a mapping step after the parse. Unassigned until mapped.
+      vocabulary, assigned by a mapping step after the parse. Empty until mapped.
     from_schema: https://rcpc.for5672/schema/product
     owner: Material
     domain_of:

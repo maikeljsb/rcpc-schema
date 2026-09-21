@@ -555,7 +555,7 @@
         },
         "category": {
           "type": "string",
-          "description": "The Material's category, IFC's IfcMaterial.Category as this project's vocabulary, assigned by a mapping step after the parse. Unassigned until mapped."
+          "description": "The Material's category, IFC's IfcMaterial.Category as this project's vocabulary, assigned by a mapping step after the parse. Empty until mapped."
         }
       },
       "required": [
