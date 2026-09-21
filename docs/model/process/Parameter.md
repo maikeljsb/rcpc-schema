@@ -141,9 +141,6 @@ slots:
 - parameter_kind
 - applies_to
 slot_usage:
-  parameter_name:
-    name: parameter_name
-    required: true
   parameter_kind:
     name: parameter_kind
     required: true
@@ -161,9 +158,6 @@ description: 'One declared parameter of a task or a method: the kind of object i
   to. Written inline, keyed by the parameter''s name.'
 from_schema: https://rcpc.for5672/schema/process
 slot_usage:
-  parameter_name:
-    name: parameter_name
-    required: true
   parameter_kind:
     name: parameter_kind
     required: true

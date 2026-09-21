@@ -106,8 +106,6 @@ classes:
       - parameter_kind
       - applies_to
     slot_usage:
-      parameter_name:
-        required: true
       parameter_kind:
         required: true
 
