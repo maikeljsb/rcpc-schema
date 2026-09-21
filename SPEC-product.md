@@ -1,14 +1,14 @@
 # Spec: product
 
-*Module `product` of `CAPABILITY-MAP.md`. Drafted, reviewed, and approved 2026-09-15 (`732ddaf`); the required-everywhere redesign in decision 2 and decision 15 followed during Task 2's implementation. Depends on `common`. Imported by `process`. Direction fixed by the brief's Product Side and its dated decisions; IFC lineage from `docs/research/ifc43-for-product.md`; derivation limits from `docs/research/topologicpy-for-product.md`; metamodel usage follows `docs/research/linkml-metamodel-conformance-and-inheritance.md`.*
+*Module `product` of `CAPABILITY-MAP.md`. Drafted, reviewed, and approved 2026-09-15 (`732ddaf`); the required-everywhere redesign in decision 2 and decision 15 followed during Task 2's implementation; `Material` and `made_of` added 2026-09-21 (decision 17). Depends on `common`. Imported by `process`. Direction fixed by the brief's Product Side and its dated decisions; IFC lineage from `docs/research/ifc43-for-product.md`; derivation limits from `docs/research/topologicpy-for-product.md`; metamodel usage follows `docs/research/linkml-metamodel-conformance-and-inheritance.md`.*
 
 ## Objective
 
-Give the process side something to build: a building component identified by an IFC GlobalId, parsed or minted, with the material string a method matches on, the point a placement task binds to, and the light spatial topology that says where it is and what a robot passes through to reach it. Deliver it as `schema/product.yaml`, with example documents taken from a real model, generated JSON Schema, and generated documentation.
+Give the process side something to build: a building component identified by an IFC GlobalId, parsed or minted, made of a Material whose category a method matches on, the point a placement task binds to, and the light spatial topology that says where it is and what a robot passes through to reach it. Deliver it as `schema/product.yaml`, with example documents taken from a real model, generated JSON Schema, and generated documentation.
 
-**Users.** The IFC parser and the derivation, later, which fill BuildingComponents, Spaces, Storeys, and Connectors from a model. The person resolving a parsed model, who adds derived components such as bricks and fills missing materials. The process module, whose methods match `material` and whose primitives reference components by id. The projection component, which turns `derived_from`, `part_of`, `located_in`, `contained_in`, and `connects` into edges. Other project teams, who read `docs/model/product/`.
+**Users.** The IFC parser and the derivation, later, which fill BuildingComponents, Spaces, Storeys, and Connectors from a model. The person resolving a parsed model, who adds derived components such as bricks and fills missing materials and categories. The mapping step, outside this module, that fills each `Material`'s `category`. The process module, whose methods match a Material's `category` and whose primitives reference components by id. The projection component, which turns `derived_from`, `part_of`, `located_in`, `contained_in`, and `connects` into edges. Other project teams, who read `docs/model/product/`.
 
-**Success in one sentence.** `schema/product.yaml` lints clean, the four example documents from the real model validate and the ten invalid documents fail naming their slot, the toolchain produces its JSON Schema and docs unchanged, and every row of the lineage table below names the IFC construct it borrows or adapts.
+**Success in one sentence.** `schema/product.yaml` lints clean, the five example documents from the real model validate and the eleven invalid documents fail naming their slot, the toolchain produces its JSON Schema and docs unchanged, and every row of the lineage table below names the IFC construct it borrows or adapts.
 
 **What this module deliberately is not.** It carries no geometry, no IFC element hierarchy, no property sets, no material taxonomy, no Building or Site class, and no runtime state beyond `current_location`. It does not derive its own instances: the parser and the topology derivation are later slices, and this spec records only what they must deliver.
 
@@ -24,6 +24,7 @@ uv run linkml-validate -s schema/product.yaml -C BuildingComponent examples/prod
 uv run linkml-validate -s schema/product.yaml -C Connector examples/product/connectors.yaml
 uv run linkml-validate -s schema/product.yaml -C Space examples/product/spaces.yaml
 uv run linkml-validate -s schema/product.yaml -C Storey examples/product/storeys.yaml
+uv run linkml-validate -s schema/product.yaml -C Material examples/product/materials.yaml
 uv run python scripts/build.py          # produces dist/product.schema.json, dist/README.md, docs/model/product/
 uv run pytest
 ```
@@ -41,6 +42,7 @@ examples/
     connectors.yaml                                     doors, voids, and a stair from the same model
     spaces.yaml                                         its spaces, including one exterior Space per storey
     storeys.yaml                                        its storeys
+    materials.yaml                                      one record per distinct material string, with its category
     invalid/
       building_component_missing_permanence.yaml        no permanence
       building_component_id_not_global_id.yaml          id is a readable slug, not a GlobalId
@@ -52,6 +54,7 @@ examples/
       space_missing_source.yaml                         a Space without source
       space_record_type_mismatch.yaml                   a Space document whose record_type says Storey
       storey_id_not_global_id.yaml                      a Storey whose id is not a GlobalId
+      material_missing_category.yaml                    a Material without the category key
 dist/
   product.schema.json                                   generated
   README.md                                             regenerated, now lists product
@@ -59,14 +62,14 @@ docs/
   model/
     product/                                            generated, one page per element
 tests/
-  test_examples.py                                      fourteen rows added to EXAMPLES, nothing else
+  test_examples.py                                      sixteen rows added to EXAMPLES, nothing else
 ```
 
 The example documents are supplied by the author from a real model, not invented. This spec names the files and says what each must contain; the author fills them.
 
 ## Prerequisite change to common
 
-None. `MaterialName`, `Position` with its unit, and the four dimension slots already exist in common.
+The `MaterialCategory` enum, added to common on 2026-09-21 (`SPEC-common.md` decision 15), in its own commit before `Material` lands here; the same commit retires `MaterialName`, which `material` ranged. `Position` with its unit and the four dimension slots already existed.
 
 ## The Model
 
@@ -92,20 +95,21 @@ imports:
 
 ### Identity
 
-Every record's `id` is an IFC GlobalId, the 22-character compressed form, and the pattern `^[0-3][0-9A-Za-z_$]{21}$` is set on `id` in every class through `slot_usage`. For a parsed record it is the GlobalId of the IFC entity. For a derived record the derivation mints one in the same format. There is no separate `ifc_global_id` slot; `name` carries the readable label, and every reference slot holds an id.
+Every record's `id` is an IFC GlobalId, the 22-character compressed form, and the pattern `^[0-3][0-9A-Za-z_$]{21}$` is set on `id` in every class through `slot_usage`. For a parsed record it is the GlobalId of the IFC entity. For a derived record the derivation mints one in the same format. There is no separate `ifc_global_id` slot; `name` carries the readable label, and every reference slot holds an id. One exception since 2026-09-21: `Material`'s `id` is the material string as the parser derived it, because `IfcMaterial` has no GlobalId and within a model that string is its identity.
 
 ### Classes
 
 | Class | Slots | Notes |
 |---|---|---|
-| `BuildingComponent` | `record_type`, `id`, `ifc_type`, `name`, `material`, `permanence`, `source`, `derived_from`, `part_of`, `target_location`, `supply_location`, `current_location`, `located_in`, `contained_in`, `length`, `width`, `height`, `weight` | One thing a task acts on. Every slot is `required: true`: the document shape is the same for every component. `ifc_type`, `material`, `derived_from`, `part_of`, `located_in`, `contained_in` hold `""` where they do not apply or are not yet resolved; `supply_location`, `current_location`, `length`, `width`, `height`, `weight` hold the unresolved sentinel, a real Position or Quantity object with `unit: ""`. One class rule: when `source` is `derived`, `derived_from` must additionally match the GlobalId pattern, not just be present. |
+| `BuildingComponent` | `record_type`, `id`, `ifc_type`, `name`, `made_of`, `permanence`, `source`, `derived_from`, `part_of`, `target_location`, `supply_location`, `current_location`, `located_in`, `contained_in`, `length`, `width`, `height`, `weight` | One thing a task acts on. Every slot is `required: true`: the document shape is the same for every component. `ifc_type`, `made_of`, `derived_from`, `part_of`, `located_in`, `contained_in` hold `""` where they do not apply or are not yet resolved; `supply_location`, `current_location`, `length`, `width`, `height`, `weight` hold the unresolved sentinel, a real Position or Quantity object with `unit: ""`. One class rule: when `source` is `derived`, `derived_from` must additionally match the GlobalId pattern, not just be present. |
 | `Connector` | the BuildingComponent slots plus `kind`, `connects`, `clear_width`, `clear_height` | `is_a BuildingComponent`, the model's one subclass. A door, an unfilled opening, or a stair as one node: the component a task installs and the passage a robot fits through. Every slot is `required: true`: `kind`, `connects` with exactly two Spaces, and `clear_width`, `clear_height`, which hold the unresolved sentinel on a stair until a later slice reads them from geometry. No rule of its own; it inherits `BuildingComponent`'s one, so its schema carries a bare `if`/`then` pair. |
 | `Space` | `record_type`, `id`, `name`, `long_name`, `source`, `contained_in` | A room, or the exterior region of one storey. Parsed from `IfcSpace`, or derived: rooms cut from wall footprints when the file has no spaces, and one exterior Space per storey so that an exterior door and a roof stair have two ends. Every slot but `elevation`-typed ones (none here) is `required: true`: `name` and `long_name` hold `""` when the IFC file has none; `contained_in` always holds a real Storey id, never `""`, because a Space always has one by construction. |
 | `Storey` | `record_type`, `id`, `name`, `long_name`, `elevation` | A building storey. Always parsed. Every slot is `required: true`; `name`/`long_name` hold `""` when the IFC file has none, `elevation` the unresolved sentinel `{value: 0.0, unit: ""}` (see decision 2). |
+| `Material` | `record_type`, `id`, `category` | A material as IFC's `IfcMaterial`: one record per distinct material string the parser derives, shared by every component made of it. `id` is that string; `category` is the `MaterialCategory` value a mapping step assigns after the parse. Every slot `required: true`; `category` holds `unassigned` until mapped. Added 2026-09-21, decision 17. |
 
-All four classes carry an identifier and project to nodes. `derived_from`, `part_of`, `located_in`, `contained_in`, and `connects` are reference slots and project to edges. `Position` and `Quantity` have no identifier and flatten into the node that holds them.
+All five classes carry an identifier and project to nodes. `derived_from`, `part_of`, `made_of`, `located_in`, `contained_in`, and `connects` are reference slots and project to edges; `category` is an enum slot and projects to a property. `Position` and `Quantity` have no identifier and flatten into the node that holds them.
 
-Every class also carries `record_type`, a LinkML type designator (`designates_type: true`) that names the class itself: `"Storey"`, `"Space"`, `"BuildingComponent"`, `"Connector"`. Declared once as a plain string slot and reused by all four the way `id` is; `Connector` inherits it from `BuildingComponent` without redeclaring it, and its own generated schema independently locks it to `"Connector"`, not `"BuildingComponent"` (LinkML resolves the designated value from the class actually being generated, not the class that declares the slot). A record therefore always says what it is, on its own terms, independent of which file holds it; a document validated against the wrong class fails on `record_type` even where the two classes' other slots would otherwise overlap.
+Every class also carries `record_type`, a LinkML type designator (`designates_type: true`) that names the class itself: `"Storey"`, `"Space"`, `"BuildingComponent"`, `"Connector"`, `"Material"`. Declared once as a plain string slot and reused by all five the way `id` is; `Connector` inherits it from `BuildingComponent` without redeclaring it, and its own generated schema independently locks it to `"Connector"`, not `"BuildingComponent"` (LinkML resolves the designated value from the class actually being generated, not the class that declares the slot). A record therefore always says what it is, on its own terms, independent of which file holds it; a document validated against the wrong class fails on `record_type` even where the two classes' other slots would otherwise overlap.
 
 ### Enums
 
@@ -121,11 +125,12 @@ Enums are named after what they qualify, following `RobotStatus`, because an enu
 
 | Slot | Range | Notes |
 |---|---|---|
-| `record_type` | string, `designates_type: true` | Which class the record is: `Storey`, `Space`, `BuildingComponent`, or `Connector`. Required on all four; the value is fixed by the class, not authored. |
+| `record_type` | string, `designates_type: true` | Which class the record is: `Storey`, `Space`, `BuildingComponent`, `Connector`, or `Material`. Required on all five; the value is fixed by the class, not authored. |
 | `ifc_type` | string | The bare IFC entity name, such as `IfcWall`. No PredefinedType, no ObjectType. Required on every BuildingComponent; `""` on a derived record, which has none. |
 | `name` | string | The IFC Name. Required on every class that carries it; `""` when the IFC file has none. |
 | `long_name` | string | The IFC LongName of a Space or Storey. Required on both; `""` when the IFC file has none. |
-| `material` | `MaterialName` | The one material string the parser derives, exactly as the IFC spells it. Required on every BuildingComponent; `""` when unresolved, still a tier 3 work item. |
+| `made_of` | `Material`, not inlined | The Material the component is made of, IFC's `IfcRelAssociatesMaterial` from the element's side. Required on every BuildingComponent; `""` when the parser derived no material string, a tier 3 work item. Named `made_of` because a slot `material` beside the class `Material` would write the same docs page. No pattern, because the id is a material string. |
+| `category` | `MaterialCategory` | The Material's category, IFC's `IfcMaterial.Category` as this project's vocabulary: `masonry`, `timber`, `concrete`. Assigned by a mapping step after the parse. Required on every Material; `unassigned` until mapped, a tier 3 work item. The enum is checked at tier 1. |
 | `permanence` | `ComponentPermanence` | Required, no default. |
 | `source` | `RecordSource` | Required on BuildingComponent and Space, no default. |
 | `derived_from` | `BuildingComponent`, not inlined | The IFC-sourced component this one was generated from. Required on every BuildingComponent; `""` except when `source` is `derived`, when a rule requires it to match the GlobalId pattern, not `""`. |
@@ -141,7 +146,7 @@ Enums are named after what they qualify, following `RobotStatus`, because an enu
 | `clear_height` | `Quantity`, `inlined: true` | The passable height. For a door the IFC OverallHeight, with the opening's geometry as fallback; for a void the opening's geometry; for a stair the headroom, read from geometry. |
 | `elevation` | `Quantity`, `inlined: true` | The storey's level in the project frame. Required; the unresolved sentinel `{value: 0.0, unit: ""}` when not known. |
 
-Reused from common: `id`, `length`, `width`, `height`, `weight` as slots; `Position`, `Quantity`, `MaterialName` as ranges. Every Position and Quantity slot states `inlined: true` so the document shape is visible in the YAML; a reference slot states `range` alone, no `inlined`, so a reader sees which slots are references. On `BuildingComponent`, `derived_from`, `part_of`, `located_in`, and `contained_in` additionally carry `pattern: "^$|^[0-3][0-9A-Za-z_$]{21}$"` in `slot_usage`, so their value is always a real GlobalId or the empty string, never other text.
+Reused from common: `id`, `length`, `width`, `height`, `weight` as slots; `Position`, `Quantity`, `MaterialCategory` as ranges. Every Position and Quantity slot states `inlined: true` so the document shape is visible in the YAML; a reference slot states `range` alone, no `inlined`, so a reader sees which slots are references. On `BuildingComponent`, `derived_from`, `part_of`, `located_in`, and `contained_in` additionally carry `pattern: "^$|^[0-3][0-9A-Za-z_$]{21}$"` in `slot_usage`, so their value is always a real GlobalId or the empty string, never other text.
 
 ### Class rules
 
@@ -163,7 +168,8 @@ Instances of this module are derived, not authored, and the derivation is a late
 - Every Connector gets exactly two Spaces. A Connector with one end is a derivation bug, and tier 1 catches it.
 - Windows are parsed as BuildingComponents and never as Connectors.
 - Every derived Space is a line on the human work list, confirmed as a real exterior or room, or a sign the model is missing one.
-- Every `BuildingComponent` key is written on every record, resolved or not: `ifc_type`, `material`, `derived_from`, `part_of`, `located_in`, and `contained_in` hold `""` rather than being left out when they do not apply or have not been resolved yet. Whether an empty one is expected (`part_of` on almost everything) or a gap worth a human's attention (`material`, `contained_in`, `located_in` on a model good enough to have them) is a tier 3 question, not a shape question.
+- Every `BuildingComponent` key is written on every record, resolved or not: `ifc_type`, `made_of`, `derived_from`, `part_of`, `located_in`, and `contained_in` hold `""` rather than being left out when they do not apply or have not been resolved yet. Whether an empty one is expected (`part_of` on almost everything) or a gap worth a human's attention (`made_of`, `contained_in`, `located_in` on a model good enough to have them) is a tier 3 question, not a shape question.
+- The parser writes one `Material` record per distinct material string it derives, with `category: unassigned`, and points every component at its record through `made_of`. A mapping step that runs after the parse and is not part of the derivation replaces `unassigned` with a category, once per material, and leaves it where it has no rule.
 
 Known ceiling, accepted for the first slice: two disconnected exterior regions on one storey, a north balcony and a south balcony, share one exterior Space and so admit a false path between them. Splitting by connected region needs geometry the first derivation will not have.
 
@@ -184,7 +190,10 @@ Every row is a decision. "Borrowed" means the IFC value is carried as is, "Adapt
 
 | IFC construct | Slot or class | Borrowed / Adapted | Note |
 |---|---|---|---|
-| IfcRelAssociatesMaterial.RelatingMaterial (IfcMaterialSelect) | `material` | Adapted | One string: occurrence over type, unwrap a usage to its set, IfcMaterial.Name, else the set's name, else member names joined with " / ". Loses layering, profiles, constituents. Rule in the research note, 3.3. |
+| IfcMaterial | `Material` | Adapted | One record per distinct material string, shared by the components made of it, as one IfcMaterial is associated to many elements. Description is not carried. |
+| IfcMaterial.Name, or the set name the derivation rule reaches instead (IfcMaterialSelect) | `Material.id` | Adapted | The string the parser derives: occurrence over type, unwrap a usage to its set, IfcMaterial.Name, else the set's name, else member names joined with " / ". Loses layering, profiles, constituents. Rule in the research note, 3.3. IfcMaterial has no GlobalId, so the string is the record's identity. |
+| IfcMaterial.Category | `category` | Adapted | IFC's optional category label, recommended values 'concrete', 'brick', 'wood' and so on; real files rarely fill it and the Duplex never does. Assigned by a mapping step into the project's `MaterialCategory` vocabulary, not read from the file. |
+| IfcRelAssociatesMaterial | `made_of` | Adapted | The element's side of the association, one Material per component, IFC's MaxOneMaterialAssociation. |
 | IfcProduct.ObjectPlacement resolved through PlacementRelTo to the WorldCoordinateSystem | `target_location` | Adapted | The centroid of the body in the project frame, not the placement origin, which is a corner or axis start. |
 | IfcGeometricRepresentationContext.WorldCoordinateSystem, TrueNorth; IfcContext.UnitsInContext | the frame and unit of every location slot | Adapted | Stated once in the slot descriptions; the unit travels on `Position`. TrueNorth and IfcMapConversion are dropped. |
 
@@ -230,9 +239,10 @@ Every row is a decision. "Borrowed" means the IFC value is carried as is, "Adapt
 | `id` on every class, matching the GlobalId pattern | It projects to a node, a node needs an identifier, and the identifier must survive a re-parse of the model. |
 | `BuildingComponent.permanence`, `source` | An unknown lifetime or provenance is a hole in the plan; a default would mislabel temporary works. |
 | `BuildingComponent.target_location` | A placement task has nothing to bind to without it. |
-| `BuildingComponent.ifc_type`, `material`, `derived_from`, `part_of`, `located_in`, `contained_in` as keys, on every record | The document shape must not depend on what the pipeline happened to resolve; a downstream check reads a value, never has to test for a missing key, and `""` on a reference slot renders as no edge at projection time, exactly what absence used to mean. |
+| `BuildingComponent.ifc_type`, `made_of`, `derived_from`, `part_of`, `located_in`, `contained_in` as keys, on every record | The document shape must not depend on what the pipeline happened to resolve; a downstream check reads a value, never has to test for a missing key, and `""` on a reference slot renders as no edge at projection time, exactly what absence used to mean. |
 | `derived_from` matching the GlobalId pattern, not `""`, when `source` is `derived` | Presence alone does not say a derived record actually names what it came from; unlike `ifc_type`, which the parser always has, this is the derivation's own logic, which can fail or forget. |
 | `Space.source` | A derived room or exterior must say so, because it is a claim the derivation made, not a fact the model carried. |
+| `Material.id`, `category` as keys, on every record | A material the parser met is a record whether or not the mapping step has reached it; `unassigned` in `category` is the work item, and a missing key would hide it. An enum slot cannot hold `""`, so the enum carries the value. |
 | `name`, `long_name` as keys, on every class that carries them | The same required-everywhere reasoning applies to any plain string slot, not only `BuildingComponent`'s; `""` when the IFC file has none. |
 | `Space.contained_in`, holding a real Storey id, never `""` | Every Space has a storey by construction (the derivation's own contract, see What the derivation must deliver); unlike `BuildingComponent`'s use of the same slot, there is no legitimate empty case to allow. |
 | `BuildingComponent.supply_location`, `current_location`, `length`, `width`, `height`, `weight`, and `Storey.elevation` as keys, on every record | The same reasoning as the string and reference slots; a Position or Quantity's own `value`/`x_coord`/etc. stay real floats (`0.0` by convention) but its `unit` is `""` when unresolved, which no genuinely resolved Position or Quantity would ever have, so it is as safe a marker as the empty string is for a plain slot. Needs neither `null` nor a change to common's `Position`/`Quantity` (see decision 2). |
@@ -271,6 +281,20 @@ Every slot in the module is now a required key. What varies is only what an unre
   contained_in: 3ZYW59sxj8lei475l7EhLU
 ```
 
+`materials.yaml`:
+
+```yaml
+- record_type: Material
+  id: "Basic Wall:Exterior - Brick on Block"
+  category: masonry
+- record_type: Material
+  id: Brick
+  category: masonry
+- record_type: Material
+  id: "Metal - Steel - 345 MPa"
+  category: unassigned
+```
+
 `building_components.yaml`:
 
 ```yaml
@@ -278,7 +302,7 @@ Every slot in the module is now a required key. What varies is only what an unre
   id: 3bXiCStxP6Fgxdej$yc50n
   ifc_type: IfcWall
   name: Basic Wall:Exterior - Brick on Block:138157
-  material: Brick
+  made_of: "Basic Wall:Exterior - Brick on Block"
   permanence: permanent
   source: ifc
   derived_from: ""
@@ -296,7 +320,7 @@ Every slot in the module is now a required key. What varies is only what an unre
   id: 2O2Fr$t4X7Zf8NOew3FLTF
   ifc_type: ""
   name: brick 0001 of Basic Wall:Exterior - Brick on Block:138157
-  material: Brick
+  made_of: Brick
   permanence: permanent
   source: derived
   derived_from: 3bXiCStxP6Fgxdej$yc50n
@@ -319,7 +343,7 @@ Every slot in the module is now a required key. What varies is only what an unre
   id: 3KMJUyUe9DfQ2FOCd5ZoiN
   ifc_type: IfcDoor
   name: Entrance door
-  material: ""
+  made_of: ""
   permanence: permanent
   source: ifc
   derived_from: ""
@@ -343,7 +367,7 @@ The values above show the shape. The committed files hold the real model's value
 
 ### Fixed by the brief
 
-Four classes, one `is_a`. `BuildingComponent` subclassed by kind only, never by source or permanence. `permanence` and `source` required with no default. `id` is the GlobalId, parsed or minted. `derived_from` is a required key on every record, `""` unless `source` is `derived`, when a rule requires it to hold a real id; the producing algorithm not recorded. `material` a required key, `""` when unresolved, still a tier 3 query. `target_location` required and a centroid; `supply_location` and `current_location` also required keys, the unresolved sentinel (a real Position with `unit: ""`) until known. The exterior is a Space per storey; `connects` exactly two. `Storey` a class identified by its GlobalId. `name` and `long_name` are required keys everywhere they appear, `""` when the IFC file has none. `contained_in` ranges Storey and is reused for Space; `located_in` is the component-to-Space relation. Connectors are doors, voids, and stairs; a stair's clearances are optional. Instances are derived, not authored; the derivation is a later slice.
+Five classes, one `is_a`. `BuildingComponent` subclassed by kind only, never by source or permanence. `permanence` and `source` required with no default. `id` is the GlobalId, parsed or minted. `derived_from` is a required key on every record, `""` unless `source` is `derived`, when a rule requires it to hold a real id; the producing algorithm not recorded. `made_of` a required key naming a `Material`, `""` when the parser derived none, still a tier 3 query; `Material` shaped on `IfcMaterial`, one shared record per distinct string, its `id` the string and its `category` a required enum value, `unassigned` until the mapping step assigns one, the work item method selection reads (2026-09-21). `target_location` required and a centroid; `supply_location` and `current_location` also required keys, the unresolved sentinel (a real Position with `unit: ""`) until known. The exterior is a Space per storey; `connects` exactly two. `Storey` a class identified by its GlobalId. `name` and `long_name` are required keys everywhere they appear, `""` when the IFC file has none. `contained_in` ranges Storey and is reused for Space; `located_in` is the component-to-Space relation. Connectors are doors, voids, and stairs; a stair's clearances are optional. Instances are derived, not authored; the derivation is a later slice.
 
 ## Code Style
 
@@ -360,7 +384,7 @@ classes:
       - id
       - ifc_type
       - name
-      - material
+      - made_of
       - permanence
       - source
       - derived_from
@@ -388,7 +412,7 @@ classes:
         required: true
       ifc_type:
         required: true
-      material:
+      made_of:
         required: true
       part_of:
         required: true
@@ -418,25 +442,26 @@ classes:
 Conventions specific to this module:
 
 - **Names follow the linter's `standard_naming` rule**: CamelCase classes and enums, snake_case slots and permissible values.
-- **IFC names stay recognisable.** `ifc_type`, `name`, `long_name`, `contained_in`, and `elevation` are IFC's words in snake_case. The module's own words are `located_in`, `connects`, `kind`, `derived_from`, `part_of`, `permanence`, `source`, `record_type`, and the three location slots.
+- **IFC names stay recognisable.** `ifc_type`, `name`, `long_name`, `contained_in`, `elevation`, `Material`, and `category` are IFC's words in the house style. The module's own words are `located_in`, `connects`, `kind`, `derived_from`, `part_of`, `made_of`, `permanence`, `source`, `record_type`, and the three location slots.
 - **Attribution only where the meaning changed.** Adapted slots say in one sentence what the parser does to the IFC value; borrowed slots say what the IFC attribute is; the module's own slots do not mention IFC.
 - **Enums are named after what they qualify**: `ComponentPermanence`, `RecordSource`, `ConnectorKind`, so no enum page collides with its slot page.
 - **Every rule has a `description`**, one sentence in the indicative, so the generated Rules table reads as prose.
 - **`inlined: true` on every Position and Quantity slot**, nothing on reference slots.
-- **Ids are GlobalIds, names are for people.** A derived record's `name` says what it is and what it came from, as in the brick above, because its id says nothing a reader can use.
-- **Every slot in the module is a required key, with no exceptions.** An unresolved or inapplicable value is never an absent key: `""` for a plain string or reference slot, and for the seven Position/Quantity-typed slots (`target_location` excepted, always real), a real Position or Quantity object whose `unit` is `""` — `value`/`x_coord`/etc. stay ordinary floats (`0.0` by convention), since only `unit` needs to carry the marker and a resolved Position or Quantity never legitimately has an empty one. This is the module's own convention, not IFC's: it keeps the document shape identical across every record of a class regardless of what the pipeline has resolved, and gives the tiered checks a value to read instead of a key to test for, at any depth. `derived_from` and `part_of` on `BuildingComponent`, `located_in`, and `contained_in` on `BuildingComponent` also carry `pattern: "^$|^[0-3][0-9A-Za-z_$]{21}$"`, so their value is always the empty string or a real GlobalId, never other text; `contained_in` on `Space` keeps the plain, unwidened GlobalId pattern instead, because a Space always has one.
+- **Ids are GlobalIds, names are for people.** A derived record's `name` says what it is and what it came from, as in the brick above, because its id says nothing a reader can use. `Material` is the exception: its id is the material string, which people read, so it has no `name`.
+- **Every slot in the module is a required key, with no exceptions.** An unresolved or inapplicable value is never an absent key: `""` for a plain string or reference slot, and for the seven Position/Quantity-typed slots (`target_location` excepted, always real), a real Position or Quantity object whose `unit` is `""` — `value`/`x_coord`/etc. stay ordinary floats (`0.0` by convention), since only `unit` needs to carry the marker and a resolved Position or Quantity never legitimately has an empty one. This is the module's own convention, not IFC's: it keeps the document shape identical across every record of a class regardless of what the pipeline has resolved, and gives the tiered checks a value to read instead of a key to test for, at any depth. `derived_from` and `part_of` on `BuildingComponent`, `located_in`, and `contained_in` on `BuildingComponent` also carry `pattern: "^$|^[0-3][0-9A-Za-z_$]{21}$"`, so their value is always the empty string or a real GlobalId, never other text; `contained_in` on `Space` keeps the plain, unwidened GlobalId pattern instead, because a Space always has one. `made_of` carries no pattern: a material string has no fixed shape, so it is `""` or an id that tier 2 resolves. `Material.category` is an enum, so its unmapped value is the permissible value `unassigned`, not `""`, and the validator checks it.
 - **Every record names its own class, in the data.** `record_type` is declared once, `designates_type: true`, and reused by all four classes exactly as `id` is; each class's own generated schema locks it to that class's own name, computed by LinkML, not hand-maintained per class. A record is therefore self-describing independent of which file holds it, and a document checked against the wrong class fails on `record_type` specifically, not by chance of the classes' other slots differing.
 
 ## Testing Strategy
 
-No new test files. Fourteen rows in `EXAMPLES`.
+No new test files. Sixteen rows in `EXAMPLES`, fourteen on 2026-09-15 and two on 2026-09-21.
 
 | Document | Class | Expected | Proves |
 |---|---|---|---|
-| `examples/product/building_components.yaml` | `BuildingComponent` | validates | IFC-sourced and derived components, a temporary one, a window, a part with `part_of`, the dimension slots, `located_in` and `contained_in`, and the required-everywhere convention on every record, ifc-sourced or derived |
+| `examples/product/building_components.yaml` | `BuildingComponent` | validates | IFC-sourced and derived components, a temporary one, a window, a part with `part_of`, the dimension slots, `located_in` and `contained_in`, `made_of` naming a Material on every component the model gives one and `""` on the rest, and the required-everywhere convention on every record, ifc-sourced or derived |
 | `examples/product/connectors.yaml` | `Connector` | validates | A door with clearances, a stair without, an exterior door whose second Space is an exterior; inherited slots plus the four of its own |
 | `examples/product/spaces.yaml` | `Space` | validates | Parsed rooms, one derived exterior per storey, `source` on each |
 | `examples/product/storeys.yaml` | `Storey` | validates | Every storey the other files reference |
+| `examples/product/materials.yaml` | `Material` | validates | One record per distinct material string in the component and connector files, `category` mapped on the masonry, concrete, and timber ones and `unassigned` on the rest |
 | `invalid/building_component_missing_permanence.yaml` | `BuildingComponent` | fails on `permanence` | A plain required enum slot |
 | `invalid/building_component_id_not_global_id.yaml` | `BuildingComponent` | fails on `id` | The GlobalId pattern reaches the validator |
 | `invalid/building_component_ifc_missing_ifc_type.yaml` | `BuildingComponent` | fails on `ifc_type` | `ifc_type` is a required key on every record, not only ifc-sourced ones |
@@ -447,10 +472,11 @@ No new test files. Fourteen rows in `EXAMPLES`.
 | `invalid/space_missing_source.yaml` | `Space` | fails on `source` | A Space always says where it came from |
 | `invalid/space_record_type_mismatch.yaml` | `Space` | fails on `record_type` | A record validated as the wrong class fails on its own type designator, not by chance of the classes' other slots |
 | `invalid/storey_id_not_global_id.yaml` | `Storey` | fails on `id` | The pattern is set on every class, not only on components |
+| `invalid/material_missing_category.yaml` | `Material` | fails on `category` | `category` is a required key on every Material |
 
 All nine error messages were probed on 2026-09-15 with the schema shape above and contain the slot name the harness looks for. `test_lint.py` and `test_dist.py` collect the new files with no change.
 
-What the validator does not check, and who does: that `connects`, `located_in`, `contained_in`, `derived_from`, and `part_of` name ids that exist in the sibling files is a tier 2 check for the projection component. Until then, success criterion 5 checks it by hand. The whole-graph checks this module needs are listed under Deferred to CHECKS.md below.
+What the validator does not check, and who does: that `connects`, `located_in`, `contained_in`, `derived_from`, `part_of`, and `made_of` name ids that exist in the sibling files is a tier 2 check for the projection component. Until then, success criterion 5 checks it by hand. The whole-graph checks this module needs are listed under Deferred to CHECKS.md below.
 
 A Connector cannot be written into `building_components.yaml`: validated as `BuildingComponent`, its `kind` and `connects` are unexpected properties. Probed 2026-09-15. Connectors live in their own file, always.
 
@@ -464,7 +490,8 @@ Tier 3 checks this module needs and the schema cannot express, because each read
 | A stair Connector's two Spaces lie on different storeys | each Space's `contained_in` | The storeys are on the Space records, not on the Connector |
 | A `derived` component's `derived_from` names a component whose `source` is `ifc` | the target's `source` | The target is another record; tier 2 checks only that it exists |
 | A part's `part_of` names a component that is not itself a part | the target's `part_of` | Same; keeps the aggregation one level deep, as IFC assemblies are |
-| Work list: every component with `material: ""` | all components | Fixed by the brief as a work list, not a shape error; `""` marks it, not a missing key |
+| Work list: every component with `made_of: ""` | all components | Fixed by the brief as a work list, not a shape error; `""` marks it, not a missing key |
+| Work list: every Material with `category: unassigned` | all Materials | The mapping step has no rule for the string; one line per material, not per component, which is the list the catalogue author needs |
 | Work list: every non-part component with `contained_in: ""` | all components | Whether an empty one is a defect or an expected absence depends on trusting the source model's quality, a judgement outside what a shape check can make |
 | Work list: every component with `located_in: ""` | all components | Empty on every record until the point-in-space derivation exists; a real gap once it does |
 | Work list: every component with a dimension slot's `unit: ""` | `length`, `width`, `height`, `weight` on all components | No `IfcElementQuantity` in this model resolves any of the four, so this flags nothing yet; a real gap once a model that has base quantities is parsed |
@@ -477,17 +504,17 @@ Tier 3 checks this module needs and the schema cannot express, because each read
 
 **Ask first.** Adding a class or slot beyond the lineage table. A second `is_a` subclass. A second class rule. A fourth `ConnectorKind` value, `window` included. Carrying PredefinedType or ObjectType. A flag or slot that marks the exterior Space. A Building or Site class. A third runtime slot beyond `status` and `current_location`. A second level of `part_of`. Moving a slot into common. Adding a test file.
 
-**Never.** Subclassing `BuildingComponent` by `source` or `permanence`. A default on `permanence` or `source`. An `id` that is not in GlobalId form, or a second identifier slot beside it. A `derived_by` or any record of the producing algorithm. A separate Opening node beside a door. Geometry, property sets, or a material taxonomy. `abstract`, `mixins`, or `union_of`. Graph vocabulary or annotations. Hand edits under `dist/` or `docs/model/`. Redefining a slot common declares. Invented example data.
+**Never.** Subclassing `BuildingComponent` by `source` or `permanence`. A slot named `material` beside the class `Material`. A pattern on `made_of`. A GlobalId or a second identity slot on `Material`. A `Material` without a `category` key. A default on `permanence` or `source`. An `id` that is not in GlobalId form, or a second identifier slot beside it. A `derived_by` or any record of the producing algorithm. A separate Opening node beside a door. Geometry, property sets, or a material taxonomy. `abstract`, `mixins`, or `union_of`. Graph vocabulary or annotations. Hand edits under `dist/` or `docs/model/`. Redefining a slot common declares. Invented example data.
 
 ## Success Criteria
 
-1. `uv run pytest` passes with fourteen new rows collected and passing, and no test file other than `test_examples.py` changed.
-2. `dist/product.schema.json` declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `BuildingComponent`, `Connector`, `Space`, `Storey`, `ComponentPermanence`, `RecordSource`, `ConnectorKind`, and common's `Position`, `Quantity`, `Interval`, `CapabilityType` (`ParameterKind` until it moved to process, 2026-09-18). `id` carries the GlobalId pattern in all four class definitions; `Connector.properties` holds every BuildingComponent property plus its four own; `connects` has `minItems: 2` and `maxItems: 2`; `BuildingComponent` and `Connector` each carry a bare `if`/`then` pair, the one `derived_from` rule, which `Connector` inherits and adds nothing to. All probed on 2026-09-15 and 2026-09-16.
+1. `uv run pytest` passes with fourteen new rows collected and passing, sixteen since 2026-09-21, and no test file other than `test_examples.py` changed.
+2. `dist/product.schema.json` declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `BuildingComponent`, `Connector`, `Space`, `Storey`, `Material` since 2026-09-21, `ComponentPermanence`, `RecordSource`, `ConnectorKind`, and common's `Position`, `Quantity`, `Interval`, `CapabilityType` (`ParameterKind` until it moved to process, 2026-09-18; `MaterialCategory` since 2026-09-21). `id` carries the GlobalId pattern in all four class definitions; `Connector.properties` holds every BuildingComponent property plus its four own; `connects` has `minItems: 2` and `maxItems: 2`; `BuildingComponent` and `Connector` each carry a bare `if`/`then` pair, the one `derived_from` rule, which `Connector` inherits and adds nothing to. All probed on 2026-09-15 and 2026-09-16.
 3. `dist/README.md` lists `product.schema.json` with the module description.
-4. `docs/model/product/index.md` lists the four classes with `Connector` indented under `BuildingComponent`, the three enums, and this module's own slots, every entry with a description. The `BuildingComponent` page shows a Rules table; `Connector`'s does not, since `gen-doc` renders a rule only on the class that declares it, and the inherited one shows in the JSON Schema instead. The folder also holds unlinked pages for common's elements, as in resource.
-5. The four example files come from one real model. `building_components.yaml` holds at least one IFC-sourced component with a `material`, one window, one derived component whose `derived_from` names a component in the same file, one temporary component, and, when the model has an element assembly, one part whose `part_of` names its assembly in the same file or in `connectors.yaml`. `connectors.yaml` holds at least one door with clearances, one door whose `connects` names an exterior Space, and one stair. `spaces.yaml` holds one exterior Space per storey with `source: derived` and every id named in `connects` and `located_in`. `storeys.yaml` holds every id named in `contained_in`. Every `id` across the four files is distinct.
+4. `docs/model/product/index.md` lists the five classes with `Connector` indented under `BuildingComponent`, the three enums, and this module's own slots, every entry with a description. The `BuildingComponent` page shows a Rules table; `Connector`'s does not, since `gen-doc` renders a rule only on the class that declares it, and the inherited one shows in the JSON Schema instead. The folder also holds unlinked pages for common's elements, as in resource.
+5. The five example files come from one real model. `building_components.yaml` holds at least one IFC-sourced component whose `made_of` names a Material and one with `made_of: ""`, one window, one derived component whose `derived_from` names a component in the same file, one temporary component, and, when the model has an element assembly, one part whose `part_of` names its assembly in the same file or in `connectors.yaml`. `connectors.yaml` holds at least one door with clearances, one door whose `connects` names an exterior Space, and one stair. `spaces.yaml` holds one exterior Space per storey with `source: derived` and every id named in `connects` and `located_in`. `storeys.yaml` holds every id named in `contained_in`. `materials.yaml` holds every id named in `made_of` in the other two files, at least one with a real `category` and one `unassigned`. Every `id` across the five files is distinct.
 6. Every slot declared in `schema/product.yaml` appears in the lineage table or is one of the module's own words listed under Code Style. Checked by reading, recorded as done once.
-7. `schema/common.yaml` did not change, and the toolchain did not change. `git log -- schema/common.yaml scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module.
+7. `schema/common.yaml` did not change during the module's four tasks, and the toolchain did not change. `git log -- schema/common.yaml scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module. The 2026-09-21 amendment added `MaterialCategory` to common in its own commit before `Material` landed here, both under the process plan.
 
 ## Decisions Made Here
 
@@ -513,6 +540,7 @@ Everything the brief fixed is under Fixed by the brief. The following were decid
 14. **Tier 3 candidates are named, not modelled**, in the section Deferred to CHECKS.md, so they are in one place when the generator's `CHECKS.md` is written. Accepted; the section heading is this spec's own, not an existing convention.
 15. **Splitting `BuildingComponent` by `source` into two classes was considered and declined, 2026-09-15.** An abstract base plus an ifc-sourced and a derived subclass would have retired the same two rules for free, via `is_a` slot inheritance the way `Connector` already uses, and let a derived record's identifier not pretend to be GlobalId-shaped. It was declined because it only pays off for the two slots that already had a working rule; `material`, `part_of`, `located_in`, and `contained_in` have the identical shape question and are orthogonal to `source`, so the split would not have touched them, and it reopens "Fixed by the brief: subclassed by kind only, never by source" for a narrower win than decision 2 gives across all six slots at once, in the existing single-class shape.
 16. **Every record carries `record_type`, a LinkML type designator naming its own class, added 2026-09-16.** This reverses the original draft's Boundaries, which listed `designates_type` under Never; the reversal is deliberate, not an oversight, and this entry is that Never line's replacement. The four example files stay one per class; nothing about document layout changed. The four classes already differing in required slots meant a document validated against the wrong class was likely, but not guaranteed, to fail; `record_type` makes it a designed, unconditional guarantee, chosen deliberately over relying on that coincidence as the schema's slots evolve. Declared once, `range: string`, `designates_type: true`, reused by all four classes exactly as `id` is; `Connector` inherits it from `BuildingComponent` without a separate declaration, and LinkML computes the class's own name as the locked value from whichever class is actually being generated, confirmed by generating `Connector`'s own schema directly (`record_type` there locks to `"Connector"`, not `"BuildingComponent"`). `linkml-validate`'s `-C`/`--target-class` remains the mechanism that selects which class's schema a run checks against; `record_type` does not replace it and does not make `-C` optional, it only guarantees a mismatch is caught. `invalid/space_record_type_mismatch.yaml` pins the guarantee: a real Space record with `record_type: Storey` fails naming `record_type` alone. Considered as an alternative to the four-file layout (one shared, self-describing collection per LinkML's own property-graph howto pattern, `Node`/`category` and `Edge`/`predicate`) and kept independent of it: the combined-collection question stays open, `designates_type` was adopted on its own merits regardless of how it is decided.
+17. **`Material` as a class shaped on `IfcMaterial`, and `made_of` on the component, added 2026-09-21** during process's Phase 4, when method applicability moved to `Method.applies_to` as one `MaterialCategory` (`SPEC-process.md` decision 19). A catalogue cannot be written against strings like "Basic Wall:Exterior - Brick on Block", so a mapping step outside the schema turns each string into one of the project's categories, and methods are written against those. Where the category lives was decided from IFC: `IfcMaterial` carries `Name` and `Category`, so the category is an attribute of the material, not of the component, and `Material` is a class with `id`, the string, and `category`. Two shapes were weighed. An inlined object on every component, `material: {name, category}`, would have flattened to the same node properties as a bare `material_category` slot and made the mapping step write 143 copies of about twenty decisions. The identified, shared record is IFC's own shape, one `IfcMaterial` associated to many elements: the mapping step decides once per material, its work list is one line per material, and the component records keep the string they always carried, now as a reference. Its costs: `Material.id` is the one product id that is not a GlobalId, because `IfcMaterial` has none; a fifth example file; a third hop in the brief's opening query. The component's slot is `made_of`, not `material`, because a slot and a class of one name write the same generated docs page on a case-insensitive filesystem, and the repo renames the slot in that case. `category` ranges the `MaterialCategory` enum in common, a fold decided the same day from a first shape with a second class; it is a required key whose unmapped value is the enum's `unassigned`, because an enum slot cannot hold `""` and decision 2 forbids an absent key. `made_of` carries no pattern, because a material string has no fixed shape. `materials.yaml` is produced by the throwaway extractor from the distinct strings it meets, with a string-to-category table: brick-on-block and CMU walls to `masonry`, foundation walls and slabs on grade to `concrete`, wood floors and the wood-joist roof to `timber`, everything else `unassigned`.
 
 ## Open Questions
 

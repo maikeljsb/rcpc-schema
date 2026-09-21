@@ -1,6 +1,6 @@
 # PDDL and HDDL as the source for the process module
 
-Research note, 2026-09-17, replacing the draft of 2026-09-16.
+Research note, 2026-09-17, replacing the draft of 2026-09-16. Section 2.6, Part 3 item 6, Part 4 question 9, and Appendix B.1 and B.2 revised 2026-09-21, when method applicability moved back onto the method as one material category.
 
 ## Question
 
@@ -251,7 +251,7 @@ Brief change. The checked assumption "a closed set of parameter kinds covers eve
 
 ### 2.3 Predicates and functions
 
-Foundation. Every reference and enum slot is a predicate: `located_in`, `contained_in`, `connects`, `derived_from`, `part_of`, `offers`, `status`, `permanence`, `material`. Every `Quantity`, `Position`, or `Interval` slot is a function value, `(= (weight c) 12.5)`; a `Position` is three functions, which is the flattening rule `target_location_x_coord`. Transport's `(>= (capacity ?v) (package-size ?p))` has both operands in the foundation: `load_capacity` on `PhysicalProperty`, `weight` on `BuildingComponent`.
+Foundation. Every reference and enum slot is a predicate: `located_in`, `contained_in`, `connects`, `derived_from`, `part_of`, `offers`, `status`, `permanence`, `made_of` and a Material's `category`, written together as `(material ?e masonry)` in Appendix B.1. Every `Quantity`, `Position`, or `Interval` slot is a function value, `(= (weight c) 12.5)`; a `Position` is three functions, which is the flattening rule `target_location_x_coord`. Transport's `(>= (capacity ?v) (package-size ?p))` has both operands in the foundation: `load_capacity` on `PhysicalProperty`, `weight` on `BuildingComponent`.
 
 Shape. Nothing in `process.yaml`. Comparisons across them are the planner's or a tier 3 query's.
 
@@ -273,11 +273,11 @@ Basis. Parameters are declared, and tier 2 checks that every subtask's parameter
 
 ### 2.6 Methods
 
-Foundation. `MaterialName` in common joins product's `material` to the method's applicability.
+Foundation. `MaterialCategory` in common, the vocabulary a mapping step assigns as the `category` of product's `Material` records, one per distinct parsed string, is what a method's applicability names (2026-09-21).
 
-Shape. `Method` with `id`; `task`, a reference to `CompoundTask`, HDDL's `:task`; `parameters`, the keyed map of 2.2, declaring every variable the subtasks use, a superset of the task's parameters (HDDL §3, p. 4; question 4); `subtasks` and `ordering` (2.7); `description`. Applicability: the brief's `applies_to`, a list of material strings, is HDDL's type constraint on a parameter (1.7, Definition 1) realised through the method's own declaration of that parameter, which HDDL says exists to restrict "the abstract task's parameters to subtypes" (1.6). Its place is therefore the method's declaration of its component parameter, an optional slot beside the kind: `c: {parameter_kind: component, applies_to: [Brick]}`. On the method it would be ambiguous once a method has two component parameters.
+Shape. `Method` with `id`; `task`, a reference to `CompoundTask`, HDDL's `:task`; `parameters`, the keyed map of 2.2, declaring every variable the subtasks use, a superset of the task's parameters (HDDL §3, p. 4; question 4); `subtasks` and `ordering` (2.7); `description`. Applicability: `applies_to`, one `MaterialCategory` on the method, the category of the components it decomposes its task for, absent when unrestricted. HDDL restricts a method to a kind of object in two ways, and neither writes anything but a type on the parameter declaration: the method's own declaration may type its parameter with a subtype, which §4, p. 7 names as the purpose of separate method parameters (1.6), or a method precondition may test a fact of the object (1.6). So `Parameter` is the name and the kind, HDDL's `?c - component`, and the method's scope is a slot of the method. Appendix B.1 writes the precondition form over a closed set of category constants and solves it; the subtype form solves too, B.2.
 
-Basis. HDDL §4, p. 7 and Def. 1. Brief change: `applies_to` moved from `Method` to the component parameter declaration; the list and its matching by membership are unchanged.
+Basis. HDDL §4, p. 7, 1.6, Appendix B. History: the brief of 2026-09-10 had a list of material strings on the method. This note moved it onto the component parameter declaration on 2026-09-17, reading the subtype restriction as licence to put a material list where a type goes. Reversed 2026-09-21 (question 9): the declaration is a typed variable and nothing else, and the list existed only for several spellings of one material, a reason the mapping step to `MaterialCategory` removes.
 
 No method preconditions and no method effects. Basis: 1.6 and 1.11; the brief agrees.
 
@@ -333,14 +333,15 @@ Derived from part 2 and written into the brief and the map on 2026-09-17. "Decid
 **brief**
 4. Domain Structure: add that the catalogue is the HDDL domain, product and resource documents are the problem's objects and initial state, parentless ground compounds are the initial task network, and the rest of the instance side is the decomposition tree (2.1). The path stays `Method` to `PrimitiveTask`, one edge per subtask carrying its position (question 8).
 5. Decisions Taken by Default, "Ordering is over start and end events from the start": reversed to whole-task ordering (2.7). Decided by the sources.
-6. Decisions Taken by Default, "Method applicability is `applies_to`": the list moves from the method to the method's component parameter declaration (2.6). Decided by the sources.
+6. Decisions Taken by Default, "Method applicability is `applies_to`": moved to the method's component parameter declaration on 2026-09-17, and back onto the method on 2026-09-21 as one `MaterialCategory` (2.6, question 9).
 7. Error Tiers: replace "a method has an empty network without declaring it" with "a subtask lists too few parameters for its task, or one that is neither a method parameter nor an object" (2.6).
 8. Preconditions as Relation Kinds, "Acts on component": the pattern is a parameter of an object kind (2.2); Capacity is a function comparison (2.3).
 9. Key Assumptions: the parameter-kinds item is reopened and answered by this note.
 10. Decisions Taken by Default, "Stage-two allocation is one edge, `assigned_unit`", becomes the `robot` parameter's binding on the `PrimitiveTaskInstance` (question 3).
 
 **product, resource**
-None. Product's three location slots are what lets positions leave the parameter kinds; resource's `offers`, `status`, and CRS quantities are the predicates and functions the export reads.
+None on 2026-09-17. Product's three location slots are what lets positions leave the parameter kinds; resource's `offers`, `status`, and CRS quantities are the predicates and functions the export reads.
+11. On 2026-09-21, question 9 added the `MaterialCategory` enum to common and `Material` to product, shaped on `IfcMaterial`, one shared record per distinct parsed string with the `category` a mapping step assigns, the value `applies_to` names; the component's slot became `made_of` and the `MaterialName` type was retired (`SPEC-common.md` decision 15, `SPEC-product.md` decision 17).
 
 ## Part 4. Open questions
 
@@ -354,6 +355,8 @@ None. Product's three location slots are what lets positions leave the parameter
 
 5. Do process classes carry `record_type`, as product's do? **Decided 2026-09-17.** Yes, on every process class, reusing the slot product declares; LinkML locks its value to each class's own name. The brief's inheritance policy, no `designates_type`, is thereby reversed for process as it was for product.
 8. Is an occurrence in a method a node of its own, and if so, does it point at a shared definition of its primitive task? **Decided 2026-09-17: B.** The occurrence is an entry inside the method: `Method` holds `subtasks` as an ordered list, each entry a task name followed by its parameter sequence, as HDDL's `(t1 (move ?r ?l0 ?from))` with the position standing for the id, and `ordering` as a list of position pairs, `[[1, 2], [2, 3], [3, 4]]`, a property of the method: `rep_b.yaml` in B.3 exactly. `Subtask` is the entry class, without key or identifier; the brief's rule for unkeyed lists changes so that the position is the key, and the entry is flattened onto the method and is not a node. There is no `OrderingConstraint` class: `ordering` is an array slot of two dimensions, the only LinkML construct that admits a list of pairs (Appendix A). Tier 1 then checks only that it is a list; that each pair names two existing positions is a tier 2 check. The projection rule table has no case for an array slot yet and needs one, since a Neo4j property holds flat lists only. One hop from `Method` to the task it uses, two parallel edges when the same task occurs twice, told apart by position. `rep_b.yaml` validates against a LinkML schema of this shape (Appendix A). Planning is indifferent to all three shapes (B.4), so the choice rests on the graph alone. Not taken: A, the occurrence as a `Subtask` node pointing at a shared `PrimitiveTask` node with ordering as edges between occurrences; C, the occurrence as the primitive node itself with no shared definition record. Consequences: ordering between root instances in a ground document, HDDL's `:htn`, can take the same shape, a keyed list of entries referencing `CompoundTaskInstance`s and an `ordering` map, so no second form is needed; every export writes the explicit labelled form with ids `t1` to `tn` made from the positions, as B.4 does; the definition of each primitive stays a shared `PrimitiveTask` record, as under A.
+
+9. Where does method applicability live, and what is its value? **Decided 2026-09-21, reversing 2.6 of 2026-09-17.** On `Method`, as `applies_to`, one `MaterialCategory` id, absent when the method applies to any component. The parameter declaration returns to HDDL's typed variable, name and kind only. The value is a category from a closed vocabulary the project writes, the enum `masonry`, `timber`, `concrete`, with `unassigned` for the mapping step's not-yet, assigned by a mapping step to each product `Material` record, one per distinct parsed IFC string and shared by the components made of it, because a catalogue cannot be written against strings like "Basic Wall:Exterior - Brick on Block". Single-valued: the vocabulary is cut at the granularity methods distinguish. HDDL admits both a subtype on the method's parameter and a method precondition over a fact of the element; Appendix B.1 shows the precondition form, B.2 records that the subtype form solves too, and the schema leaves the choice to the export. Recorded in `SPEC-process.md` decision 19.
 
 6. Is the capability map row amended for `ParameterDeclaration`, `ArgumentBinding`, the binding class, and `OrderingConstraint`, or left as a summary? **Decided 2026-09-17.** The row names every class, as the product and resource rows do: `PrimitiveTask`, `CompoundTask`, `Method`, `Subtask` as its list entry (question 8), `PrimitiveTaskInstance`, `CompoundTaskInstance`, the keyed `Parameter` class, and the `ParameterKind` enum. A subtask's parameters are a plain list of strings, HDDL's parameter sequence, so no class carries them; tier 2 checks the count and each entry against the task's declaration. `Precedence` leaves the row and no ordering class replaces it (question 8). The common row loses `ParameterKind`.
 
@@ -376,56 +379,113 @@ None. Product's three location slots are what lets positions leave the parameter
 
 ## Appendix B. Experiment: does planning need `Subtask` as a record of its own?
 
-Run 2026-09-17 in the session scratchpad. Question: the first draft of part 2.7 made `Subtask` an identified record because ordering constraints must point at an occurrence. Does anything on the planning side need that, or is it only a graph concern? Method: write one method in two document shapes, export both to an HDDL `:method` block with one script, diff the outputs, and solve the resulting domain with an HTN planner. Planner: Aries through `unified-planning`, installed for the run with `uv run --with "unified-planning[aries]"`, the same route `robot-entry-as-type.md` used. Domain follows the user's framing: the material prefab selects the compound task `prefab`, refined by `m-prefab`.
+Run 2026-09-17 in the session scratchpad. Question: the first draft of part 2.7 made `Subtask` an identified record because ordering constraints must point at an occurrence. Does anything on the planning side need that, or is it only a graph concern? Method: write one method in two document shapes, export both to an HDDL `:method` block with one script, diff the outputs, and solve the resulting domain with an HTN planner. Planner: Aries through `unified-planning`, installed for the run with `uv run --with "unified-planning[aries]"`, the same route `robot-entry-as-type.md` used.
+
+B.1 and B.2 were rewritten on 2026-09-21 to the direction question 9 decided: the top-level task is `construct-element`, and a method is restricted to a material category by a precondition over a `material` fact, the HDDL form the schema's `applies_to` translates to. B.3 to B.6 keep the domain of 2026-09-17, one task `prefab` and one method `m-prefab` with no restriction, because the subtask-shape question they answer does not depend on the task above the method, and their recorded outputs are from that run.
 
 ### B.1 Domain and problem
 
-`domain.hddl`, with the method in its first, totally ordered form:
+Two prefabricated elements of the Duplex, a brick-on-block wall and a timber panel, each to be constructed. `construct-element` is the one top-level task; two methods decompose it, one per material category, and a method precondition over the `material` fact selects between them. `material-category` is a type whose constants are the schema's `MaterialCategory` values but `unassigned`, and `(material ?e ?m)` is the `category` of the `Material` a component is `made_of`, as one predicate. `transport` below it is the compound task `m_transport` decomposes in the catalogue.
+
+`domain.hddl`:
 ```lisp
 (define (domain construction)
-  (:requirements :hierarchy :typing :negative-preconditions)
-  (:types component location robot - object)
+  (:requirements :hierarchy :typing :negative-preconditions :method-preconditions)
+  (:types element location robot material-category - object)
+
+  (:constants masonry timber - material-category)
+
   (:predicates
+    (at ?e - element ?l - location)
     (at-robot ?r - robot ?l - location)
-    (at ?c - component ?l - location)
-    (holding ?r - robot ?c - component)
-    (target ?c - component ?l - location)
-    (placed ?c - component))
+    (holding ?r - robot ?e - element)
+    (target ?e - element ?l - location)
+    (material ?e - element ?m - material-category)
+    (built ?e - element))
 
-  (:task prefab :parameters (?c - component))
+  (:task construct-element :parameters (?e - element))
+  (:task transport         :parameters (?e - element))
 
-  (:method m-prefab
-    :parameters (?c - component ?r - robot ?l0 ?from ?to - location)
-    :task (prefab ?c)
+  (:method m-construct-masonry
+    :parameters (?e - element ?r - robot ?at - location)
+    :task (construct-element ?e)
+    :precondition (material ?e masonry)
+    :ordered-subtasks (and
+      (transport ?e)
+      (place ?r ?e ?at)))
+
+  (:method m-construct-timber
+    :parameters (?e - element ?r - robot ?at - location)
+    :task (construct-element ?e)
+    :precondition (material ?e timber)
+    :ordered-subtasks (and
+      (transport ?e)
+      (nail ?r ?e ?at)))
+
+  (:method m-transport
+    :parameters (?e - element ?r - robot ?l0 ?from ?to - location)
+    :task (transport ?e)
     :ordered-subtasks (and
       (move ?r ?l0 ?from)
-      (attach ?r ?c ?from)
+      (attach ?r ?e ?from)
       (move ?r ?from ?to)
-      (detach ?r ?c ?to)))
+      (detach ?r ?e ?to)))
 
   (:action move
     :parameters (?r - robot ?from ?to - location)
     :precondition (at-robot ?r ?from)
     :effect (and (not (at-robot ?r ?from)) (at-robot ?r ?to)))
-
   (:action attach
-    :parameters (?r - robot ?c - component ?l - location)
-    :precondition (and (at-robot ?r ?l) (at ?c ?l))
-    :effect (and (holding ?r ?c) (not (at ?c ?l))))
-
+    :parameters (?r - robot ?e - element ?l - location)
+    :precondition (and (at-robot ?r ?l) (at ?e ?l))
+    :effect (and (not (at ?e ?l)) (holding ?r ?e)))
   (:action detach
-    :parameters (?r - robot ?c - component ?l - location)
-    :precondition (and (at-robot ?r ?l) (holding ?r ?c) (target ?c ?l))
-    :effect (and (not (holding ?r ?c)) (at ?c ?l) (placed ?c))))
+    :parameters (?r - robot ?e - element ?l - location)
+    :precondition (and (at-robot ?r ?l) (holding ?r ?e))
+    :effect (and (not (holding ?r ?e)) (at ?e ?l)))
+  (:action place
+    :parameters (?r - robot ?e - element ?at - location)
+    :precondition (and (at-robot ?r ?at) (at ?e ?at) (target ?e ?at))
+    :effect (built ?e))
+  (:action nail
+    :parameters (?r - robot ?e - element ?at - location)
+    :precondition (and (at-robot ?r ?at) (at ?e ?at) (target ?e ?at))
+    :effect (built ?e))
+
+  ;; Solver workaround, not part of the model: up-aries 0.5.0 on Windows
+  ;; closes the connection when a precondition reads a fluent no effect
+  ;; writes. No method reaches this action; it only makes (material) non-static.
+  (:action keep-material
+    :parameters (?e - element ?m - material-category)
+    :precondition (material ?e ?m)
+    :effect (material ?e ?m))
+)
 ```
 `problem.hddl`:
 ```lisp
-(define (problem prefab-wall) (:domain construction)
-  (:objects wall1 - component  r1 - robot  base depot site - location)
-  (:htn :tasks (and (prefab wall1)) :ordering ( ) :constraints ( ))
-  (:init (at-robot r1 base) (at wall1 depot) (target wall1 site)))
+(define (problem duplex-two-elements)
+  (:domain construction)
+  (:objects
+    wall_2O2Frt4X7Zf8NOew3FLKI panel_1hOSvn6df7F8_7GcBWlS_a - element
+    base depot ground_floor_room_1 ground_floor_room_2 - location
+    sam100_1 - robot)
+  (:htn
+    :parameters ()
+    :subtasks (and
+      (t1 (construct-element wall_2O2Frt4X7Zf8NOew3FLKI))
+      (t2 (construct-element panel_1hOSvn6df7F8_7GcBWlS_a)))
+    :ordering (and (< t1 t2)))
+  (:init
+    (material wall_2O2Frt4X7Zf8NOew3FLKI masonry)
+    (material panel_1hOSvn6df7F8_7GcBWlS_a timber)
+    (at wall_2O2Frt4X7Zf8NOew3FLKI depot)
+    (at panel_1hOSvn6df7F8_7GcBWlS_a depot)
+    (target wall_2O2Frt4X7Zf8NOew3FLKI ground_floor_room_1)
+    (target panel_1hOSvn6df7F8_7GcBWlS_a ground_floor_room_2)
+    (at-robot sam100_1 base))
+)
 ```
-`(target wall1 site)` stands for product's `located_in`; `(at wall1 depot)` for the space of `supply_location`. Without them `?to` and `?from` would be free, as part 4 question 4 records.
+What each line stands for in the documents: an `element` object is a `BuildingComponent` id, `(material e masonry)` the `category` of the Material it is `made_of`, `(target e l)` its `located_in`, `(at e depot)` the space of its `supply_location`; the `:htn` block is the `TaskNetwork`; a method's `:precondition (material ?e masonry)` is its `applies_to: masonry`, and `m-transport`, with no precondition, is a method without `applies_to`. The export mints one `material-category` constant per `MaterialCategory` record and one `material` fact per component whose Material's `category` is not `unassigned`. Element ids are the GlobalIds with `$` removed, since the reader's grammar does not admit it in a name.
 
 ### B.2 Solver
 
@@ -437,7 +497,7 @@ from unified_planning.shortcuts import OneshotPlanner, get_environment
 get_environment().credits_stream = None
 d, p = sys.argv[1], sys.argv[2]
 problem = PDDLReader().parse_problem(d, p)
-print("kind:", problem.kind.features)
+print("kind:", sorted(problem.kind.features))
 with OneshotPlanner(problem_kind=problem.kind) as planner:
     print("planner:", planner.name)
     res = planner.solve(problem)
@@ -445,18 +505,28 @@ with OneshotPlanner(problem_kind=problem.kind) as planner:
     if res.plan is not None:
         print(res.plan)
 ```
-Output for `domain.hddl`, `problem.hddl`:
+Output for `domain.hddl`, `problem.hddl`, run 2026-09-21 with unified-planning 1.3.0 and up-aries 0.5.0:
 ```
-kind: {'HIERARCHICAL', 'FLAT_TYPING', 'TASK_ORDER_TOTAL'}
+kind: ['FLAT_TYPING', 'HIERARCHICAL', 'METHOD_PRECONDITIONS', 'TASK_ORDER_TOTAL']
 planner: aries
 status: PlanGenerationResultStatus.SOLVED_SATISFICING
 Hierarchical SequentialPlan:
-    move(r1, base, depot)
-    attach(r1, wall1, depot)
-    move(r1, depot, site)
-    detach(r1, wall1, site)
+    move(sam100_1, base, depot)
+    attach(sam100_1, wall_2o2frt4x7zf8noew3flki, depot)
+    move(sam100_1, depot, ground_floor_room_1)
+    detach(sam100_1, wall_2o2frt4x7zf8noew3flki, ground_floor_room_1)
+    place(sam100_1, wall_2o2frt4x7zf8noew3flki, ground_floor_room_1)
+    move(sam100_1, ground_floor_room_1, depot)
+    attach(sam100_1, panel_1hosvn6df7f8_7gcbwls_a, depot)
+    move(sam100_1, depot, ground_floor_room_2)
+    detach(sam100_1, panel_1hosvn6df7f8_7gcbwls_a, ground_floor_room_2)
+    nail(sam100_1, panel_1hosvn6df7f8_7gcbwls_a, ground_floor_room_2)
 ```
-`?r`, `?l0`, `?from`, `?to` were bound by the preconditions against the initial state; the task handed the method only `?c`.
+The wall went through `m-construct-masonry` and ends in `place`; the panel through `m-construct-timber` and ends in `nail`. The precondition selected, and it excludes rather than prefers: the same problem against the domain without `m-construct-timber` returns `UNSOLVABLE_INCOMPLETELY`.
+
+The subtype form solves identically. With `(:types element location robot - object  masonry-element timber-element - element)`, no `material` predicate, the methods declared `:parameters (?e - masonry-element ...)` and `(?e - timber-element ...)`, and the objects declared `wall_... - masonry-element` and `panel_... - timber-element`, Aries reports `HIERARCHICAL_TYPING` and returns the same ten-step plan; removing the timber method makes it unsolvable in the same way. The two forms are HDDL's two ways to restrict a method to a kind of object, and the schema's one `applies_to` value can be exported as either.
+
+Three things the toolchain forced, recorded so the next run does not rediscover them. The reader requires `:constants` before `:predicates`, refuses a type and a predicate with the same name (`material` and `material-category` here), and refuses a name beginning with an underscore. This Aries build closes the gRPC connection, `StatusCode.UNAVAILABLE`, whenever an action or method precondition reads a fluent that no effect writes, bisected from the 2026-09-17 baseline by adding one static predicate; the `keep-material` action above is the workaround and is reachable from no method. `forall` effects are rejected by the same build, so `move` carries its origin as a parameter.
 
 ### B.3 The three document shapes
 
