@@ -26,6 +26,7 @@ URI: [rcpc:description](https://rcpc.for5672/schema/description)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |  yes  |
+| [MaterialCategory](MaterialCategory.md) | A category of material a construction method is written for, IFC's IfcMateria... |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [rcpc:description](https://rcpc.for5672/schema/description)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md) |
+| Domain Of | [CapabilityType](CapabilityType.md), [MaterialCategory](MaterialCategory.md) |
 
 ### Cardinality and Requirements
 
@@ -88,6 +89,7 @@ description: What this is, in one or two plain sentences.
 from_schema: https://rcpc.for5672/schema/common
 domain_of:
 - CapabilityType
+- MaterialCategory
 range: string
 
 ```

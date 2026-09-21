@@ -207,6 +207,7 @@ attributes:
     owner: Safety
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - RobotUnit
     - PhysicalProperty
     - Sensor

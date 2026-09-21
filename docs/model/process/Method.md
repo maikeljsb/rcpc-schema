@@ -278,6 +278,7 @@ attributes:
     owner: Method
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - Storey
     - Space
     - BuildingComponent
@@ -300,6 +301,7 @@ attributes:
     owner: Method
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - Task
     - Method
     range: string

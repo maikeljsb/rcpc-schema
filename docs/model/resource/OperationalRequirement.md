@@ -207,6 +207,7 @@ attributes:
     owner: OperationalRequirement
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - RobotUnit
     - PhysicalProperty
     - Sensor

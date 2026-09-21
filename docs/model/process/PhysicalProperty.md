@@ -428,6 +428,7 @@ attributes:
     owner: PhysicalProperty
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - Storey
     - Space
     - BuildingComponent

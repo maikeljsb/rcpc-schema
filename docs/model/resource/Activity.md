@@ -261,6 +261,7 @@ attributes:
     owner: Activity
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - RobotUnit
     - PhysicalProperty
     - Sensor

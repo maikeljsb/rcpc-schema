@@ -26,6 +26,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |  no  |
+| [MaterialCategory](MaterialCategory.md) | A category of material a construction method is written for, IFC's IfcMateria... |  no  |
 | [Storey](Storey.md) | A building storey |  yes  |
 | [Space](Space.md) | A room, or the exterior region of one storey |  yes  |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
@@ -54,7 +55,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md), [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [Material](Material.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [OperationalRequirement](OperationalRequirement.md), [Safety](Safety.md), [Activity](Activity.md), [Task](Task.md), [Method](Method.md) |
+| Domain Of | [CapabilityType](CapabilityType.md), [MaterialCategory](MaterialCategory.md), [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [Material](Material.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [OperationalRequirement](OperationalRequirement.md), [Safety](Safety.md), [Activity](Activity.md), [Task](Task.md), [Method](Method.md) |
 
 ### Cardinality and Requirements
 
@@ -112,6 +113,7 @@ from_schema: https://rcpc.for5672/schema/common
 identifier: true
 domain_of:
 - CapabilityType
+- MaterialCategory
 - Storey
 - Space
 - BuildingComponent

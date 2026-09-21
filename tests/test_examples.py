@@ -21,6 +21,8 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "tests/fixtures/minimal_invalid.yaml": ("tests/fixtures/minimal.yaml", "Widget", "made_of"),
     "examples/common/capability_types.yaml": ("schema/common.yaml", "CapabilityType", None),
     "examples/common/invalid/capability_type_missing_id.yaml": ("schema/common.yaml", "CapabilityType", "id"),
+    "examples/common/material_categories.yaml": ("schema/common.yaml", "MaterialCategory", None),
+    "examples/common/invalid/material_category_missing_description.yaml": ("schema/common.yaml", "MaterialCategory", "description"),
     "examples/resource/robot_units.yaml": ("schema/resource.yaml", "RobotUnit", None),
     "examples/resource/invalid/robot_unit_missing_activity.yaml": ("schema/resource.yaml", "RobotUnit", "activity_group"),
     "examples/resource/invalid/robot_unit_zero_count.yaml": ("schema/resource.yaml", "RobotUnit", "count"),

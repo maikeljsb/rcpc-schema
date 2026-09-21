@@ -193,6 +193,7 @@ attributes:
     owner: Material
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - Storey
     - Space
     - BuildingComponent

@@ -480,6 +480,7 @@ attributes:
     owner: Connector
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - Storey
     - Space
     - BuildingComponent

@@ -216,6 +216,7 @@ attributes:
     owner: Storey
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - Storey
     - Space
     - BuildingComponent

@@ -1,39 +1,78 @@
 ---
 search:
-  boost: 2.0
+  boost: 10.0
 ---
 
-
-# Enum: MaterialCategory 
-
+# Class: MaterialCategory 
 
 
-
-_The categories of material a construction method is written for, IFC's IfcMaterial.Category as this project's vocabulary._
+_A category of material a construction method is written for, IFC's IfcMaterial.Category as this project's vocabulary. Named by a product Material's category and by a method's applies_to._
 
 
 
 <div data-search-exclude markdown="1">
 
+
+
 URI: [rcpc:MaterialCategory](https://rcpc.for5672/schema/MaterialCategory)
 
-## Permissible Values
-| Value | Meaning | Description |
-| --- | --- | --- |
-| masonry | None | Brick, block, and stone, laid or prefabricated as a unit |
-| timber | None | Wood, solid or engineered, including joisted floors and roofs |
-| concrete | None | Cast or precast concrete, including slabs and foundation walls |
-| unassigned | None | No category yet; the parser writes it and a mapping step replaces it |
 
 
 
+
+```mermaid
+ classDiagram
+    class MaterialCategory
+    click MaterialCategory href "../MaterialCategory/"
+      MaterialCategory : description
+        
+          
+    
+        
+        
+        MaterialCategory --> "1" String : description
+        click String href "../http://www.w3.org/2001/XMLSchema#string/"
+    
+
+        
+      MaterialCategory : id
+        
+          
+    
+        
+        
+        MaterialCategory --> "1" String : id
+        click String href "../http://www.w3.org/2001/XMLSchema#string/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
 
 ## Slots
 
-| Name | Description |
-| ---  | --- |
-| [category](category.md) | The Material's category, IFC's IfcMaterial |
-| [applies_to](applies_to.md) | The material category of the components a method decomposes its task for; a c... |
+| Name | Cardinality and Range | Description | Inheritance |
+| ---  | --- | --- | --- |
+| [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | Identifier, unique among instances of its class | direct |
+| [description](description.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | What this is, in one or two plain sentences | direct |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Material](Material.md) | [category](category.md) | range | [MaterialCategory](MaterialCategory.md) |
+| [Method](Method.md) | [applies_to](applies_to.md) | range | [MaterialCategory](MaterialCategory.md) |
+
+
 
 
 
@@ -58,32 +97,91 @@ URI: [rcpc:MaterialCategory](https://rcpc.for5672/schema/MaterialCategory)
 
 
 
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | rcpc:MaterialCategory |
+| native | rcpc:MaterialCategory |
+
+
+
+
 
 
 ## LinkML Source
 
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
 <details>
 ```yaml
 name: MaterialCategory
-description: The categories of material a construction method is written for, IFC's
-  IfcMaterial.Category as this project's vocabulary.
+description: A category of material a construction method is written for, IFC's IfcMaterial.Category
+  as this project's vocabulary. Named by a product Material's category and by a method's
+  applies_to.
 from_schema: https://rcpc.for5672/schema/common
-permissible_values:
-  masonry:
-    text: masonry
-    description: Brick, block, and stone, laid or prefabricated as a unit.
-  timber:
-    text: timber
-    description: Wood, solid or engineered, including joisted floors and roofs.
-  concrete:
-    text: concrete
-    description: Cast or precast concrete, including slabs and foundation walls.
-  unassigned:
-    text: unassigned
-    description: No category yet; the parser writes it and a mapping step replaces
-      it.
+slots:
+- id
+- description
+slot_usage:
+  description:
+    name: description
+    required: true
 
 ```
 </details>
 
-</div>
+### Induced
+
+<details>
+```yaml
+name: MaterialCategory
+description: A category of material a construction method is written for, IFC's IfcMaterial.Category
+  as this project's vocabulary. Named by a product Material's category and by a method's
+  applies_to.
+from_schema: https://rcpc.for5672/schema/common
+slot_usage:
+  description:
+    name: description
+    required: true
+attributes:
+  id:
+    name: id
+    description: Identifier, unique among instances of its class.
+    from_schema: https://rcpc.for5672/schema/common
+    identifier: true
+    owner: MaterialCategory
+    domain_of:
+    - CapabilityType
+    - MaterialCategory
+    - Storey
+    - Space
+    - BuildingComponent
+    - Material
+    - RobotUnit
+    - PhysicalProperty
+    - Sensor
+    - OperationalRequirement
+    - Safety
+    - Activity
+    - Task
+    - Method
+    range: string
+    required: true
+  description:
+    name: description
+    description: What this is, in one or two plain sentences.
+    from_schema: https://rcpc.for5672/schema/common
+    owner: MaterialCategory
+    domain_of:
+    - CapabilityType
+    - MaterialCategory
+    - Task
+    - Method
+    range: string
+    required: true
+
+```
+</details></div>

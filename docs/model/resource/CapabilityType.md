@@ -152,6 +152,7 @@ attributes:
     owner: CapabilityType
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - RobotUnit
     - PhysicalProperty
     - Sensor
@@ -167,6 +168,7 @@ attributes:
     owner: CapabilityType
     domain_of:
     - CapabilityType
+    - MaterialCategory
     range: string
     required: true
 

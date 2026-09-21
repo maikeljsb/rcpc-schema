@@ -145,6 +145,7 @@ attributes:
     owner: CapabilityType
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - Storey
     - Space
     - BuildingComponent
@@ -158,6 +159,7 @@ attributes:
     owner: CapabilityType
     domain_of:
     - CapabilityType
+    - MaterialCategory
     range: string
     required: true
 

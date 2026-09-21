@@ -146,6 +146,7 @@ attributes:
     owner: CapabilityType
     domain_of:
     - CapabilityType
+    - MaterialCategory
     range: string
     required: true
   description:
@@ -156,6 +157,7 @@ attributes:
     owner: CapabilityType
     domain_of:
     - CapabilityType
+    - MaterialCategory
     range: string
     required: true
 

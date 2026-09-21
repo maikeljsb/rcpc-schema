@@ -14,6 +14,7 @@ Name: common
 | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |
 | [Interval](Interval.md) | A lower and an upper bound with their unit |
+| [MaterialCategory](MaterialCategory.md) | A category of material a construction method is written for, IFC's IfcMateria... |
 | [Position](Position.md) | Three cartesian coordinates and their unit: a point, or an extent along each ... |
 | [Quantity](Quantity.md) | A number with a unit |
 
@@ -42,7 +43,6 @@ Name: common
 
 | Enumeration | Description |
 | --- | --- |
-| [MaterialCategory](MaterialCategory.md) | The categories of material a construction method is written for, IFC's IfcMat... |
 
 
 ## Types

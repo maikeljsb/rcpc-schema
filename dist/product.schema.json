@@ -7,17 +7,6 @@
   "type": "object",
   "additionalProperties": true,
   "$defs": {
-    "MaterialCategory": {
-      "type": "string",
-      "description": "The categories of material a construction method is written for, IFC's IfcMaterial.Category as this project's vocabulary.",
-      "enum": [
-        "masonry",
-        "timber",
-        "concrete",
-        "unassigned"
-      ],
-      "title": "MaterialCategory"
-    },
     "RecordSource": {
       "type": "string",
       "description": "Where a component or Space came from: parsed from the IFC model, or produced by derivation.",
@@ -140,6 +129,26 @@
         "description"
       ],
       "title": "CapabilityType"
+    },
+    "MaterialCategory": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A category of material a construction method is written for, IFC's IfcMaterial.Category as this project's vocabulary. Named by a product Material's category and by a method's applies_to.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
+        },
+        "description": {
+          "type": "string",
+          "description": "What this is, in one or two plain sentences."
+        }
+      },
+      "required": [
+        "id",
+        "description"
+      ],
+      "title": "MaterialCategory"
     },
     "Storey": {
       "type": "object",
@@ -524,7 +533,7 @@
           "description": "The material string the parser derives, as the IFC spells it: the IfcMaterial Name, or the layer set's name where the derivation rule reaches that instead."
         },
         "category": {
-          "$ref": "#/$defs/MaterialCategory",
+          "type": "string",
           "description": "The Material's category, IFC's IfcMaterial.Category as this project's vocabulary, assigned by a mapping step after the parse. Unassigned until mapped."
         }
       },

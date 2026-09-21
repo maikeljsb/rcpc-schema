@@ -216,6 +216,7 @@ attributes:
     owner: RobotUnit
     domain_of:
     - CapabilityType
+    - MaterialCategory
     - Storey
     - Space
     - BuildingComponent

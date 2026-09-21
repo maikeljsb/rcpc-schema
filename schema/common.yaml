@@ -12,21 +12,6 @@ default_range: string
 imports:
   - linkml:types
 
-enums:
-  MaterialCategory:
-    description: >-
-      The categories of material a construction method is written for, IFC's
-      IfcMaterial.Category as this project's vocabulary.
-    permissible_values:
-      masonry:
-        description: Brick, block, and stone, laid or prefabricated as a unit.
-      timber:
-        description: Wood, solid or engineered, including joisted floors and roofs.
-      concrete:
-        description: Cast or precast concrete, including slabs and foundation walls.
-      unassigned:
-        description: No category yet; the parser writes it and a mapping step replaces it.
-
 classes:
   Position:
     description: "Three cartesian coordinates and their unit: a point, or an extent along each axis."
@@ -74,6 +59,18 @@ classes:
     description: >-
       Something a robot can do, named by a verb. Required by primitive tasks and
       offered by robots.
+    slots:
+      - id
+      - description
+    slot_usage:
+      description:
+        required: true
+
+  MaterialCategory:
+    description: >-
+      A category of material a construction method is written for, IFC's
+      IfcMaterial.Category as this project's vocabulary. Named by a product
+      Material's category and by a method's applies_to.
     slots:
       - id
       - description

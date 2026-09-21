@@ -1,0 +1,6 @@
+- id: masonry
+  description: Brick, block, and stone, laid or prefabricated as a unit.
+- id: timber
+  description: Wood, solid or engineered, including joisted floors and roofs.
+- id: concrete
+  description: Cast or precast concrete, including slabs and foundation walls.

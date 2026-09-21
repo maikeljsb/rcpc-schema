@@ -26,6 +26,7 @@ URI: [rcpc:description](https://rcpc.for5672/schema/description)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |  yes  |
+| [MaterialCategory](MaterialCategory.md) | A category of material a construction method is written for, IFC's IfcMateria... |  yes  |
 | [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |  yes  |
 | [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
 | [PrimitiveTask](PrimitiveTask.md) | HDDL's action: a task a robot performs directly, with what performing it requ... |  no  |
@@ -43,7 +44,7 @@ URI: [rcpc:description](https://rcpc.for5672/schema/description)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md), [Task](Task.md), [Method](Method.md) |
+| Domain Of | [CapabilityType](CapabilityType.md), [MaterialCategory](MaterialCategory.md), [Task](Task.md), [Method](Method.md) |
 
 ### Cardinality and Requirements
 
@@ -92,6 +93,7 @@ description: What this is, in one or two plain sentences.
 from_schema: https://rcpc.for5672/schema/common
 domain_of:
 - CapabilityType
+- MaterialCategory
 - Task
 - Method
 range: string
