@@ -75,11 +75,11 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
 - [x] Review with human, 2026-09-21: Task 3b added and done
 
 ### Phase 3: The plan side
-- [ ] Task 4: `TaskNetwork`, `CompoundTaskInstance`, `PrimitiveTaskInstance`, and `ParameterBinding`, end to end
+- [x] Task 4: `TaskNetwork`, `CompoundTaskInstance`, `PrimitiveTaskInstance`, and `ParameterBinding`, end to end
 
 ### Checkpoint: Phase 3
-- [ ] Thirteen process rows pass; `plan.yaml` validates through the split, `record_type` locking to each subclass
-- [ ] Every id `plan.yaml` names resolves in `catalogue.yaml`, `plan.yaml`, `examples/product/`, or as a machine of `mason_m1`; every instance is listed exactly once
+- [x] Thirteen process rows pass; `plan.yaml` validates through the split, `record_type` locking to each subclass
+- [x] Every id `plan.yaml` names resolves in `catalogue.yaml`, `plan.yaml`, `examples/product/`, or as a machine of `mason_m1`; every instance is listed exactly once
 - [ ] Review with human
 
 ### Phase 4: Close
