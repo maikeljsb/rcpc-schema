@@ -657,3 +657,223 @@ Hierarchical SequentialPlan:
 Planning does not distinguish the three shapes: the exported HDDL is identical, and the labels the partial order needs come equally from A's ids, from B's list positions and from C's node ids. The reason for `Subtask` as a record is therefore the graph alone. With A, ordering is a traversable edge between `Subtask` nodes and the path from `Method` to `PrimitiveTask` is two hops. With B, `Method -[:SUBTASK {label, arguments}]-> PrimitiveTask` is one hop, two parallel edges carry the two `move`s, and ordering becomes a property on the method, a list of label pairs, which needs an array slot and a projection rule case (Appendix A). B costs a second shape for ordering wherever the ordered things are nodes, root instances for example, where an edge class is the natural form. Part 2.7's recommendation was reopened as part 4 question 8 and decided for B there.
 
 Shape C, every occurrence its own primitive node with ordering edges between them, `move -> attach -> move -> detach -> report`, is the catalogue given the shape the result already has: in the result every `PrimitiveTaskInstance` is a distinct record, and C makes every occurrence a distinct record in the method as well. Ordering between task names would not work, since `m-prefab` uses `move` twice and `attach -> move` would close a cycle on one node; ordering between occurrences does, which is why HDDL writes it between labels, `t1 (move ?r ?l0 ?from)` and `t3 (move ?r ?from ?to)`, never between task names (§4, p. 7). A and C both make the occurrence a node and keep the two `move`s apart by identity. They differ in one thing: under A the occurrence points at a shared `PrimitiveTask` record that defines `move` once, under C no such record exists in the document and the definition lives elsewhere, on each node or in the schema as a class. B keeps the occurrence inside the method. In the result the order between child instances is not stored under any shape but inherited from the method (Def. 5, part 4 question 2). HDDL's word for the occurrence is subtask.
+
+## Appendix C. Experiment: can the model express resource-dependent parallelism?
+
+Run 2026-09-21 in the session scratchpad, unified-planning 1.3.0 and up-aries 0.5.0, the `solve.py` of B.2. Question from the author: two in-situ concrete walls, each decomposed into formwork, reinforcement, and concreting; no arbitrary order between the two walls; when enough formwork is available their formwork should run side by side. Can a planner derive that from what the schema records?
+
+Durations make concurrency observable: with HDDL 2.1 durative actions Aries returns a time-triggered plan, and two actions starting at the same instant are two actions running at once. Durations 4, 3, 2 stand for the catalogue's `duration`.
+
+### C.1 The catalogue as modelled
+
+Tasks, one method with ordered subtasks, durations. No state, because the schema has no preconditions, effects, or resource kinds, and formwork is not an object because the schema has none for it. The `touched` effect is a reader workaround: the PDDL reader of unified-planning 1.3.0 rejects a durative action with an empty `:effect`.
+
+`domain_as_modelled.hddl`:
+```lisp
+(define (domain insitu-as-modelled)
+  (:requirements :hierarchy :typing :durative-actions)
+  (:types wall robot - object)
+  (:predicates (touched ?w - wall))
+  (:task construct-wall :parameters (?w - wall))
+  (:method m-insitu
+    :parameters (?w - wall ?r - robot)
+    :task (construct-wall ?w)
+    :ordered-subtasks (and
+      (formwork ?r ?w)
+      (reinforce ?r ?w)
+      (concrete ?r ?w)))
+  (:durative-action formwork
+    :parameters (?r - robot ?w - wall)
+    :duration (= ?duration 4)
+    :condition (and )
+    :effect (at end (touched ?w)))
+  (:durative-action reinforce
+    :parameters (?r - robot ?w - wall)
+    :duration (= ?duration 3)
+    :condition (and )
+    :effect (at end (touched ?w)))
+  (:durative-action concrete
+    :parameters (?r - robot ?w - wall)
+    :duration (= ?duration 2)
+    :condition (and )
+    :effect (at end (touched ?w)))
+)
+```
+`problem_unordered.hddl`:
+```lisp
+(define (problem two-walls-unordered)
+  (:domain insitu-as-modelled)
+  (:objects wall2 wall4 - wall  r1 r2 - robot)
+  (:htn
+    :parameters ()
+    :subtasks (and
+      (t1 (construct-wall wall2))
+      (t2 (construct-wall wall4))))
+  (:init)
+)
+```
+Output:
+```
+kind: ['CONTINUOUS_TIME', 'FLAT_TYPING', 'HIERARCHICAL', 'INT_TYPE_DURATIONS', 'TASK_ORDER_PARTIAL']
+planner: aries
+status: PlanGenerationResultStatus.SOLVED_SATISFICING
+Hierarchical TimeTriggeredPlan:
+    0.0: formwork(r1, wall2) [4.0]
+    0.0: formwork(r1, wall4) [4.0]
+    4.1: reinforce(r1, wall2) [3.0]
+    4.1: reinforce(r1, wall4) [3.0]
+    7.2: concrete(r1, wall2) [2.0]
+    7.2: concrete(r1, wall4) [2.0]
+```
+`problem_ordered.hddl` is the same problem with `:ordering (and (< t1 t2))`, the network's `[[1, 2]]`. Output: the same six steps strictly in sequence, `formwork(r1, wall2)` at 0.0 to `concrete(r1, wall4)` at 16.5, kind `TASK_ORDER_TOTAL`.
+
+Two readings. The parallelism of the unordered case is unconditional: no fact in the problem can change, so nothing could ever make the planner sequence the walls, and the problem cannot state whether one formwork set exists or two. And `r1` performs both formworks at once: `requires` against `offers` is a type check, and no state says a machine is busy.
+
+### C.2 Formwork as a resource with state
+
+The same tasks and method, plus a `formwork-set` type, a `free` predicate, and a formwork parameter on the method. Formwork takes a free set at its start; concrete frees it at its end. Between the two, reinforce, the set is standing in the wall and unavailable, which is why the take and the release are two halves in two actions tied together by the method's shared variable `?f`.
+
+`domain_formwork_resource.hddl`:
+```lisp
+(define (domain insitu-formwork-resource)
+  (:requirements :hierarchy :typing :durative-actions :negative-preconditions)
+  (:types wall robot formwork-set - object)
+  (:predicates (free ?f - formwork-set) (formed ?w - wall ?f - formwork-set) (reinforced ?w - wall))
+  (:task construct-wall :parameters (?w - wall))
+  (:method m-insitu
+    :parameters (?w - wall ?r - robot ?f - formwork-set)
+    :task (construct-wall ?w)
+    :ordered-subtasks (and
+      (formwork ?r ?w ?f)
+      (reinforce ?r ?w)
+      (concrete ?r ?w ?f)))
+  (:durative-action formwork
+    :parameters (?r - robot ?w - wall ?f - formwork-set)
+    :duration (= ?duration 4)
+    :condition (at start (free ?f))
+    :effect (and (at start (not (free ?f))) (at end (formed ?w ?f))))
+  (:durative-action reinforce
+    :parameters (?r - robot ?w - wall)
+    :duration (= ?duration 3)
+    :condition ()
+    :effect (at end (reinforced ?w)))
+  (:durative-action concrete
+    :parameters (?r - robot ?w - wall ?f - formwork-set)
+    :duration (= ?duration 2)
+    :condition (and (at start (formed ?w ?f)) (at start (reinforced ?w)))
+    :effect (and (at end (free ?f)) (at end (not (formed ?w ?f)))))
+)
+```
+`problem_two_sets.hddl` declares `f1 f2 - formwork-set` and `(:init (free f1) (free f2))`; `problem_one_set.hddl`:
+```lisp
+(define (problem two-walls-one-set)
+  (:domain insitu-formwork-resource)
+  (:objects wall2 wall4 - wall  r1 r2 - robot  f1 - formwork-set)
+  (:htn
+    :parameters ()
+    :subtasks (and
+      (t1 (construct-wall wall2))
+      (t2 (construct-wall wall4))))
+  (:init (free f1))
+)
+```
+Output, two sets: the fully parallel plan of C.1, `formwork(r1, wall2, f2)` and `formwork(r1, wall4, f1)` both at 0.0, finishing at 9.2. Output, one set:
+```
+kind: ['CONTINUOUS_TIME', 'FLAT_TYPING', 'HIERARCHICAL', 'INT_TYPE_DURATIONS', 'TASK_ORDER_PARTIAL']
+planner: aries
+status: PlanGenerationResultStatus.SOLVED_SATISFICING
+Hierarchical TimeTriggeredPlan:
+    0.0: formwork(r1, wall2, f1) [4.0]
+    4.1: reinforce(r1, wall2) [3.0]
+    7.2: concrete(r1, wall2, f1) [2.0]
+    9.3: formwork(r1, wall4, f1) [4.0]
+    13.4: reinforce(r1, wall4) [3.0]
+    16.5: concrete(r1, wall4, f1) [2.0]
+```
+The planner sequenced the walls with no ordering in the network, because a set was missing.
+
+### C.3 The export shape: take and release as the method's own steps
+
+C.2 put the stock parameter and the conditions on the catalogue's actions. The schema will not: the author decided on 2026-09-21 that a stock use is a statement on the method, with no parameter kind and no binding, because panels are interchangeable. So the export has to write the state without touching the exported actions. Tried: one type per stock named by its id, `count` objects `<id>_<n>`, a `free-<id>` predicate, and, per use, a method variable and two instantaneous actions the export inserts into the method's subtask list, `take-<id>` before the taking position and, for a temporary stock, `release-<id>` after the releasing position. The catalogue's three actions are exactly those of C.1.
+
+`domain_export_shape.hddl`:
+```lisp
+(define (domain insitu-export-shape)
+  (:requirements :hierarchy :typing :durative-actions :negative-preconditions)
+  (:types wall robot formwork_panels rebar - object)
+  (:predicates (free-formwork_panels ?u - formwork_panels) (free-rebar ?u - rebar) (touched ?w - wall))
+  (:task construct-wall :parameters (?w - wall))
+  (:method m-insitu
+    :parameters (?w - wall ?r - robot ?u1 - formwork_panels ?u2 - rebar)
+    :task (construct-wall ?w)
+    :ordered-subtasks (and
+      (take-formwork_panels ?u1)
+      (formwork ?r ?w)
+      (take-rebar ?u2)
+      (reinforce ?r ?w)
+      (concrete ?r ?w)
+      (release-formwork_panels ?u1)))
+  (:action take-formwork_panels
+    :parameters (?u - formwork_panels)
+    :precondition (free-formwork_panels ?u)
+    :effect (not (free-formwork_panels ?u)))
+  (:action release-formwork_panels
+    :parameters (?u - formwork_panels)
+    :precondition ()
+    :effect (free-formwork_panels ?u))
+  (:action take-rebar
+    :parameters (?u - rebar)
+    :precondition (free-rebar ?u)
+    :effect (not (free-rebar ?u)))
+  (:durative-action formwork
+    :parameters (?r - robot ?w - wall)
+    :duration (= ?duration 4)
+    :condition (and )
+    :effect (at end (touched ?w)))
+  (:durative-action reinforce
+    :parameters (?r - robot ?w - wall)
+    :duration (= ?duration 3)
+    :condition (and )
+    :effect (at end (touched ?w)))
+  (:durative-action concrete
+    :parameters (?r - robot ?w - wall)
+    :duration (= ?duration 2)
+    :condition (and )
+    :effect (at end (touched ?w)))
+)
+```
+`problem_export_one_set.hddl`:
+```lisp
+(define (problem export-one-set)
+  (:domain insitu-export-shape)
+  (:objects wall2 wall4 - wall  r1 r2 - robot  formwork_panels_1 - formwork_panels  rebar_1 rebar_2 - rebar)
+  (:htn
+    :parameters ()
+    :subtasks (and
+      (t1 (construct-wall wall2))
+      (t2 (construct-wall wall4))))
+  (:init (free-formwork_panels formwork_panels_1) (free-rebar rebar_1) (free-rebar rebar_2))
+)
+```
+Output, one formwork set and two rebar units:
+```
+    0.0: take-formwork_panels(formwork_panels_1)
+    0.1: formwork(r1, wall2) [4.0]
+    4.2: take-rebar(rebar_2)
+    4.3: reinforce(r1, wall2) [3.0]
+    7.4: concrete(r1, wall2) [2.0]
+    9.5: release-formwork_panels(formwork_panels_1)
+    9.6: take-formwork_panels(formwork_panels_1)
+    9.7: formwork(r1, wall4) [4.0]
+    13.8: take-rebar(rebar_1)
+    13.9: reinforce(r1, wall4) [3.0]
+    17.0: concrete(r1, wall4) [2.0]
+    19.1: release-formwork_panels(formwork_panels_1)
+```
+Two formwork sets, `problem_export_two_sets.hddl`: both takes at 0.0, both formworks at 0.1, both releases at 9.5, the parallel plan of C.1. One rebar unit for two walls, `problem_export_one_rebar.hddl`: `UNSOLVABLE_INCOMPLETELY`, which is the right answer for a consumed stock that runs out; no release exists for rebar, and nothing else would be right.
+
+So the shape the schema records, one stock, the taking position, the releasing position, and the stock's permanence, is enough for the export to produce the planner behaviour of C.2 without a stock parameter on any task.
+
+### C.4 Finding
+
+The schema as it stands expresses unconditional parallelism, `ordering: []`, or an imposed order, and nothing between. Resource-dependent parallelism needs four things, of which the catalogue has one: objects with a count for the resource, a variable for it on the method, state the resource action takes and a later action returns, and durations. In HDDL 2.1 the state is two timed effects on two actions sharing the method's variable; a consumed resource, rebar, is the same with no returning half. What the author decided from this on 2026-09-21 is recorded in the brief's Decisions Taken by Default and in `SPEC-stock.md`: a `Resource` base with `count`, `Stock` beside `RobotUnit`, `permanence` saying whether the stock returns, and `uses` on `Method` listing the stocks it holds for its whole span; no parameter kind and no binding, the export mints the variable and inserts the take before the first subtask and the release after the last, the steps of C.3, whose positions 1 and 3 are `m-insitu`'s span. Robots keep the type-level check and the orchestration stage; the concurrent `r1` of C.1 is the status quo, not a change.
