@@ -63,10 +63,10 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
 - [x] Review with human, 2026-09-21: `applies_to` reopened, decided as decision 19
 
 ### Phase 2: Material applicability
-- [ ] Task 3: `applies_to` onto `Method` as one `MaterialCategory`, with common's category enum and product's `Material`, three commits
+- [x] Task 3: `applies_to` onto `Method` as one `MaterialCategory`, with common's category enum and product's `Material`, three commits
 
 ### Checkpoint: Phase 2
-- [ ] `uv run pytest` passes with two new product rows, 59 tests; every component record carries `made_of` and every non-empty value resolves in `materials.yaml`; `Parameter` has two slots and `Method` has `applies_to` in `dist/process.schema.json`
+- [x] `uv run pytest` passes with two new product rows, 59 tests; every component record carries `made_of` and every non-empty value resolves in `materials.yaml`; `Parameter` has two slots and `Method` has `applies_to` in `dist/process.schema.json`
 - [ ] Review with human
 
 ### Phase 3: The plan side
