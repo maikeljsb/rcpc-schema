@@ -30,7 +30,7 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
                                     └── dist/, docs/  rebuilt for all four modules
                                             │
                                             └── + TaskInstance, CompoundTaskInstance, PrimitiveTaskInstance,      (Task 4)
-                                  TaskNetwork, Binding, tasks, decomposed_by, bindings, bound_to,
+                                  TaskNetwork, ParameterBinding, tasks, decomposed_by, bindings, bound_to,
                                   and subtasks ranging TaskInstance on the compound instance
                                     ├── examples/process/plan.yaml   one network, three compounds, five leaves
                                     ├── invalid/  one TaskNetwork, one CompoundTaskInstance document
@@ -75,7 +75,7 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
 - [x] Review with human, 2026-09-21: Task 3b added and done
 
 ### Phase 3: The plan side
-- [ ] Task 4: `TaskNetwork`, `CompoundTaskInstance`, `PrimitiveTaskInstance`, and `Binding`, end to end
+- [ ] Task 4: `TaskNetwork`, `CompoundTaskInstance`, `PrimitiveTaskInstance`, and `ParameterBinding`, end to end
 
 ### Checkpoint: Phase 3
 - [ ] Thirteen process rows pass; `plan.yaml` validates through the split, `record_type` locking to each subclass
