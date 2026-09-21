@@ -2,8 +2,8 @@ id: https://rcpc.for5672/schema/common
 name: common
 version: 0.1.0
 description: >-
-  Shared vocabulary for the Product Process Graph: value types, the material name
-  type, and the capability types. Imported by every other module.
+  Shared vocabulary for the Product Process Graph: value types, the material
+  categories, and the capability types. Imported by every other module.
 prefixes:
   rcpc: https://rcpc.for5672/schema/
   linkml: https://w3id.org/linkml/
@@ -16,6 +16,21 @@ types:
   MaterialName:
     typeof: string
     description: An IFC material name, exactly as it appears in the model.
+
+enums:
+  MaterialCategory:
+    description: >-
+      The categories of material a construction method is written for, IFC's
+      IfcMaterial.Category as this project's vocabulary.
+    permissible_values:
+      masonry:
+        description: Brick, block, and stone, laid or prefabricated as a unit.
+      timber:
+        description: Wood, solid or engineered, including joisted floors and roofs.
+      concrete:
+        description: Cast or precast concrete, including slabs and foundation walls.
+      unassigned:
+        description: No category yet; the parser writes it and a mapping step replaces it.
 
 classes:
   Position:

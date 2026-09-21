@@ -1,6 +1,6 @@
 # common
 
-Shared vocabulary for the Product Process Graph: value types, the material name type, and the capability types. Imported by every other module.
+Shared vocabulary for the Product Process Graph: value types, the material categories, and the capability types. Imported by every other module.
 
 URI: https://rcpc.for5672/schema/common
 
@@ -42,6 +42,7 @@ Name: common
 
 | Enumeration | Description |
 | --- | --- |
+| [MaterialCategory](MaterialCategory.md) | The categories of material a construction method is written for, IFC's IfcMat... |
 
 
 ## Types

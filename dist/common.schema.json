@@ -7,6 +7,17 @@
   "type": "object",
   "additionalProperties": true,
   "$defs": {
+    "MaterialCategory": {
+      "type": "string",
+      "description": "The categories of material a construction method is written for, IFC's IfcMaterial.Category as this project's vocabulary.",
+      "enum": [
+        "masonry",
+        "timber",
+        "concrete",
+        "unassigned"
+      ],
+      "title": "MaterialCategory"
+    },
     "Position": {
       "type": "object",
       "additionalProperties": false,
