@@ -2,7 +2,7 @@
   id: 1hOSvn6df7F8_7GcBWlRGQ
   ifc_type: IfcDoor
   name: M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146596
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''

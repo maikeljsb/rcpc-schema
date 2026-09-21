@@ -29,6 +29,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | [Storey](Storey.md) | A building storey |  yes  |
 | [Space](Space.md) | A room, or the exterior region of one storey |  yes  |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
+| [Material](Material.md) | A material as IFC's IfcMaterial: one record per distinct material string the ... |  yes  |
 | [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |  yes  |
 | [PhysicalProperty](PhysicalProperty.md) | CRS group 1: the robot's physical dimensions, hardware, and performance |  no  |
 | [Sensor](Sensor.md) | One sensor on or around the robot |  no  |
@@ -53,7 +54,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [CapabilityType](CapabilityType.md), [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [OperationalRequirement](OperationalRequirement.md), [Safety](Safety.md), [Activity](Activity.md), [Task](Task.md), [Method](Method.md) |
+| Domain Of | [CapabilityType](CapabilityType.md), [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [Material](Material.md), [RobotUnit](RobotUnit.md), [PhysicalProperty](PhysicalProperty.md), [Sensor](Sensor.md), [OperationalRequirement](OperationalRequirement.md), [Safety](Safety.md), [Activity](Activity.md), [Task](Task.md), [Method](Method.md) |
 
 ### Cardinality and Requirements
 
@@ -114,6 +115,7 @@ domain_of:
 - Storey
 - Space
 - BuildingComponent
+- Material
 - RobotUnit
 - PhysicalProperty
 - Sensor

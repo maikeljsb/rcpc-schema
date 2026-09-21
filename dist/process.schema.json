@@ -271,9 +271,9 @@
           "type": "string",
           "description": "The IFC Name. Empty when the IFC file has none."
         },
-        "material": {
+        "made_of": {
           "type": "string",
-          "description": "The one material string the parser derives, as the IFC spells it. Empty when unresolved."
+          "description": "The Material the component is made of, IFC's IfcRelAssociatesMaterial from the element's side. Empty when the parser derived no material string."
         },
         "permanence": {
           "$ref": "#/$defs/ComponentPermanence",
@@ -337,7 +337,7 @@
         "id",
         "ifc_type",
         "name",
-        "material",
+        "made_of",
         "permanence",
         "source",
         "derived_from",
@@ -421,9 +421,9 @@
           "type": "string",
           "description": "The IFC Name. Empty when the IFC file has none."
         },
-        "material": {
+        "made_of": {
           "type": "string",
-          "description": "The one material string the parser derives, as the IFC spells it. Empty when unresolved."
+          "description": "The Material the component is made of, IFC's IfcRelAssociatesMaterial from the element's side. Empty when the parser derived no material string."
         },
         "permanence": {
           "$ref": "#/$defs/ComponentPermanence",
@@ -491,7 +491,7 @@
         "id",
         "ifc_type",
         "name",
-        "material",
+        "made_of",
         "permanence",
         "source",
         "derived_from",
@@ -527,6 +527,34 @@
         ]
       },
       "title": "Connector"
+    },
+    "Material": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A material as IFC's IfcMaterial: one record per distinct material string the parser derives, shared by every component made of it.",
+      "properties": {
+        "record_type": {
+          "type": "string",
+          "description": "Which class in this schema the record belongs to.",
+          "enum": [
+            "Material"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "description": "The material string the parser derives, as the IFC spells it: the IfcMaterial Name, or the layer set's name where the derivation rule reaches that instead."
+        },
+        "category": {
+          "$ref": "#/$defs/MaterialCategory",
+          "description": "The Material's category, IFC's IfcMaterial.Category as this project's vocabulary, assigned by a mapping step after the parse. Unassigned until mapped."
+        }
+      },
+      "required": [
+        "record_type",
+        "id",
+        "category"
+      ],
+      "title": "Material"
     },
     "RobotUnit": {
       "type": "object",

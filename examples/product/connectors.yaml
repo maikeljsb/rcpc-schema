@@ -2,7 +2,7 @@
   id: 1hOSvn6df7F8_7GcBWlRGQ
   ifc_type: IfcDoor
   name: M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146596
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -26,7 +26,7 @@
   id: 1hOSvn6df7F8_7GcBWlRH8
   ifc_type: IfcDoor
   name: M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146678
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -50,7 +50,7 @@
   id: 1hOSvn6df7F8_7GcBWlS8Z
   ifc_type: IfcDoor
   name: M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150173
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -74,7 +74,7 @@
   id: 1hOSvn6df7F8_7GcBWlS9F
   ifc_type: IfcDoor
   name: M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150257
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -98,7 +98,7 @@
   id: 1hOSvn6df7F8_7GcBWlSFK
   ifc_type: IfcDoor
   name: M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150378
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -122,7 +122,7 @@
   id: 1hOSvn6df7F8_7GcBWlSDm
   ifc_type: IfcDoor
   name: M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150478
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -146,7 +146,7 @@
   id: 2OBrcmyk58NupXoVOHUuXp
   ifc_type: IfcDoor
   name: M_Single-Flush:0864 x 2032mm:0864 x 2032mm:159734
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -170,7 +170,7 @@
   id: 2OBrcmyk58NupXoVOHUvVV
   ifc_type: IfcDoor
   name: M_Single-Flush:0864 x 2032mm:0864 x 2032mm:159834
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -194,7 +194,7 @@
   id: 2OBrcmyk58NupXoVOHUvR4
   ifc_type: IfcDoor
   name: M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160065
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -218,7 +218,7 @@
   id: 2OBrcmyk58NupXoVOHUvPL
   ifc_type: IfcDoor
   name: M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160208
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -242,7 +242,7 @@
   id: 1s1jVhK8z0pgKYcr9jt781
   ifc_type: IfcDoor
   name: M_Single-Glass 1:0813 x 2420mm:0813 x 2420mm:171853
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -266,7 +266,7 @@
   id: 1s1jVhK8z0pgKYcr9jt7AB
   ifc_type: IfcDoor
   name: M_Single-Glass 1:0813 x 2420mm:0813 x 2420mm:171975
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -290,7 +290,7 @@
   id: 1aj$VJZFn2TxepZUBcKp$i
   ifc_type: IfcDoor
   name: M_Single-Flush:0762 x 2032mm:0762 x 2032mm:203720
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -314,7 +314,7 @@
   id: 1aj$VJZFn2TxepZUBcKpac
   ifc_type: IfcDoor
   name: M_Single-Flush:0762 x 2032mm:0762 x 2032mm:204034
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -338,7 +338,7 @@
   id: 0wkEuT1wr1kOyafLY4v_O1
   ifc_type: IfcStair
   name: Stair:Residential - 200mm Max Riser 250mm Tread:151086
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -362,7 +362,7 @@
   id: 21ldoMpbP4VfsJ0XGY_34d
   ifc_type: IfcStair
   name: Stair:Residential - 200mm Max Riser 250mm Tread:198878
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''

@@ -4,7 +4,8 @@ version: 0.1.0
 description: >-
   Building components as planning targets. BuildingComponent identified by its IFC
   GlobalId, with lifetime and provenance; Connector for what a robot passes through;
-  Space and Storey as the topology they sit in.
+  Material for what a component is made of; Space and Storey as the topology they
+  sit in.
 prefixes:
   rcpc: https://rcpc.for5672/schema/
   linkml: https://w3id.org/linkml/
@@ -95,7 +96,7 @@ classes:
       - id
       - ifc_type
       - name
-      - material
+      - made_of
       - permanence
       - source
       - derived_from
@@ -123,7 +124,7 @@ classes:
         required: true
       ifc_type:
         required: true
-      material:
+      made_of:
         required: true
       part_of:
         required: true
@@ -186,6 +187,23 @@ classes:
       clear_height:
         required: true
 
+  Material:
+    description: >-
+      A material as IFC's IfcMaterial: one record per distinct material string the
+      parser derives, shared by every component made of it.
+    slots:
+      - record_type
+      - id
+      - category
+    slot_usage:
+      id:
+        description: >-
+          The material string the parser derives, as the IFC spells it: the
+          IfcMaterial Name, or the layer set's name where the derivation rule
+          reaches that instead.
+      category:
+        required: true
+
 slots:
   record_type:
     range: string
@@ -217,11 +235,17 @@ slots:
     description: >-
       The bare IFC entity name, such as IfcWall. Empty on a derived record, which has
       none.
-  material:
-    range: MaterialName
+  made_of:
+    range: Material
     description: >-
-      The one material string the parser derives, as the IFC spells it.
-      Empty when unresolved.
+      The Material the component is made of, IFC's IfcRelAssociatesMaterial from
+      the element's side. Empty when the parser derived no material string.
+  category:
+    range: MaterialCategory
+    description: >-
+      The Material's category, IFC's IfcMaterial.Category as this project's
+      vocabulary, assigned by a mapping step after the parse. Unassigned until
+      mapped.
   permanence:
     range: ComponentPermanence
     description: Whether the component stays in the building.

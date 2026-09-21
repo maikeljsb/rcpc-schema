@@ -28,6 +28,12 @@ URI: [rcpc:MaterialCategory](https://rcpc.for5672/schema/MaterialCategory)
 
 
 
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [category](category.md) | The Material's category, IFC's IfcMaterial |
+
 
 
 

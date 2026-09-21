@@ -2,7 +2,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FNtn
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:138062
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -20,7 +20,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FNqI
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:138157
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -38,7 +38,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FNr2
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:138237
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -56,7 +56,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FNhv
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:138310
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -74,7 +74,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FNld
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):138584
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -92,7 +92,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FNau
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):139143
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -110,7 +110,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FNbT
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139234
-  material: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
+  made_of: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -128,7 +128,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKRi
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139347
-  material: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
+  made_of: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -146,7 +146,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKRH
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139374
-  material: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
+  made_of: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -164,7 +164,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKST
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):139682
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -182,7 +182,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKIu
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):139783
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -200,7 +200,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKGS
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):139939
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -218,7 +218,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FK80
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Foundation - Concrete (417mm):140479
-  material: Basic Wall:Foundation - Concrete (417mm)
+  made_of: Basic Wall:Foundation - Concrete (417mm)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -236,7 +236,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FK9N
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Foundation - Concrete (417mm):140520
-  material: Basic Wall:Foundation - Concrete (417mm)
+  made_of: Basic Wall:Foundation - Concrete (417mm)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -254,7 +254,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKEr
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Foundation - Concrete (417mm):140554
-  material: Basic Wall:Foundation - Concrete (417mm)
+  made_of: Basic Wall:Foundation - Concrete (417mm)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -272,7 +272,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKE5
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Foundation - Concrete (417mm):140602
-  material: Basic Wall:Foundation - Concrete (417mm)
+  made_of: Basic Wall:Foundation - Concrete (417mm)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -290,7 +290,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FK3E
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Foundation - Concrete (435mm):140913
-  material: Basic Wall:Foundation - Concrete (435mm)
+  made_of: Basic Wall:Foundation - Concrete (435mm)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -308,7 +308,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FK04
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Foundation - Concrete (435mm):140987
-  material: Basic Wall:Foundation - Concrete (435mm)
+  made_of: Basic Wall:Foundation - Concrete (435mm)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -326,7 +326,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FK1b
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Foundation - Concrete (435mm):141018
-  material: Basic Wall:Foundation - Concrete (435mm)
+  made_of: Basic Wall:Foundation - Concrete (435mm)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -344,7 +344,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FK4F
   ifc_type: IfcSlab
   name: Floor:127mm Slab on Grade:141232
-  material: Floor:127mm Slab on Grade
+  made_of: Floor:127mm Slab on Grade
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -362,7 +362,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKcz
   ifc_type: IfcSlab
   name: Floor:127mm Slab on Grade:143106
-  material: Floor:127mm Slab on Grade
+  made_of: Floor:127mm Slab on Grade
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -380,7 +380,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FKau
   ifc_type: IfcWall
   name: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239
-  material: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
+  made_of: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -398,7 +398,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLQD
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:143410
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -416,7 +416,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLR9
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:143478
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -434,7 +434,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLOH
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:143534
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -452,7 +452,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLPP
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:143590
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -470,7 +470,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLTF
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):143856
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -488,7 +488,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLIE
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):143921
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -506,7 +506,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLJd
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):143960
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -524,7 +524,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLMr
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Plumbing (152mm Stud):144138
-  material: Basic Wall:Interior - Plumbing (152mm Stud)
+  made_of: Basic Wall:Interior - Plumbing (152mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -542,7 +542,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLKI
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):144301
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -560,7 +560,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FL8v
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):144518
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -578,7 +578,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FL9r
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):144586
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -596,7 +596,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FL96
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):144633
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -614,7 +614,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLEJ
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):144684
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -632,7 +632,7 @@
   id: 2O2Fr$t4X7Zf8NOew3FLCm
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Plumbing (152mm Stud):144783
-  material: Basic Wall:Interior - Plumbing (152mm Stud)
+  made_of: Basic Wall:Interior - Plumbing (152mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -650,7 +650,7 @@
   id: 1hOSvn6df7F8_7GcBWlRqU
   ifc_type: IfcSlab
   name: Floor:Residential - Wood Joist with Subflooring:144800
-  material: Floor:Residential - Wood Joist with Subflooring
+  made_of: Floor:Residential - Wood Joist with Subflooring
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -668,7 +668,7 @@
   id: 1hOSvn6df7F8_7GcBWlRrM
   ifc_type: IfcSlab
   name: Floor:Residential - Wood Joist with Subflooring:144872
-  material: Floor:Residential - Wood Joist with Subflooring
+  made_of: Floor:Residential - Wood Joist with Subflooring
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -686,7 +686,7 @@
   id: 1hOSvn6df7F8_7GcBWlR72
   ifc_type: IfcWindow
   name: M_Fixed:4835mm x 2420mm:4835mm x 2420mm:145788
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -704,7 +704,7 @@
   id: 1hOSvn6df7F8_7GcBWlRBU
   ifc_type: IfcWindow
   name: M_Fixed:4835mm x 2420mm:4835mm x 2420mm:146016
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -722,7 +722,7 @@
   id: 1hOSvn6df7F8_7GcBWlRLx
   ifc_type: IfcWindow
   name: M_Fixed:750mm x 2200mm:750mm x 2200mm:146885
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -740,7 +740,7 @@
   id: 1hOSvn6df7F8_7GcBWlRRL
   ifc_type: IfcWindow
   name: M_Fixed:750mm x 2200mm:750mm x 2200mm:147051
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -758,7 +758,7 @@
   id: 1hOSvn6df7F8_7GcBWlSXO
   ifc_type: IfcWindow
   name: M_Fixed:2800mm x 2410mm:2800mm x 2410mm:147686
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -776,7 +776,7 @@
   id: 1hOSvn6df7F8_7GcBWlSga
   ifc_type: IfcWindow
   name: M_Fixed:819mm x 759mm:819mm x 759mm:147994
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -794,7 +794,7 @@
   id: 1hOSvn6df7F8_7GcBWlSp1
   ifc_type: IfcWindow
   name: M_Casement:819mm x 759mm:819mm x 759mm:148607
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -812,7 +812,7 @@
   id: 1hOSvn6df7F8_7GcBWlSnC
   ifc_type: IfcWindow
   name: M_Fixed:819mm x 759mm:819mm x 759mm:148722
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -830,7 +830,7 @@
   id: 1hOSvn6df7F8_7GcBWlS_W
   ifc_type: IfcWindow
   name: M_Fixed:2800mm x 2410mm:2800mm x 2410mm:149278
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -848,7 +848,7 @@
   id: 1hOSvn6df7F8_7GcBWlS2V
   ifc_type: IfcWindow
   name: M_Fixed:819mm x 759mm:819mm x 759mm:149537
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -866,7 +866,7 @@
   id: 1hOSvn6df7F8_7GcBWlS1M
   ifc_type: IfcWindow
   name: M_Casement:819mm x 759mm:819mm x 759mm:149736
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -884,7 +884,7 @@
   id: 1hOSvn6df7F8_7GcBWlS4Q
   ifc_type: IfcWindow
   name: M_Fixed:819mm x 759mm:819mm x 759mm:149924
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -902,7 +902,7 @@
   id: 1oKjKg9PD3fP1iIwXLh3lK
   ifc_type: IfcStairFlight
   name: Stair:Residential - 200mm Max Riser 250mm Tread:151086:1
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -920,7 +920,7 @@
   id: 1gtrSK5QnDuxDwygd0EDGO
   ifc_type: IfcMember
   name: Stair:Residential - 200mm Max Riser 250mm Tread:151086:1
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -938,7 +938,7 @@
   id: 34qUFGjJzFKwVWpXe2dTPt
   ifc_type: IfcMember
   name: Stair:Residential - 200mm Max Riser 250mm Tread:151086:2
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -956,7 +956,7 @@
   id: 0wkEuT1wr1kOyafLY4v_PL
   ifc_type: IfcRailing
   name: Railing:900mm Handrail Only:151162
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -974,7 +974,7 @@
   id: 0wkEuT1wr1kOyafLY4v_PH
   ifc_type: IfcRailing
   name: Railing:1100mm Guard Rail:151166
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -992,7 +992,7 @@
   id: 2OBrcmyk58NupXoVOHUtC0
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Wood:169093
-  material: Floor:Finish Floor - Wood
+  made_of: Floor:Finish Floor - Wood
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1010,7 +1010,7 @@
   id: 2OBrcmyk58NupXoVOHUtDX
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Wood:169188
-  material: Floor:Finish Floor - Wood
+  made_of: Floor:Finish Floor - Wood
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1028,7 +1028,7 @@
   id: 2OBrcmyk58NupXoVOHUtBP
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Wood:169308
-  material: Floor:Finish Floor - Wood
+  made_of: Floor:Finish Floor - Wood
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1046,7 +1046,7 @@
   id: 2OBrcmyk58NupXoVOHUt8F
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Wood:169354
-  material: Floor:Finish Floor - Wood
+  made_of: Floor:Finish Floor - Wood
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1064,7 +1064,7 @@
   id: 2OBrcmyk58NupXoVOHUt8s
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Wood:169395
-  material: Floor:Finish Floor - Wood
+  made_of: Floor:Finish Floor - Wood
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1082,7 +1082,7 @@
   id: 2OBrcmyk58NupXoVOHUt5W
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Wood:169701
-  material: Floor:Finish Floor - Wood
+  made_of: Floor:Finish Floor - Wood
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1100,7 +1100,7 @@
   id: 2OBrcmyk58NupXoVOHUt2f
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Ceramic Tile:169772
-  material: Floor:Finish Floor - Ceramic Tile
+  made_of: Floor:Finish Floor - Ceramic Tile
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1118,7 +1118,7 @@
   id: 2OBrcmyk58NupXoVOHUt0F
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Ceramic Tile:169866
-  material: Floor:Finish Floor - Ceramic Tile
+  made_of: Floor:Finish Floor - Ceramic Tile
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1136,7 +1136,7 @@
   id: 2OBrcmyk58NupXoVOHUtxr
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Wood:170352
-  material: Floor:Finish Floor - Wood
+  made_of: Floor:Finish Floor - Wood
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1154,7 +1154,7 @@
   id: 2OBrcmyk58NupXoVOHUtoa
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Ceramic Tile:170785
-  material: Floor:Finish Floor - Ceramic Tile
+  made_of: Floor:Finish Floor - Ceramic Tile
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1172,7 +1172,7 @@
   id: 2OBrcmyk58NupXoVOHUtjR
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Ceramic Tile:171230
-  material: Floor:Finish Floor - Ceramic Tile
+  made_of: Floor:Finish Floor - Ceramic Tile
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1190,7 +1190,7 @@
   id: 2OBrcmyk58NupXoVOHUtju
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Ceramic Tile:171261
-  material: Floor:Finish Floor - Ceramic Tile
+  made_of: Floor:Finish Floor - Ceramic Tile
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1208,7 +1208,7 @@
   id: 2OBrcmyk58NupXoVOHUtgP
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Wood:171292
-  material: Floor:Finish Floor - Wood
+  made_of: Floor:Finish Floor - Wood
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1226,7 +1226,7 @@
   id: 2OBrcmyk58NupXoVOHUten
   ifc_type: IfcSlab
   name: Floor:Finish Floor - Ceramic Tile:171444
-  material: Floor:Finish Floor - Ceramic Tile
+  made_of: Floor:Finish Floor - Ceramic Tile
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1244,7 +1244,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4$e
   ifc_type: IfcWindow
   name: M_Fixed:2800mm x 2410mm:2800mm x 2410mm:180318
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1262,7 +1262,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4u1
   ifc_type: IfcWindow
   name: M_Fixed:819mm x 759mm:819mm x 759mm:180663
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1280,7 +1280,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4qs
   ifc_type: IfcWindow
   name: M_Fixed:819mm x 759mm:819mm x 759mm:180864
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1298,7 +1298,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4oq
   ifc_type: IfcWindow
   name: M_Casement:819mm x 759mm:819mm x 759mm:180994
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1316,7 +1316,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4pU
   ifc_type: IfcWindow
   name: M_Fixed:2800mm x 2410mm:2800mm x 2410mm:181096
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1334,7 +1334,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4kJ
   ifc_type: IfcWindow
   name: M_Fixed:819mm x 759mm:819mm x 759mm:181285
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1352,7 +1352,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4gQ
   ifc_type: IfcWindow
   name: M_Casement:819mm x 759mm:819mm x 759mm:181548
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1370,7 +1370,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4hv
   ifc_type: IfcWindow
   name: M_Fixed:819mm x 759mm:819mm x 759mm:181583
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1388,7 +1388,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4aS
   ifc_type: IfcWindow
   name: M_Fixed:750mm x 2200mm:750mm x 2200mm:181930
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1406,7 +1406,7 @@
   id: 1l0GAJtRTFv8$zmKJOH4ZZ
   ifc_type: IfcWindow
   name: M_Fixed:750mm x 2200mm:750mm x 2200mm:182101
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1424,7 +1424,7 @@
   id: 0jf0rYHfX3RAB3bSIRjmxl
   ifc_type: IfcRoof
   name: Basic Roof:Live Roof over Wood Joist Flat Roof:184483
-  material: Basic Roof:Live Roof over Wood Joist Flat Roof
+  made_of: Basic Roof:Live Roof over Wood Joist Flat Roof
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1442,7 +1442,7 @@
   id: 3ThA22djr8AQQ9eQMA5s7I
   ifc_type: IfcSlab
   name: Basic Roof:Live Roof over Wood Joist Flat Roof:184483
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1460,7 +1460,7 @@
   id: 0jf0rYHfX3RAB3bSIRjmmy
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:184944
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1478,7 +1478,7 @@
   id: 0jf0rYHfX3RAB3bSIRjmpw
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:185014
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1496,7 +1496,7 @@
   id: 0jf0rYHfX3RAB3bSIRjmoa
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:185064
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1514,7 +1514,7 @@
   id: 0jf0rYHfX3RAB3bSIRjmr1
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:185101
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1532,7 +1532,7 @@
   id: 1Eo2$BaHX42AEkDvQQDocD
   ifc_type: IfcWindow
   name: M_Skylight:1180 x 1170mm:1180 x 1170mm:185337
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1550,7 +1550,7 @@
   id: 1Eo2$BaHX42AEkDvQQDoy2
   ifc_type: IfcWindow
   name: M_Skylight:1180 x 1170mm:1180 x 1170mm:185718
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1568,7 +1568,7 @@
   id: 0kF45Qs8L9PAM9kmb1lT5d
   ifc_type: IfcFooting
   name: Wall Foundation:Bearing Footing - 900 x 300:186596
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1586,7 +1586,7 @@
   id: 0kF45Qs8L9PAM9kmb1lT5l
   ifc_type: IfcFooting
   name: Wall Foundation:Bearing Footing - 900 x 300:186604
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1604,7 +1604,7 @@
   id: 0kF45Qs8L9PAM9kmb1lT5t
   ifc_type: IfcFooting
   name: Wall Foundation:Bearing Footing - 900 x 300:186612
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1622,7 +1622,7 @@
   id: 0kF45Qs8L9PAM9kmb1lT5$
   ifc_type: IfcFooting
   name: Wall Foundation:Bearing Footing - 900 x 300:186620
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1640,7 +1640,7 @@
   id: 0kF45Qs8L9PAM9kmb1lT2B
   ifc_type: IfcFooting
   name: Wall Foundation:Bearing Footing - 900 x 300:186632
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1658,7 +1658,7 @@
   id: 0kF45Qs8L9PAM9kmb1lT2N
   ifc_type: IfcFooting
   name: Wall Foundation:Bearing Footing - 900 x 300:186644
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1676,7 +1676,7 @@
   id: 0kF45Qs8L9PAM9kmb1lT2Z
   ifc_type: IfcFooting
   name: Wall Foundation:Bearing Footing - 900 x 300:186656
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1694,7 +1694,7 @@
   id: 3bXiCStxP6Fgxdej$yc5T8
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187149
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1712,7 +1712,7 @@
   id: 3bXiCStxP6Fgxdej$yc503
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187462
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1730,7 +1730,7 @@
   id: 3bXiCStxP6Fgxdej$yc50B
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187470
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1748,7 +1748,7 @@
   id: 3bXiCStxP6Fgxdej$yc50U
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187483
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1766,7 +1766,7 @@
   id: 3bXiCStxP6Fgxdej$yc50n
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187508
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1784,7 +1784,7 @@
   id: 3bXiCStxP6Fgxdej$yc52o
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187639
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1802,7 +1802,7 @@
   id: 3bXiCStxP6Fgxdej$yc554
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187649
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1820,7 +1820,7 @@
   id: 3bXiCStxP6Fgxdej$yc55E
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187659
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1838,7 +1838,7 @@
   id: 3bXiCStxP6Fgxdej$yc55M
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187667
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1856,7 +1856,7 @@
   id: 3bXiCStxP6Fgxdej$yc55U
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187675
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1874,7 +1874,7 @@
   id: 3bXiCStxP6Fgxdej$yc55c
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187683
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1892,7 +1892,7 @@
   id: 3bXiCStxP6Fgxdej$yc55k
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187691
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1910,7 +1910,7 @@
   id: 3bXiCStxP6Fgxdej$yc55m
   ifc_type: IfcCovering
   name: Compound Ceiling:Gypsum Board:187701
-  material: Compound Ceiling:Gypsum Board
+  made_of: Compound Ceiling:Gypsum Board
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1928,7 +1928,7 @@
   id: 0iEHWY1$XA8eQeeULq4jZ1
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (152 mm Stud):189074
-  material: Basic Wall:Interior - Furring (152 mm Stud)
+  made_of: Basic Wall:Interior - Furring (152 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1946,7 +1946,7 @@
   id: 0iEHWY1$XA8eQeeULq4j_U
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (152 mm Stud):189901
-  material: Basic Wall:Interior - Furring (152 mm Stud)
+  made_of: Basic Wall:Interior - Furring (152 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1964,7 +1964,7 @@
   id: 0iEHWY1$XA8eQeeULq4jpl
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):190140
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -1982,7 +1982,7 @@
   id: 0iEHWY1$XA8eQeeULq4jDb
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (152 mm Stud):190774
-  material: Basic Wall:Interior - Furring (152 mm Stud)
+  made_of: Basic Wall:Interior - Furring (152 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2000,7 +2000,7 @@
   id: 0iEHWY1$XA8eQeeULq4jE6
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (152 mm Stud):190933
-  material: Basic Wall:Interior - Furring (152 mm Stud)
+  made_of: Basic Wall:Interior - Furring (152 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2018,7 +2018,7 @@
   id: 0dxE1Sy6nDqfpDb5vIMNiA
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (152 mm Stud):193247
-  material: Basic Wall:Interior - Furring (152 mm Stud)
+  made_of: Basic Wall:Interior - Furring (152 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2036,7 +2036,7 @@
   id: 0dxE1Sy6nDqfpDb5vIMN_Z
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (152 mm Stud):194166
-  material: Basic Wall:Interior - Furring (152 mm Stud)
+  made_of: Basic Wall:Interior - Furring (152 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2054,7 +2054,7 @@
   id: 3KMJUyUe9DfQ2FOCd5ZoiN
   ifc_type: IfcStairFlight
   name: Stair:Residential - 200mm Max Riser 250mm Tread:198878:1
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2072,7 +2072,7 @@
   id: 01KzA4SPn5IOODwLEb5RNY
   ifc_type: IfcMember
   name: Stair:Residential - 200mm Max Riser 250mm Tread:198878:1
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2090,7 +2090,7 @@
   id: 37Fy90kSD2PvviizyM7EKl
   ifc_type: IfcMember
   name: Stair:Residential - 200mm Max Riser 250mm Tread:198878:2
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2108,7 +2108,7 @@
   id: 21ldoMpbP4VfsJ0XGY_34P
   ifc_type: IfcRailing
   name: Railing:900mm Handrail Only:198880
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2126,7 +2126,7 @@
   id: 21ldoMpbP4VfsJ0XGY_335
   ifc_type: IfcRailing
   name: Railing:1100mm Guard Rail:198972
-  material: ''
+  made_of: ''
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2144,7 +2144,7 @@
   id: 1aj$VJZFn2TxepZUBcKpvt
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):203347
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2162,7 +2162,7 @@
   id: 1aj$VJZFn2TxepZUBcKpZw
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):203998
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2180,7 +2180,7 @@
   id: 1aj$VJZFn2TxepZUBcKpee
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):204300
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2198,7 +2198,7 @@
   id: 1aj$VJZFn2TxepZUBcKphf
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Partition (92mm Stud):204493
-  material: Basic Wall:Interior - Partition (92mm Stud)
+  made_of: Basic Wall:Interior - Partition (92mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2216,7 +2216,7 @@
   id: 2OrWItJ6zAwBNp0OUxK_l8
   ifc_type: IfcBeam
   name: M_W-Wide Flange:W310X60:W310X60:207325
-  material: Metal - Steel - 345 MPa
+  made_of: Metal - Steel - 345 MPa
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2234,7 +2234,7 @@
   id: 2OrWItJ6zAwBNp0OUxK$8W
   ifc_type: IfcBeam
   name: M_W-Wide Flange:W410X60:W410X60:208949
-  material: Metal - Steel - 345 MPa
+  made_of: Metal - Steel - 345 MPa
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2252,7 +2252,7 @@
   id: 2OrWItJ6zAwBNp0OUxK$Bq
   ifc_type: IfcBeam
   name: M_W-Wide Flange:W410X60:W410X60:209121
-  material: Metal - Steel - 345 MPa
+  made_of: Metal - Steel - 345 MPa
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2270,7 +2270,7 @@
   id: 2OrWItJ6zAwBNp0OUxK$CR
   ifc_type: IfcBeam
   name: M_W-Wide Flange:W410X60:W410X60:209166
-  material: Metal - Steel - 345 MPa
+  made_of: Metal - Steel - 345 MPa
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2288,7 +2288,7 @@
   id: 2OrWItJ6zAwBNp0OUxK$Dv
   ifc_type: IfcBeam
   name: M_W-Wide Flange:W310X60:W310X60:209260
-  material: Metal - Steel - 345 MPa
+  made_of: Metal - Steel - 345 MPa
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2306,7 +2306,7 @@
   id: 2OrWItJ6zAwBNp0OUxK$Du
   ifc_type: IfcBeam
   name: M_W-Wide Flange:W410X60:W410X60:209261
-  material: Metal - Steel - 345 MPa
+  made_of: Metal - Steel - 345 MPa
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2324,7 +2324,7 @@
   id: 2OrWItJ6zAwBNp0OUxK$Dx
   ifc_type: IfcBeam
   name: M_W-Wide Flange:W410X60:W410X60:209262
-  material: Metal - Steel - 345 MPa
+  made_of: Metal - Steel - 345 MPa
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2342,7 +2342,7 @@
   id: 2OrWItJ6zAwBNp0OUxK$Dw
   ifc_type: IfcBeam
   name: M_W-Wide Flange:W410X60:W410X60:209263
-  material: Metal - Steel - 345 MPa
+  made_of: Metal - Steel - 345 MPa
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2360,7 +2360,7 @@
   id: 1CZILmCaHETO8tf3SgGEWh
   ifc_type: IfcSlab
   name: Floor:150mm Exterior Slab on Grade:216507
-  material: Floor:150mm Exterior Slab on Grade
+  made_of: Floor:150mm Exterior Slab on Grade
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2378,7 +2378,7 @@
   id: 1CZILmCaHETO8tf3SgGEXu
   ifc_type: IfcSlab
   name: Floor:150mm Exterior Slab on Grade:216552
-  material: Floor:150mm Exterior Slab on Grade
+  made_of: Floor:150mm Exterior Slab on Grade
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2396,7 +2396,7 @@
   id: 3Y4YRln2r91vflHcHE5IVS
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (38 mm Stud):217414
-  material: Basic Wall:Interior - Furring (38 mm Stud)
+  made_of: Basic Wall:Interior - Furring (38 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2414,7 +2414,7 @@
   id: 3Y4YRln2r91vflHcHE5IVT
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (38 mm Stud):217415
-  material: Basic Wall:Interior - Furring (38 mm Stud)
+  made_of: Basic Wall:Interior - Furring (38 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2432,7 +2432,7 @@
   id: 3Y4YRln2r91vflHcHE5IVI
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (38 mm Stud):217416
-  material: Basic Wall:Interior - Furring (38 mm Stud)
+  made_of: Basic Wall:Interior - Furring (38 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2450,7 +2450,7 @@
   id: 3Y4YRln2r91vflHcHE5IVJ
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (38 mm Stud):217417
-  material: Basic Wall:Interior - Furring (38 mm Stud)
+  made_of: Basic Wall:Interior - Furring (38 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2468,7 +2468,7 @@
   id: 3Y4YRln2r91vflHcHE5ITp
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (38 mm Stud):217577
-  material: Basic Wall:Interior - Furring (38 mm Stud)
+  made_of: Basic Wall:Interior - Furring (38 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2486,7 +2486,7 @@
   id: 3Y4YRln2r91vflHcHE5ITm
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (38 mm Stud):217578
-  material: Basic Wall:Interior - Furring (38 mm Stud)
+  made_of: Basic Wall:Interior - Furring (38 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2504,7 +2504,7 @@
   id: 3Y4YRln2r91vflHcHE5ITn
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (38 mm Stud):217579
-  material: Basic Wall:Interior - Furring (38 mm Stud)
+  made_of: Basic Wall:Interior - Furring (38 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2522,7 +2522,7 @@
   id: 3Y4YRln2r91vflHcHE5ITs
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Interior - Furring (38 mm Stud):217580
-  material: Basic Wall:Interior - Furring (38 mm Stud)
+  made_of: Basic Wall:Interior - Furring (38 mm Stud)
   permanence: permanent
   source: ifc
   derived_from: ''
@@ -2540,7 +2540,7 @@
   id: 30Lb4tFizKvx5X_QlBEKR9
   ifc_type: ''
   name: brick 0001 of Basic Wall:Exterior - Brick on Block:138062
-  material: Masonry - Brick
+  made_of: Masonry - Brick
   permanence: permanent
   source: derived
   derived_from: 2O2Fr$t4X7Zf8NOew3FNtn
@@ -2558,7 +2558,7 @@
   id: 3Ba6OwaF5IlP8NVwAW6lw6
   ifc_type: ''
   name: formwork for Wall Foundation:Bearing Footing - 900 x 300:186596
-  material: ''
+  made_of: ''
   permanence: temporary
   source: derived
   derived_from: 0kF45Qs8L9PAM9kmb1lT5d

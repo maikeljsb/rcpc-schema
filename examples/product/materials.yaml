@@ -1,0 +1,51 @@
+- record_type: Material
+  id: Basic Wall:Exterior - Brick on Block
+  category: masonry
+- record_type: Material
+  id: Basic Wall:Interior - Partition (92mm Stud)
+  category: unassigned
+- record_type: Material
+  id: Basic Wall:Party Wall - CMU Residential Unit Dimising Wall
+  category: masonry
+- record_type: Material
+  id: Basic Wall:Foundation - Concrete (417mm)
+  category: concrete
+- record_type: Material
+  id: Basic Wall:Foundation - Concrete (435mm)
+  category: concrete
+- record_type: Material
+  id: Floor:127mm Slab on Grade
+  category: concrete
+- record_type: Material
+  id: Basic Wall:Interior - Plumbing (152mm Stud)
+  category: unassigned
+- record_type: Material
+  id: Floor:Residential - Wood Joist with Subflooring
+  category: timber
+- record_type: Material
+  id: Floor:Finish Floor - Wood
+  category: timber
+- record_type: Material
+  id: Floor:Finish Floor - Ceramic Tile
+  category: unassigned
+- record_type: Material
+  id: Basic Roof:Live Roof over Wood Joist Flat Roof
+  category: timber
+- record_type: Material
+  id: Compound Ceiling:Gypsum Board
+  category: unassigned
+- record_type: Material
+  id: Basic Wall:Interior - Furring (152 mm Stud)
+  category: unassigned
+- record_type: Material
+  id: Metal - Steel - 345 MPa
+  category: unassigned
+- record_type: Material
+  id: Floor:150mm Exterior Slab on Grade
+  category: concrete
+- record_type: Material
+  id: Basic Wall:Interior - Furring (38 mm Stud)
+  category: unassigned
+- record_type: Material
+  id: Masonry - Brick
+  category: masonry

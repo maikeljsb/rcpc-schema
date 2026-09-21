@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: material 
+# Slot: made_of 
 
 
-_The one material string the parser derives, as the IFC spells it. Empty when unresolved._
+_The Material the component is made of, IFC's IfcRelAssociatesMaterial from the element's side. Empty when the parser derived no material string._
 
 
 
@@ -14,7 +14,7 @@ _The one material string the parser derives, as the IFC spells it. Empty when un
 
 
 
-URI: [rcpc:material](https://rcpc.for5672/schema/material)
+URI: [rcpc:made_of](https://rcpc.for5672/schema/made_of)
 <!-- no inheritance hierarchy -->
 
 
@@ -39,7 +39,7 @@ URI: [rcpc:material](https://rcpc.for5672/schema/material)
 
 | Property | Value |
 | --- | --- |
-| Range | [MaterialName](MaterialName.md) |
+| Range | [Material](Material.md) |
 | Domain Of | [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
@@ -74,8 +74,8 @@ URI: [rcpc:material](https://rcpc.for5672/schema/material)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rcpc:material |
-| native | rcpc:material |
+| self | rcpc:made_of |
+| native | rcpc:made_of |
 
 
 
@@ -84,13 +84,14 @@ URI: [rcpc:material](https://rcpc.for5672/schema/material)
 
 <details>
 ```yaml
-name: material
-description: The one material string the parser derives, as the IFC spells it. Empty
-  when unresolved.
+name: made_of
+description: The Material the component is made of, IFC's IfcRelAssociatesMaterial
+  from the element's side. Empty when the parser derived no material string.
 from_schema: https://rcpc.for5672/schema/product
+rank: 1000
 domain_of:
 - BuildingComponent
-range: MaterialName
+range: Material
 
 ```
 </details></div>

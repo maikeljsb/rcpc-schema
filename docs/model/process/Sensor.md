@@ -173,6 +173,7 @@ attributes:
     - Storey
     - Space
     - BuildingComponent
+    - Material
     - RobotUnit
     - PhysicalProperty
     - Sensor

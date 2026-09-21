@@ -1,7 +1,7 @@
 - record_type: BuildingComponent
   id: 2O2Fr$t4X7Zf8NOew3FNtn
   name: Basic Wall:Exterior - Brick on Block:138062
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''

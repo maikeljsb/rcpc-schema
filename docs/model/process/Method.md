@@ -250,6 +250,7 @@ attributes:
     - Storey
     - Space
     - BuildingComponent
+    - Material
     - Task
     - Method
     range: string
@@ -265,6 +266,7 @@ attributes:
     - Storey
     - Space
     - BuildingComponent
+    - Material
     - RobotUnit
     - PhysicalProperty
     - Sensor

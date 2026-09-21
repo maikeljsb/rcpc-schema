@@ -1,6 +1,6 @@
 # product
 
-Building components as planning targets. BuildingComponent identified by its IFC GlobalId, with lifetime and provenance; Connector for what a robot passes through; Space and Storey as the topology they sit in.
+Building components as planning targets. BuildingComponent identified by its IFC GlobalId, with lifetime and provenance; Connector for what a robot passes through; Material for what a component is made of; Space and Storey as the topology they sit in.
 
 URI: https://rcpc.for5672/schema/product
 
@@ -14,6 +14,7 @@ Name: product
 | --- | --- |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |
+| [Material](Material.md) | A material as IFC's IfcMaterial: one record per distinct material string the ... |
 | [Space](Space.md) | A room, or the exterior region of one storey |
 | [Storey](Storey.md) | A building storey |
 
@@ -23,6 +24,7 @@ Name: product
 
 | Slot | Description |
 | --- | --- |
+| [category](category.md) | The Material's category, IFC's IfcMaterial |
 | [clear_height](clear_height.md) | The passable height: a door's IFC OverallHeight, a void's opening height, a s... |
 | [clear_width](clear_width.md) | The passable width: a door's IFC OverallWidth, a void's opening width, a stai... |
 | [connects](connects.md) | The two Spaces the Connector joins |
@@ -34,7 +36,7 @@ Name: product
 | [kind](kind.md) | What kind of passage the Connector is |
 | [located_in](located_in.md) | The Space the component's point lies in |
 | [long_name](long_name.md) | The IFC LongName of a Space or Storey |
-| [material](material.md) | The one material string the parser derives, as the IFC spells it |
+| [made_of](made_of.md) | The Material the component is made of, IFC's IfcRelAssociatesMaterial from th... |
 | [name](name.md) | The IFC Name |
 | [part_of](part_of.md) | The assembly this component is a part of, IFC's aggregation from the part's s... |
 | [permanence](permanence.md) | Whether the component stays in the building |

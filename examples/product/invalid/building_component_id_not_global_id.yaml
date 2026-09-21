@@ -2,7 +2,7 @@
   id: wall-001
   ifc_type: IfcWallStandardCase
   name: Basic Wall:Exterior - Brick on Block:138062
-  material: Basic Wall:Exterior - Brick on Block
+  made_of: Basic Wall:Exterior - Brick on Block
   permanence: permanent
   source: ifc
   derived_from: ''

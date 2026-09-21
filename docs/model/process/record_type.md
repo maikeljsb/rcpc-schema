@@ -28,6 +28,7 @@ URI: [rcpc:record_type](https://rcpc.for5672/schema/record_type)
 | [Storey](Storey.md) | A building storey |  no  |
 | [Space](Space.md) | A room, or the exterior region of one storey |  no  |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  no  |
+| [Material](Material.md) | A material as IFC's IfcMaterial: one record per distinct material string the ... |  no  |
 | [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |  no  |
 | [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |  no  |
 | [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
@@ -46,7 +47,7 @@ URI: [rcpc:record_type](https://rcpc.for5672/schema/record_type)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [Task](Task.md), [Method](Method.md) |
+| Domain Of | [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [Material](Material.md), [Task](Task.md), [Method](Method.md) |
 
 ### Cardinality and Requirements
 
@@ -106,6 +107,7 @@ domain_of:
 - Storey
 - Space
 - BuildingComponent
+- Material
 - Task
 - Method
 range: string

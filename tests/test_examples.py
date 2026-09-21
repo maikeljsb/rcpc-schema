@@ -40,6 +40,8 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "examples/product/connectors.yaml": ("schema/product.yaml", "Connector", None),
     "examples/product/invalid/connector_one_space.yaml": ("schema/product.yaml", "Connector", "connects"),
     "examples/product/invalid/connector_door_missing_clear_height.yaml": ("schema/product.yaml", "Connector", "clear_height"),
+    "examples/product/materials.yaml": ("schema/product.yaml", "Material", None),
+    "examples/product/invalid/material_missing_category.yaml": ("schema/product.yaml", "Material", "category"),
     "examples/process/catalogue.yaml": ("schema/process.yaml", BY_RECORD_TYPE, None),
     "examples/process/invalid/primitive_task_missing_duration.yaml": ("schema/process.yaml", "PrimitiveTask", "duration"),
     "examples/process/invalid/primitive_task_requires_empty.yaml": ("schema/process.yaml", "PrimitiveTask", "requires"),

@@ -115,14 +115,14 @@ URI: [rcpc:BuildingComponent](https://rcpc.for5672/schema/BuildingComponent)
     
 
         
-      BuildingComponent : material
+      BuildingComponent : made_of
         
           
     
         
         
-        BuildingComponent --> "1" MaterialName : material
-        click MaterialName href "../MaterialName/"
+        BuildingComponent --> "1" Material : made_of
+        click Material href "../Material/"
     
 
         
@@ -245,7 +245,7 @@ URI: [rcpc:BuildingComponent](https://rcpc.for5672/schema/BuildingComponent)
 | [id](id.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC GlobalId in its 22-character form: the entity's own when parsed, mint... | direct |
 | [ifc_type](ifc_type.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The bare IFC entity name, such as IfcWall | direct |
 | [name](name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The IFC Name | direct |
-| [material](material.md) | 1 <br/> [MaterialName](MaterialName.md) | The one material string the parser derives, as the IFC spells it | direct |
+| [made_of](made_of.md) | 1 <br/> [Material](Material.md) | The Material the component is made of, IFC's IfcRelAssociatesMaterial from th... | direct |
 | [permanence](permanence.md) | 1 <br/> [ComponentPermanence](ComponentPermanence.md) | Whether the component stays in the building | direct |
 | [source](source.md) | 1 <br/> [RecordSource](RecordSource.md) | Where a component or Space came from: parsed from the IFC model, or produced ... | direct |
 | [derived_from](derived_from.md) | 1 <br/> [BuildingComponent](BuildingComponent.md) | The IFC-sourced component this one was generated from | direct |
@@ -339,7 +339,7 @@ slots:
 - id
 - ifc_type
 - name
-- material
+- made_of
 - permanence
 - source
 - derived_from
@@ -371,8 +371,8 @@ slot_usage:
   ifc_type:
     name: ifc_type
     required: true
-  material:
-    name: material
+  made_of:
+    name: made_of
     required: true
   part_of:
     name: part_of
@@ -456,8 +456,8 @@ slot_usage:
   ifc_type:
     name: ifc_type
     required: true
-  material:
-    name: material
+  made_of:
+    name: made_of
     required: true
   part_of:
     name: part_of
@@ -509,6 +509,7 @@ attributes:
     - Storey
     - Space
     - BuildingComponent
+    - Material
     range: string
     required: true
   id:
@@ -523,6 +524,7 @@ attributes:
     - Storey
     - Space
     - BuildingComponent
+    - Material
     range: string
     required: true
     pattern: ^[0-3][0-9A-Za-z_$]{21}$
@@ -549,16 +551,16 @@ attributes:
     - BuildingComponent
     range: string
     required: true
-  material:
-    name: material
-    description: The one material string the parser derives, as the IFC spells it.
-      Empty when unresolved.
+  made_of:
+    name: made_of
+    description: The Material the component is made of, IFC's IfcRelAssociatesMaterial
+      from the element's side. Empty when the parser derived no material string.
     from_schema: https://rcpc.for5672/schema/product
     rank: 1000
     owner: BuildingComponent
     domain_of:
     - BuildingComponent
-    range: MaterialName
+    range: Material
     required: true
   permanence:
     name: permanence

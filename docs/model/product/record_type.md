@@ -28,6 +28,7 @@ URI: [rcpc:record_type](https://rcpc.for5672/schema/record_type)
 | [Storey](Storey.md) | A building storey |  no  |
 | [Space](Space.md) | A room, or the exterior region of one storey |  no  |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  no  |
+| [Material](Material.md) | A material as IFC's IfcMaterial: one record per distinct material string the ... |  no  |
 | [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 
 
@@ -42,7 +43,7 @@ URI: [rcpc:record_type](https://rcpc.for5672/schema/record_type)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:string](http://www.w3.org/2001/XMLSchema#string) |
-| Domain Of | [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md) |
+| Domain Of | [Storey](Storey.md), [Space](Space.md), [BuildingComponent](BuildingComponent.md), [Material](Material.md) |
 
 ### Cardinality and Requirements
 
@@ -103,6 +104,7 @@ domain_of:
 - Storey
 - Space
 - BuildingComponent
+- Material
 range: string
 required: true
 

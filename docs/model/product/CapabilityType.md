@@ -148,6 +148,7 @@ attributes:
     - Storey
     - Space
     - BuildingComponent
+    - Material
     range: string
     required: true
   description:
