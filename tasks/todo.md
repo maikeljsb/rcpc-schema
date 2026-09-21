@@ -143,21 +143,21 @@ Plan: `tasks/plan.md`. Spec: `SPEC-process.md`. Each task is one Conventional Co
 ## Checkpoint: Phase 3
 - [x] Thirteen process rows pass
 - [x] Every id `plan.yaml` names resolves in `catalogue.yaml`, `plan.yaml`, `examples/product/`, or as `mason_m1_1` or `mason_m1_2`; every instance is listed exactly once, in the network's `tasks` or one compound's `subtasks`
-- [ ] Review with human before Task 5
+- [x] Review with human before Task 5, 2026-09-21
 
 ## Task 5: Verify success criteria, push, confirm CI
 
 **Description:** Walk the seven success criteria in `SPEC-process.md` and record evidence for each in this file under a dated "Checkpoint: Complete" section, as product did. Criterion 5 is the script from Task 4, run once more on the committed files; criterion 6 is a read-through of the slot table against `schema/process.yaml`, recorded once. Confirm `git log 689af87..HEAD -- schema/resource.yaml tests/test_lint.py tests/test_dist.py` is empty, `git log 689af87..HEAD -- schema/product.yaml` shows only Task 3's product commit, `git log 689af87..HEAD -- scripts tests/test_build.py` shows only the prerequisite 6 commit, and `git log 689af87..HEAD -- schema/common.yaml examples/resource` shows the two prerequisite commits and Task 3's common commit. Push and confirm the CI run passes. Commit the evidence as `docs(plan): mark process complete with the success-criteria evidence`.
 
 **Acceptance criteria:**
-- [ ] Each of the seven criteria has a line of evidence with the command or file it came from
-- [ ] CI is green on the pushed head
-- [ ] `tasks/plan.md` checkpoints ticked
+- [x] Each of the seven criteria has a line of evidence with the command or file it came from
+- [x] CI is green on the pushed head, run 35617959584 on `e59829f`
+- [x] `tasks/plan.md` checkpoints ticked
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
-- [ ] Manual check: the CI run page shows the same passing count as local
+- [x] Tests pass: `uv run pytest`, 76 passed
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
+- [x] Manual check: the CI run page shows the same passing count as local
 
 **Dependencies:** Task 4
 
@@ -168,7 +168,16 @@ Plan: `tasks/plan.md`. Spec: `SPEC-process.md`. Each task is one Conventional Co
 **Estimated scope:** Small
 
 ## Checkpoint: Complete
-- [ ] All five tasks committed
-- [ ] CI passes on the last commit
-- [ ] Resource and the toolchain untouched by this module's five tasks except the prerequisite 6 commit; common and product changed by Task 3's two commits only
-- [ ] Ready for step 2 of the brief
+- [x] All five tasks committed
+- [x] CI passes on the last commit: run 35617959584, success, on `e59829f`, 2026-09-21
+- [x] Resource and the toolchain untouched by this module's five tasks except the prerequisite 6 commit; common and product changed by the prerequisite 7 commits only, as criterion 7 records them
+- [x] Ready for step 2 of the brief
+
+Evidence, 2026-09-21, against the seven criteria of `SPEC-process.md`:
+1. `uv run pytest`: 76 passed in 113 s; thirteen process rows in `tests/test_examples.py`. Test files changed since `689af87`: `test_examples.py`, `test_references.py` (5e4a808), `test_build.py` with `fixtures/keyed.yaml` (a042c33).
+2. `dist/process.schema.json`: declares draft 2020-12 and passes `Draft202012Validator.check_schema`; 32 `$defs` with all twelve own entries, none suffixed `__identifier_optional`; `Parameter.required` is `[parameter_kind]`, `ParameterBinding.required` is `[bound_to]`; `record_type` is a one-value `enum` of the class's own name in all eight identified classes; both catalogue task classes carry `description`, `id` with `^[A-Za-z][A-Za-z0-9_]*$`, `parameters`, `record_type` in `properties` and `required`; both instance classes carry `bindings`, `id`, `record_type` in both; `Method.subtasks.items` is `$ref` `Subtask` with `minItems: 1`; `CompoundTaskInstance.subtasks.items` is `{type: string}`; `requires` and `tasks` carry `minItems: 1`; `parameters` and `bindings` are objects.
+3. `dist/README.md` lists `process.schema.json` with the module description.
+4. `docs/model/process/index.md`: 11 classes, 15 slots, `ParameterKind`, no empty description; `CompoundTask` and `PrimitiveTask` indented under `Task`, `CompoundTaskInstance` and `PrimitiveTaskInstance` under `TaskInstance`; `Subtask.md` has its Rules table; the lowercased names `SchemaView` reports with imports are all distinct.
+5. `tests/test_references.py`, twelve rows, passes on every run; the criterion 5 script (session scratchpad) rerun on the committed files prints "no failing row" and catches a planted variable disagreement.
+6. The fifteen slots declared in `schema/process.yaml` all appear in the slot table; all appear in the lineage table or the module's-own-words list, after that list gained `parameter_name` and `parameter_kind` in the same commit as this evidence.
+7. `git log 689af87..HEAD`: `schema/resource.yaml tests/test_lint.py tests/test_dist.py` none; `schema/product.yaml` 410c1c4, e614ac8; `scripts tests/test_build.py` a042c33; `schema/common.yaml examples/resource` 269bcc4, bdfc723, 57626db, 8c13636, 4278422.

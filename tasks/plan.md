@@ -80,15 +80,15 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
 ### Checkpoint: Phase 3
 - [x] Thirteen process rows pass; `plan.yaml` validates through the split, `record_type` locking to each subclass
 - [x] Every id `plan.yaml` names resolves in `catalogue.yaml`, `plan.yaml`, `examples/product/`, or as a machine of `mason_m1`; every instance is listed exactly once
-- [ ] Review with human
+- [x] Review with human, 2026-09-21
 
 ### Phase 4: Close
-- [ ] Task 5: Verify the seven success criteria, push, confirm CI
+- [x] Task 5: Verify the seven success criteria, push, confirm CI
 
 ### Checkpoint: Complete
-- [ ] Every success criterion in `SPEC-process.md` verified with evidence
-- [ ] `schema/resource.yaml`, `tests/test_lint.py`, and `tests/test_dist.py` untouched by Tasks 1 to 5; `schema/common.yaml` and `schema/product.yaml` changed by Task 3's two prerequisite 7 commits only; `scripts/build.py` and `tests/test_build.py` changed by the prerequisite 6 commit only
-- [ ] Ready for step 2 of the brief, the generator
+- [x] Every success criterion in `SPEC-process.md` verified with evidence
+- [x] `schema/resource.yaml`, `tests/test_lint.py`, and `tests/test_dist.py` untouched by Tasks 1 to 5; `schema/common.yaml` and `schema/product.yaml` changed by the prerequisite 7 commits of Tasks 3 and 3b only; `scripts/build.py` and `tests/test_build.py` changed by the prerequisite 6 commit only
+- [x] Ready for step 2 of the brief, the generator
 
 ## Risks and Mitigations
 
