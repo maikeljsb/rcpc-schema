@@ -49,7 +49,6 @@ Name: common
 
 | Type | Description |
 | --- | --- |
-| [MaterialName](MaterialName.md) | An IFC material name, exactly as it appears in the model |
 
 
 ## Subsets

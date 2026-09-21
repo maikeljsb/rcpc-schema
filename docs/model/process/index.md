@@ -12,8 +12,8 @@ Name: process
 
 | Class | Description |
 | --- | --- |
-| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |
-| [Parameter](Parameter.md) | One declared parameter of a task or a method: the kind of object it ranges ov... |
+| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |
+| [Parameter](Parameter.md) | HDDL's typed variable: one declared parameter of a task or a method, its name... |
 | [Subtask](Subtask.md) | One entry of a method's subtask list: the task it names and the arguments it ... |
 | [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[CompoundTask](CompoundTask.md) | HDDL's abstract task: a task performed only by decomposing it through a metho... |
@@ -25,7 +25,7 @@ Name: process
 
 | Slot | Description |
 | --- | --- |
-| [applies_to](applies_to.md) | The materials a method applies to, as IFC spells them; a component matches wh... |
+| [applies_to](applies_to.md) | The material category of the components a method decomposes its task for; a c... |
 | [arguments](arguments.md) | The values a subtask passes, in the named task's parameter order: method para... |
 | [compound_task](compound_task.md) | The compound task a method decomposes, a subtask names, or an instance realis... |
 | [duration](duration.md) | How long one performance of the primitive task takes, recommended in seconds |

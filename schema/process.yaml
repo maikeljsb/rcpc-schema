@@ -68,12 +68,14 @@ classes:
 
   Method:
     description: >-
-      One way to decompose a compound task into an ordered network of subtasks.
+      One way to decompose a compound task into an ordered network of subtasks,
+      for components of one material category or for any component.
     slots:
       - record_type
       - id
       - description
       - compound_task
+      - applies_to
       - parameters
       - subtasks
       - ordering
@@ -98,13 +100,12 @@ classes:
 
   Parameter:
     description: >-
-      One declared parameter of a task or a method: the kind of object it ranges
-      over and, on a method's component parameter, the materials the method
-      applies to. Written inline, keyed by the parameter's name.
+      HDDL's typed variable: one declared parameter of a task or a method, its
+      name and the kind of object it ranges over. Written inline, keyed by the
+      parameter's name.
     slots:
       - parameter_name
       - parameter_kind
-      - applies_to
     slot_usage:
       parameter_kind:
         required: true
@@ -149,11 +150,11 @@ slots:
     range: ParameterKind
     description: The kind of object the parameter ranges over.
   applies_to:
-    range: MaterialName
-    multivalued: true
+    range: MaterialCategory
     description: >-
-      The materials a method applies to, as IFC spells them; a component matches
-      when its material is in the list. Set on a method's component parameter only.
+      The material category of the components a method decomposes its task for;
+      a component matches when the Material it is made_of has that category.
+      Absent when the method applies to any component.
   requires:
     range: CapabilityType
     multivalued: true

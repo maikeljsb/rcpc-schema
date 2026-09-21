@@ -12,11 +12,6 @@ default_range: string
 imports:
   - linkml:types
 
-types:
-  MaterialName:
-    typeof: string
-    description: An IFC material name, exactly as it appears in the model.
-
 enums:
   MaterialCategory:
     description: >-

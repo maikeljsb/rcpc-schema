@@ -30,7 +30,7 @@ URI: [rcpc:record_type](https://rcpc.for5672/schema/record_type)
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  no  |
 | [Material](Material.md) | A material as IFC's IfcMaterial: one record per distinct material string the ... |  no  |
 | [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |  no  |
-| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |  no  |
+| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  no  |
 | [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 | [PrimitiveTask](PrimitiveTask.md) | HDDL's action: a task a robot performs directly, with what performing it requ... |  no  |
 | [CompoundTask](CompoundTask.md) | HDDL's abstract task: a task performed only by decomposing it through a metho... |  no  |

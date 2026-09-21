@@ -6,7 +6,7 @@ search:
 # Slot: applies_to 
 
 
-_The materials a method applies to, as IFC spells them; a component matches when its material is in the list. Set on a method's component parameter only._
+_The material category of the components a method decomposes its task for; a component matches when the Material it is made_of has that category. Absent when the method applies to any component._
 
 
 
@@ -25,7 +25,7 @@ URI: [rcpc:applies_to](https://rcpc.for5672/schema/applies_to)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Parameter](Parameter.md) | One declared parameter of a task or a method: the kind of object it ranges ov... |  no  |
+| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  no  |
 
 
 
@@ -38,14 +38,13 @@ URI: [rcpc:applies_to](https://rcpc.for5672/schema/applies_to)
 
 | Property | Value |
 | --- | --- |
-| Range | [MaterialName](MaterialName.md) |
-| Domain Of | [Parameter](Parameter.md) |
+| Range | [MaterialCategory](MaterialCategory.md) |
+| Domain Of | [Method](Method.md) |
 
 ### Cardinality and Requirements
 
 | Property | Value |
 | --- | --- |
-| Multivalued | Yes |
 
 
 
@@ -85,14 +84,14 @@ URI: [rcpc:applies_to](https://rcpc.for5672/schema/applies_to)
 <details>
 ```yaml
 name: applies_to
-description: The materials a method applies to, as IFC spells them; a component matches
-  when its material is in the list. Set on a method's component parameter only.
+description: The material category of the components a method decomposes its task
+  for; a component matches when the Material it is made_of has that category. Absent
+  when the method applies to any component.
 from_schema: https://rcpc.for5672/schema/process
 rank: 1000
 domain_of:
-- Parameter
-range: MaterialName
-multivalued: true
+- Method
+range: MaterialCategory
 
 ```
 </details></div>

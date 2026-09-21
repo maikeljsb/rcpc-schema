@@ -25,7 +25,7 @@ URI: [rcpc:compound_task](https://rcpc.for5672/schema/compound_task)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |  yes  |
+| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
 | [Subtask](Subtask.md) | One entry of a method's subtask list: the task it names and the arguments it ... |  no  |
 
 

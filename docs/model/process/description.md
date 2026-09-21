@@ -27,7 +27,7 @@ URI: [rcpc:description](https://rcpc.for5672/schema/description)
 | --- | --- | --- |
 | [CapabilityType](CapabilityType.md) | Something a robot can do, named by a verb |  yes  |
 | [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |  yes  |
-| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |  yes  |
+| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
 | [PrimitiveTask](PrimitiveTask.md) | HDDL's action: a task a robot performs directly, with what performing it requ... |  no  |
 | [CompoundTask](CompoundTask.md) | HDDL's abstract task: a task performed only by decomposing it through a metho... |  no  |
 

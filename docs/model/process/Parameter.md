@@ -6,7 +6,7 @@ search:
 # Class: Parameter 
 
 
-_One declared parameter of a task or a method: the kind of object it ranges over and, on a method's component parameter, the materials the method applies to. Written inline, keyed by the parameter's name._
+_HDDL's typed variable: one declared parameter of a task or a method, its name and the kind of object it ranges over. Written inline, keyed by the parameter's name._
 
 
 
@@ -24,17 +24,6 @@ URI: [rcpc:Parameter](https://rcpc.for5672/schema/Parameter)
  classDiagram
     class Parameter
     click Parameter href "../Parameter/"
-      Parameter : applies_to
-        
-          
-    
-        
-        
-        Parameter --> "*" MaterialName : applies_to
-        click MaterialName href "../MaterialName/"
-    
-
-        
       Parameter : parameter_kind
         
           
@@ -71,7 +60,6 @@ URI: [rcpc:Parameter](https://rcpc.for5672/schema/Parameter)
 | ---  | --- | --- | --- |
 | [parameter_name](parameter_name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The parameter's name, a plain word such as c, r, or from | direct |
 | [parameter_kind](parameter_kind.md) | 1 <br/> [ParameterKind](ParameterKind.md) | The kind of object the parameter ranges over | direct |
-| [applies_to](applies_to.md) | * <br/> [MaterialName](MaterialName.md) | The materials a method applies to, as IFC spells them; a component matches wh... | direct |
 
 
 
@@ -132,14 +120,13 @@ URI: [rcpc:Parameter](https://rcpc.for5672/schema/Parameter)
 <details>
 ```yaml
 name: Parameter
-description: 'One declared parameter of a task or a method: the kind of object it
-  ranges over and, on a method''s component parameter, the materials the method applies
-  to. Written inline, keyed by the parameter''s name.'
+description: 'HDDL''s typed variable: one declared parameter of a task or a method,
+  its name and the kind of object it ranges over. Written inline, keyed by the parameter''s
+  name.'
 from_schema: https://rcpc.for5672/schema/process
 slots:
 - parameter_name
 - parameter_kind
-- applies_to
 slot_usage:
   parameter_kind:
     name: parameter_kind
@@ -153,9 +140,9 @@ slot_usage:
 <details>
 ```yaml
 name: Parameter
-description: 'One declared parameter of a task or a method: the kind of object it
-  ranges over and, on a method''s component parameter, the materials the method applies
-  to. Written inline, keyed by the parameter''s name.'
+description: 'HDDL''s typed variable: one declared parameter of a task or a method,
+  its name and the kind of object it ranges over. Written inline, keyed by the parameter''s
+  name.'
 from_schema: https://rcpc.for5672/schema/process
 slot_usage:
   parameter_kind:
@@ -183,18 +170,6 @@ attributes:
     - Parameter
     range: ParameterKind
     required: true
-  applies_to:
-    name: applies_to
-    description: The materials a method applies to, as IFC spells them; a component
-      matches when its material is in the list. Set on a method's component parameter
-      only.
-    from_schema: https://rcpc.for5672/schema/process
-    rank: 1000
-    owner: Parameter
-    domain_of:
-    - Parameter
-    range: MaterialName
-    multivalued: true
 
 ```
 </details></div>

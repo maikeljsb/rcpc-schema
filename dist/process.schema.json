@@ -1039,7 +1039,7 @@
     "Method": {
       "type": "object",
       "additionalProperties": false,
-      "description": "One way to decompose a compound task into an ordered network of subtasks.",
+      "description": "One way to decompose a compound task into an ordered network of subtasks, for components of one material category or for any component.",
       "properties": {
         "record_type": {
           "type": "string",
@@ -1060,6 +1060,10 @@
         "compound_task": {
           "type": "string",
           "description": "The compound task a method decomposes, a subtask names, or an instance realises."
+        },
+        "applies_to": {
+          "$ref": "#/$defs/MaterialCategory",
+          "description": "The material category of the components a method decomposes its task for; a component matches when the Material it is made_of has that category. Absent when the method applies to any component."
         },
         "parameters": {
           "type": "object",
@@ -1113,7 +1117,7 @@
     "Parameter": {
       "type": "object",
       "additionalProperties": false,
-      "description": "One declared parameter of a task or a method: the kind of object it ranges over and, on a method's component parameter, the materials the method applies to. Written inline, keyed by the parameter's name.",
+      "description": "HDDL's typed variable: one declared parameter of a task or a method, its name and the kind of object it ranges over. Written inline, keyed by the parameter's name.",
       "properties": {
         "parameter_name": {
           "type": "string",
@@ -1122,13 +1126,6 @@
         "parameter_kind": {
           "$ref": "#/$defs/ParameterKind",
           "description": "The kind of object the parameter ranges over."
-        },
-        "applies_to": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "The materials a method applies to, as IFC spells them; a component matches when its material is in the list. Set on a method's component parameter only."
         }
       },
       "required": [

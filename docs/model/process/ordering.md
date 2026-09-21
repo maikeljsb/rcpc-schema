@@ -25,7 +25,7 @@ URI: [rcpc:ordering](https://rcpc.for5672/schema/ordering)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |  yes  |
+| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
 
 
 

@@ -33,6 +33,7 @@ URI: [rcpc:MaterialCategory](https://rcpc.for5672/schema/MaterialCategory)
 | Name | Description |
 | ---  | --- |
 | [category](category.md) | The Material's category, IFC's IfcMaterial |
+| [applies_to](applies_to.md) | The material category of the components a method decomposes its task for; a c... |
 
 
 

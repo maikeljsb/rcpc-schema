@@ -25,7 +25,7 @@ URI: [rcpc:parameter_kind](https://rcpc.for5672/schema/parameter_kind)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Parameter](Parameter.md) | One declared parameter of a task or a method: the kind of object it ranges ov... |  yes  |
+| [Parameter](Parameter.md) | HDDL's typed variable: one declared parameter of a task or a method, its name... |  yes  |
 
 
 

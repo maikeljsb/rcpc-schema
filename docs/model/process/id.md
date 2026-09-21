@@ -37,7 +37,7 @@ URI: [rcpc:id](https://rcpc.for5672/schema/id)
 | [Safety](Safety.md) | CRS group 3: how the robot protects the people and objects around it |  no  |
 | [Activity](Activity.md) | CRS group 4: the capabilities a robot offers and how it performs them |  no  |
 | [Task](Task.md) | HDDL's task: a name and typed parameters, before it is said whether the task ... |  yes  |
-| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks |  yes  |
+| [Method](Method.md) | One way to decompose a compound task into an ordered network of subtasks, for... |  yes  |
 | [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 | [PrimitiveTask](PrimitiveTask.md) | HDDL's action: a task a robot performs directly, with what performing it requ... |  no  |
 | [CompoundTask](CompoundTask.md) | HDDL's abstract task: a task performed only by decomposing it through a metho... |  no  |

@@ -45,10 +45,8 @@
   id: m_prefab
   description: Build a prefabricated component by transporting it and placing it.
   compound_task: ConstructComponent
-  parameters:
-    c: {parameter_kind: component, applies_to: ["Basic Wall:Exterior - Brick on Block"]}
-    r: robot
-    at: location
+  applies_to: masonry
+  parameters: {c: component, r: robot, at: location}
   subtasks:
     - {compound_task: Transport, arguments: [c]}
     - {primitive_task: Place, arguments: [r, c, at]}
