@@ -95,6 +95,9 @@ tests/
                               examples/invalid/*.yaml fails
   test_dist.py                committed dist/ and docs/model/ equal a fresh build; every
                               dist/*.schema.json passes Draft202012Validator.check_schema
+  test_references.py          every value of a reference slot named in REFERENCES resolves to
+                              an id in the document it points at; "" only where allowed
+                              (added 2026-09-21 by common, SPEC-common.md decision 17)
 .github/workflows/ci.yml      install uv, uv sync, uv run pytest
 ```
 

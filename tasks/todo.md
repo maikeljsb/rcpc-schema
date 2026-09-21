@@ -83,8 +83,35 @@ Plan: `tasks/plan.md`. Spec: `SPEC-process.md`. Each task is one Conventional Co
 
 **Estimated scope:** Medium
 
+## Task 3b: `MaterialCategory` as a class with its document, `category` empty until mapped, and the reference resolution test
+
+**Description:** Three commits, the first two rebuilding `dist/` and `docs/model/` for every module and all three passing `uv run pytest`. (a) `refactor(common): make MaterialCategory a class with its example file`: in `schema/common.yaml` the enum becomes a class with `id` and `description`, `description` required, shaped as `CapabilityType` is, described as `SPEC-common.md` decision 17 says; `examples/common/material_categories.yaml` with `masonry`, `timber`, `concrete`, each `id` and one-sentence `description`, the descriptions moved from the enum; `examples/common/invalid/material_category_missing_description.yaml`, one category without `description`; two rows. `schema/product.yaml` and `schema/process.yaml` do not change, since the range keeps its name; their dist and docs regenerate. (b) `refactor(product): empty category until the mapping step assigns one`: the extractor writes `""` where it wrote `unassigned` and regenerates `materials.yaml`; the `category` slot description says empty until mapped; nothing else in the five product files changes. (c) `test: resolve every vocabulary and record reference in the examples`: `tests/test_references.py` with one table `REFERENCES`, a row per document and slot, `(document, slot, target document, empty allowed)`: `catalogue.yaml` `requires` and `robot_units.yaml` `offers` against `capability_types.yaml`, neither empty; `materials.yaml` `category` against `material_categories.yaml`, empty allowed; `catalogue.yaml` `applies_to` against `material_categories.yaml`, not empty; `building_components.yaml` and `connectors.yaml` `made_of` against `materials.yaml`, empty allowed; six rows. The harness walks the loaded document recursively and collects every value under the slot's key, flattening lists, so nesting such as `activity_group.offers` needs no path; every collected value must be an id in the target document, and `""` passes only where the row allows it. RED first: write the rows, run them, watch `category: unassigned` fail before (b) lands. `SPEC-toolchain.md`'s test tree gains the file in commit (c).
+
+**Acceptance criteria:**
+- [ ] `uv run linkml-lint schema/common.yaml` reports no problems; `material_categories.yaml` validates against `MaterialCategory`; `material_category_missing_description.yaml` fails naming `description`
+- [ ] `materials.yaml` holds seventeen records, ten with a category and seven with `category: ""`, and no `unassigned` anywhere under `examples/`
+- [ ] `dist/common.schema.json` `$defs` has five entries, `MaterialCategory` an object with `id` and `description` and `required` listing `description`; no dist file contains `"enum": [` for `MaterialCategory`; `Material.properties.category` and `Method.properties.applies_to` are plain strings; `dist/process.schema.json` `$defs` still has 27 entries
+- [ ] `tests/test_references.py` collects six rows and passes; with `made_of: gripp` planted in a scratch copy of `catalogue.yaml`'s `requires`, or `unassigned` in a scratch copy of `materials.yaml`, the corresponding row fails naming the value
+
+**Verification:**
+- [ ] Tests pass: `uv run pytest` with 67 tests after commit (c), 61 after (a) and (b)
+- [ ] Build succeeds: `uv run python scripts/build.py` run twice after (a) and (b); `git status --porcelain` shows only the intended files
+- [ ] Manual check: `docs/model/common/index.md` lists five classes and no enum; `docs/model/common/MaterialCategory.md` is a class page with two slots; `git ls-files docs/model | grep -i materialcategory` shows the same paths as before; the lowercased names `SchemaView` reports for `schema/process.yaml` with imports are all distinct
+
+**Dependencies:** Task 3
+
+**Files likely touched:**
+- `schema/common.yaml`, `schema/product.yaml` (description only)
+- `examples/common/material_categories.yaml` (new), `examples/common/invalid/material_category_missing_description.yaml` (new), `examples/product/materials.yaml` (regenerated)
+- `tests/test_examples.py`, `tests/test_references.py` (new), `SPEC-toolchain.md`
+- `dist/*.schema.json`, `docs/model/*/*` (generated)
+- `examples/ifc_models/extract_product_examples.py` (gitignored)
+
+**Estimated scope:** Small
+
 ## Checkpoint: Phase 2
 - [x] 59 tests pass; the three commits are in the log in the order common, product, process
+- [ ] 67 tests pass; Task 3b's three commits are in the log in the order common, product, tests
 - [ ] Review with human before Task 4
 
 ## Task 4: `TaskInstance` with its two subclasses, `TaskNetwork`, and `Binding`, end to end

@@ -1,6 +1,6 @@
 # Spec: common
 
-*Module `common` of `CAPABILITY-MAP.md`. Approved 2026-09-11; the `MaterialCategory` enum added and `MaterialName` retired 2026-09-21 (decisions 15 and 16). Depends on `toolchain` (complete). Imported by `product`, `resource`, and `process`.*
+*Module `common` of `CAPABILITY-MAP.md`. Approved 2026-09-11; `MaterialCategory` added and `MaterialName` retired 2026-09-21 (decisions 15 and 16), and `MaterialCategory` made a class with its document the same day, with the vocabulary rule and the resolution test (decision 17). Depends on `toolchain` (complete). Imported by `product`, `resource`, and `process`.*
 
 ## Objective
 
@@ -35,8 +35,10 @@ schema/
 examples/
   common/
     capability_types.yaml              the four core capability types, migrated from the reference
+    material_categories.yaml           the three material categories methods are written for (2026-09-21)
     invalid/
       capability_type_missing_id.yaml  one entry without an id
+      material_category_missing_description.yaml  one category without a description (2026-09-21)
 dist/
   common.schema.json                   generated
   README.md                            regenerated, now lists common
@@ -74,13 +76,12 @@ imports:
 | `Position` | `x_coord`, `y_coord`, `z_coord`, all `float`; `unit` string; all required | Three cartesian coordinates and their unit: a point, or an extent along each axis. Site positions are in the IFC project coordinate frame, the one frame the model resolves to a Space; an owning slot may say its value is in another frame, such as a robot's own, or is an extent rather than a point. Always inlined by its owner; never a document on its own. Amended 2026-09-14, see decisions 12 and 13. |
 | `Quantity` | `value` `float` required; `unit` string required | A number with a unit. UCUM case-sensitive codes are the recommended convention; not enforced and not stated in the schema. Always inlined. |
 | `Interval` | `minimum`, `maximum`, both `float`; `unit` string; all required | A lower and an upper bound with their unit. Always inlined. |
-| `CapabilityType` | `id` identifier; `description` required | Something a robot can do, named by a bare verb. The id is the name; no separate label. Matching is by id, no levels or qualifiers. The only document class in this module. |
+| `CapabilityType` | `id` identifier; `description` required | Something a robot can do, named by a bare verb. The id is the name; no separate label. Matching is by id, no levels or qualifiers. A vocabulary class: process `requires` it, resource `offers` it, both by id. |
+| `MaterialCategory` | `id` identifier; `description` required | A category of material a construction method is written for, IFC's `IfcMaterial.Category` as this project's vocabulary: `masonry`, `timber`, `concrete`. A product `Material` names one in `category`, `""` until a mapping step assigns it; a method names one in `applies_to`. Cut at the granularity methods distinguish, so every method has exactly one; a category is added to the document when a method needs it. Added 2026-09-21, decisions 15 and 17. |
 
 ### Enum
 
-| Enum | Values | Notes |
-|---|---|---|
-| `MaterialCategory` | `masonry`, `timber`, `concrete`, `unassigned` | The categories of material a construction method is written for, IFC's `IfcMaterial.Category` as this project's vocabulary, each value with a description. A product `Material` carries one in `category`, `unassigned` until a mapping step replaces it; a method names one in `applies_to`. Cut at the granularity methods distinguish, so every method has exactly one; a category is added here when a method needs it. Added 2026-09-21, decision 15. |
+None. Common's two shared vocabularies are classes with documents, not enums, by the rule in decision 17: an enum is for a value set code branches on, and no code branches on a verb or a category. `MaterialCategory` was an enum for one day, 2026-09-21.
 
 ### Type
 
@@ -102,7 +103,7 @@ Other shared classes are added as the project identifies them, by amending this 
 
 ### Fixed by the brief
 
-Duration is a Quantity-typed slot on `PrimitiveTask`, not a parameter kind. CapabilityType lives here because process `requires` it and resource `offers` it; The `MaterialCategory` enum because a product Material carries it and process names it; it is the one enum read by two modules, which is why it is here and `ParameterKind` is not. `offers` is a flat set, so CapabilityType carries no level or qualifier. One coordinate frame, no frame slot; a unit slot is not a frame slot. No graph vocabulary or annotations. Every element has a description.
+Duration is a Quantity-typed slot on `PrimitiveTask`, not a parameter kind. CapabilityType lives here because process `requires` it and resource `offers` it; `MaterialCategory` because a product Material names it and process names it; both are vocabularies two modules read and neither module can see the other, which is why they are here and `ParameterKind` is not. `offers` is a flat set, so CapabilityType carries no level or qualifier. One coordinate frame, no frame slot; a unit slot is not a frame slot. No graph vocabulary or annotations. Every element has a description.
 
 ## Code Style
 
@@ -128,17 +129,18 @@ Conventions specific to this module:
 - **Descriptions are simple and descriptive.** One or two plain sentences saying what the thing is. No rationale, no history, no claims about which other things use it. This rule applies to every module and to example documents.
 - **Capability descriptions are migrated from the reference, with "element" replaced by "component"** and nothing else changed unless a sentence no longer makes sense. The vocabulary is a starting point, open to revision; capabilities are added when a method needs them.
 - **Capability ids are bare verbs**, `locomote`, `grip`, `lift`, `align`, and every future capability follows: a capability is something a robot can *do*. The id is the name, so there is no label; descriptions open with the verb.
-- **Material category values are single lowercase nouns**, `masonry`, `timber`, `concrete`, one per kind of material a method is written for, plus `unassigned` for the mapping step's not-yet. A category is added when a method needs one, never to describe a model.
+- **Material category values are single lowercase nouns**, `masonry`, `timber`, `concrete`, one per kind of material a method is written for; the mapping step's not-yet is `""` on the Material, not a category. A category is added to `material_categories.yaml` when a method needs one, never to describe a model.
 - **No `tree_root`.** See Decisions Made Here.
 
 ## Testing Strategy
 
-No new test files. This module lights up the tests the toolchain left waiting and adds two rows to one table.
+This module lights up the tests the toolchain left waiting and adds rows to one table. Since 2026-09-21 it also has `tests/test_references.py`, the resolution test that makes the two vocabularies type safe: every `requires` and `offers` value in the examples must be an id in `capability_types.yaml`, every `category` and `applies_to` value an id in `material_categories.yaml`, and every `made_of` an id in product's `materials.yaml`; `""` passes only where the owning spec says the key may be empty. A reference to an identified class renders as a plain string in JSON Schema, so without this test nothing checks the join at all, and the same rule is the generator's tier 2 obligation.
 
 | Test | What it proves for common | Change |
 |---|---|---|
 | `test_lint.py` | `schema/common.yaml` lints clean | none, it collects the file |
-| `test_examples.py` | `capability_types.yaml` validates against `CapabilityType`; `capability_type_missing_id.yaml` fails naming `id` | two rows in `EXAMPLES` |
+| `test_examples.py` | `capability_types.yaml` validates against `CapabilityType`; `capability_type_missing_id.yaml` fails naming `id`; since 2026-09-21 `material_categories.yaml` validates against `MaterialCategory` and `material_category_missing_description.yaml` fails naming `description` | four rows in `EXAMPLES` |
+| `test_references.py` | every `requires`, `offers`, `category`, `applies_to`, and `made_of` value in the examples resolves in its vocabulary or record file | one row per document and slot, added 2026-09-21 |
 | `test_dist.py` | committed `dist/common.schema.json` and `docs/model/common/` equal a fresh build; the schema passes the 2020-12 meta-schema | none, it collects the files |
 | `test_build.py` | unchanged; still runs on the fixture | none |
 
@@ -154,11 +156,11 @@ No new test files. This module lights up the tests the toolchain left waiting an
 
 ## Success Criteria
 
-1. `uv run pytest` passes with `test_lint.py` and `test_dist.py` no longer skipped: 1 lint test, 1 meta-schema test, and 2 new example rows collected and passing.
-2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `Interval`, `CapabilityType`, and, since 2026-09-21, the `MaterialCategory` enum with its four values. `MaterialName` never appeared while it existed: LinkML inlines types onto the slots that use them, so it rendered as a plain string, and it was retired on 2026-09-21. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
+1. `uv run pytest` passes with `test_lint.py` and `test_dist.py` no longer skipped: 1 lint test, 1 meta-schema test, and 2 new example rows collected and passing; 4 example rows and the `test_references.py` rows since 2026-09-21.
+2. `dist/common.schema.json` exists, declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `Position`, `Quantity`, `Interval`, `CapabilityType`, and, since 2026-09-21, `MaterialCategory`, a class like `CapabilityType`, so nothing in any module's file points at either: a reference by id renders as a plain string. `MaterialName` never appeared while it existed: LinkML inlines types onto the slots that use them, so it rendered as a plain string, and it was retired on 2026-09-21. Its root has no `properties` of its own, confirming the no-`tree_root` decision. Both behaviours verified on a probe, 2026-09-11.
 3. `dist/README.md` lists `common.schema.json` with the module description.
-4. `docs/model/common/index.md` lists four classes, thirteen slots, one enum, and no type since 2026-09-21. Every page has a description.
-5. `examples/common/capability_types.yaml` contains the four core capability types, `locomote`, `grip`, `lift`, `align`, with `id` and `description` only; every id is a bare verb and the word "element" appears in none of them.
+4. `docs/model/common/index.md` lists five classes, thirteen slots, no enum, and no type since 2026-09-21. Every page has a description.
+5. `examples/common/capability_types.yaml` contains the four core capability types, `locomote`, `grip`, `lift`, `align`, with `id` and `description` only; every id is a bare verb and the word "element" appears in none of them. `examples/common/material_categories.yaml` contains `masonry`, `timber`, `concrete` with `id` and `description` only, since 2026-09-21.
 6. Another team's check: given only `docs/model/common/`, a person adds an eleventh capability type to the example file and `uv run pytest` still passes. Recorded as done when it has happened once; not blocking.
 7. The toolchain was not changed by this module's own work. One exception, recorded: using common surfaced a toolchain bug, stale pages surviving inside a module's docs folder when an element is removed, fixed in a separate `fix(build)` commit with its own test. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows that commit and no other from this module.
 
@@ -177,9 +179,10 @@ No new test files. This module lights up the tests the toolchain left waiting an
 11. **The four dimension slots live here.** Decided 2026-09-12 in resource's Phase 1: slots are global to the merged schema and product does not import resource, so a slot both need is declared in the module both import. `weight` is also what the brief's Capacity check compares against load capacity.
 12. **`Position` carries `unit`, required.** Decided 2026-09-14 in resource's Task 3 review. Before this, `Position` was three floats whose unit was a sentence in its description, "the project's units, read from the IFC," which the schema itself could not see: a `Position` was only meaningful inside the document that produced it. Resource's mount offsets, a sensor's or manipulator's installation point on the robot body, needed a unit-carrying point and got a second class, `MountPosition`, which sidestepped the brief's one-frame rule by name. Putting `unit` on `Position` makes a point self-describing wherever it is written, retires `MountPosition`, and leaves the brief untouched: it forbids a frame slot, and a unit is not a frame. Product's derived positions write the unit the IFC parse read them in, redundant with the IFC and harmless. The schema stays at eleven shared slots; `unit` was already declared for `Quantity`.
 13. **`Position` is a triple with a unit, not only a point.** Decided 2026-09-14 in resource's Task 3 review. Resource's manipulator reach is three extents along the robot's axes with one unit, the same data as a point and nothing more; a second class for it would duplicate `Position` under another name. The description now reads "a point, or an extent along each axis", and the owning slot says which it holds.
-14. **`ParameterKind` moved to process.** Decided 2026-09-17 in process's Phase 1 and applied 2026-09-18: its only reader is process, and its values, `component`, `location`, `robot`, name classes common cannot see. Common carried no enum until `MaterialCategory`, which two modules read (decision 15).
-15. **`MaterialCategory` is an enum in common.** Decided 2026-09-21 in process's Phase 4, when `applies_to` moved from the parameter declaration to `Method`, and folded the same day from a first shape in which it was a class with `id` and `description` beside a product `Material` class. The question was where the vocabulary methods are written in lives and what checks it. Material strings arrive from the IFC parser per model, spelled as the authoring tool spelled them, so no method can be written against one; they are the `id` of a product `Material` record. The categories are the project's own words, IFC's `IfcMaterial.Category`, which real files rarely fill, written at the granularity methods distinguish. As an enum they are checked at tier 1 on the Material and on the Method by the validator, appear in the JSON Schema with their values, and need no example file and no tier 2 resolution. `CapabilityType` is a class because another team adds a verb by copying a line into a data file; a category is added by the person writing the method that needs it, who edits the schema anyway, so that reason does not carry over. `unassigned` is a permissible value because an enum slot cannot hold `""` and product's rule forbids an absent key: the parser writes it, the mapping step replaces it, and the work list queries it. Common carries this one enum because product and process both read it and cannot see each other, the test `ParameterKind` failed.
+14. **`ParameterKind` moved to process.** Decided 2026-09-17 in process's Phase 1 and applied 2026-09-18: its only reader is process, and its values, `component`, `location`, `robot`, name classes common cannot see. Common carries no enum: its two shared vocabularies are classes with documents (decision 17).
+15. **`MaterialCategory` lives in common.** Decided 2026-09-21 in process's Phase 4, when `applies_to` moved from the parameter declaration to `Method`. Material strings arrive from the IFC parser per model, spelled as the authoring tool spelled them, so no method can be written against one; they are the `id` of a product `Material` record. The categories are the project's words, IFC's `IfcMaterial.Category`, which real files rarely fill, written at the granularity methods distinguish. Common carries the vocabulary because product and process both read it and cannot see each other, the test `ParameterKind` failed. Its form was decided twice that day: first a class with `id` and `description` beside product's `Material`, then folded to an enum for tier 1 checking on both sides and visible values in the JSON Schema, then returned to the class by decision 17.
 16. **`MaterialName` retired.** Decided 2026-09-21 with `SPEC-product.md` decision 17. The material string became the `id` of product's `Material` record, shaped on `IfcMaterial`, and `applies_to` moved to `MaterialCategory`, so nothing ranged the type. A type ranged by nothing is a sentence with no reader. Common carries no type; `dist/common.schema.json` is unchanged, since a type never appeared there.
+17. **Vocabularies are classes with documents; enums are for values code branches on.** Decided 2026-09-21, the evening of decision 15, reversing that day's enum. The question was how a company adopting the schema adds a capability its robot offers, or a category its methods need, and how the two readers of each vocabulary, `offers` and `requires`, `category` and `applies_to`, are kept from drifting silently. An enum answers the second at tier 1 and fails the first: every new word is a schema change, and the schema's longevity is the point of publishing it. The comparable systems put curated words that adopters extend in documents, never in the base schema: FHIR's CodeSystems and ValueSets with a terminology server checking codes at ingestion, IFC's `USERDEFINED` escape and external classification tables, IANA registries referenced by pattern, and LinkML's own dynamic enums. The deciding test, from the GraphQL enum discussion the author brought: an enum is for a flag the code depends on; a value the code only carries and matches is data. No code here branches on `grip` or `masonry`; the generator branches on `ParameterKind`. So `CapabilityType` and `MaterialCategory` are classes with `id` and `description`, each with a document under `examples/common/`, and a company adds a word by adding a record. The price is that a reference by id renders as a plain string in JSON Schema and nothing checks the join at tier 1; the design is type safe only through an explicit check, so `tests/test_references.py` resolves every `requires`, `offers`, `category`, `applies_to`, and `made_of` in the examples against its document on every run, and the generator carries the same rule at tier 2. `unassigned` goes with the enum: a reference slot holds `""` until the mapping step assigns a category, as every other product reference slot does.
 
 ## Open Questions
 
