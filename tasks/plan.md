@@ -67,12 +67,12 @@ schema/process.yaml  (header, ParameterKind, Parameter, Task, PrimitiveTask, Com
 
 ### Phase 2: Material applicability
 - [x] Task 3: `applies_to` onto `Method` as one `MaterialCategory`, with common's category enum and product's `Material`, three commits
-- [ ] Task 3b: `MaterialCategory` back to a class with `material_categories.yaml`, `category` `""` until mapped, and `tests/test_references.py`, three commits
+- [x] Task 3b: `MaterialCategory` back to a class with `material_categories.yaml`, `category` `""` until mapped, and `tests/test_references.py`, three commits
 
 ### Checkpoint: Phase 2
 - [x] `uv run pytest` passes with two new product rows, 59 tests; every component record carries `made_of` and every non-empty value resolves in `materials.yaml`; `Parameter` has two slots and `Method` has `applies_to` in `dist/process.schema.json`
-- [ ] `uv run pytest` passes with 67 tests; `test_references.py` resolves every `requires`, `offers`, `category`, `applies_to`, and `made_of` in the examples
-- [ ] Review with human
+- [x] `uv run pytest` passes with 67 tests; `test_references.py` resolves every `requires`, `offers`, `category`, `applies_to`, and `made_of` in the examples
+- [x] Review with human, 2026-09-21: Task 3b added and done
 
 ### Phase 3: The plan side
 - [ ] Task 4: `TaskNetwork`, `CompoundTaskInstance`, `PrimitiveTaskInstance`, and `Binding`, end to end
