@@ -50,7 +50,7 @@ URI: [rcpc:ComponentPermanence](https://rcpc.for5672/schema/ComponentPermanence)
 ### Schema Source
 
 
-* from schema: https://rcpc.for5672/schema/product
+* from schema: https://rcpc.for5672/schema/common
 
 
 
@@ -64,8 +64,7 @@ URI: [rcpc:ComponentPermanence](https://rcpc.for5672/schema/ComponentPermanence)
 name: ComponentPermanence
 description: Whether the component stays in the building. Reinforcement is permanent,
   formwork temporary.
-from_schema: https://rcpc.for5672/schema/product
-rank: 1000
+from_schema: https://rcpc.for5672/schema/common
 permissible_values:
   permanent:
     text: permanent

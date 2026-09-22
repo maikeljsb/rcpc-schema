@@ -12,6 +12,17 @@ default_range: string
 imports:
   - linkml:types
 
+enums:
+  ComponentPermanence:
+    description: >-
+      Whether the component stays in the building. Reinforcement is permanent,
+      formwork temporary.
+    permissible_values:
+      permanent:
+        description: The component remains in the finished building.
+      temporary:
+        description: The component is removed before the building is finished.
+
 classes:
   Position:
     description: "Three cartesian coordinates and their unit: a point, or an extent along each axis."
@@ -120,3 +131,6 @@ slots:
     range: Quantity
     inlined: true
     description: How much the item weighs, recommended in kilograms.
+  permanence:
+    range: ComponentPermanence
+    description: Whether the component stays in the building.

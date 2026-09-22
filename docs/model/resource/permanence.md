@@ -21,16 +21,6 @@ URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 
 
 
-## Applicable Classes
-
-| Name | Description | Modifies Slot |
-| --- | --- | --- |
-| [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
-| [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
-
-
-
-
 
 
 ## Properties
@@ -40,7 +30,6 @@ URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 | Property | Value |
 | --- | --- |
 | Range | [ComponentPermanence](ComponentPermanence.md) |
-| Domain Of | [BuildingComponent](BuildingComponent.md) |
 
 ### Cardinality and Requirements
 
@@ -87,8 +76,6 @@ URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 name: permanence
 description: Whether the component stays in the building.
 from_schema: https://rcpc.for5672/schema/common
-domain_of:
-- BuildingComponent
 range: ComponentPermanence
 
 ```

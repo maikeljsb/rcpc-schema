@@ -30,6 +30,7 @@ Name: common
 | [length](length.md) | How long the item is, recommended in metres |
 | [maximum](maximum.md) | The upper bound |
 | [minimum](minimum.md) | The lower bound |
+| [permanence](permanence.md) | Whether the component stays in the building |
 | [unit](unit.md) | The unit of the value, of the coordinates, or of the bounds |
 | [value](value.md) | The numeric value |
 | [weight](weight.md) | How much the item weighs, recommended in kilograms |
@@ -43,6 +44,7 @@ Name: common
 
 | Enumeration | Description |
 | --- | --- |
+| [ComponentPermanence](ComponentPermanence.md) | Whether the component stays in the building |
 
 
 ## Types

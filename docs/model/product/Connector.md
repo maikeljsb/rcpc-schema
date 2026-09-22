@@ -525,8 +525,7 @@ attributes:
   permanence:
     name: permanence
     description: Whether the component stays in the building.
-    from_schema: https://rcpc.for5672/schema/product
-    rank: 1000
+    from_schema: https://rcpc.for5672/schema/common
     owner: Connector
     domain_of:
     - BuildingComponent

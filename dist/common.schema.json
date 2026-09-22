@@ -7,6 +7,15 @@
   "type": "object",
   "additionalProperties": true,
   "$defs": {
+    "ComponentPermanence": {
+      "type": "string",
+      "description": "Whether the component stays in the building. Reinforcement is permanent, formwork temporary.",
+      "enum": [
+        "permanent",
+        "temporary"
+      ],
+      "title": "ComponentPermanence"
+    },
     "Position": {
       "type": "object",
       "additionalProperties": false,

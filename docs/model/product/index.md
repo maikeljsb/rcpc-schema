@@ -39,7 +39,6 @@ Name: product
 | [made_of](made_of.md) | The Material the component is made of, IFC's IfcRelAssociatesMaterial from th... |
 | [name](name.md) | The IFC Name |
 | [part_of](part_of.md) | The assembly this component is a part of, IFC's aggregation from the part's s... |
-| [permanence](permanence.md) | Whether the component stays in the building |
 | [record_type](record_type.md) | Which class in this schema the record belongs to |
 | [source](source.md) | Where a component or Space came from: parsed from the IFC model, or produced ... |
 | [supply_location](supply_location.md) | Where the component is delivered or staged |
@@ -50,7 +49,6 @@ Name: product
 
 | Enumeration | Description |
 | --- | --- |
-| [ComponentPermanence](ComponentPermanence.md) | Whether the component stays in the building |
 | [ConnectorKind](ConnectorKind.md) | What kind of passage a Connector is |
 | [RecordSource](RecordSource.md) | Where a component or Space came from: parsed from the IFC model, or produced ... |
 

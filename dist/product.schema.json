@@ -7,15 +7,6 @@
   "type": "object",
   "additionalProperties": true,
   "$defs": {
-    "RecordSource": {
-      "type": "string",
-      "description": "Where a component or Space came from: parsed from the IFC model, or produced by derivation.",
-      "enum": [
-        "ifc",
-        "derived"
-      ],
-      "title": "RecordSource"
-    },
     "ComponentPermanence": {
       "type": "string",
       "description": "Whether the component stays in the building. Reinforcement is permanent, formwork temporary.",
@@ -24,6 +15,15 @@
         "temporary"
       ],
       "title": "ComponentPermanence"
+    },
+    "RecordSource": {
+      "type": "string",
+      "description": "Where a component or Space came from: parsed from the IFC model, or produced by derivation.",
+      "enum": [
+        "ifc",
+        "derived"
+      ],
+      "title": "RecordSource"
     },
     "ConnectorKind": {
       "type": "string",

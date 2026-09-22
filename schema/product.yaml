@@ -26,16 +26,6 @@ enums:
       derived:
         description: Produced by derivation.
 
-  ComponentPermanence:
-    description: >-
-      Whether the component stays in the building. Reinforcement is permanent,
-      formwork temporary.
-    permissible_values:
-      permanent:
-        description: The component remains in the finished building.
-      temporary:
-        description: The component is removed before the building is finished.
-
   ConnectorKind:
     description: What kind of passage a Connector is.
     permissible_values:
@@ -246,9 +236,6 @@ slots:
       The Material's category, IFC's IfcMaterial.Category as this project's
       vocabulary, assigned by a mapping step after the parse. Empty until
       mapped.
-  permanence:
-    range: ComponentPermanence
-    description: Whether the component stays in the building.
   derived_from:
     range: BuildingComponent
     description: >-

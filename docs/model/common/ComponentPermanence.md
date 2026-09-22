@@ -65,6 +65,7 @@ name: ComponentPermanence
 description: Whether the component stays in the building. Reinforcement is permanent,
   formwork temporary.
 from_schema: https://rcpc.for5672/schema/common
+rank: 1000
 permissible_values:
   permanent:
     text: permanent
