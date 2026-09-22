@@ -1,6 +1,6 @@
 # Spec: resource
 
-*Module `resource` of `CAPABILITY-MAP.md`. Approved 2026-09-12; extended 2026-09-22 by `Resource` and `Stock` under `SPEC-stock.md` (decision 14). Depends on `common`. Imported by `process`. Direction fixed by `docs/ideas/robot-entry-as-type.md`; metamodel usage follows `docs/research/linkml-metamodel-conformance-and-inheritance.md`.*
+*Module `resource` of `CAPABILITY-MAP.md`. Approved 2026-09-12; extended 2026-09-22 by `ResourceEntry` and `Stock` under `SPEC-stock.md` (decision 14). Depends on `common`. Imported by `process`. Direction fixed by `docs/ideas/robot-entry-as-type.md`; metamodel usage follows `docs/research/linkml-metamodel-conformance-and-inheritance.md`.*
 
 ## Objective
 
@@ -82,9 +82,9 @@ imports:
 
 | Class | Slots | Notes |
 |---|---|---|
-| `Resource` | `id`, `count` | Something a method draws on, counted in identical units. The base `RobotUnit` and `Stock` are `is_a`, declaring the two shared slots once; never written as a record. No `record_type`: no file mixes the two classes, each validates with `-C` on its own. Added 2026-09-22, decision 14. |
-| `RobotUnit` | the two of `Resource`, plus `status`, `physical_property_group`, `operational_requirement_group`, `safety_group`, `activity_group` | The entry. One per robot product; identical machines are one entry with a higher `count`. `id` is a readable product slug and is the CRS Name. Required: `id`, `count`, `activity_group`. |
-| `Stock` | the two of `Resource`, plus `permanence` | A stock a method uses one unit of: formwork panels, rebar. `id` matches `^[A-Za-z][A-Za-z0-9_]*$`, an HDDL name, because the export writes it as a type. `permanence` says what happens to a unit a method takes: `temporary`, it comes back when the method ends; `permanent`, it is consumed. Required: all three. Added 2026-09-22, decision 14. |
+| `ResourceEntry` | `id`, `count` | Something a method draws on, counted in identical units. The base `RobotUnit` and `Stock` are `is_a`, declaring the two shared slots once; never written as a record. No `record_type`: no file mixes the two classes, each validates with `-C` on its own. Added 2026-09-22, decision 14. |
+| `RobotUnit` | the two of `ResourceEntry`, plus `status`, `physical_property_group`, `operational_requirement_group`, `safety_group`, `activity_group` | The entry. One per robot product; identical machines are one entry with a higher `count`. `id` is a readable product slug and is the CRS Name. Required: `id`, `count`, `activity_group`. |
+| `Stock` | the two of `ResourceEntry`, plus `permanence` | A stock a method uses one unit of: formwork panels, rebar. `id` matches `^[A-Za-z][A-Za-z0-9_]*$`, an HDDL name, because the export writes it as a type. `permanence` says what happens to a unit a method takes: `temporary`, it comes back when the method ends; `permanent`, it is consumed. Required: all three. Added 2026-09-22, decision 14. |
 | `PhysicalProperty` | `id`, 22 attribute slots, `sensors` | CRS group 1. Holds the robot's sensors as a list of `Sensor` objects. |
 | `Sensor` | `id`, `sensor_type`, `sensor_requirements`, `sensor_location` | One sensor mounted on the robot. Carries the CRS sensor attributes, so it belongs to the PhysicalProperty group one hop down. Required: `id`. |
 | `OperationalRequirement` | `id`, 6 attribute slots | CRS group 2. |
@@ -101,7 +101,7 @@ Every group class and `Sensor` has an authored `id`, so by the projection rule i
 
 ### Slots declared in this module
 
-The group slots on `RobotUnit`: `physical_property_group`, `operational_requirement_group`, `safety_group`, `activity_group`, each single-valued, `inlined: true`, ranging the class named before the `_group` suffix. The suffix is there because a slot named plain `activity` or `safety` collides with its class's own generated doc page on a case-insensitive filesystem (both would write to `Activity.md`/`activity.md`, indistinguishable on Windows); all four carry it so the pointer slots read alike. `sensors` on `PhysicalProperty`: multivalued, `inlined: true`, `inlined_as_list: true`, range `Sensor`. `count`: `integer`, `minimum_value: 1`, required, on `Resource` since 2026-09-22: how many identical units the entry stands for, machines of a robot or units of a stock, one unit being what one method use takes; the projection mints `<id>_<n>` for each. `status`: range `RobotStatus`, `ifabsent: RobotStatus(idle)`, on `RobotUnit` only. `offers`: multivalued, range `CapabilityType`, not inlined, so a document carries capability ids. Plus the attribute slots in the lineage table. Every object-valued slot states `inlined: true` even where LinkML would infer it, so the document shape is visible in the YAML.
+The group slots on `RobotUnit`: `physical_property_group`, `operational_requirement_group`, `safety_group`, `activity_group`, each single-valued, `inlined: true`, ranging the class named before the `_group` suffix. The suffix is there because a slot named plain `activity` or `safety` collides with its class's own generated doc page on a case-insensitive filesystem (both would write to `Activity.md`/`activity.md`, indistinguishable on Windows); all four carry it so the pointer slots read alike. `sensors` on `PhysicalProperty`: multivalued, `inlined: true`, `inlined_as_list: true`, range `Sensor`. `count`: `integer`, `minimum_value: 1`, required, on `ResourceEntry` since 2026-09-22: how many identical units the entry stands for, machines of a robot or units of a stock, one unit being what one method use takes; the projection mints `<id>_<n>` for each. `status`: range `RobotStatus`, `ifabsent: RobotStatus(idle)`, on `RobotUnit` only. `offers`: multivalued, range `CapabilityType`, not inlined, so a document carries capability ids. Plus the attribute slots in the lineage table. Every object-valued slot states `inlined: true` even where LinkML would infer it, so the document shape is visible in the YAML.
 
 Reused from common: `id`, the four dimension slots, and since 2026-09-22 `permanence` as slots; `Position`, `Quantity`, `Interval`, and `ComponentPermanence` as ranges.
 
@@ -189,8 +189,8 @@ Every row is one attribute of the paper's Table 3, in the paper's order. "Type" 
 
 | Slot | Why |
 |---|---|
-| `Resource.id`, so on `RobotUnit` and `Stock` | Every machine id and every stock unit id is derived from it. |
-| `Resource.count`, at least one | Without it the component cannot create a machine node or a stock unit. |
+| `ResourceEntry.id`, so on `RobotUnit` and `Stock` | Every machine id and every stock unit id is derived from it. |
+| `ResourceEntry.count`, at least one | Without it the component cannot create a machine node or a stock unit. |
 | `Stock.permanence` | Without it the export cannot say whether a unit comes back or is consumed; a default would mislabel one of the two. |
 | `RobotUnit.activity_group`, and `Activity.offers` with at least one | Without a capability the entry can never be matched to a task. |
 | `id` on any group or sensor object that is present | It projects to a node, and a node needs an identifier. |
@@ -243,7 +243,7 @@ Example robots are fictional. The second entry in the example file is a single m
 
 ### Fixed by the brief and the one-pager
 
-Five classes plus `Sensor`; `Resource` and `Stock` added 2026-09-22 by `SPEC-stock.md`. `RobotType` retired. `count` expands into machine nodes with suffixed ids, the one named-slot rule, and since 2026-09-22 into stock units the same way. `status` is the only runtime slot. `offers` is a flat set matched by containment. Group ids are authored. No `label`. The five CRS enum attributes stay open. `Activity Type` and `Material` are dropped.
+Five classes plus `Sensor`; `ResourceEntry` and `Stock` added 2026-09-22 by `SPEC-stock.md`. `RobotType` retired. `count` expands into machine nodes with suffixed ids, the one named-slot rule, and since 2026-09-22 into stock units the same way. `status` is the only runtime slot. `offers` is a flat set matched by containment. Group ids are authored. No `label`. The five CRS enum attributes stay open. `Activity Type` and `Material` are dropped.
 
 ## Code Style
 
@@ -251,7 +251,7 @@ The module follows `SPEC-toolchain.md` and `SPEC-common.md`. The base, the entry
 
 ```yaml
 classes:
-  Resource:
+  ResourceEntry:
     description: >-
       Something a method draws on, counted in identical units: a robot product
       or a stock.
@@ -260,7 +260,7 @@ classes:
       - count
 
   RobotUnit:
-    is_a: Resource
+    is_a: ResourceEntry
     description: >-
       One robot product, entered from its Construction Robot Schema attributes.
       Identical machines are one entry with a count.
@@ -277,7 +277,7 @@ classes:
         required: true
 
   Stock:
-    is_a: Resource
+    is_a: ResourceEntry
     description: >-
       A stock a method uses one unit of, such as formwork panels or rebar.
     slots:
@@ -310,7 +310,7 @@ Conventions specific to this module:
 
 - **Names follow the linter's `standard_naming` rule**: CamelCase classes and enums, snake_case slots and permissible values. Attribute slots are the paper's names in snake_case, verbatim.
 - **Attribution only where the name changed.** `id`, `offers`, the three merged quantities, and the merged reach say which CRS attribute they come from. Nothing else mentions the paper.
-- **One `is_a` base, nothing else from the inheritance features.** `Resource` declares `id` and `count` once for `RobotUnit` and `Stock`, since 2026-09-22; the other classes are concrete and list global slots, with `slot_usage` for per-class `required`. No `abstract`, `mixins`, `union_of`, or `designates_type`.
+- **One `is_a` base, nothing else from the inheritance features.** `ResourceEntry` declares `id` and `count` once for `RobotUnit` and `Stock`, since 2026-09-22; the other classes are concrete and list global slots, with `slot_usage` for per-class `required`. No `abstract`, `mixins`, `union_of`, or `designates_type`.
 - **Every object-valued slot states `inlined: true`.** Mandatory on the group slots and `sensors`, whose ranges have identifiers; stated on the Quantity and position slots too, for a uniform read.
 - **Group ids follow the entry id**: `mason_m1_physical`, `mason_m1_operational`, `mason_m1_safety`, `mason_m1_activity`, and sensors `mason_m1_<sensor>`.
 
@@ -321,7 +321,7 @@ No new test files. Five rows in `EXAMPLES`, seven since 2026-09-22.
 | Document | Class | Expected | Proves |
 |---|---|---|---|
 | `examples/resource/robot_units.yaml` | `RobotUnit` | validates | Both entries, all six classes, a mounted sensor on each |
-| `examples/resource/stocks.yaml` | `Stock` | validates | A temporary and a permanent stock, `id` and `count` inherited from `Resource` |
+| `examples/resource/stocks.yaml` | `Stock` | validates | A temporary and a permanent stock, `id` and `count` inherited from `ResourceEntry` |
 | `invalid/stock_missing_permanence.yaml` | `Stock` | fails on `permanence` | The one slot `Stock` adds is required |
 | `invalid/robot_unit_missing_activity.yaml` | `RobotUnit` | fails on `activity` | The one required group |
 | `invalid/robot_unit_zero_count.yaml` | `RobotUnit` | fails on `count` | `minimum_value` reaches the validator |
@@ -343,9 +343,9 @@ What the validator does not check, and who does: that every id in `offers` names
 ## Success Criteria
 
 1. `uv run pytest` passes with five new rows collected and passing, and no test file other than `test_examples.py` changed; two more rows from 2026-09-22.
-2. `dist/resource.schema.json` declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `RobotUnit`, `PhysicalProperty`, `Sensor`, `OperationalRequirement`, `Safety`, `Activity`, `RobotStatus`, and common's `Position`, `Quantity`, `Interval`, `CapabilityType`, `MaterialCategory` since 2026-09-21 (`ParameterKind` until it moved to process, 2026-09-18), and since 2026-09-22 `Resource`, `Stock`, and common's `ComponentPermanence`, fifteen entries. `RobotUnit.properties.count` has `minimum: 1`, and `RobotUnit.properties` and `RobotUnit.required` are the same set before and after `is_a: Resource`; `Stock.required` is `count`, `id`, `permanence`; `sensors` is an array of `Sensor`; `offers` is an array of strings.
+2. `dist/resource.schema.json` declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `RobotUnit`, `PhysicalProperty`, `Sensor`, `OperationalRequirement`, `Safety`, `Activity`, `RobotStatus`, and common's `Position`, `Quantity`, `Interval`, `CapabilityType`, `MaterialCategory` since 2026-09-21 (`ParameterKind` until it moved to process, 2026-09-18), and since 2026-09-22 `ResourceEntry`, `Stock`, and common's `ComponentPermanence`, fifteen entries. `RobotUnit.properties.count` has `minimum: 1`, and `RobotUnit.properties` and `RobotUnit.required` are the same set before and after `is_a: Resource`; `Stock.required` is `count`, `id`, `permanence`; `sensors` is an array of `Sensor`; `offers` is an array of strings.
 3. `dist/README.md` lists `resource.schema.json` with the module description.
-4. `docs/model/resource/index.md` lists exactly the six classes, and since 2026-09-22 `Resource` with `RobotUnit` and `Stock` indented under it, `RobotStatus`, and this module's own slots, every entry with a description. The folder also holds unlinked pages for common's elements and a `common.md` schema page: `gen-doc --no-mergeimports` drops the built-in types but still writes pages for a project import. Accepted as is; stripping them would be a toolchain change.
+4. `docs/model/resource/index.md` lists exactly the six classes, and since 2026-09-22 `ResourceEntry` with `RobotUnit` and `Stock` indented under it, `RobotStatus`, and this module's own slots, every entry with a description. The folder also holds unlinked pages for common's elements and a `common.md` schema page: `gen-doc --no-mergeimports` drops the built-in types but still writes pages for a project import. Accepted as is; stripping them would be a toolchain change.
 5. `examples/resource/robot_units.yaml` holds two fictional entries. Both carry a sensor with a `sensor_location`; one has `count: 2` and all four groups, the other `count: 1`. Every id in `offers` appears in `examples/common/capability_types.yaml`. Since 2026-09-22, `examples/resource/stocks.yaml` holds `formwork_panels`, `count: 8`, `temporary`, and `rebar`, `count: 10`, `permanent`.
 6. The lineage table has exactly 56 attribute rows, and every slot declared in `schema/resource.yaml` appears in it or in the group-slot list. Checked by reading, recorded as done once.
 7. `schema/common.yaml` changed only by the four dimension slots, by `unit` on `Position` and its widened description (`SPEC-common.md` decisions 12 and 13), by the `Interval` value type, and on 2026-09-22 by `ComponentPermanence` and `permanence` arriving from product (`SPEC-common.md` decision 18), and the toolchain did not change. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module.
@@ -367,7 +367,7 @@ All decided 2026-09-12 in Phase 1.
 11. **`status` default is written by the projection component**, since `ifabsent` reaches neither the validator nor the JSON Schema. Documents may omit `status`.
 12. **Decided 2026-09-14: `RobotUnit`'s group-pointer slot for `Activity` is named `activity_group`, not `activity`.** A same-named slot and class produce the same generated doc filename (`Activity.md`/`activity.md`) on a case-insensitive filesystem — one silently overwrites the other on Windows, which passed locally but failed `test_committed_outputs_match_fresh_build` on Linux CI. Fixed by suffixing the slot, not the class: the class name is the paper's own CRS category name (section 3.6, "CRS has four categories... Safety, and Activity") and isn't ours to rename; the group-pointer slot is local plumbing with no CRS equivalent. `Safety`'s group-pointer slot will hit the same collision when Task 4 adds it — flag it then and name it `safety_group` to match.
 13. **Sensor Capability is dropped; `sensor_type` covers it.** Decided 2026-09-14 in the Task 3 review. The paper's two examples, "computer vision sensors, passive lasers, and motion sensors" for the type and "LiDAR emits laser pulses and measures the time it takes them to bounce back" for the capability, state the same fact, what the sensor is, at two lengths. One string slot holds it.
-14. **`Resource` is the base of `RobotUnit` and `Stock`, with `id` and `count`; `Stock` adds `permanence`.** Decided 2026-09-21 in Phase 1 of the `Stock` extension, `SPEC-stock.md` decisions 1, 3, 4, and 6, from the formwork runs in `docs/research/pddl-for-process.md` Appendix C; recorded 2026-09-22. A planner can sequence two walls on one formwork set and run them side by side on two only if the stock is an object with a count, so a stock is a resource the way a robot is: `count` moves from `RobotUnit` to the base and means the same on both, units the projection mints as `<id>_<n>`. It is not a parameter kind and never bound: panels are interchangeable, there is no optimal panel as there is an optimal robot, so the export mints the variable and the plan never says which unit a component got. `Stock` carries one slot of its own, `permanence`, product's distinction reused from common: a temporary unit comes back when the method ends, a permanent one is consumed. `status` stays on `RobotUnit`; robots keep their treatment, machine allocation being orchestration's question, not a count the planner consumes. `Resource` is never written as a record and carries no `record_type`, since no file holds both classes and each validates with `-C` on its own. The one `is_a` in the module, admitted as process admitted `Task` and `TaskInstance`: the two shared slots declared once, and one label over everything a method draws on.
+14. **`ResourceEntry` is the base of `RobotUnit` and `Stock`, with `id` and `count`; `Stock` adds `permanence`.** Decided 2026-09-21 in Phase 1 of the `Stock` extension, `SPEC-stock.md` decisions 1, 3, 4, and 6, from the formwork runs in `docs/research/pddl-for-process.md` Appendix C; recorded 2026-09-22. A planner can sequence two walls on one formwork set and run them side by side on two only if the stock is an object with a count, so a stock is a resource the way a robot is: `count` moves from `RobotUnit` to the base and means the same on both, units the projection mints as `<id>_<n>`. It is not a parameter kind and never bound: panels are interchangeable, there is no optimal panel as there is an optimal robot, so the export mints the variable and the plan never says which unit a component got. `Stock` carries one slot of its own, `permanence`, product's distinction reused from common: a temporary unit comes back when the method ends, a permanent one is consumed. `status` stays on `RobotUnit`; robots keep their treatment, machine allocation being orchestration's question, not a count the planner consumes. `ResourceEntry` is never written as a record and carries no `record_type`, since no file holds both classes and each validates with `-C` on its own. The one `is_a` in the module, admitted as process admitted `Task` and `TaskInstance`: the two shared slots declared once, and one label over everything a method draws on. Named `ResourceEntry` rather than `Resource` on 2026-09-22, when Task 3's build showed `Resource.md` overwriting the schema page `resource.md` that gen-doc writes into every importing module's folder, the collision of decision 12 in a new form; the class name is ours to choose, the schema name is the module id.
 
 ## Open Questions
 

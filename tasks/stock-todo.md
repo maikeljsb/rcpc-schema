@@ -4,7 +4,7 @@ Plan: `tasks/stock-plan.md`. Spec: `SPEC-stock.md`. Each task is one Conventiona
 
 ## Task 1: Record the stock decisions in the four module specs
 
-**Description:** Write, in place, `SPEC-common.md` decision 18 (`ComponentPermanence` and `permanence` arrive from product), `SPEC-product.md` decision 18 (they leave; `BuildingComponent` keeps `permanence` required), `SPEC-resource.md` decision 14 (`Resource` base with `id` and `count`, `RobotUnit` is_a it, `Stock` with `permanence`; class table and project structure updated), and `SPEC-process.md` decision 20 (`uses` on `Method`, range `Stock`, optional; slot table row; the plan example's network renamed `level_1` with four tasks; the catalogue example's third method). Each entry points at `SPEC-stock.md`. Commit as `docs(spec): record the stock extension in the four module specs`.
+**Description:** Write, in place, `SPEC-common.md` decision 18 (`ComponentPermanence` and `permanence` arrive from product), `SPEC-product.md` decision 18 (they leave; `BuildingComponent` keeps `permanence` required), `SPEC-resource.md` decision 14 (`ResourceEntry` base with `id` and `count`, `RobotUnit` is_a it, `Stock` with `permanence`; class table and project structure updated), and `SPEC-process.md` decision 20 (`uses` on `Method`, range `Stock`, optional; slot table row; the plan example's network renamed `level_1` with four tasks; the catalogue example's third method). Each entry points at `SPEC-stock.md`. Commit as `docs(spec): record the stock extension in the four module specs`.
 
 **Acceptance criteria:**
 - [x] Each of the four specs has its new numbered decision, and its class or slot table shows the new element
@@ -42,14 +42,14 @@ Plan: `tasks/stock-plan.md`. Spec: `SPEC-stock.md`. Each task is one Conventiona
 
 **Estimated scope:** Small
 
-## Task 3: `Resource`, `Stock`, and `stocks.yaml`, end to end
+## Task 3: `ResourceEntry`, `Stock`, and `stocks.yaml`, end to end
 
-**Description:** Write `examples/resource/stocks.yaml` with `formwork_panels` (count 8, temporary) and `rebar` (count 10, permanent), and `invalid/stock_missing_permanence.yaml`, a copy of one record without its `permanence`. Add two rows to `tests/test_examples.py` and run them: RED with `No such class: Stock`. Then in `schema/resource.yaml`: `Resource` with `id` and `count`, `count` moved off `RobotUnit` into the base; `RobotUnit` gains `is_a: Resource` and drops `id` and `count` from its own list; `Stock` is_a `Resource` with `permanence` required and the `id` pattern, descriptions from the spec. Rebuild and commit as `feat(resource): add Resource as the base and Stock beside RobotUnit`.
+**Description:** Write `examples/resource/stocks.yaml` with `formwork_panels` (count 8, temporary) and `rebar` (count 10, permanent), and `invalid/stock_missing_permanence.yaml`, a copy of one record without its `permanence`. Add two rows to `tests/test_examples.py` and run them: RED with `No such class: Stock`. Then in `schema/resource.yaml`: `ResourceEntry` with `id` and `count`, `count` moved off `RobotUnit` into the base; `RobotUnit` gains `is_a: Resource` and drops `id` and `count` from its own list; `Stock` is_a `ResourceEntry` with `permanence` required and the `id` pattern, descriptions from the spec. Rebuild and commit as `feat(resource): add Resource as the base and Stock beside RobotUnit`.
 
 **Acceptance criteria:**
 - [ ] `stocks.yaml` validates with `-C Stock`; the invalid document fails naming `permanence`
-- [ ] `dist/resource.schema.json` `$defs` has 15 entries including `Resource` and `Stock`; `Stock.required` is `count`, `id`, `permanence`; `RobotUnit.properties` and `RobotUnit.required` are unchanged from HEAD; `dist/process.schema.json` `$defs` has 34
-- [ ] `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `Resource`
+- [ ] `dist/resource.schema.json` `$defs` has 15 entries including `ResourceEntry` and `Stock`; `Stock.required` is `count`, `id`, `permanence`; `RobotUnit.properties` and `RobotUnit.required` are unchanged from HEAD; `dist/process.schema.json` `$defs` has 34
+- [ ] `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`
 
 **Verification:**
 - [ ] Tests pass: `uv run pytest` with two new rows, 40 example rows
@@ -65,6 +65,8 @@ Plan: `tasks/stock-plan.md`. Spec: `SPEC-stock.md`. Each task is one Conventiona
 - `dist/*.schema.json`, `docs/model/*` (generated)
 
 **Estimated scope:** Medium
+
+Amendment 2026-09-22: the base is `ResourceEntry`, because `Resource` collides case-insensitively with the schema page `resource.md`; see `SPEC-stock.md` decision 4.
 
 ## Checkpoint: Resource
 - [ ] 40 example rows pass

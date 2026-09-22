@@ -4,7 +4,7 @@
 
 ## Overview
 
-A quick demo in five commits: the four module specs record the decisions, `ComponentPermanence` and `permanence` move to common, resource gains `Resource` and `Stock` with its stock file, process gains `uses` on `Method` with the in-situ method and the two slab tasks, then verify and push. One module per commit, in import order, so that no slot ever names a class that does not yet exist in the merged schema. Tests and example rows are written before each schema change and fail first.
+A quick demo in five commits: the four module specs record the decisions, `ComponentPermanence` and `permanence` move to common, resource gains `ResourceEntry` and `Stock` with its stock file, process gains `uses` on `Method` with the in-situ method and the two slab tasks, then verify and push. One module per commit, in import order, so that no slot ever names a class that does not yet exist in the merged schema. Tests and example rows are written before each schema change and fail first.
 
 ## Dependency Graph
 
@@ -13,7 +13,7 @@ SPEC-common 18, SPEC-product 18, SPEC-resource 14, SPEC-process 20   (Task 1, do
     │
 common.yaml  ComponentPermanence, permanence   <-  product.yaml loses both   (Task 2)
     │
-resource.yaml  Resource, RobotUnit is_a Resource, Stock; stocks.yaml           (Task 3)
+resource.yaml  ResourceEntry, RobotUnit is_a ResourceEntry, Stock; stocks.yaml (Task 3)
     │
 process.yaml  uses on Method; catalogue m_insitu; plan two slabs;
               capability_types shutter, tie, pour; robot_units concreter_k1     (Task 4)
@@ -36,10 +36,10 @@ verify criteria, push, CI                                                       
 - [x] Task 2: Move `ComponentPermanence` and `permanence` from product to common
 
 ### Phase 2: Resource
-- [ ] Task 3: `Resource`, `Stock`, and `stocks.yaml`, end to end
+- [ ] Task 3: `ResourceEntry`, `Stock`, and `stocks.yaml`, end to end
 
 ### Checkpoint: Resource
-- [ ] `uv run pytest` passes with two new rows; `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `Resource`
+- [ ] `uv run pytest` passes with two new rows; `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`
 - [ ] Review with human before Task 4
 
 ### Phase 3: Process
@@ -57,7 +57,7 @@ verify criteria, push, CI                                                       
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| A new name collides case-insensitively with an existing one in the generated docs; Windows hides it, Linux CI fails | High if it happens | Names fixed in the spec: `Resource`, `Stock`, `uses`; the SchemaView scan of process Task 4 rerun in Tasks 3 and 4 |
+| A new name collides case-insensitively with an existing one in the generated docs; Windows hides it, Linux CI fails | High if it happens | Names fixed in the spec: `ResourceEntry`, `Stock`, `uses`; the SchemaView scan of process Task 4 rerun in Tasks 3 and 4 |
 | `RobotUnit` gaining `is_a: Resource` changes its JSON Schema or docs beyond the index indent | Medium: resource criterion 2 of `SPEC-resource.md` names its `$defs` | Task 3 diffs `RobotUnit` in `dist/resource.schema.json` before and after; only `$defs` entries may differ |
 | `uses` as a slot name means something to LinkML | Low: lint would say so | `linkml-lint` in Task 4 before the build |
 | Moving `permanence` changes product's JSON Schema in content | Low | Task 2 diffs `dist/product.schema.json` against HEAD and expects no change |

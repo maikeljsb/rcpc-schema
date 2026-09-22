@@ -4,7 +4,7 @@
 
 ## Objective
 
-Let a planner see the stock a method draws on, so that two components run side by side when the stock suffices and one after the other when it does not, with no order imposed between them. A `Stock` beside `RobotUnit` under one `Resource` base, and `uses` on `Method` naming the stocks it holds.
+Let a planner see the stock a method draws on, so that two components run side by side when the stock suffices and one after the other when it does not, with no order imposed between them. A `Stock` beside `RobotUnit` under one `ResourceEntry` base, and `uses` on `Method` naming the stocks it holds.
 
 **Success in one sentence.** The stock and catalogue examples validate, every `uses` id resolves to a stock record, and Appendix C shows a planner sequencing two walls on one formwork set and running them side by side on two, from exactly these fields.
 
@@ -26,7 +26,7 @@ uv run pytest
 ```
 schema/common.yaml                     gains ComponentPermanence and permanence, from product
 schema/product.yaml                    loses both; behaviour unchanged
-schema/resource.yaml                   Resource base, RobotUnit is_a Resource, Stock
+schema/resource.yaml                   ResourceEntry base, RobotUnit is_a ResourceEntry, Stock
 schema/process.yaml                    uses on Method
 examples/common/capability_types.yaml  gains shutter, tie, pour
 examples/resource/stocks.yaml          formwork_panels and rebar
@@ -47,12 +47,12 @@ dist/, docs/model/                     regenerated
 
 | Element | Module | Shape |
 |---|---|---|
-| `Resource` | resource | Base class with `id` and `count`. `RobotUnit` and `Stock` are `is_a` it. Never written as a record. No `record_type`: no file mixes the two classes. |
-| `count` | resource | Moves to `Resource`. How many identical units the entry stands for: machines, or units of a stock, one unit being what one method use takes. The export mints `<id>_<n>`. |
+| `ResourceEntry` | resource | Base class with `id` and `count`. `RobotUnit` and `Stock` are `is_a` it. Never written as a record. No `record_type`: no file mixes the two classes. |
+| `count` | resource | Moves to `ResourceEntry`. How many identical units the entry stands for: machines, or units of a stock, one unit being what one method use takes. The export mints `<id>_<n>`. |
 | `Stock` | resource | `is_a: Resource`, adds `permanence`, required. `id` matches `^[A-Za-z][A-Za-z0-9_]*$`, an HDDL name. `temporary`: a unit a method takes comes back when the method ends. `permanent`: it is consumed. |
 | `uses` | process | On `Method`, optional, multivalued, range `Stock`: the stocks the method holds one unit of each for its whole span. A plain string in JSON Schema, resolved against `stocks.yaml` by `tests/test_references.py`. |
 
-Case collisions checked: no slot named `stock` or `resource`.
+Case collisions checked against classes, slots, enums, types, and schema names: no slot named `stock` or `resource`, and the base is `ResourceEntry` because `Resource` coincides with the schema name `resource` (decision 4).
 
 Documents:
 
@@ -102,8 +102,8 @@ Rows before schema, RED first. `test_examples.py`: `stocks.yaml` against `Stock`
 ## Success Criteria
 
 1. `uv run pytest` passes with two example rows and one reference row added.
-2. `dist/resource.schema.json` `$defs` gains `Resource`, `Stock`, `ComponentPermanence`; `dist/process.schema.json` gains `Resource` and `Stock`, 34 entries; `Stock.required` is `count`, `id`, `permanence`; `Method.properties.uses` is an array of strings and not in `Method.required`; no `"null"` added.
-3. `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `Resource`; no case collision in `schema/process.yaml` with imports.
+2. `dist/resource.schema.json` `$defs` gains `ResourceEntry`, `Stock`, `ComponentPermanence`; `dist/process.schema.json` gains `ResourceEntry` and `Stock`, 34 entries; `Stock.required` is `count`, `id`, `permanence`; `Method.properties.uses` is an array of strings and not in `Method.required`; no `"null"` added.
+3. `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`; no case collision in `schema/process.yaml` with imports.
 4. `catalogue.yaml` holds twelve records, `plan.yaml` eleven with a four-task network and one ordering pair; every `uses`, `requires`, and `offers` resolves, and `concreter_k1` offers what the three new primitives require.
 5. `schema/product.yaml` changed only by the removal; `scripts/` and the toolchain tests did not change.
 
@@ -114,7 +114,7 @@ Decided 2026-09-21 with the author, from Appendix C.
 1. **Stock is a resource, not a parameter.** Units are interchangeable; there is no optimal panel as there is an optimal robot. The export mints the variable.
 2. **`uses` is a list of stock ids held for the method's whole span.** The first draft placed a take and a release at subtask positions. The author asked why; for `m_insitu` the positions equal the span, and elsewhere they only save idle stock time, never a wrong plan. Positions are additive later as an object form of the entry.
 3. **One `Stock` with `permanence`, from product's own distinction.** Formwork is temporary and comes back; rebar is permanent and is consumed. The export branches on the value, which is what enums are for (`SPEC-common.md` decision 17).
-4. **`Resource` is the base with `id` and `count`.** The author's shape; `status` stays on `RobotUnit`.
+4. **`ResourceEntry` is the base with `id` and `count`.** The author's shape; `status` stays on `RobotUnit`. Named `ResourceEntry`, not `Resource`, on 2026-09-22 in Task 3: gen-doc writes a page per imported schema, `resource.md`, so a class `Resource` writes the same page on a case-insensitive filesystem, the collision the repo renames the newcomer for; `Entry` is the word `RobotUnit`'s description already uses for one record.
 5. **`ComponentPermanence` and `permanence` move to common.** Two modules use them.
 6. **Robots keep their treatment.** Appendix C.1 shows one machine doing two formworks at once; the author judged machine allocation orchestration's question, not a count the planner consumes.
 7. **One catalogue, one plan.** In-situ concreting joins the masonry catalogue so `applies_to` selects between two method families for one compound task; the network gains an unordered pair beside its ordered one.
