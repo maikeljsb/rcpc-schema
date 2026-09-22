@@ -59,10 +59,10 @@ Documents:
 ```yaml
 # examples/resource/stocks.yaml
 - id: formwork_panels
-  count: 2
+  count: 8
   permanence: temporary
 - id: rebar
-  count: 20
+  count: 10
   permanence: permanent
 ```
 

@@ -36,7 +36,7 @@ schema/
 examples/
   resource/
     robot_units.yaml                       two fictional robots, one with count 2
-    stocks.yaml                            formwork_panels, temporary, count 2; rebar, permanent, count 20 (2026-09-22)
+    stocks.yaml                            formwork_panels, temporary, count 8; rebar, permanent, count 10 (2026-09-22)
     invalid/
       robot_unit_missing_activity.yaml     entry without an Activity group
       robot_unit_zero_count.yaml           count: 0
@@ -234,10 +234,10 @@ Example robots are fictional. The second entry in the example file is a single m
 
 ```yaml
 - id: formwork_panels
-  count: 2
+  count: 8
   permanence: temporary
 - id: rebar
-  count: 20
+  count: 10
   permanence: permanent
 ```
 
@@ -346,7 +346,7 @@ What the validator does not check, and who does: that every id in `offers` names
 2. `dist/resource.schema.json` declares draft 2020-12, passes the meta-schema check, and its `$defs` contain exactly `RobotUnit`, `PhysicalProperty`, `Sensor`, `OperationalRequirement`, `Safety`, `Activity`, `RobotStatus`, and common's `Position`, `Quantity`, `Interval`, `CapabilityType`, `MaterialCategory` since 2026-09-21 (`ParameterKind` until it moved to process, 2026-09-18), and since 2026-09-22 `Resource`, `Stock`, and common's `ComponentPermanence`, fifteen entries. `RobotUnit.properties.count` has `minimum: 1`, and `RobotUnit.properties` and `RobotUnit.required` are the same set before and after `is_a: Resource`; `Stock.required` is `count`, `id`, `permanence`; `sensors` is an array of `Sensor`; `offers` is an array of strings.
 3. `dist/README.md` lists `resource.schema.json` with the module description.
 4. `docs/model/resource/index.md` lists exactly the six classes, and since 2026-09-22 `Resource` with `RobotUnit` and `Stock` indented under it, `RobotStatus`, and this module's own slots, every entry with a description. The folder also holds unlinked pages for common's elements and a `common.md` schema page: `gen-doc --no-mergeimports` drops the built-in types but still writes pages for a project import. Accepted as is; stripping them would be a toolchain change.
-5. `examples/resource/robot_units.yaml` holds two fictional entries. Both carry a sensor with a `sensor_location`; one has `count: 2` and all four groups, the other `count: 1`. Every id in `offers` appears in `examples/common/capability_types.yaml`. Since 2026-09-22, `examples/resource/stocks.yaml` holds `formwork_panels`, `count: 2`, `temporary`, and `rebar`, `count: 20`, `permanent`.
+5. `examples/resource/robot_units.yaml` holds two fictional entries. Both carry a sensor with a `sensor_location`; one has `count: 2` and all four groups, the other `count: 1`. Every id in `offers` appears in `examples/common/capability_types.yaml`. Since 2026-09-22, `examples/resource/stocks.yaml` holds `formwork_panels`, `count: 8`, `temporary`, and `rebar`, `count: 10`, `permanent`.
 6. The lineage table has exactly 56 attribute rows, and every slot declared in `schema/resource.yaml` appears in it or in the group-slot list. Checked by reading, recorded as done once.
 7. `schema/common.yaml` changed only by the four dimension slots, by `unit` on `Position` and its widened description (`SPEC-common.md` decisions 12 and 13), by the `Interval` value type, and on 2026-09-22 by `ComponentPermanence` and `permanence` arriving from product (`SPEC-common.md` decision 18), and the toolchain did not change. `git log -- scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows no commit from this module.
 
