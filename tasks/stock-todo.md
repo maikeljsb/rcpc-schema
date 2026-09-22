@@ -26,13 +26,13 @@ Plan: `tasks/stock-plan.md`. Spec: `SPEC-stock.md`. Each task is one Conventiona
 **Description:** Add the enum and the slot to `schema/common.yaml`, wording unchanged; remove both from `schema/product.yaml`, keeping `permanence` in `BuildingComponent`'s slot list and `slot_usage` with `required: true`. No example changes. Rebuild and commit as `refactor(common): move ComponentPermanence and permanence from product`.
 
 **Acceptance criteria:**
-- [ ] `dist/common.schema.json` `$defs` has 6 entries including `ComponentPermanence`; `dist/resource.schema.json` has 13; `dist/product.schema.json` `$defs` is the same set as at HEAD and `BuildingComponent.required` still lists `permanence`
-- [ ] `git diff HEAD -- dist/product.schema.json` shows no change
+- [x] `dist/common.schema.json` `$defs` has 6 entries including `ComponentPermanence`; `dist/resource.schema.json` has 13; `dist/product.schema.json` `$defs` is the same set as at HEAD and `BuildingComponent.required` still lists `permanence`
+- [x] `git diff HEAD -- dist/product.schema.json` shows no change in content (two enum definitions swap order inside `$defs`)
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`, same count as before
-- [ ] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
-- [ ] Manual check: `docs/model/common/index.md` lists `ComponentPermanence` and `permanence`
+- [x] Tests pass: `uv run pytest`, same count as before
+- [x] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
+- [x] Manual check: `docs/model/common/index.md` lists `ComponentPermanence` and `permanence`
 
 **Dependencies:** Task 1
 
@@ -44,7 +44,7 @@ Plan: `tasks/stock-plan.md`. Spec: `SPEC-stock.md`. Each task is one Conventiona
 
 ## Task 3: `Resource`, `Stock`, and `stocks.yaml`, end to end
 
-**Description:** Write `examples/resource/stocks.yaml` with `formwork_panels` (count 2, temporary) and `rebar` (count 20, permanent), and `invalid/stock_missing_permanence.yaml`, a copy of one record without its `permanence`. Add two rows to `tests/test_examples.py` and run them: RED with `No such class: Stock`. Then in `schema/resource.yaml`: `Resource` with `id` and `count`, `count` moved off `RobotUnit` into the base; `RobotUnit` gains `is_a: Resource` and drops `id` and `count` from its own list; `Stock` is_a `Resource` with `permanence` required and the `id` pattern, descriptions from the spec. Rebuild and commit as `feat(resource): add Resource as the base and Stock beside RobotUnit`.
+**Description:** Write `examples/resource/stocks.yaml` with `formwork_panels` (count 8, temporary) and `rebar` (count 10, permanent), and `invalid/stock_missing_permanence.yaml`, a copy of one record without its `permanence`. Add two rows to `tests/test_examples.py` and run them: RED with `No such class: Stock`. Then in `schema/resource.yaml`: `Resource` with `id` and `count`, `count` moved off `RobotUnit` into the base; `RobotUnit` gains `is_a: Resource` and drops `id` and `count` from its own list; `Stock` is_a `Resource` with `permanence` required and the `id` pattern, descriptions from the spec. Rebuild and commit as `feat(resource): add Resource as the base and Stock beside RobotUnit`.
 
 **Acceptance criteria:**
 - [ ] `stocks.yaml` validates with `-C Stock`; the invalid document fails naming `permanence`

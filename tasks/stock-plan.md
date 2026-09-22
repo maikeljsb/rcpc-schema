@@ -33,7 +33,7 @@ verify criteria, push, CI                                                       
 
 ### Phase 1: Record and move
 - [x] Task 1: Record the stock decisions in the four module specs
-- [ ] Task 2: Move `ComponentPermanence` and `permanence` from product to common
+- [x] Task 2: Move `ComponentPermanence` and `permanence` from product to common
 
 ### Phase 2: Resource
 - [ ] Task 3: `Resource`, `Stock`, and `stocks.yaml`, end to end
