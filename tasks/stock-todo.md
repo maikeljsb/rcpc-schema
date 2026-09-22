@@ -104,14 +104,14 @@ Amendment 2026-09-22: `ids_in` in `tests/test_references.py` expands only robot 
 **Description:** Walk the five success criteria in `SPEC-stock.md` and record one line of evidence each under a dated "Checkpoint: Complete" here. Push and confirm the CI run passes. Commit as `docs(plan): mark the stock extension complete with its evidence`.
 
 **Acceptance criteria:**
-- [ ] Each criterion has a line of evidence with the command or file it came from
-- [ ] CI is green on the pushed head
-- [ ] `tasks/stock-plan.md` checkpoints ticked
+- [x] Each criterion has a line of evidence with the command or file it came from
+- [x] CI is green on the pushed head
+- [x] `tasks/stock-plan.md` checkpoints ticked
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest`
-- [ ] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
-- [ ] Manual check: the CI run page shows the same passing count as local
+- [x] Tests pass: `uv run pytest`
+- [x] Build succeeds: `uv run python scripts/build.py && git status --porcelain` prints nothing
+- [x] Manual check: the CI run page shows the same passing count as local
 
 **Dependencies:** Task 4
 
@@ -121,6 +121,13 @@ Amendment 2026-09-22: `ids_in` in `tests/test_references.py` expands only robot 
 **Estimated scope:** Small
 
 ## Checkpoint: Complete
-- [ ] All five tasks committed
-- [ ] CI passes on the last commit
-- [ ] `scripts/` and the toolchain tests untouched; `schema/product.yaml` changed by Task 2 only
+- [x] All five tasks committed
+- [x] CI passes on the last commit
+- [x] `scripts/` and the toolchain tests untouched; `schema/product.yaml` changed by Task 2 only
+
+Evidence 2026-09-22, head `29597c7`, CI run 35715364577 green:
+1. `uv run pytest`: 79 passed; 40 example rows and 13 reference rows collected (`--collect-only`), two and one more than before.
+2. `dist/resource.schema.json` `$defs` 15 with `ResourceEntry`, `Stock`, `ComponentPermanence`; `dist/process.schema.json` 34 with `ResourceEntry` and `Stock`; `Stock.required` is `count`, `id`, `permanence`; `Method.properties.uses` is an array of strings and not in `Method.required`; `"null"` occurs twice, as before.
+3. `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`; the SchemaView scan over `schema/process.yaml` with imports, classes, slots, enums, types, and schema names, reports no case collision.
+4. `catalogue.yaml` 12 records, `plan.yaml` 11, network of four tasks with `ordering: [[1, 2]]`; every `uses`, `requires`, `offers`, `compound_task`, `applies_to` resolves in `tests/test_references.py`; `concreter_k1` offers `pour`, `shutter`, `tie`, everything `Formwork`, `Reinforce`, `Concrete` require.
+5. `git log e59829f..HEAD -- schema/product.yaml scripts tests/test_build.py tests/test_lint.py tests/test_dist.py` shows `51f3bb0` only, the Task 2 move.

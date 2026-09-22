@@ -46,12 +46,12 @@ verify criteria, push, CI                                                       
 - [x] Task 4: `uses` on `Method`, the in-situ method, and the two slab tasks
 
 ### Phase 4: Close
-- [ ] Task 5: Verify the five success criteria, push, confirm CI
+- [x] Task 5: Verify the five success criteria, push, confirm CI
 
 ### Checkpoint: Complete
-- [ ] Every success criterion in `SPEC-stock.md` verified with evidence in `tasks/stock-todo.md`
-- [ ] `scripts/` and the toolchain tests untouched; `schema/product.yaml` changed by Task 2 only
-- [ ] CI green on the pushed head
+- [x] Every success criterion in `SPEC-stock.md` verified with evidence in `tasks/stock-todo.md`
+- [x] `scripts/` and the toolchain tests untouched; `schema/product.yaml` changed by Task 2 only
+- [x] CI green on the pushed head
 
 ## Risks and Mitigations
 
