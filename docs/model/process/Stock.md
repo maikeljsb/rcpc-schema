@@ -84,6 +84,13 @@ URI: [rcpc:Stock](https://rcpc.for5672/schema/Stock)
 
 
 
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Method](Method.md) | [uses](uses.md) | range | [Stock](Stock.md) |
+
+
 
 
 

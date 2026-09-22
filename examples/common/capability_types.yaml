@@ -6,3 +6,9 @@
   description: Bear and raise a component's weight. Distinct from grip.
 - id: align
   description: Position a component to a stated tolerance, rather than merely arriving at a location.
+- id: shutter
+  description: Erect formwork around a component to be cast, and strike it afterwards.
+- id: tie
+  description: Fix reinforcement bars into a cage at their positions.
+- id: pour
+  description: Place fresh concrete into formwork and compact it.

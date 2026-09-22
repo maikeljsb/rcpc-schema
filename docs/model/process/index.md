@@ -45,6 +45,7 @@ Name: process
 | [requires](requires.md) | The capabilities a robot must offer to perform the primitive task |
 | [subtasks](subtasks.md) | The subtasks in list order, counted from 1 |
 | [tasks](tasks.md) | The network's tasks in list order, counted from 1, each position its label |
+| [uses](uses.md) | The stocks a method holds one unit of each for its whole span |
 
 
 ## Enumerations

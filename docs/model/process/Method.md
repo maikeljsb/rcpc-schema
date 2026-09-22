@@ -112,6 +112,17 @@ URI: [rcpc:Method](https://rcpc.for5672/schema/Method)
     
 
         
+      Method : uses
+        
+          
+    
+        
+        
+        Method --> "*" Stock : uses
+        click Stock href "../Stock/"
+    
+
+        
       
 ```
 
@@ -132,6 +143,7 @@ URI: [rcpc:Method](https://rcpc.for5672/schema/Method)
 | [parameters](parameters.md) | 1..* <br/> [Parameter](Parameter.md) | The declared parameters, keyed by name | direct |
 | [subtasks](subtasks.md) | 1..* <br/> [Subtask](Subtask.md) | The subtasks in list order, counted from 1 | direct |
 | [ordering](ordering.md) | 1 <br/> [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) | Pairs of positions in the owner's subtask or task list; in each pair the firs... | direct |
+| [uses](uses.md) | * <br/> [Stock](Stock.md) | The stocks a method holds one unit of each for its whole span | direct |
 
 
 
@@ -201,6 +213,7 @@ slots:
 - parameters
 - subtasks
 - ordering
+- uses
 slot_usage:
   id:
     name: id
@@ -388,6 +401,17 @@ attributes:
       dimensions:
       - alias: pair
       - exact_cardinality: 2
+  uses:
+    name: uses
+    description: The stocks a method holds one unit of each for its whole span. Absent
+      when the method uses no stock.
+    from_schema: https://rcpc.for5672/schema/process
+    rank: 1000
+    owner: Method
+    domain_of:
+    - Method
+    range: Stock
+    multivalued: true
 
 ```
 </details></div>

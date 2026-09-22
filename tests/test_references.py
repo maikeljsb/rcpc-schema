@@ -10,7 +10,9 @@ Domain modules add rows to REFERENCES and nothing else. A row is
 Every value found under the slot's key anywhere in the document, lists flattened and a
 keyed map read by its values, must be the id of a record in one of the target documents;
 "" passes only where the owning spec says the key may be empty. A record with a count, a
-robot entry, stands for its machines <id>_<n> and not for itself.
+robot entry, stands for its machines <id>_<n> and not for itself; a stock, which also
+has a count, stands for itself, because a method names the stock and the export mints
+its units.
 """
 from pathlib import Path
 
@@ -21,6 +23,7 @@ CAPABILITIES = ("examples/common/capability_types.yaml",)
 CATEGORIES = ("examples/common/material_categories.yaml",)
 MATERIALS = ("examples/product/materials.yaml",)
 CATALOGUE = ("examples/process/catalogue.yaml",)
+STOCKS = ("examples/resource/stocks.yaml",)
 PLAN = ("examples/process/plan.yaml",)
 OBJECTS = (
     "examples/product/building_components.yaml",
@@ -33,6 +36,7 @@ REFERENCES: dict[tuple[str, str], tuple[tuple[str, ...], bool]] = {
     ("examples/process/catalogue.yaml", "requires"): (CAPABILITIES, False),
     ("examples/resource/robot_units.yaml", "offers"): (CAPABILITIES, False),
     ("examples/process/catalogue.yaml", "applies_to"): (CATEGORIES, False),
+    ("examples/process/catalogue.yaml", "uses"): (STOCKS, False),
     ("examples/product/materials.yaml", "category"): (CATEGORIES, True),
     ("examples/product/building_components.yaml", "made_of"): (MATERIALS, True),
     ("examples/product/connectors.yaml", "made_of"): (MATERIALS, True),
@@ -61,10 +65,10 @@ def values_under(node, key: str) -> list:
 
 
 def ids_in(target: Path) -> set[str]:
-    """The ids of target's records; a record with a count stands for its machines <id>_<n>."""
+    """The ids of target's records; a robot entry stands for its machines <id>_<n>."""
     ids: set[str] = set()
     for record in yaml.safe_load(target.read_text(encoding="utf-8")):
-        if "count" in record:
+        if "activity_group" in record:
             ids |= {f"{record['id']}_{n}" for n in range(1, record["count"] + 1)}
         else:
             ids.add(record["id"])

@@ -1158,6 +1158,13 @@
             ],
             "additionalProperties": true
           }
+        },
+        "uses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The stocks a method holds one unit of each for its whole span. Absent when the method uses no stock."
         }
       },
       "required": [

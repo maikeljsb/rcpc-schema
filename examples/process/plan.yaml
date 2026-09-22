@@ -1,6 +1,6 @@
 - record_type: TaskNetwork
-  id: level_1_walls
-  tasks: [construct_138157, construct_138062]
+  id: level_1
+  tasks: [construct_138157, construct_138062, construct_141232, construct_143106]
   ordering: [[1, 2]]
 - record_type: CompoundTaskInstance
   id: construct_138157
@@ -19,6 +19,18 @@
   compound_task: ConstructComponent
   decomposed_by: ""
   bindings: {c: 2O2Fr$t4X7Zf8NOew3FNtn}
+  subtasks: []
+- record_type: CompoundTaskInstance
+  id: construct_141232
+  compound_task: ConstructComponent
+  decomposed_by: ""
+  bindings: {c: 2O2Fr$t4X7Zf8NOew3FK4F}
+  subtasks: []
+- record_type: CompoundTaskInstance
+  id: construct_143106
+  compound_task: ConstructComponent
+  decomposed_by: ""
+  bindings: {c: 2O2Fr$t4X7Zf8NOew3FKcz}
   subtasks: []
 - record_type: PrimitiveTaskInstance
   id: construct_138157_1_1

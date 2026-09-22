@@ -60,3 +60,9 @@
       - id: scout_v1_camera
         sensor_type: Camera
         sensor_location: {x_coord: 0.3, y_coord: 0, z_coord: 0.4, unit: m}
+- id: concreter_k1
+  count: 1
+  activity_group:
+    id: concreter_k1_activity
+    offers: [locomote, shutter, tie, pour]
+    productivity: {value: 6, unit: m3/h}

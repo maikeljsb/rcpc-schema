@@ -1,3 +1,4 @@
+# Primitive tasks: what a robot does, each requiring capabilities and taking a duration.
 - record_type: PrimitiveTask
   id: MoveTo
   description: Drive the robot to a space.
@@ -22,6 +23,26 @@
   parameters: {r: robot, c: component, at: location}
   requires: [lift, align]
   duration: {value: 180, unit: s}
+- record_type: PrimitiveTask
+  id: Formwork
+  description: Shutter the component's formwork at its target.
+  parameters: {r: robot, c: component, at: location}
+  requires: [shutter]
+  duration: {value: 14400, unit: s}
+- record_type: PrimitiveTask
+  id: Reinforce
+  description: Tie the component's reinforcement inside the formwork.
+  parameters: {r: robot, c: component, at: location}
+  requires: [tie]
+  duration: {value: 10800, unit: s}
+- record_type: PrimitiveTask
+  id: Concrete
+  description: Pour the component's concrete into the formwork.
+  parameters: {r: robot, c: component, at: location}
+  requires: [pour]
+  duration: {value: 7200, unit: s}
+
+# Compound tasks: the ones that get planned, decomposed by a method.
 - record_type: CompoundTask
   id: Transport
   description: Bring a component from where it lies to where it belongs.
@@ -30,6 +51,8 @@
   id: ConstructComponent
   description: Build one component of the building where the design puts it.
   parameters: {c: component}
+
+# Methods: how a compound task decomposes into ordered subtasks.
 - record_type: Method
   id: m_transport
   description: Fetch the component and carry it to its target space with one robot.
@@ -51,3 +74,15 @@
     - {compound_task: Transport, arguments: [c]}
     - {primitive_task: Place, arguments: [r, c, at]}
   ordering: [[1, 2]]
+- record_type: Method
+  id: m_insitu
+  description: "Cast a component in place: shutter it, tie its reinforcement, pour."
+  compound_task: ConstructComponent
+  applies_to: concrete
+  parameters: {c: component, r: robot, at: location}
+  subtasks:
+    - {primitive_task: Formwork, arguments: [r, c, at]}
+    - {primitive_task: Reinforce, arguments: [r, c, at]}
+    - {primitive_task: Concrete, arguments: [r, c, at]}
+  ordering: [[1, 2], [2, 3]]
+  uses: [formwork_panels, rebar]

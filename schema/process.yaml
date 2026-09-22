@@ -79,6 +79,7 @@ classes:
       - parameters
       - subtasks
       - ordering
+      - uses
     slot_usage:
       id:
         pattern: "^[A-Za-z][A-Za-z0-9_]*$"
@@ -232,6 +233,12 @@ slots:
       The material category of the components a method decomposes its task for;
       a component matches when the Material it is made_of has that category.
       Absent when the method applies to any component.
+  uses:
+    range: Stock
+    multivalued: true
+    description: >-
+      The stocks a method holds one unit of each for its whole span. Absent when
+      the method uses no stock.
   requires:
     range: CapabilityType
     multivalued: true
