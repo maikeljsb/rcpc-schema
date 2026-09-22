@@ -77,14 +77,14 @@ Amendment 2026-09-22: the base is `ResourceEntry`, because `Resource` collides c
 **Description:** Add `shutter`, `tie`, `pour` to `examples/common/capability_types.yaml` and `concreter_k1` (count 1, `activity_group` offering `locomote`, `shutter`, `tie`, `pour`) to `examples/resource/robot_units.yaml`. Add to `examples/process/catalogue.yaml` the primitives `Formwork`, `Reinforce`, `Concrete` (`{r: robot, c: component, at: location}`, one requirement each, durations 14400, 10800, 7200 s) and `m_insitu` as the spec writes it, with `uses: [formwork_panels, rebar]`. In `plan.yaml` rename the network `level_1`, append the slabs `2O2Fr$t4X7Zf8NOew3FK4F` and `2O2Fr$t4X7Zf8NOew3FKcz` as tasks 3 and 4, `ordering` unchanged, and add their two undecomposed `CompoundTaskInstance` records. Add the reference row `catalogue.yaml` `uses` to `stocks.yaml`; plant an unknown stock, see it fail naming the value, restore. Run the catalogue row: RED on the unknown key `uses`. Then in `schema/process.yaml`: `uses` declared with range `Stock`, multivalued, added to `Method`'s slot list, optional. Rebuild and commit as `feat(process): add uses on Method with the in-situ concreting example`.
 
 **Acceptance criteria:**
-- [ ] `catalogue.yaml` holds 12 records and `plan.yaml` 11, both validating through the split; every `uses`, `requires`, `offers`, `compound_task`, and `applies_to` resolves
-- [ ] `dist/process.schema.json` `$defs` still has 34 entries; `Method.properties.uses` is an array of strings and `Method.required` does not list it; `"null"` occurs exactly twice
-- [ ] `concreter_k1` offers every word `Formwork`, `Reinforce`, and `Concrete` require, checked by a one-line script
+- [x] `catalogue.yaml` holds 12 records and `plan.yaml` 11, both validating through the split; every `uses`, `requires`, `offers`, `compound_task`, and `applies_to` resolves
+- [x] `dist/process.schema.json` `$defs` still has 34 entries; `Method.properties.uses` is an array of strings and `Method.required` does not list it; `"null"` occurs exactly twice
+- [x] `concreter_k1` offers every word `Formwork`, `Reinforce`, and `Concrete` require, checked by a one-line script
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest` with 13 reference rows
-- [ ] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
-- [ ] Manual check: `uv run linkml-lint schema/process.yaml` clean; the SchemaView name scan clean; `docs/model/process/Method.md` lists `uses`
+- [x] Tests pass: `uv run pytest` with 13 reference rows
+- [x] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
+- [x] Manual check: `uv run linkml-lint schema/process.yaml` clean; the SchemaView name scan clean; `docs/model/process/Method.md` lists `uses`
 
 **Dependencies:** Task 3
 
@@ -96,6 +96,8 @@ Amendment 2026-09-22: the base is `ResourceEntry`, because `Resource` collides c
 - `dist/process.schema.json`, `docs/model/process/*` (generated)
 
 **Estimated scope:** Medium
+
+Amendment 2026-09-22: `ids_in` in `tests/test_references.py` expands only robot entries into machines, so a stock resolves by its id; the `m_insitu` description is quoted; see `SPEC-stock.md` Testing Strategy.
 
 ## Task 5: Verify success criteria, push, confirm CI
 

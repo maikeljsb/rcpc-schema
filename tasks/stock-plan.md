@@ -43,7 +43,7 @@ verify criteria, push, CI                                                       
 - [x] Review with human before Task 4
 
 ### Phase 3: Process
-- [ ] Task 4: `uses` on `Method`, the in-situ method, and the two slab tasks
+- [x] Task 4: `uses` on `Method`, the in-situ method, and the two slab tasks
 
 ### Phase 4: Close
 - [ ] Task 5: Verify the five success criteria, push, confirm CI
