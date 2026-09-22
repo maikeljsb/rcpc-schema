@@ -27,13 +27,20 @@ enums:
         description: Unavailable for assignment due to maintenance or failure.
 
 classes:
+  ResourceEntry:
+    description: >-
+      Something a method draws on, counted in identical units: a robot product
+      or a stock.
+    slots:
+      - id
+      - count
+
   RobotUnit:
+    is_a: ResourceEntry
     description: >-
       One robot product, entered from its Construction Robot Schema attributes.
       Identical machines are one entry with a count.
     slots:
-      - id
-      - count
       - status
       - physical_property_group
       - operational_requirement_group
@@ -44,6 +51,22 @@ classes:
         description: The robot's name, a readable product slug. The CRS Name.
       activity_group:
         required: true
+
+  Stock:
+    is_a: ResourceEntry
+    description: >-
+      A stock a method uses one unit of, such as formwork panels or rebar.
+    slots:
+      - permanence
+    slot_usage:
+      id:
+        pattern: "^[A-Za-z][A-Za-z0-9_]*$"
+        description: The stock's name, an HDDL name.
+      permanence:
+        required: true
+        description: >-
+          Whether a unit a method takes comes back when the method ends, or is
+          consumed.
 
   PhysicalProperty:
     description: >-
@@ -127,12 +150,14 @@ classes:
 
 
 slots:
-  # Slots of RobotUnit
+  # Slots of ResourceEntry and RobotUnit
   count:
     range: integer
     minimum_value: 1
     required: true
-    description: How many identical machines this entry stands for.
+    description: >-
+      How many identical units this entry stands for: machines of a robot
+      product, or units of a stock.
   status:
     range: RobotStatus
     ifabsent: RobotStatus(idle)

@@ -529,7 +529,7 @@ attributes:
     - Space
     - BuildingComponent
     - Material
-    - RobotUnit
+    - ResourceEntry
     - PhysicalProperty
     - Sensor
     - OperationalRequirement
@@ -580,6 +580,7 @@ attributes:
     owner: BuildingComponent
     domain_of:
     - BuildingComponent
+    - Stock
     range: ComponentPermanence
     required: true
   source:

@@ -565,20 +565,32 @@
       ],
       "title": "Material"
     },
+    "ResourceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Something a method draws on, counted in identical units: a robot product or a stock.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier, unique among instances of its class."
+        },
+        "count": {
+          "type": "integer",
+          "description": "How many identical units this entry stands for: machines of a robot product, or units of a stock.",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "id",
+        "count"
+      ],
+      "title": "ResourceEntry"
+    },
     "RobotUnit": {
       "type": "object",
       "additionalProperties": false,
       "description": "One robot product, entered from its Construction Robot Schema attributes. Identical machines are one entry with a count.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "The robot's name, a readable product slug. The CRS Name."
-        },
-        "count": {
-          "type": "integer",
-          "description": "How many identical machines this entry stands for.",
-          "minimum": 1
-        },
         "status": {
           "$ref": "#/$defs/RobotStatus",
           "description": "The runtime state of one machine."
@@ -598,14 +610,50 @@
         "activity_group": {
           "$ref": "#/$defs/Activity",
           "description": "The Activity group holding this robot's offered capabilities."
+        },
+        "id": {
+          "type": "string",
+          "description": "The robot's name, a readable product slug. The CRS Name."
+        },
+        "count": {
+          "type": "integer",
+          "description": "How many identical units this entry stands for: machines of a robot product, or units of a stock.",
+          "minimum": 1
         }
       },
       "required": [
+        "activity_group",
         "id",
-        "count",
-        "activity_group"
+        "count"
       ],
       "title": "RobotUnit"
+    },
+    "Stock": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A stock a method uses one unit of, such as formwork panels or rebar.",
+      "properties": {
+        "permanence": {
+          "$ref": "#/$defs/ComponentPermanence",
+          "description": "Whether a unit a method takes comes back when the method ends, or is consumed."
+        },
+        "id": {
+          "type": "string",
+          "description": "The stock's name, an HDDL name.",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "count": {
+          "type": "integer",
+          "description": "How many identical units this entry stands for: machines of a robot product, or units of a stock.",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "permanence",
+        "id",
+        "count"
+      ],
+      "title": "Stock"
     },
     "PhysicalProperty": {
       "type": "object",

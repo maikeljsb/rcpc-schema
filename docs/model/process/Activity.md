@@ -266,7 +266,7 @@ attributes:
     - Space
     - BuildingComponent
     - Material
-    - RobotUnit
+    - ResourceEntry
     - PhysicalProperty
     - Sensor
     - OperationalRequirement

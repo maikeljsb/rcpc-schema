@@ -28,6 +28,8 @@ EXAMPLES: dict[str, tuple[str, str, str | None]] = {
     "examples/resource/invalid/robot_unit_zero_count.yaml": ("schema/resource.yaml", "RobotUnit", "count"),
     "examples/resource/invalid/activity_missing_offers.yaml": ("schema/resource.yaml", "RobotUnit", "offers"),
     "examples/resource/invalid/robot_unit_group_missing_id.yaml": ("schema/resource.yaml", "RobotUnit", "id"),
+    "examples/resource/stocks.yaml": ("schema/resource.yaml", "Stock", None),
+    "examples/resource/invalid/stock_missing_permanence.yaml": ("schema/resource.yaml", "Stock", "permanence"),
     "examples/product/storeys.yaml": ("schema/product.yaml", "Storey", None),
     "examples/product/spaces.yaml": ("schema/product.yaml", "Space", None),
     "examples/product/invalid/space_missing_source.yaml": ("schema/product.yaml", "Space", "source"),

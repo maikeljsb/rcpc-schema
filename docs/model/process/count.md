@@ -6,7 +6,7 @@ search:
 # Slot: count 
 
 
-_How many identical machines this entry stands for._
+_How many identical units this entry stands for: machines of a robot product, or units of a stock._
 
 
 
@@ -25,7 +25,9 @@ URI: [rcpc:count](https://rcpc.for5672/schema/count)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [ResourceEntry](ResourceEntry.md) | Something a method draws on, counted in identical units: a robot product or a... |  no  |
 | [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |  no  |
+| [Stock](Stock.md) | A stock a method uses one unit of, such as formwork panels or rebar |  no  |
 
 
 
@@ -39,7 +41,7 @@ URI: [rcpc:count](https://rcpc.for5672/schema/count)
 | Property | Value |
 | --- | --- |
 | Range | [xsd:integer](http://www.w3.org/2001/XMLSchema#integer) |
-| Domain Of | [RobotUnit](RobotUnit.md) |
+| Domain Of | [ResourceEntry](ResourceEntry.md) |
 
 ### Cardinality and Requirements
 
@@ -92,10 +94,11 @@ URI: [rcpc:count](https://rcpc.for5672/schema/count)
 <details>
 ```yaml
 name: count
-description: How many identical machines this entry stands for.
+description: 'How many identical units this entry stands for: machines of a robot
+  product, or units of a stock.'
 from_schema: https://rcpc.for5672/schema/resource
 domain_of:
-- RobotUnit
+- ResourceEntry
 range: integer
 required: true
 minimum_value: 1

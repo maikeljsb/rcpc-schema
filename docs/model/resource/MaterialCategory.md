@@ -148,7 +148,7 @@ attributes:
     domain_of:
     - CapabilityType
     - MaterialCategory
-    - RobotUnit
+    - ResourceEntry
     - PhysicalProperty
     - Sensor
     - OperationalRequirement

@@ -26,6 +26,7 @@ URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [BuildingComponent](BuildingComponent.md) | One thing a task acts on |  yes  |
+| [Stock](Stock.md) | A stock a method uses one unit of, such as formwork panels or rebar |  yes  |
 | [Connector](Connector.md) | A door, an unfilled opening, or a stair as one node: the component a task ins... |  no  |
 
 
@@ -40,7 +41,7 @@ URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 | Property | Value |
 | --- | --- |
 | Range | [ComponentPermanence](ComponentPermanence.md) |
-| Domain Of | [BuildingComponent](BuildingComponent.md) |
+| Domain Of | [BuildingComponent](BuildingComponent.md), [Stock](Stock.md) |
 
 ### Cardinality and Requirements
 
@@ -89,6 +90,7 @@ description: Whether the component stays in the building.
 from_schema: https://rcpc.for5672/schema/common
 domain_of:
 - BuildingComponent
+- Stock
 range: ComponentPermanence
 
 ```

@@ -15,7 +15,9 @@ Name: resource
 | [Activity](Activity.md) | CRS group 4: the capabilities a robot offers and how it performs them |
 | [OperationalRequirement](OperationalRequirement.md) | CRS group 2: the site conditions and the people the robot needs to work |
 | [PhysicalProperty](PhysicalProperty.md) | CRS group 1: the robot's physical dimensions, hardware, and performance |
-| [RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |
+| [ResourceEntry](ResourceEntry.md) | Something a method draws on, counted in identical units: a robot product or a... |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[RobotUnit](RobotUnit.md) | One robot product, entered from its Construction Robot Schema attributes |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Stock](Stock.md) | A stock a method uses one unit of, such as formwork panels or rebar |
 | [Safety](Safety.md) | CRS group 3: how the robot protects the people and objects around it |
 | [Sensor](Sensor.md) | One sensor on or around the robot |
 
@@ -29,7 +31,7 @@ Name: resource
 | [activity_group](activity_group.md) | The Activity group holding this robot's offered capabilities |
 | [additional_ppe_requirements](additional_ppe_requirements.md) | Extra personal protective equipment required when humans operate or work with... |
 | [coordinate_reach](coordinate_reach.md) | How far the manipulator reaches along each of the robot's three axes, recomme... |
-| [count](count.md) | How many identical machines this entry stands for |
+| [count](count.md) | How many identical units this entry stands for: machines of a robot product, ... |
 | [crew_information](crew_information.md) | The composition of the team working with the robot |
 | [crew_responsibilities](crew_responsibilities.md) | What the crew does while the robot performs its tasks |
 | [data_output_file_type](data_output_file_type.md) | The file formats of the data the robot's sensors output |

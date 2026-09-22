@@ -21,6 +21,15 @@ URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 
 
 
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Stock](Stock.md) | A stock a method uses one unit of, such as formwork panels or rebar |  yes  |
+
+
+
+
 
 
 ## Properties
@@ -30,6 +39,7 @@ URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 | Property | Value |
 | --- | --- |
 | Range | [ComponentPermanence](ComponentPermanence.md) |
+| Domain Of | [Stock](Stock.md) |
 
 ### Cardinality and Requirements
 
@@ -76,6 +86,8 @@ URI: [rcpc:permanence](https://rcpc.for5672/schema/permanence)
 name: permanence
 description: Whether the component stays in the building.
 from_schema: https://rcpc.for5672/schema/common
+domain_of:
+- Stock
 range: ComponentPermanence
 
 ```

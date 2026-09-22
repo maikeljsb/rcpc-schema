@@ -484,7 +484,7 @@ attributes:
     - Space
     - BuildingComponent
     - Material
-    - RobotUnit
+    - ResourceEntry
     - PhysicalProperty
     - Sensor
     - OperationalRequirement
@@ -535,6 +535,7 @@ attributes:
     owner: Connector
     domain_of:
     - BuildingComponent
+    - Stock
     range: ComponentPermanence
     required: true
   source:

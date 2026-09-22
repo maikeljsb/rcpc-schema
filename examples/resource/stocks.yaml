@@ -1,0 +1,6 @@
+- id: formwork_panels
+  count: 8
+  permanence: temporary
+- id: rebar
+  count: 10
+  permanence: permanent
