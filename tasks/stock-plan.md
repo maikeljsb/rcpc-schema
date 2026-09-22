@@ -36,10 +36,10 @@ verify criteria, push, CI                                                       
 - [x] Task 2: Move `ComponentPermanence` and `permanence` from product to common
 
 ### Phase 2: Resource
-- [ ] Task 3: `ResourceEntry`, `Stock`, and `stocks.yaml`, end to end
+- [x] Task 3: `ResourceEntry`, `Stock`, and `stocks.yaml`, end to end
 
 ### Checkpoint: Resource
-- [ ] `uv run pytest` passes with two new rows; `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`
+- [x] `uv run pytest` passes with two new rows; `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`
 - [ ] Review with human before Task 4
 
 ### Phase 3: Process

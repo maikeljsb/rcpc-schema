@@ -47,14 +47,14 @@ Plan: `tasks/stock-plan.md`. Spec: `SPEC-stock.md`. Each task is one Conventiona
 **Description:** Write `examples/resource/stocks.yaml` with `formwork_panels` (count 8, temporary) and `rebar` (count 10, permanent), and `invalid/stock_missing_permanence.yaml`, a copy of one record without its `permanence`. Add two rows to `tests/test_examples.py` and run them: RED with `No such class: Stock`. Then in `schema/resource.yaml`: `ResourceEntry` with `id` and `count`, `count` moved off `RobotUnit` into the base; `RobotUnit` gains `is_a: Resource` and drops `id` and `count` from its own list; `Stock` is_a `ResourceEntry` with `permanence` required and the `id` pattern, descriptions from the spec. Rebuild and commit as `feat(resource): add Resource as the base and Stock beside RobotUnit`.
 
 **Acceptance criteria:**
-- [ ] `stocks.yaml` validates with `-C Stock`; the invalid document fails naming `permanence`
-- [ ] `dist/resource.schema.json` `$defs` has 15 entries including `ResourceEntry` and `Stock`; `Stock.required` is `count`, `id`, `permanence`; `RobotUnit.properties` and `RobotUnit.required` are unchanged from HEAD; `dist/process.schema.json` `$defs` has 34
-- [ ] `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`
+- [x] `stocks.yaml` validates with `-C Stock`; the invalid document fails naming `permanence`
+- [x] `dist/resource.schema.json` `$defs` has 15 entries including `ResourceEntry` and `Stock`; `Stock.required` is `count`, `id`, `permanence`; `RobotUnit.properties` and `RobotUnit.required` are unchanged from HEAD; `dist/process.schema.json` `$defs` has 34
+- [x] `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`
 
 **Verification:**
-- [ ] Tests pass: `uv run pytest` with two new rows, 40 example rows
-- [ ] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
-- [ ] Manual check: the lowercased names `SchemaView` reports for `schema/process.yaml` with imports are all distinct
+- [x] Tests pass: `uv run pytest` with two new rows, 40 example rows
+- [x] Build succeeds: `uv run python scripts/build.py` run twice; `git status --porcelain` shows only the intended files
+- [x] Manual check: the lowercased names `SchemaView` reports for `schema/process.yaml` with imports are all distinct
 
 **Dependencies:** Task 2
 
@@ -69,7 +69,7 @@ Plan: `tasks/stock-plan.md`. Spec: `SPEC-stock.md`. Each task is one Conventiona
 Amendment 2026-09-22: the base is `ResourceEntry`, because `Resource` collides case-insensitively with the schema page `resource.md`; see `SPEC-stock.md` decision 4.
 
 ## Checkpoint: Resource
-- [ ] 40 example rows pass
+- [x] 40 example rows pass
 - [ ] Review with human before Task 4
 
 ## Task 4: `uses` on `Method`, the in-situ method, and the two slab tasks
