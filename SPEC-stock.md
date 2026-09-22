@@ -71,7 +71,7 @@ Documents:
 # with parameters {r: robot, c: component, at: location}, requiring shutter, tie, pour
 - record_type: Method
   id: m_insitu
-  description: Cast a component in place: shutter it, tie its reinforcement, pour.
+  description: "Cast a component in place: shutter it, tie its reinforcement, pour."
   compound_task: ConstructComponent
   applies_to: concrete
   parameters: {c: component, r: robot, at: location}
@@ -89,7 +89,7 @@ Documents:
 
 ## Testing Strategy
 
-Rows before schema, RED first. `test_examples.py`: `stocks.yaml` against `Stock` passes; `stock_missing_permanence.yaml` fails naming `permanence`. `test_references.py`: `catalogue.yaml` `uses` against `stocks.yaml`, RED with a planted unknown stock. Tests that count `$defs` or rows move to the new numbers in the same commit.
+Rows before schema, RED first. `test_examples.py`: `stocks.yaml` against `Stock` passes; `stock_missing_permanence.yaml` fails naming `permanence`. `test_references.py`: `catalogue.yaml` `uses` against `stocks.yaml`, RED with a planted unknown stock. The harness expands a robot entry into its machines `<id>_<n>` and, since 2026-09-22, only a robot entry: a stock also has a `count`, but a method names the stock by its id and the export mints the units, so a stock resolves as itself. Tests that count `$defs` or rows move to the new numbers in the same commit.
 
 ## Boundaries
 

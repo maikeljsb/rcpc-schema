@@ -66,7 +66,8 @@ docs/
     process/                                                generated, one page per element
 tests/
   test_examples.py                                          thirteen rows added to EXAMPLES; one new row kind, see prerequisite 5
-  test_references.py                                        one row added 2026-09-22: catalogue uses -> examples/resource/stocks.yaml
+  test_references.py                                        one row added 2026-09-22: catalogue uses -> examples/resource/stocks.yaml;
+                                                            only a robot entry expands into machines, a stock resolves by its id
 ```
 
 The catalogue examples are written by hand and are fictional in the sense that no site runs them; they use the four capability ids in `examples/common/capability_types.yaml` and the material category the product examples carry. The instance examples bind ids that exist in `examples/product/` and machine ids derived from `examples/resource/`.
@@ -272,7 +273,7 @@ Every row is a decision. "Borrowed" means the construct is carried under HDDL's 
   ordering: [[1, 2]]
 - record_type: Method
   id: m_insitu
-  description: Cast a component in place: shutter it, tie its reinforcement, pour.
+  description: "Cast a component in place: shutter it, tie its reinforcement, pour."
   compound_task: ConstructComponent
   applies_to: concrete
   parameters: {c: component, r: robot, at: location}
