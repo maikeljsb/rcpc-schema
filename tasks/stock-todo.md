@@ -7,12 +7,12 @@ Plan: `tasks/stock-plan.md`. Spec: `SPEC-stock.md`. Each task is one Conventiona
 **Description:** Write, in place, `SPEC-common.md` decision 18 (`ComponentPermanence` and `permanence` arrive from product), `SPEC-product.md` decision 18 (they leave; `BuildingComponent` keeps `permanence` required), `SPEC-resource.md` decision 14 (`Resource` base with `id` and `count`, `RobotUnit` is_a it, `Stock` with `permanence`; class table and project structure updated), and `SPEC-process.md` decision 20 (`uses` on `Method`, range `Stock`, optional; slot table row; the plan example's network renamed `level_1` with four tasks; the catalogue example's third method). Each entry points at `SPEC-stock.md`. Commit as `docs(spec): record the stock extension in the four module specs`.
 
 **Acceptance criteria:**
-- [ ] Each of the four specs has its new numbered decision, and its class or slot table shows the new element
-- [ ] `SPEC-process.md`'s plan example reads `level_1` and lists four tasks with `ordering: [[1, 2]]`
-- [ ] No amendment notes: existing text rewritten where it changes
+- [x] Each of the four specs has its new numbered decision, and its class or slot table shows the new element
+- [x] `SPEC-process.md`'s plan example reads `level_1` and lists four tasks with `ordering: [[1, 2]]`
+- [x] No amendment notes: existing text rewritten where it changes
 
 **Verification:**
-- [ ] Manual check: `grep -n "SPEC-stock" SPEC-*.md` shows the four pointers
+- [x] Manual check: `grep -n "SPEC-stock" SPEC-*.md` shows the four pointers
 
 **Dependencies:** process Task 5 recorded
 

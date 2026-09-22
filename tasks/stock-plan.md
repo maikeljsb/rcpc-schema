@@ -32,7 +32,7 @@ verify criteria, push, CI                                                       
 ## Task List
 
 ### Phase 1: Record and move
-- [ ] Task 1: Record the stock decisions in the four module specs
+- [x] Task 1: Record the stock decisions in the four module specs
 - [ ] Task 2: Move `ComponentPermanence` and `permanence` from product to common
 
 ### Phase 2: Resource
