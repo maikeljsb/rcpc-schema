@@ -70,7 +70,7 @@ Amendment 2026-09-22: the base is `ResourceEntry`, because `Resource` collides c
 
 ## Checkpoint: Resource
 - [x] 40 example rows pass
-- [ ] Review with human before Task 4
+- [x] Review with human before Task 4
 
 ## Task 4: `uses` on `Method`, the in-situ method, and the two slab tasks
 

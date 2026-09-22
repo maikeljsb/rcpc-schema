@@ -40,7 +40,7 @@ verify criteria, push, CI                                                       
 
 ### Checkpoint: Resource
 - [x] `uv run pytest` passes with two new rows; `docs/model/resource/index.md` indents `RobotUnit` and `Stock` under `ResourceEntry`
-- [ ] Review with human before Task 4
+- [x] Review with human before Task 4
 
 ### Phase 3: Process
 - [ ] Task 4: `uses` on `Method`, the in-situ method, and the two slab tasks
