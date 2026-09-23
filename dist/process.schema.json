@@ -1327,7 +1327,7 @@
               },
               {
                 "type": "string",
-                "description": "The id of the object the parameter is bound to: a BuildingComponent, a Space, or a machine such as mason_m1_1, as the parameter's declared kind says."
+                "description": "The id of the object the parameter is bound to: a BuildingComponent, one of a component's positions such as <id>_target, or a machine such as mason_m1_1, as the parameter's declared kind says. Empty until bound."
               }
             ]
           },
@@ -1382,7 +1382,7 @@
               },
               {
                 "type": "string",
-                "description": "The id of the object the parameter is bound to: a BuildingComponent, a Space, or a machine such as mason_m1_1, as the parameter's declared kind says."
+                "description": "The id of the object the parameter is bound to: a BuildingComponent, one of a component's positions such as <id>_target, or a machine such as mason_m1_1, as the parameter's declared kind says. Empty until bound."
               }
             ]
           },
@@ -1428,7 +1428,7 @@
               },
               {
                 "type": "string",
-                "description": "The id of the object the parameter is bound to: a BuildingComponent, a Space, or a machine such as mason_m1_1, as the parameter's declared kind says."
+                "description": "The id of the object the parameter is bound to: a BuildingComponent, one of a component's positions such as <id>_target, or a machine such as mason_m1_1, as the parameter's declared kind says. Empty until bound."
               }
             ]
           },
@@ -1454,7 +1454,7 @@
         },
         "bound_to": {
           "type": "string",
-          "description": "The id of the object the parameter is bound to: a BuildingComponent, a Space, or a machine such as mason_m1_1, as the parameter's declared kind says."
+          "description": "The id of the object the parameter is bound to: a BuildingComponent, one of a component's positions such as <id>_target, or a machine such as mason_m1_1, as the parameter's declared kind says. Empty until bound."
         }
       },
       "required": [

@@ -33,7 +33,7 @@ Name: process
 | [applies_to](applies_to.md) | The material category of the components a method decomposes its task for; a c... |
 | [arguments](arguments.md) | The values a subtask passes, in the named task's parameter order: method para... |
 | [bindings](bindings.md) | The instance's parameters bound to object ids, keyed by parameter name |
-| [bound_to](bound_to.md) | The id of the object the parameter is bound to: a BuildingComponent, a Space,... |
+| [bound_to](bound_to.md) | The id of the object the parameter is bound to: a BuildingComponent, one of a... |
 | [compound_task](compound_task.md) | The compound task a method decomposes, a subtask names, or an instance realis... |
 | [decomposed_by](decomposed_by.md) | The method chosen to decompose a compound task instance |
 | [duration](duration.md) | How long one performance of the primitive task takes, recommended in seconds |

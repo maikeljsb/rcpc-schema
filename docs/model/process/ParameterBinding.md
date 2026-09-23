@@ -59,7 +59,7 @@ URI: [rcpc:ParameterBinding](https://rcpc.for5672/schema/ParameterBinding)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [parameter_name](parameter_name.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The parameter's name, a plain word such as c, r, or from | direct |
-| [bound_to](bound_to.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The id of the object the parameter is bound to: a BuildingComponent, a Space,... | direct |
+| [bound_to](bound_to.md) | 1 <br/> [xsd:string](http://www.w3.org/2001/XMLSchema#string) | The id of the object the parameter is bound to: a BuildingComponent, one of a... | direct |
 
 
 
@@ -163,8 +163,8 @@ attributes:
   bound_to:
     name: bound_to
     description: 'The id of the object the parameter is bound to: a BuildingComponent,
-      a Space, or a machine such as mason_m1_1, as the parameter''s declared kind
-      says.'
+      one of a component''s positions such as <id>_target, or a machine such as mason_m1_1,
+      as the parameter''s declared kind says. Empty until bound.'
     from_schema: https://rcpc.for5672/schema/process
     rank: 1000
     owner: ParameterBinding

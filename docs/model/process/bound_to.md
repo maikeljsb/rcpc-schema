@@ -6,7 +6,7 @@ search:
 # Slot: bound_to 
 
 
-_The id of the object the parameter is bound to: a BuildingComponent, a Space, or a machine such as mason_m1_1, as the parameter's declared kind says._
+_The id of the object the parameter is bound to: a BuildingComponent, one of a component's positions such as <id>_target, or a machine such as mason_m1_1, as the parameter's declared kind says. Empty until bound._
 
 
 
@@ -85,7 +85,8 @@ URI: [rcpc:bound_to](https://rcpc.for5672/schema/bound_to)
 ```yaml
 name: bound_to
 description: 'The id of the object the parameter is bound to: a BuildingComponent,
-  a Space, or a machine such as mason_m1_1, as the parameter''s declared kind says.'
+  one of a component''s positions such as <id>_target, or a machine such as mason_m1_1,
+  as the parameter''s declared kind says. Empty until bound.'
 from_schema: https://rcpc.for5672/schema/process
 rank: 1000
 domain_of:
