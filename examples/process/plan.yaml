@@ -35,20 +35,20 @@
 - record_type: PrimitiveTaskInstance
   id: construct_138157_1_1
   primitive_task: MoveTo
-  bindings: {r: mason_m1_1, to: 3It7HtQdTQBQsvQlFr2iGK}
+  bindings: {r: mason_m1_1, to: 2O2Fr$t4X7Zf8NOew3FNqI_supply}
 - record_type: PrimitiveTaskInstance
   id: construct_138157_1_2
   primitive_task: Attach
-  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 3It7HtQdTQBQsvQlFr2iGK}
+  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 2O2Fr$t4X7Zf8NOew3FNqI_supply}
 - record_type: PrimitiveTaskInstance
   id: construct_138157_1_3
   primitive_task: MoveTo
-  bindings: {r: mason_m1_1, to: 0BTBFw6f90Nfh9rP1dlXrr}
+  bindings: {r: mason_m1_1, to: 2O2Fr$t4X7Zf8NOew3FNqI_target}
 - record_type: PrimitiveTaskInstance
   id: construct_138157_1_4
   primitive_task: Detach
-  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 0BTBFw6f90Nfh9rP1dlXrr}
+  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 2O2Fr$t4X7Zf8NOew3FNqI_target}
 - record_type: PrimitiveTaskInstance
   id: construct_138157_2
   primitive_task: Place
-  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 0BTBFw6f90Nfh9rP1dlXrr}
+  bindings: {r: mason_m1_1, c: 2O2Fr$t4X7Zf8NOew3FNqI, at: 2O2Fr$t4X7Zf8NOew3FNqI_target}

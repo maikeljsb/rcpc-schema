@@ -21,7 +21,7 @@ URI: [rcpc:ParameterKind](https://rcpc.for5672/schema/ParameterKind)
 | Value | Meaning | Description |
 | --- | --- | --- |
 | component | None | A BuildingComponent, or one of its subclasses |
-| location | None | A Space |
+| location | None | One of a component's three positions, named after the component and the slot:... |
 | robot | None | One machine of a RobotUnit entry |
 
 
@@ -72,7 +72,8 @@ permissible_values:
     description: A BuildingComponent, or one of its subclasses.
   location:
     text: location
-    description: A Space.
+    description: 'One of a component''s three positions, named after the component
+      and the slot: <id>_target, <id>_supply, or <id>_current.'
   robot:
     text: robot
     description: One machine of a RobotUnit entry.

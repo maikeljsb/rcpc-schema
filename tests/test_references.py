@@ -12,7 +12,8 @@ keyed map read by its values, must be the id of a record in one of the target do
 "" passes only where the owning spec says the key may be empty. A record with a count, a
 robot entry, stands for its machines <id>_<n> and not for itself; a stock, which also
 has a count, stands for itself, because a method names the stock and the export mints
-its units.
+its units. A component stands for its three positions <id>_target, <id>_supply, <id>_current
+as well as for itself (SPEC-process.md decision 21).
 """
 from pathlib import Path
 
@@ -28,7 +29,6 @@ PLAN = ("examples/process/plan.yaml",)
 OBJECTS = (
     "examples/product/building_components.yaml",
     "examples/product/connectors.yaml",
-    "examples/product/spaces.yaml",
     "examples/resource/robot_units.yaml",
 )
 
@@ -65,13 +65,15 @@ def values_under(node, key: str) -> list:
 
 
 def ids_in(target: Path) -> set[str]:
-    """The ids of target's records; a robot entry stands for its machines <id>_<n>."""
+    """The ids of target's records; a robot entry stands for its machines <id>_<n>, a component also for its positions <id>_<slot>."""
     ids: set[str] = set()
     for record in yaml.safe_load(target.read_text(encoding="utf-8")):
         if "activity_group" in record:
             ids |= {f"{record['id']}_{n}" for n in range(1, record["count"] + 1)}
         else:
             ids.add(record["id"])
+        if "target_location" in record:
+            ids |= {f"{record['id']}_{slot}" for slot in ("target", "supply", "current")}
     return ids
 
 

@@ -24,7 +24,9 @@ enums:
       component:
         description: A BuildingComponent, or one of its subclasses.
       location:
-        description: A Space.
+        description: >-
+          One of a component's three positions, named after the component and
+          the slot: <id>_target, <id>_supply, or <id>_current.
       robot:
         description: One machine of a RobotUnit entry.
 
