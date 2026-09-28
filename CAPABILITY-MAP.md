@@ -9,8 +9,9 @@ Approved 2026-09-10. This map is the index of module specs: each module id names
 | `product` | BuildingComponent, Connector (a subclass of it), Space, Storey, Material, and their enums | common |
 | `resource` | ResourceEntry as the base with id and count; RobotUnit with status, holding PhysicalProperty, OperationalRequirement, Safety, Activity; Stock with permanence | common |
 | `process` | PrimitiveTask and CompoundTask with Task as their base, Method with Subtask as its list entry, TaskNetwork, CompoundTaskInstance and PrimitiveTaskInstance with TaskInstance as theirs, the keyed Parameter and ParameterBinding classes, ParameterKind, and uses on Method naming a Stock | common, product, resource |
+| `mvp` | The progress-report demonstration under `mvp/`: topologicpy parse, tier 1 and tier 2 validation, projection to Neo4j, process graph generation from the projected product and catalogue, HDDL export and Aries planning, six dashboard views, run comparison. Its own uv project; changes no schema module | common, product, resource, process |
 
-Build order: `toolchain` → `common` → `product`, `resource` → `process`.
+Build order: `toolchain` → `common` → `product`, `resource` → `process`. `mvp` after all four, added 2026-09-23 (`SPEC-mvp.md`).
 
 Rules:
 - Module ids are stable; they are the file names under `schema/` and the spec names here.
